@@ -2,8 +2,8 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.3.0  
-**Status:** 45 source-linked records indexed; Paper A structural scan completed, independent extraction review and mathematical verification remain open  
+**Version:** 0.4.0  
+**Status:** 45 source-linked records indexed; Paper A independent extraction review completed with issues; mathematical verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
 ---
@@ -64,9 +64,9 @@ The canonical source pins and file digests are maintained in `MANUSCRIPT_SOURCE_
 
 ## 6. Claim index
 
-The registry now contains 45 source-linked records (28 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 14 candidate records after the full six-section structural scan; all remain unreviewed candidates. Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
+The registry now contains 45 source-linked records (28 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 14 candidate records from the six-section structural scan; all 14 have undergone independent extraction review, with issues recorded. One record (PROP-0008) is a duplicate of a subclaim in PROP-0001. No record has been mathematically verified.
 
-### Paper A — 14 candidate records; structural scan completed, independent review pending
+### Paper A — 14 candidate records; extraction review completed with issues
 
 | Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
 |---|---|---|---|---|---|---|
@@ -225,7 +225,7 @@ Valid dispositions include DEFINITION_ONLY, NOT_A_CLAIM, EXAMPLE, CONJECTURE, DU
 
 | Paper ID | Source frozen | Sections scanned | Appendices scanned | Candidates reconciled | Independent review | Completeness status |
 |---|---|---|---|---|---|---|
-| A | YES | YES (six revised sections) | UNKNOWN | PARTIAL (secondary ledger reconciled; open scope items remain) | NO | STRUCTURAL_SCAN_COMPLETE; REVIEW_OPEN |
+| A | YES | YES (six revised sections) | UNKNOWN | PARTIAL (secondary ledger reconciled; duplicate and source issues recorded) | YES — WITH ISSUES (14/14 records) | EXTRACTION_REVIEW_COMPLETE_WITH_ISSUES; APPENDIX_AND_PROOF_REVIEW_OPEN |
 | D | YES | PARTIAL (nine structured theorem sources; no integrated manuscript) | UNKNOWN | NO (manuscript scope blocked) | NO | BLOCKED_PENDING_INTEGRATED_MANUSCRIPT |
 | A1 | YES (Stage A1-1 snapshot) | PARTIAL (five theorem statements and 17 ledger rows) | UNKNOWN | PARTIAL | NO | PARTIAL_STAGE_SCOPE; REVIEW_OPEN |
 
@@ -237,16 +237,16 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 |---|---|---|---|
 | 0.1.0 | Initial registry schema | Registry architecture | Pending |
 | 0.2.0 | Initial source-linked extraction; 38 records | Paper A, D, A1 | Independent review pending |
-| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |
+| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |
 
 ## 11. Current truth statement
 
-At version 0.3.0:
+At version 0.4.0:
 
 - Source-linked claim records: **45** (28 formal/proposition/definition records and 17 A1 ledger records).
 - Paper A: **14** candidates; all CANDIDATE / NOT_ASSESSED.
 - Paper A six-section structural scan: **COMPLETED for Pass 1**.
-- Paper A independent extraction review: **NOT_RUN**.
+- Paper A independent extraction review: **COMPLETED WITH ISSUES (14/14 records)**; one duplicate record identified; no proof verified.
 - Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
 - Paper A1 extraction: **PARTIAL**, limited to Stage A1-1.
 - Constant Llapoy VERIFIED claims: **0**.
@@ -256,7 +256,7 @@ A record's presence is not evidence of correctness. Do not promote a claim to RE
 
 ## 12. Governing documents
 
-- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`
+- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`
 - `VERIFICATION_OBLIGATION_MATRIX.md`
 - `ARCHITECTURE_CHARTER.md`
 - `THREAT_MODEL.md`
