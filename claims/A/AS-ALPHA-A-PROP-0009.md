@@ -4,7 +4,7 @@
 - **Paper:** A
 - **Claim version:** 0.1.0 (first extraction record)
 - **Extraction status:** CANDIDATE
-- **Constant Llapoy verification status:** NOT_ASSESSED
+- **Constant Llapoy verification status:** PARTIALLY VERIFIED
 - **Canonical source repository:** `mytheeramet3dev-x/Absolute_Sym`
 - **Source branch:** `paper-a-interval-audit-2026-11-14`
 - **Source commit:** `8deb7de4a49cb2060720246b7101820ee7e08c91`
@@ -48,11 +48,42 @@ This is a source-asserted asymptotic claim. Its stated derivation points to Lemm
 
 ## Review state
 
-- Independent extraction review: COMPLETED (see `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`).
-- Mathematical proof review: NOT_RUN.
+- Independent extraction review: COMPLETED (see PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md).
+- Mathematical proof review: PARTIALLY COMPLETED; see the independent uniform strong-coupling derivation and the general-N small-eigenvalue coefficient derivation.
 - Formal proof correspondence: NOT_RUN.
-- Counterexample review: NOT_RUN.
-- Overall Constant Llapoy status: CANDIDATE / NOT_VERIFIED.
+- Lean verification: NOT_RUN.
+- Independent audit of the exact-rational diagnostic implementation: PENDING.
+- Overall Constant Llapoy status: CANDIDATE / PARTIALLY VERIFIED.
+
+### Independent mathematical derivation — 2026-11-17
+
+The uniform strong-coupling function and its derivative have now been derived independently inside Constant Llapoy from the Hamiltonian, the parity-sector perturbation problem, and the one-/two-site reduced states:
+
+- Uniform function and derivative proof: audits/paper-a/UNIFORM_GN_STRONG_COUPLING_FUNCTION_AND_DERIVATIVE_PROOF.md.
+- General-N fourth-order small-eigenvalue derivation: audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md.
+- Exact-rational finite-N diagnostic and N=4 exception: audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md.
+- Reproducible diagnostic: working/paper-a/finite_n_strong_coupling_exact_diagnostic.py.
+- Integrated working derivation: working/paper-a/CANONICAL_STRONG_COUPLING_DERIVATION.md.
+
+The derivation establishes, for each fixed finite N >= 4,
+
+\[
+\mathcal G_N(x)=\ln2-\frac{1}{(N-1)^2x^2}
++O_N\!\left(\frac{\ln x}{x^4}\right),
+\]
+
+and independently establishes
+
+\[
+\mathcal G_N'(x)=\frac{2}{(N-1)^2x^3}
++O_N\!\left(\frac{\ln x}{x^5}\right).
+\]
+
+The derivative result is obtained from analytic eigenvalue branches and their derivatives, not by differentiating a bare big-O statement.
+
+A correction was found in a supporting fourth-order eigenvalue coefficient: the coefficient is 1/648 at N=4, not 1/1296; for N >= 5 it is 1/[8(N-2)(N-1)^4] (derived symbolically for N >= 9 and checked by exact-rational finite calculations for N=5,6,7,8).
+
+**Why only Partially Verified:** the mathematical asymptotic derivation is now present, but Lean formalization, proof-to-manuscript correspondence, independent code review, and source-citation reconciliation have not been completed. The frozen manuscript still cites Lemma 5.1, whose located source concerns B-C rather than this uniform asymptotic. No upstream file was changed.
 
 **Important:** Registration or transcription does not establish correctness, completeness, novelty, or Lean verification.
 
