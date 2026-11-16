@@ -2,7 +2,7 @@
 
 - **Claim ID:** `AS-ALPHA-A-PROP-0012`
 - **Paper:** A
-- **Claim version:** 0.1.0 (first extraction record)
+- **Claim version:** 0.2.0 (independent weak-coupling follow-up added)
 - **Extraction status:** SOURCE_CONFLICT
 - **Constant Llapoy verification status:** NOT_VERIFIED — source assertion contradicted by an independent local weak-coupling derivation; formalization pending
 - **Canonical source repository:** `mytheeramet3dev-x/Absolute_Sym`
