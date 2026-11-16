@@ -2,7 +2,7 @@
 
 - **Claim ID:** `AS-ALPHA-A-PROP-0009`
 - **Paper:** A
-- **Claim version:** 0.1.0 (first extraction record)
+- **Claim version:** 0.2.0 (independent uniform asymptotic proof added)
 - **Extraction status:** CANDIDATE
 - **Constant Llapoy verification status:** PARTIALLY VERIFIED
 - **Canonical source repository:** `mytheeramet3dev-x/Absolute_Sym`
