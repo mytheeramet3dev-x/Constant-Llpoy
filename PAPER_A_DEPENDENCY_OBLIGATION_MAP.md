@@ -52,7 +52,7 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0006 | A-THM-0002 | A/L | Positive multiplication by (h) preserves the ground eigenspace; uniqueness is needed for a single ground-state projector |
 | A-PROP-0007 | Hamiltonian at (x=0), Section 2.4 | L | At zero coupling the ground state is the product (|+x\rangle^{\otimes N}), giving zero pairwise mutual information |
 | A-PROP-0008 | A-PROP-0001 | DUPLICATE | Same subcritical-exclusion statement; not an independent theorem |
-| A-PROP-0009 | Missing Lemma 5.1; strong-coupling spectral perturbation; entropy remainder control | U/A | Need proof of the coefficient, error order, and differentiated remainder; include (N\ge4) |
+| A-PROP-0009 | Section 4.4.2 cites Lemma 5.1, but located `docs/lemma_5_1_proof.md` concerns B-C rather than G_N; actual G_N expansion proof source unresolved | U/A | Need proof of the coefficient, error order, and differentiated remainder; include (N\ge4) |
 | A-PROP-0010 | Section 5.1 definition of (F_J) | D/L | (F_J=g\,\partial_J I_{12}-1); (F_J<0\) gives only the upper bound (\partial_JI_{12}<1/g) |
 | A-PROP-0011 | A-PROP-0006 | D/A | Differentiate the dimensionless dependence with respect to each edge coupling; requires differentiability of the ground-state response map |
 | A-PROP-0005 | (S_N)-invariance of the symmetric Hamiltonian and response map | S/A | Need differentiability, orbit classification of edge pairs, and (N\ge3); algebraic eigenvalue identity is separate from the conjectural sign of (B-C) |
@@ -145,3 +145,19 @@ This map does **not** establish:
 ---
 
 **End of preliminary Paper A dependency and verification-obligation map.**
+
+
+## 8. Newly located supporting-source obligations
+
+- **A-THM-0002:** candidate proof source `docs/tfim_ground_state_simplicity_lemma.md` (blob `472328b596ccdcc82ece65faf5ef65a9dab63e50`) supplies the (cI-H) Perron–Frobenius argument. It is not yet independently verified by Constant Llapoy.
+- **A-PROP-0009:** `docs/lemma_5_1_proof.md` is not the proof of the (\mathcal G_N(x)) expansion cited in Section 4.4.2; it concerns (B-C). The actual (\mathcal G_N) asymptotic proof source remains unresolved.
+- **A-PROP-0012:** the weak-coupling opposite-sign response assertion conflicts with the later `docs/lemma_5_2_audit.md`. The original negative-sign derivation omitted an order-(r^2) coherence; the corrected leading sign is positive, but its derivative remainder is not bounded. The full sign claim remains unproved.
+- **Entropy–Schur remainder lemma:** `docs/entropy_schur_remainder_lemma.md` is conditional on model-specific Schur-complement and derivative bounds; it does not itself establish those hypotheses.
+- **Supplementary material:** `Arxiv/supplementary_material.md` supplies an exact Johnson-scheme derivation of the sector identity and finite numerical validation data; these must be separated into exact algebraic support and finite empirical evidence.
+
+### VO-A-009 — Weak-coupling response conflict
+
+- Reconcile Section 4.4.3 with both `docs/lemma_5_2_proof.md` and its correcting audit `docs/lemma_5_2_audit.md`.
+- Do not cite the superseded negative-sign proof as evidence.
+- Prove a differentiated remainder bound before making an endpoint sign theorem.
+- Keep the global sign of (B-C) a conjecture unless independently proved.
