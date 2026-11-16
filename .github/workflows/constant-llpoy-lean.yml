@@ -5,15 +5,19 @@ on:
     branches: [main]
     paths:
       - "formalization/lean/**"
-      - ".github/workflows/constant-llapoy-lean.yml"
+      - ".github/workflows/constant-llpoy-lean.yml"
   pull_request:
     paths:
       - "formalization/lean/**"
-      - ".github/workflows/constant-llapoy-lean.yml"
+      - ".github/workflows/constant-llpoy-lean.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: constant-llpoy-lean-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lean-build:
