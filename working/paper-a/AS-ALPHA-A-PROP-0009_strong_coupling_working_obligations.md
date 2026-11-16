@@ -60,3 +60,7 @@ are established for the full TFIM reduced pair. Analyticity of the projector alo
 - Derivative asymptotic and derivative limit: open until separately proved.
 - Global branch continuation: separate obligation.
 - Claim status: NOT_VERIFIED.
+
+## Additional logarithmic eigenvalue obligation
+
+The entropy–Schur auxiliary lemma's derivative estimate also needs care: `lambda <= K r^4` does not upper-bound `|ln lambda|`. For each nonzero small eigenvalue branch, establish a lower bound `lambda >= c r^4` (when applicable), or a relative derivative bound such as `|partial_u lambda| <= C lambda/J`. Handle identically zero branches separately. Do not use the entropy derivative lemma until this is closed.
