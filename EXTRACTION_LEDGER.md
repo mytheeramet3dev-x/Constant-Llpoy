@@ -1,8 +1,8 @@
 # Initial Extraction Ledger
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
-**Version:** 0.3.0  
-**Status:** Paper A six-section structural scan completed for Pass 1; reconciliation edge cases and independent review remain open
+**Version:** 0.4.0  
+**Status:** Paper A six-section structural scan and independent extraction review completed with issues; mathematical proof review remains open
 
 ---
 
@@ -12,7 +12,7 @@ The initial extraction pass has inspected the upstream Absolute Symmetry reposit
 
 | Paper | Source material inspected | Initial Constant Llapoy records | Extraction state |
 |---|---|---:|---|
-| A | Six authoritative revised sections, full structural scan pass 1 | 14 | CANDIDATE; structural scan complete, independent review pending |
+| A | Six authoritative revised sections, full structural scan pass 1 | 14 | CANDIDATE; structural scan and independent extraction review complete with issues |
 | D | Nine structured theorem/proposition source files | 9 | Candidate/source records; no integrated manuscript |
 | A1 | Stage A1-1 theorem statement file plus 17-entry epistemic ledger | 22 | TRANSCRIBED; independent review pending |
 | **Total** | — | **45** | **NOT COMPLETE** |
@@ -60,7 +60,7 @@ The second Paper A pass fetched all six authoritative revised section files from
 - `AS-ALPHA-A-PROP-0006` — positive energy rescaling and dimensionless mutual-information dependence.
 - `AS-ALPHA-A-PROP-0007` — zero-coupling product state and trivial fixed point.
 - `AS-ALPHA-A-PROP-0008` — conditional subcritical exclusion.
-- `AS-ALPHA-A-PROP-0009` — strong-coupling asymptotic expansion of `G_N) and its derivative.
+- `AS-ALPHA-A-PROP-0009` — strong-coupling asymptotic expansion of `G_N` and its derivative.
 - `AS-ALPHA-A-PROP-0010` — uniform-response upper bound and correction of a false sign inference.
 - `AS-ALPHA-A-PROP-0011` — scale covariance of response eigenvalues.
 
@@ -68,7 +68,25 @@ The report also identifies unresolved cross-references to Lemma 5.1 and Lemma 5.
 
 The upstream ledger was reconciled item-by-item at the level of scope and epistemic classification. Project-level Lean-source claims and historical Stage V claims were not imported as Paper A manuscript theorems. The retracted inference `F'<0 => dI/dJ<0` remains explicitly rejected; the manuscript's correct upper bound is preserved. The sign of `B-C` remains a numerical conjecture, not a theorem.
 
-**Pass 1 result:** 14 Paper A candidate records; zero independently reviewed records; zero Constant Llapoy VERIFIED claims. The structural scan is complete for the six pinned sections, but extraction completeness is not yet certified.
+**Pass 1 result:** 14 Paper A candidate records; independent extraction review completed for 14/14 with issues; one duplicate record identified; zero Constant Llapoy VERIFIED claims. Six-section structural extraction and record-level review are complete for this pass, but appendix/supplement coverage, proof completeness, and mathematical verification remain open.
+
+
+### 2.2 Paper A independent extraction review — Pass 1
+
+Review report: `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`.
+
+All 14 Paper A claim records were freshly fetched and compared against the six pinned revised sections. The source excerpts and line locators were confirmed for 13/14 records. PROP-0011's source locator was correct but its excerpt initially omitted the numbered-item prefix; the excerpt boundary has now been corrected. PROP-0008 is an exact duplicate/overlap of the subcritical-exclusion assertion already included in PROP-0001 and is retained only for audit traceability pending explicit registry consolidation.
+
+The review identified source/proof obligations that must remain visible:
+
+1. The Perron–Frobenius argument in Section 2.1 uses the wrong shift sign as written: adding (cI) to (H) does not change its negative off-diagonal entries; the standard route applies PF to (cI-H).
+2. Section 3.2 assumes only (C^2) regularity but claims a cubic Taylor remainder and an (O(g-g_c)) branch remainder. Those orders need stronger regularity than stated.
+3. Section 4.4.2's derivative asymptotic does not follow merely by differentiating a function-level big-(O) expansion; it needs a separate derivative remainder estimate. Lemma 5.1 is cited but absent from the pinned Section 5.
+4. Section 5.2's edge-representation dimensions require an explicit domain, at least (N\ge3).
+5. Lemma 5.2 is also cited by Section 4.4.3 but absent from the pinned Section 5.
+6. The threshold's infimum and attainment/minimum language still needs clarification.
+
+**Review disposition:** Independent extraction review COMPLETED WITH ISSUES for the 14-record set. Proof re-derivation, appendix review, Lean correspondence, and mathematical verification remain open. Constant Llapoy VERIFIED claims remain zero.
 
 ## 3. Paper D extraction findings
 
