@@ -46,11 +46,12 @@ The current endpoint theorem is deliberately conditional on an explicit remainde
 From this directory, run:
 
 ```sh
-lake update
 lake exe cache get
 lake build
 ```
 
 The repository CI runs the pinned Lean/Mathlib build and an axiom audit. A green build will establish only that the declarations in this module type-check under the pinned Lean/Mathlib environment; it will not establish the unformalized analytic remainder or manuscript correspondence.
+
+Do not run `lake update` as part of an ordinary verification run: it can move dependency revisions and rewrite the lockfile. If a dependency update is intentionally proposed, review and commit the complete manifest diff as a separate change.
 
 Until a successful CI run is observed, the module status remains **NOT BUILD-VERIFIED**.
