@@ -50,4 +50,21 @@ theorem hasDerivAt_entropy_comp_with_bound
   · exact entropy_derivative_bound_of_log_control
       hA hlog hf'bound
 
+/-- A differentiable nonnegative eigenvalue branch that vanishes at an
+interior parameter value has zero first derivative there.
+
+This is only a statement about the eigenvalue branch itself. It does not,
+without a higher-order vanishing estimate, imply differentiability of
+- f log f at the zero branch. -/
+theorem hasDerivAt_nonnegative_branch_eq_zero
+    {f : ℝ → ℝ} {f' x : ℝ}
+    (hf : HasDerivAt f f' x)
+    (hzero : f x = 0)
+    (hnonneg : ∀ᶠ t in 𝓝 x, 0 ≤ f t) :
+    f' = 0 := by
+  have hmin : IsLocalMin f x := by
+    change ∀ᶠ t in 𝓝 x, f x ≤ f t
+    simpa [hzero] using hnonneg
+  exact hmin.hasDerivAt_eq_zero hf
+
 end ConstantLlapoy.PaperA
