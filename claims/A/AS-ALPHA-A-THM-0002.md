@@ -54,3 +54,11 @@ The source invokes Perron–Frobenius theory and states nondegeneracy for finite
 - Overall Constant Llapoy status: CANDIDATE / NOT_VERIFIED.
 
 **Important:** Registration or transcription does not establish correctness, completeness, novelty, or Lean verification.
+
+## Independent extraction review — 2026-11-17
+
+- **Review status:** REVIEWED_WITH_ISSUES
+- **Source transcription and locator:** Exact excerpt; Section 2, lines 3–17.
+- **Finding:** The source says that shifting (H) by a large positive multiple of the identity makes the matrix nonnegative. This is false as written because the off-diagonal spin-flip entries remain (-h). The Perron–Frobenius argument should instead be applied to (cI-H) (or (-H+cI)), with (c) chosen to make the diagonal nonnegative. For finite (N), the spin-flip graph is connected and the off-diagonal entries are (+h), giving the needed irreducibility.
+- **Disposition:** The nondegeneracy conclusion may be recoverable, but the source proof sentence is incorrect. Preserve the source excerpt; keep CANDIDATE / NOT_VERIFIED pending a corrected proof and domain audit.
+- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
