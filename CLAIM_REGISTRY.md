@@ -77,7 +77,6 @@ The registry now contains 46 source-linked records (29 theorem/proposition/defin
 | AS-ALPHA-A-PROP-0003 | §3.3 Picard criterion | Proposition/claim | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0003.md) |
 | AS-ALPHA-A-PROP-0004 | §4.2 scale independence | Proposition/claim | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0004.md) |
 | AS-ALPHA-A-PROP-0005 | §5.2 response-sector identity | Proposition/claim | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0005.md) |
-
 | AS-ALPHA-A-THM-0002 | §2.1 Perron–Frobenius ground-state nondegeneracy | Theorem candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-THM-0002.md) |
 | AS-ALPHA-A-PROP-0006 | §2.3 positive energy rescaling / dimensionless mutual information | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0006.md) |
 | AS-ALPHA-A-PROP-0007 | §2.4 zero-coupling product state and trivial root | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0007.md) |
