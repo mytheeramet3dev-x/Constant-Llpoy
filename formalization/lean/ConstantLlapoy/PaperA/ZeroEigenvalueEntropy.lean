@@ -1,6 +1,8 @@
 import Mathlib
 import ConstantLlapoy.PaperA.WeakCoupling
 
+open scoped Topology
+
 namespace ConstantLlapoy.PaperA
 
 /-- A positive eigenvalue branch whose logarithm is controlled from both sides
@@ -66,6 +68,36 @@ theorem hasDerivAt_local_min_branch_eq_zero
     (hf : HasDerivAt f f' x)
     (hmin : IsLocalMin f x) :
     f' = 0 := by
+  exact hmin.hasDerivAt_eq_zero hf
+
+/-- A nontrivial one-variable analytic branch admits a finite-order local
+factorisation. This is the pinned Mathlib isolated-zero theorem specialized
+to a real-valued branch at zero. The theorem does not yet use nonnegativity
+to show that the order is even or that the leading coefficient is positive. -/
+theorem exists_local_power_factorization_of_analytic_nontrivial
+    {f : ℝ → ℝ}
+    (hf : AnalyticAt ℝ f 0)
+    (hnot : ¬ ∀ᶠ r : ℝ in 𝓝 0, f r = 0) :
+    ∃ (m : ℕ) (g : ℝ → ℝ),
+      AnalyticAt ℝ g 0 ∧ g 0 ≠ 0 ∧
+      ∀ᶠ r : ℝ in 𝓝 0, f r = r ^ m * g r := by
+  obtain ⟨m, g, hg, hg0, hfactor⟩ :=
+    (hf.exists_eventuallyEq_pow_smul_ne_zero_iff).2 hnot
+  refine ⟨m, g, hg, hg0, ?_⟩
+  filter_upwards [hfactor] with r hr
+  simpa [smul_eq_mul] using hr
+
+/-- If a differentiable branch is nonnegative on a two-sided neighborhood
+and vanishes at the center, its first derivative is zero. -/
+theorem hasDerivAt_nonnegative_branch_eq_zero
+    {f : ℝ → ℝ} {f' x : ℝ}
+    (hf : HasDerivAt f f' x)
+    (hzero : f x = 0)
+    (hnonneg : ∀ᶠ t : ℝ in 𝓝 x, 0 ≤ f t) :
+    f' = 0 := by
+  have hmin : IsLocalMin f x := by
+    change ∀ᶠ t : ℝ in 𝓝 x, f x ≤ f t
+    simpa [hzero] using hnonneg
   exact hmin.hasDerivAt_eq_zero hf
 
 end ConstantLlapoy.PaperA
