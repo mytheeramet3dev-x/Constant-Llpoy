@@ -1,0 +1,33 @@
+name: Constant Llapoy Lean Formalization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "formalization/lean/**"
+      - ".github/workflows/constant-llapoy-lean.yml"
+  pull_request:
+    paths:
+      - "formalization/lean/**"
+      - ".github/workflows/constant-llapoy-lean.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean-build:
+    name: Pinned Lean and Mathlib build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Build Lean formalization and audit axioms
+        uses: leanprover/lean-action@498ce7030982ff0e0cecd98a8f5a7c90615b4e41
+        with:
+          lake-package-directory: formalization/lean
+          use-mathlib-cache: true
+          build: true
+          axiom-audit: true
