@@ -1,7 +1,7 @@
 # Manuscript Source Manifest
 **Project:** Constant Llapoy  
 **Document ID:** CL-MSM-001  
-**Version:** 0.2.0  
+**Version:** 0.2.1  
 **Status:** Core source revisions frozen; supplementary and supporting proof-source inventory added; mathematical verification not established
 
 ---
@@ -63,6 +63,28 @@ These files are **not** authoritative replacements for the six revised sections.
 | `STRONG_COUPLING_PROOF_RECONCILIATION.md` | `8b75e3790cd0aaa223a2ffbbdbaedb2b6f50afbc` | Forensic status reconciliation; strong-coupling derivative proof not closed |
 
 The supporting-source reconciliation is recorded in `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`. In particular, the located Lemma 5.1 concerns (B-C), not the (mathcal G_N(x)) asymptotic cited by Section 4.4.2; do not treat that citation as resolved.
+
+### Constant Llapoy snapshot and derivation mapping
+
+The following immutable source snapshots were copied into Constant Llapoy from the frozen Paper A branch. Their destination blob SHAs were checked against the upstream blob SHAs after creation.
+
+| Frozen upstream source | Upstream blob SHA | Constant Llapoy snapshot | Exact blob match |
+|---|---|---|---|
+| Section 1 revised | \`1f7857bcd44e1605900bf71193e9b593a62397bd\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_01_revised.md\` | YES |
+| Section 2 revised | \`541382fa7ab4b9e254c8e7e5158f202c1a975e0d\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_02_revised.md\` | YES |
+| Section 3 revised | \`9ac164ac67cc121af212c4fb7268b809d9234bd6\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_03_revised.md\` | Recorded in prior snapshot inventory |
+| Section 4 revised | \`a7570431eac62dd4555194df283edb5a9c87a28d\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_04_revised.md\` | YES |
+
+Provenance sidecars for Sections 1 and 2 record the frozen repository, branch, commit, original path, and blob SHA. These snapshots are read-only evidence. Any proposed manuscript correction must be made in a separate Constant Llapoy working copy and must not alter the upstream repository without prior authorization.
+
+New independent Paper A mathematical work added under Constant Llapoy:
+
+- \`audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md\`
+- \`audits/paper-a/UNIFORM_GN_STRONG_COUPLING_FUNCTION_AND_DERIVATIVE_PROOF.md\`
+- \`audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md\`
+- \`working/paper-a/CANONICAL_STRONG_COUPLING_DERIVATION.md\`
+
+These are verification artifacts, not upstream manuscript sources and not replacements for the frozen source files.
 
 **Source freeze status:** FROZEN for this extraction snapshot. Any upstream change requires a new manifest revision and impact analysis.
 
