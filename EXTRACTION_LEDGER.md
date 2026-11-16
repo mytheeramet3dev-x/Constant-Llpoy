@@ -1,7 +1,7 @@
 # Initial Extraction Ledger
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
-**Version:** 0.4.0  
+**Version:** 0.4.1  
 **Status:** Paper A six-section structural scan and independent extraction review completed with issues; mathematical proof review remains open
 
 ---
@@ -73,7 +73,7 @@ The upstream ledger was reconciled item-by-item at the level of scope and episte
 
 ### 2.2 Paper A independent extraction review — Pass 1
 
-Review report: `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`.
+Review report: `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`.\n\nPreliminary dependency/obligation map: `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`. It records provisional dependency edges and eight verification-obligation groups. No dependency closure or circularity check is claimed.
 
 All 14 Paper A claim records were freshly fetched and compared against the six pinned revised sections. The source excerpts and line locators were confirmed for 13/14 records. PROP-0011's source locator was correct but its excerpt initially omitted the numbered-item prefix; the excerpt boundary has now been corrected. PROP-0008 is an exact duplicate/overlap of the subcritical-exclusion assertion already included in PROP-0001 and is retained only for audit traceability pending explicit registry consolidation.
 
@@ -86,7 +86,7 @@ The review identified source/proof obligations that must remain visible:
 5. Lemma 5.2 is also cited by Section 4.4.3 but absent from the pinned Section 5.
 6. The threshold's infimum and attainment/minimum language still needs clarification.
 
-**Review disposition:** Independent extraction review COMPLETED WITH ISSUES for the 14-record set. Proof re-derivation, appendix review, Lean correspondence, and mathematical verification remain open. Constant Llapoy VERIFIED claims remain zero.
+**Review disposition:** Independent extraction review COMPLETED WITH ISSUES for the 14-record set. A preliminary dependency/obligation map has been created; all edges remain provisional. Proof re-derivation, appendix review, Lean correspondence, dependency closure, circularity analysis, and mathematical verification remain open. Constant Llapoy VERIFIED claims remain zero.
 
 ## 3. Paper D extraction findings
 
