@@ -138,3 +138,36 @@ B-C
 It implies \(B-C>0\) for sufficiently small \(h/J>0\), for each fixed finite \(N\ge4\). The internal analytic review found no remaining gap under the stated local positive-coupling and fixed-\(N\) hypotheses. Full-Hilbert-space finite-difference calculations for \(N=4,5,6\) independently support the leading coefficient.
 
 **Important boundary:** this is a local strong-coupling result only. It does not establish global \(B-C>0\), an explicit \(\varepsilon_N\), or uniformity in \(N\). It does not alter the manuscript's Section 5.3 conjecture status or any claim status, because the result is not yet formalized in Lean or audited for manuscript correspondence. The original upstream Lemma 5.1 file remains a frozen source snapshot and has not been modified.
+
+
+## Follow-up — weak-coupling \(B-C\) derivative remainder
+
+**Date:** 2026-11-17  
+**Frozen source snapshots:**  
+- source_snapshots/paper-a/docs/lemma_5_2_proof.md
+- source_snapshots/paper-a/docs/lemma_5_2_audit.md
+
+**New independent derivation:** working/paper-a/WEAK_COUPLING_B_MINUS_C_DERIVATIVE_PROOF.md  
+**Internal review:** audits/paper-a/WEAK_COUPLING_B_MINUS_C_PROOF_AUDIT.md  
+**Reusable entropy lemma:** audits/paper-a/ANALYTIC_NONNEGATIVE_EIGENVALUE_ENTROPY_DERIVATIVE_LEMMA.md  
+**Numerical diagnostic:** audits/paper-a/WEAK_COUPLING_B_MINUS_C_NUMERICAL_DIAGNOSTIC.md
+
+The original Lemma 5.2 proof has the wrong sign because it omits the order-\(r^2\) coherence in the \((|+-\rangle,|-+\rangle)\) block. The later source audit corrected the leading sign to positive but left the differentiated remainder unbounded.
+
+The new Constant Llapoy derivation retains the full coherence, diagonalizes the positive Gram-matrix branch, and separately handles the zero branch and the small branch of the \((++ , --)\) block using joint analyticity and the nonnegative-eigenvalue entropy lemma. It establishes the conservative fixed-\(N\) asymptotic
+
+\[
+B-C
+=\frac{J}{8h^2}
+\ln\!\left(\frac{2(N-2)}{N-1}\right)
++O_N\!\left(
+\frac{J^2}{h^3}
+\left[1+\left|\ln(J/h)\right|\right]
+\right).
+\]
+
+For every fixed finite \(N\ge4\), the leading logarithm is positive and the relative remainder tends to zero. Hence \(B-C>0\) for sufficiently small \(J/h>0\).
+
+The remainder is intentionally weaker than the old source proof's claimed \(O(J^3/h^4)\); that stronger order is not adopted. Full-Hilbert-space high-precision finite differences for \(N=4,5,6\) support the corrected coefficient and show the ratio tending to one.
+
+**Consequence for source claims:** the old negative weak-coupling sign assertion is contradicted by the corrected leading term and the new derivative remainder proof. This resolves the mathematical sign conflict in the supporting source, but the frozen source file remains unchanged. The result is local to \(J/h\to0^+\) and does not prove global \(B-C>0\).
