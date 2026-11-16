@@ -25,7 +25,6 @@ theorem entropy_derivative_bound_of_log_control
       _ ≤ 1 + (A + (m : ℝ) * |Real.log r|) := by
         simpa using add_le_add_left hlog 1
       _ = 1 + A + (m : ℝ) * |Real.log r| := by ring
-  have hpow : 0 ≤ r ^ m := by positivity
   have hfactor : 0 ≤ 1 + A + (m : ℝ) * |Real.log r| := by positivity
   calc
     |(-(1 + Real.log (f x)) * f')| =
@@ -38,8 +37,8 @@ theorem entropy_derivative_bound_of_log_control
 - f log f on a strictly positive eigenvalue branch. -/
 theorem hasDerivAt_entropy_comp_with_bound
     {f : ℝ → ℝ} {f' x r A B : ℝ} {m : ℕ}
-    (hf : HasDerivAt f f' x) (hpos : 0 < f x) (hr : 0 < r)
-    (hA : 0 ≤ A) (hB : 0 ≤ B)
+    (hf : HasDerivAt f f' x) (hpos : 0 < f x)
+    (hA : 0 ≤ A)
     (hlog : |Real.log (f x)| ≤ A + (m : ℝ) * |Real.log r|)
     (hf'bound : |f'| ≤ B * r ^ m) :
     HasDerivAt (fun t => -(f t * Real.log (f t)))
