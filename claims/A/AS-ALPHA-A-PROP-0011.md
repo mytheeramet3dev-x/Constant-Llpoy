@@ -44,3 +44,11 @@ This is a dimensional covariance claim for response eigenvalues. The underlying 
 - Overall Constant Llapoy status: CANDIDATE / NOT_VERIFIED.
 
 **Important:** Registration or transcription does not establish correctness, completeness, novelty, or Lean verification.
+
+## Independent extraction review — 2026-11-17
+
+- **Review status:** REVIEWED_WITH_MINOR_TRANSCRIPTION_BOUNDARY_FIX
+- **Source locator:** Section 5, lines 127–131 is correct.
+- **Finding:** The stored excerpt begins mid-item and omits the source prefix “3. **Scale covariance of perturbations.**”. The mathematical text is otherwise transcribed correctly, but the excerpt is not a fully contiguous verbatim passage.
+- **Disposition:** Retain CANDIDATE / NOT_ASSESSED pending a small excerpt-boundary correction. The (h^{-1}) scaling is a chain-rule consequence once the ground state is a differentiable function of (J/h); differentiability and the response-map domain remain proof obligations.
+- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
