@@ -112,10 +112,12 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 - Keep the dimensional eigenvalues distinct from the dimensionless (widetilde\chi_k).
 - Preserve the exact implication (F_J<0\Rightarrow \partial_JI_{12}<1/g), not the false implication that the response is negative.
 
-### VO-A-008 — Missing source dependencies
+### VO-A-008 — Supporting-lemma scope and source reconciliation
 
-- Locate the intended Lemma 5.1 and Lemma 5.2, or correct the source references upstream.
-- Until resolved, mark dependent claims as BLOCKED or OPEN at proof level.
+- Lemma 5.1 and Lemma 5.2 files have been located outside the six authoritative sections, but their subject/status must be reconciled with the manuscript references.
+- The located Lemma 5.1 file concerns (B-C), not the (\mathcal G_N(x)) expansion cited by Section 4.4.2; find the actual proof source for that expansion.
+- The original Lemma 5.2 negative-sign proof is superseded by its audit; do not rely on it.
+- Keep dependent claims BLOCKED or OPEN at proof level until the exact source and proof obligations are reconciled.
 - Do not synthesize missing lemmas from surrounding prose.
 
 ## 5. Circularity and dependency closure
