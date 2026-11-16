@@ -62,7 +62,8 @@ The uniform strong-coupling function and its derivative have now been derived in
 - Uniform function and derivative proof: audits/paper-a/UNIFORM_GN_STRONG_COUPLING_FUNCTION_AND_DERIVATIVE_PROOF.md.
 - General-N fourth-order small-eigenvalue derivation: audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md.
 - Exact-rational finite-N diagnostic and N=4 exception: audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md.
-- Reproducible diagnostic: working/paper-a/finite_n_strong_coupling_exact_diagnostic.py.
+- Reproducible complement-orbit diagnostic: working/paper-a/finite_n_strong_coupling_exact_diagnostic.py.
+- Independent reduced-Dicke-basis diagnostic: working/paper-a/dicke_even_basis_exact_diagnostic.py.
 - Integrated working derivation: working/paper-a/CANONICAL_STRONG_COUPLING_DERIVATION.md.
 
 The derivation establishes, for each fixed finite N >= 4,
