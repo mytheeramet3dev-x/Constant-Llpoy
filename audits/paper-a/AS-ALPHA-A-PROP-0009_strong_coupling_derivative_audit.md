@@ -178,3 +178,61 @@ The strong-coupling reconciliation also identifies unresolved derivative estimat
 5. Only after these are closed, use the derivative expansion to establish the large-(\gamma) multiplier limit on a branch whose global continuation has separately been justified.
 
 No manuscript or upstream file was modified. No claim status was upgraded.
+
+
+## 10. Follow-up derivation — uniform function and derivative now independently closed
+
+**Follow-up date:** 2026-11-17  
+**New evidence:**  
+- audits/paper-a/UNIFORM_GN_STRONG_COUPLING_FUNCTION_AND_DERIVATIVE_PROOF.md
+- audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md
+- audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md
+- working/paper-a/CANONICAL_STRONG_COUPLING_DERIVATION.md
+
+The previous audit correctly identified that the derivative asymptotic cannot be inferred from the undifferentiated function big-O term. A new derivation now supplies the missing argument directly from the finite-N Hamiltonian perturbation problem.
+
+For every fixed finite \(N\ge4\), the two-site reduced state has one exact zero singlet eigenvalue, two large eigenvalues analytic near \(1/2\), and one small analytic eigenvalue
+
+\[
+\lambda_s(\varepsilon)=c_N\varepsilon^4+O_N(\varepsilon^6),
+\qquad c_N>0,
+\]
+
+where \(c_4=1/648\) and \(c_N=1/[8(N-2)(N-1)^4]\) for \(N\ge5\). The coefficient is derived symbolically for \(N\ge9\), and the finite cases \(N=5,6,7,8\) are obtained by exact-rational recurrence. The N=4 coefficient is additionally checked by direct high-precision diagonalization.
+
+This gives both a two-sided small-eigenvalue scale bound and a derivative bound on the uniform path. Combining these with the analytic large eigenvalue branches and the one-site entropy expansion yields, independently,
+
+\[
+\mathcal G_N(x)
+=\ln2-\frac{1}{(N-1)^2x^2}
++O_N\!\left(\frac{\ln x}{x^4}\right)
+\]
+
+and
+
+\[
+\mathcal G_N'(x)
+=\frac{2}{(N-1)^2x^3}
++O_N\!\left(\frac{\ln x}{x^5}\right).
+\]
+
+Therefore the uniform endpoint limits \(\mathcal G_N(x)\to\ln2\) and \(\mathcal G_N'(x)\to0\) are now supported by an independent mathematical derivation for fixed finite \(N\ge4\). The derivative is not obtained by differentiating the bare big-O remainder.
+
+### Revised disposition
+
+| Obligation | Follow-up status |
+|---|---|
+| Derive the uniform function expansion from the Hamiltonian | **DERIVED** |
+| Derive the small-eigenvalue coefficient for fixed N >= 9 | **DERIVED** |
+| Check finite cases N=5,6,7,8 exactly | **EXACT-RATIONAL RECURRENCE** |
+| Correct the N=4 small-eigenvalue coefficient | **CORRECTED: 1/648** |
+| Derive the uniform \(x\)-derivative remainder independently | **DERIVED** |
+| Resolve the frozen manuscript's Lemma 5.1 citation mismatch | **NOT_RESOLVED IN UPSTREAM** |
+| Prove independent edge-direction derivatives \(B-C\) | **OPEN; OUTSIDE THIS CLAIM'S UNIFORM PATH** |
+| Lean verification | **NOT_RUN** |
+| Proof-to-manuscript correspondence audit | **NOT_RUN** |
+| Overall Constant Llapoy status | **PARTIALLY VERIFIED** |
+
+**Scope warning:** The new derivative is \(d\mathcal G_N/dx\) along the permutation-symmetric one-parameter path. It is not the ambient edge-direction derivative \(B-C\). No \(B-C\) theorem status is upgraded by this follow-up.
+
+No Absolute Symmetry source file was modified.
