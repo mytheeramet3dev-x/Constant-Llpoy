@@ -1,7 +1,7 @@
 # Initial Extraction Ledger
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Status:** Initial source-linked records created; full extraction and independent completeness review remain open
 
 ---
