@@ -1,8 +1,8 @@
 # Initial Extraction Ledger
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
-**Version:** 0.2.0  
-**Status:** Initial source-linked records created; full extraction and independent completeness review remain open
+**Version:** 0.3.0  
+**Status:** Paper A six-section structural scan completed for Pass 1; reconciliation edge cases and independent review remain open
 
 ---
 
@@ -12,12 +12,12 @@ The initial extraction pass has inspected the upstream Absolute Symmetry reposit
 
 | Paper | Source material inspected | Initial Constant Llapoy records | Extraction state |
 |---|---|---:|---|
-| A | Six authoritative revised sections | 7 | CANDIDATE; partial extraction |
+| A | Six authoritative revised sections, full structural scan pass 1 | 14 | CANDIDATE; structural scan complete, independent review pending |
 | D | Nine structured theorem/proposition source files | 9 | Candidate/source records; no integrated manuscript |
 | A1 | Stage A1-1 theorem statement file plus 17-entry epistemic ledger | 22 | TRANSCRIBED; independent review pending |
-| **Total** | — | **38** | **NOT COMPLETE** |
+| **Total** | — | **45** | **NOT COMPLETE** |
 
-The seven Paper A records include one definition, one conditional local theorem, and five proposition/claim records. The nine Paper D records include two theorem-source records and seven proposition/theorem-source records. The five Paper A1 records correspond to the five formal theorem statements in Stage A1-1.
+The fourteen Paper A records include one definition, two theorem candidates, and eleven proposition/claim candidates. The nine Paper D records include two theorem-source records and seven proposition/theorem-source records. The five Paper A1 records correspond to the five formal theorem statements in Stage A1-1.
 
 ## 2. Paper A extraction findings
 
@@ -47,7 +47,28 @@ Important source limitations preserved:
 - `B-C>0` is explicitly a numerically supported conjecture, not an analytic theorem.
 - The upstream Paper A claims ledger contains many additional mixed-scope entries (including project-level Lean source theorems, open proof obligations, numerical claims, retractions, and historical stages). It has not been treated as a complete manuscript claim list.
 
-**Completeness:** NOT COMPLETE. The six sections still require a full assertion-by-assertion scan, proof/dependency extraction, and independent reconciliation against the integrated manuscript and the secondary claims ledger.
+**Completeness:** STRUCTURAL SCAN COMPLETED FOR PASS 1; overall extraction review remains OPEN. A separate audit report records 14 candidates, additional sub-obligations, five structural/source issues, and reconciliation of the secondary claims ledger. Independent transcription review, appendix/supplement review, proof/dependency extraction, and resolution of open scope issues remain outstanding.
+
+
+### 2.1 Paper A full extraction audit — Pass 1
+
+Audit report: `PAPER_A_FULL_EXTRACTION_AUDIT.md`.
+
+The second Paper A pass fetched all six authoritative revised section files from the frozen upstream commit and matched their blob SHAs against the source manifest. It added seven source-linked candidate records:
+
+- `AS-ALPHA-A-THM-0002` — finite-`N`, `h>0` Perron–Frobenius ground-state nondegeneracy.
+- `AS-ALPHA-A-PROP-0006` — positive energy rescaling and dimensionless mutual-information dependence.
+- `AS-ALPHA-A-PROP-0007` — zero-coupling product state and trivial fixed point.
+- `AS-ALPHA-A-PROP-0008` — conditional subcritical exclusion.
+- `AS-ALPHA-A-PROP-0009` — strong-coupling asymptotic expansion of `G_N) and its derivative.
+- `AS-ALPHA-A-PROP-0010` — uniform-response upper bound and correction of a false sign inference.
+- `AS-ALPHA-A-PROP-0011` — scale covariance of response eigenvalues.
+
+The report also identifies unresolved cross-references to Lemma 5.1 and Lemma 5.2 in Section 4, a threshold `min`/`inf` wording clarification, ground-state nondegeneracy domain obligations, and the difference between the upstream ledger's `N>=3` endpoint-limit scope and the Section 4 asymptotic expansion's `N>=4` scope.
+
+The upstream ledger was reconciled item-by-item at the level of scope and epistemic classification. Project-level Lean-source claims and historical Stage V claims were not imported as Paper A manuscript theorems. The retracted inference `F'<0 => dI/dJ<0` remains explicitly rejected; the manuscript's correct upper bound is preserved. The sign of `B-C` remains a numerical conjecture, not a theorem.
+
+**Pass 1 result:** 14 Paper A candidate records; zero independently reviewed records; zero Constant Llapoy VERIFIED claims. The structural scan is complete for the six pinned sections, but extraction completeness is not yet certified.
 
 ## 3. Paper D extraction findings
 
@@ -86,13 +107,13 @@ The upstream README says Stage A1-1 is complete (repaired) and Stage A1-2 is pen
 ## 5. Record status and what has not been done
 
 - Initial source branches and commits: recorded.
-- Individual claim-source and source-ledger records created: 38.
-- Independent extraction review: NOT_RUN.
+- Individual claim-source and source-ledger records created: 45.
+- Independent extraction review: NOT_RUN (including Paper A Pass 1).
 - Mathematical proof re-derivation: NOT_RUN.
 - Lean formalization correspondence: NOT_RUN.
 - Axiom/TCB audit per claim: NOT_RUN.
 - Dependency closure and circularity analysis: NOT_RUN.
-- Full manuscript completeness: NOT_ESTABLISHED.
+- Paper A six-section structural scan: COMPLETED for Pass 1; overall completeness NOT_ESTABLISHED.\n- Full manuscript completeness: NOT_ESTABLISHED.
 - Any Constant Llapoy VERIFIED claim: NONE.
 
 ## 6. Next extraction operations
