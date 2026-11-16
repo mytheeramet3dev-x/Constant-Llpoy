@@ -1,0 +1,147 @@
+# Paper A Preliminary Dependency and Verification-Obligation Map
+
+- **Document ID:** CL-DEP-A-001
+- **Version:** 0.1.0
+- **Source revision:** `Absolute_Sym` / `paper-a-interval-audit-2026-11-14` / `8deb7de4a49cb2060720246b7101820ee7e08c91`
+- **Inputs:** `PAPER_A_FULL_EXTRACTION_AUDIT.md`, `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`, and 14 Paper A claim records
+- **Status:** PRELIMINARY_MAP; dependencies and proof obligations not yet independently closed
+- **Verified claims:** 0
+
+## 1. Purpose and interpretation
+
+This map records likely logical prerequisites and explicit verification obligations for Paper A. It is a planning/audit artifact, not a proof and not a claim that every listed edge is formally necessary. Edges are labelled:
+
+- **D — definitional:** a claim uses a definition or convention.
+- **L — logical:** the conclusion is derived from another claim or equation.
+- **A — analytic:** regularity, limit, perturbation, or spectral assumptions are needed.
+- **S — symmetry/representation:** group action or invariant-sector structure is needed.
+- **U — unresolved:** likely dependency or proof source is missing and must be confirmed.
+
+A dependency edge must not be treated as a proof. If a claim's proof uses an assumption not established elsewhere, that assumption remains an open obligation.
+
+## 2. Claim nodes
+
+| Node | Claim | Current extraction/review status |
+|---|---|---|
+| A-DEF-0001 | Interior critical point | Source-faithful; definition only |
+| A-PROP-0001 | Threshold infimum, interior attainment scaling, tangent minimizer relation, subcritical exclusion | Source-faithful; attainment and domain conditions remain |
+| A-PROP-0002 | Tangent constraint | Source-faithful; follows from critical-point equations |
+| A-THM-0001 | Conditional local saddle-node normal form | Reviewed with regularity/remainder issue |
+| A-PROP-0003 | Exact scalar Picard local-attractivity criterion | Source-faithful; scalar iteration only |
+| A-PROP-0004 | Root-by-root dimensionless scale independence | Source-faithful; root existence/branch selection not proved |
+| A-PROP-0005 | Edge-space representation decomposition and exact `chi_1-chi_2` identity | Source-faithful; explicit (N\ge3) domain obligation |
+| A-THM-0002 | Finite-(N), (h>0) ground-state nondegeneracy | Source proof has incorrect shift sign; conclusion not yet independently proved |
+| A-PROP-0006 | Positive energy rescaling and (I_{12}=\mathcal G_N(J/h)) | Source-faithful; requires ground-state projector uniqueness or a carefully stated spectral-subspace version |
+| A-PROP-0007 | Zero-coupling product state and trivial root | Source-faithful |
+| A-PROP-0008 | Subcritical exclusion | Duplicate/overlap of a subclaim in A-PROP-0001; preserve as trace record |
+| A-PROP-0009 | Strong-coupling expansion of (\mathcal G_N) and its derivative | Missing Lemma 5.1; derivative remainder proof unresolved; (N\ge4) context required |
+| A-PROP-0010 | Uniform-response upper bound and non-implication of response negativity | Source-faithful algebraic bound |
+| A-PROP-0011 | Scale covariance of response eigenvalues | Source excerpt boundary corrected; differentiability remains an obligation |
+
+## 3. Preliminary dependency edges
+
+| From (claim) | Depends on | Edge | Reason / open condition |
+|---|---|---|---|
+| A-PROP-0001 | A-PROP-0006 | D/A | Requires a well-defined dimensionless (\mathcal G_N(x)), positivity on the domain, and a precise domain for (x/\mathcal G_N(x)) |
+| A-DEF-0001 | Model definitions in Sections 2–3 | D | Uses (F), (f), (x), (g), (h), and (eta=g/h) |
+| A-PROP-0002 | A-DEF-0001 | L | Combines (F=0) and (F_x=0) at an interior critical point |
+| A-THM-0001 | A-DEF-0001, A-PROP-0001, A-PROP-0002 | L/A | Needs a nontrivial tangent point, (\mathcal G_N(x_c)>0), and a nondegenerate curvature condition; current (C^2) hypothesis does not justify stated cubic remainder |
+| A-PROP-0003 | Model definition of scalar Picard map (T(x)=\eta\mathcal G_N(x)) | D/L | Derives (|T'(x_*)|<1\iff -2h<F_x<0); applies only to the scalar iteration |
+| A-PROP-0004 | A-PROP-0001, A-PROP-0006 | D/L | Along (g=\gamma\alpha_Nh), the root equation is independent of (h); does not establish existence or branch uniqueness |
+| A-THM-0002 | Hamiltonian definition in Section 2.1 | A | Apply PF to (cI-H), not (H+cI); verify irreducibility and allowed coupling domain |
+| A-PROP-0006 | A-THM-0002 | A/L | Positive multiplication by (h) preserves the ground eigenspace; uniqueness is needed for a single ground-state projector |
+| A-PROP-0007 | Hamiltonian at (x=0), Section 2.4 | L | At zero coupling the ground state is the product (|+x\rangle^{\otimes N}), giving zero pairwise mutual information |
+| A-PROP-0008 | A-PROP-0001 | DUPLICATE | Same subcritical-exclusion statement; not an independent theorem |
+| A-PROP-0009 | Missing Lemma 5.1; strong-coupling spectral perturbation; entropy remainder control | U/A | Need proof of the coefficient, error order, and differentiated remainder; include (N\ge4) |
+| A-PROP-0010 | Section 5.1 definition of (F_J) | D/L | (F_J=g\,\partial_J I_{12}-1); (F_J<0\) gives only the upper bound (\partial_JI_{12}<1/g) |
+| A-PROP-0011 | A-PROP-0006 | D/A | Differentiate the dimensionless dependence with respect to each edge coupling; requires differentiability of the ground-state response map |
+| A-PROP-0005 | (S_N)-invariance of the symmetric Hamiltonian and response map | S/A | Need differentiability, orbit classification of edge pairs, and (N\ge3); algebraic eigenvalue identity is separate from the conjectural sign of (B-C) |
+
+## 4. Open verification obligations
+
+### VO-A-001 — Ground-state nondegeneracy
+
+- Re-derive the Perron–Frobenius argument for finite (N), (h>0).
+- Use (cI-H) with explicit (c); prove entrywise nonnegativity.
+- Prove irreducibility via connectedness of the single-spin-flip hypercube graph.
+- State whether the result covers all finite real (J_{ij}) or only the source's reference domain (J_{ij}\ge0).
+- Confirm the conclusion is simplicity of the lowest eigenvalue of (H).
+
+### VO-A-002 — Threshold definition and attainment
+
+- Specify the domain where (\mathcal G_N(x)>0).
+- Distinguish (inf) threshold from an attained minimizer.
+- Establish whether (\alpha_N) is finite and positive.
+- State the exact conditions under which (g_c(h)=\alpha_Nh) corresponds to an actual tangent solution rather than only an infimum threshold.
+- Keep the subcritical exclusion separate from any supercritical existence or global root-count claim.
+
+### VO-A-003 — Saddle-node regularity and curvature
+
+- Establish differentiability through the required order near (x_c).
+- Replace the unsupported cubic remainder or supply stronger regularity hypotheses.
+- Verify (\mathcal G_N''(x_c)<0) for the model if the supercritical square-root branch is claimed.
+- Distinguish local existence of two roots from global root counts and global continuation.
+- Verify the claimed (O(g-g_c)) correction order under explicit hypotheses.
+
+### VO-A-004 — Scalar iteration stability
+
+- Keep the exact multiplier (T'(x_*)) distinct from the fixed-point slope (f_x) or (F_x).
+- State that (|T'|<1) is local stability for the scalar Picard iteration only.
+- Do not infer full edge-space stability from scalar stability.
+
+### VO-A-005 — Strong-coupling asymptotics
+
+- Locate or reconstruct the missing Lemma 5.1 proof source without inventing its statement.
+- Establish the parity-even low-energy effective description and its error estimates.
+- Prove the entropy expansion for (\mathcal G_N) for the stated (N\ge4) domain.
+- Independently prove the derivative remainder estimate; do not differentiate a big-(O) term without justification.
+- Trace the asymptotic branch-limit conclusions to a valid global-continuation hypothesis.
+
+### VO-A-006 — Response representation and sector eigenvalues
+
+- State the minimum allowed (N), at least (N\ge3) for the displayed decomposition.
+- Derive the three orbit classes for pairs of edges under (S_N).
+- Derive the eigenvalues and multiplicities from the response operator.
+- Verify the uniform eigenvalue normalization against the convention for changing every edge simultaneously.
+- Keep (B-C>0) as a numerical conjecture, not a theorem.
+
+### VO-A-007 — Response scaling and sign bound
+
+- Verify differentiability of (I_{12}) with respect to all edge couplings in the domain used.
+- Derive the (h^{-1}) response scaling by the chain rule.
+- Keep the dimensional eigenvalues distinct from the dimensionless (widetilde\chi_k).
+- Preserve the exact implication (F_J<0\Rightarrow \partial_JI_{12}<1/g), not the false implication that the response is negative.
+
+### VO-A-008 — Missing source dependencies
+
+- Locate the intended Lemma 5.1 and Lemma 5.2, or correct the source references upstream.
+- Until resolved, mark dependent claims as BLOCKED or OPEN at proof level.
+- Do not synthesize missing lemmas from surrounding prose.
+
+## 5. Circularity and dependency closure
+
+No complete dependency closure or circularity analysis has been performed. The edges above are provisional and must be checked against actual proof scripts and source derivations. A claim must not be used to discharge an obligation that ultimately depends on that same claim. Any shared lemma, definition, numerical routine, or formal axiom must be tracked in the trust-boundary inventory.
+
+## 6. Explicit non-claims
+
+This map does **not** establish:
+
+- exactly two global nontrivial roots for every supercritical parameter;
+- global continuation of the selected upper branch;
+- model-specific negative curvature at the threshold;
+- positivity of (B-C) for all (N) and all parameters;
+- full edge-space dynamical stability from scalar Picard stability;
+- the missing Lemmas 5.1 and 5.2;
+- correctness of any proof merely because a source claim is indexed.
+
+## 7. Next actions
+
+1. Resolve A-REVIEW-001 and A-REVIEW-002 with the source authors or a separate derivation; do not edit the frozen upstream revision silently.
+2. Obtain the missing Lemma 5.1 / 5.2 proof sources.
+3. Verify the exact hypotheses and source context for A-PROP-0009 and A-PROP-0005.
+4. Produce a formal dependency graph only after the provisional edges are independently confirmed.
+5. Create claim-specific verification-obligation records and then select exact proof tools; tool selection must follow the obligations, not precede them.
+
+---
+
+**End of preliminary Paper A dependency and verification-obligation map.**
