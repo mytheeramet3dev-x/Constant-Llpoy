@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.4.3  
+**Version:** 0.4.4  
 **Status:** 46 source-linked records indexed; Paper A independent extraction review completed with issues; one Paper A claim partially verified; formal verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
@@ -64,7 +64,7 @@ The canonical source pins and file digests are maintained in `MANUSCRIPT_SOURCE_
 
 ## 6. Claim index
 
-The registry now contains 46 source-linked records (29 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 15 source-linked records: 14 initial candidates plus one SOURCE_CONFLICT record (PROP-0012) extracted from Section 4.4.3 after supporting-source reconciliation. All 15 have undergone extraction review; one record (PROP-0008) duplicates a subclaim in PROP-0001. No record has been mathematically verified.
+The registry now contains 46 source-linked records (29 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 15 source-linked records: 14 initial candidates plus one SOURCE_CONFLICT record (PROP-0012) extracted from Section 4.4.3 after supporting-source reconciliation. All 15 have undergone extraction review; one record (PROP-0008) duplicates a subclaim in PROP-0001. PROP-0009 is partially verified; PROP-0012 remains a source conflict and is contradicted in the weak-coupling endpoint by an independent Constant Llapoy derivation. No claim is fully verified.
 
 ### Paper A — 15 records; extraction review completed with issues
 
@@ -242,13 +242,14 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 | 0.4.1 | Added preliminary Paper A dependency and verification-obligation map | Paper A | Edges provisional; proof review open |
 | 0.4.2 | Added source-conflict claim PROP-0012 and supporting-source inventory | Paper A | Extraction review complete with issues; proof review open |
 | 0.4.3 | Added independent uniform strong-coupling function and derivative derivation; recorded N=4 coefficient correction; PROP-0009 partially verified pending Lean/correspondence | Paper A | Uniform asymptotic derivation complete; formalization and correspondence remain open |
+| 0.4.4 | Added general-edge strong-coupling B-C derivation; corrected weak-coupling B-C derivative proof and entropy zero-branch lemma; PROP-0012 source assertion contradicted locally | Paper A | Both endpoint asymptotics internally reviewed; Lean and manuscript correspondence remain open |
 
 ## 11. Current truth statement
 
-At version 0.4.3:
+At version 0.4.4:
 
 - Source-linked claim records: **46** (29 formal/proposition/definition records and 17 A1 ledger records).
-- Paper A: **15** records (14 initial candidates and one SOURCE_CONFLICT record); all extraction-reviewed; PROP-0009 is **PARTIALLY VERIFIED**; no Paper A claim is fully verified.
+- Paper A: **15** records (14 initial candidates and one SOURCE_CONFLICT record); all extraction-reviewed; PROP-0009 is **PARTIALLY VERIFIED**; PROP-0012 is contradicted in the weak-coupling endpoint by an internal analytic derivation but remains SOURCE_CONFLICT pending formalization; no Paper A claim is fully verified.
 - Paper A six-section structural scan: **COMPLETED for Pass 1**.
 - Paper A independent extraction review: **COMPLETED WITH ISSUES (15/15 records)**; one duplicate and one source conflict identified; no proof verified.
 - Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
@@ -270,4 +271,4 @@ A record's presence is not evidence of correctness. Do not promote a claim to RE
 ---
 
 **End of document.**  
-**Status:** Source-linked records populated; independent extraction review complete for Paper A; one claim partially verified; formal proof and correspondence audits remain open.
+**Status:** Source-linked records populated; independent extraction review complete for Paper A; one claim partially verified; one source-conflict assertion contradicted locally; formal proof and correspondence audits remain open.
