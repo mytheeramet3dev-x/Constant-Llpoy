@@ -1,7 +1,7 @@
 # Manuscript Source Manifest
 **Project:** Constant Llapoy  
 **Document ID:** CL-MSM-001  
-**Version:** 0.2.1  
+**Version:** 0.2.2  
 **Status:** Core source revisions frozen; supplementary and supporting proof-source inventory added; mathematical verification not established
 
 ---
