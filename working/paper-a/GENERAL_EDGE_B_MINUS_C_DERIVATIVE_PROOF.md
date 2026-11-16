@@ -60,7 +60,7 @@ The global parity symmetry implies that every one-site reduced state has the for
 \[
 \rho_i=\frac12(I+m_i\sigma_i^x),
 \qquad
-m_i=b_i+O_N(\varepsilon^3).
+m_i=2b_i+O_N(\varepsilon^3).
 \]
 
 Thus
