@@ -73,7 +73,7 @@ This identity is exact at the symmetric point and does not require a numerical a
 
 Contains the representation decomposition, response-sector eigenvalues, and exact identity. The source explicitly treats the sign of B-C as a strong numerically supported conjecture, not a theorem. Only the algebraic identity and stated decomposition are registered here as candidate claims.
 
-- Independent extraction review: NOT_RUN.
+- Independent extraction review: COMPLETED (see `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`).
 - Mathematical proof review: NOT_RUN.
 - Overall status: NOT_VERIFIED.
 
