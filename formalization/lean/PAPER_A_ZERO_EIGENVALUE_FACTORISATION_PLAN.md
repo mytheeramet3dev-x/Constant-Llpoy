@@ -2,7 +2,7 @@
 
 **Repository:** Constant Llapoy  
 **Scope:** Paper A only  
-**Status:** Mathematical proof obligations specified; not yet formalized as a complete Lean theorem.
+**Status:** Mathematical proof obligations specified; partial Lean lemmas compile. Latest pinned CI (run 43979057358, commit `af6e2eb9515d50801f47dadde7e2ee06a0bd1715`) passed the full Lake build and axiom audit. The factorisation theorem itself remains open.
 
 ## 1. Target statement
 
@@ -34,11 +34,11 @@ for a constant C0 on the selected neighborhood. Combining it with
     |partial_u[-lambda log lambda]|
       <= C1 r^m(1 + |log r|).
 
-The Lean module ZeroEigenvalueEntropy.lean currently formalizes only the final algebraic implication from explicit logarithmic-control and derivative-bound hypotheses. It does not derive these hypotheses from analyticity.
+The Lean module ZeroEigenvalueEntropy.lean currently formalizes the chain rule and final algebraic implication from explicit logarithmic-control and derivative-bound hypotheses. It does not derive these hypotheses from analyticity. The module compiles under the pinned toolchain; the successful axiom audit is a declaration-level audit, not a second proof checker.
 
 ## 3. Why the zero branch needs a separate argument
 
-If lambda(0,u0)=0 and lambda >= 0 on a two-sided neighborhood, Fermat's theorem gives partial_r lambda(0,u0)=0. The Lean declaration hasDerivAt_nonnegative_branch_eq_zero formalizes this first-derivative fact.
+If lambda(0,u0)=0 and lambda >= 0 on a two-sided neighborhood, Fermat's theorem gives partial_r lambda(0,u0)=0. The Lean declaration `hasDerivAt_local_min_branch_eq_zero` formalizes Fermat's theorem under an explicit `IsLocalMin` hypothesis. The conversion from two-sided nonnegativity plus `lambda(0,u0)=0` to `IsLocalMin` is not yet formalized.
 
 That fact alone is insufficient to differentiate -lambda log lambda at the zero branch. A differentiable nonnegative function can vanish to a rate that is too slow for the product with its logarithm to have the desired derivative. The analytic finite-order factorisation (or a stronger explicit modulus estimate) is required.
 
@@ -57,12 +57,12 @@ No uniform-in-u, uniform-in-N, or global-in-coupling conclusion may be inferred 
 
 The planned proof is split into independently reviewable obligations:
 
-- **ZF-1:** formalize the local power-series coefficient representation for the real-analytic branch.
+- **ZF-1:** formalize the local power-series coefficient representation for the real-analytic branch. This is the next mathematical formalization target; do not assume a fixed order m without proving or explicitly stratifying it.
 - **ZF-2:** prove the first nonzero order is even at a two-sided nonnegative zero.
 - **ZF-3:** factor r^m and prove continuity/analyticity of the quotient g.
 - **ZF-4:** establish compact-neighborhood lower and upper bounds for g.
 - **ZF-5:** establish the differentiated coefficient bound for partial_u g.
-- **ZF-6:** derive the two-sided logarithmic control for lambda.
+- **ZF-6:** derive the two-sided logarithmic control for lambda from the proved lower/upper factorisation bounds; do not assume the log-control bound independently in the final application.
 - **ZF-7:** discharge the hypotheses of entropy_derivative_bound_of_log_control.
 - **ZF-8:** treat the identically-zero branch separately and prove the entropy contribution is identically zero there.
 - **ZF-9:** verify the resulting estimates match the exact eigenvalue branches and edge derivative in the frozen Paper A manuscript.
