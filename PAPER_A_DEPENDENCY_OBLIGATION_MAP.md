@@ -1,7 +1,7 @@
 # Paper A Preliminary Dependency and Verification-Obligation Map
 
 - **Document ID:** CL-DEP-A-001
-- **Version:** 0.2.0
+- **Version:** 0.2.1
 - **Source revision:** `Absolute_Sym` / `paper-a-interval-audit-2026-11-14` / `8deb7de4a49cb2060720246b7101820ee7e08c91`
 - **Inputs:** `PAPER_A_FULL_EXTRACTION_AUDIT.md`, `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`, 15 Paper A claim records, and the 2026-11-17 strong-coupling follow-up audits
 - **Status:** PRELIMINARY_MAP; dependencies and proof obligations not yet independently closed
