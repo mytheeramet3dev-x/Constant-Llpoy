@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.4.2  
+**Version:** 0.4.3  
 **Status:** 45 source-linked records indexed; Paper A independent extraction review completed with issues; mathematical verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
@@ -81,7 +81,7 @@ The registry now contains 46 source-linked records (29 theorem/proposition/defin
 | AS-ALPHA-A-PROP-0006 | §2.3 positive energy rescaling / dimensionless mutual information | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0006.md) |
 | AS-ALPHA-A-PROP-0007 | §2.4 zero-coupling product state and trivial root | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0007.md) |
 | AS-ALPHA-A-PROP-0008 | §2.5 subcritical exclusion | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0008.md) |
-| AS-ALPHA-A-PROP-0009 | §4.4.2 strong-coupling asymptotic expansion | Proposition candidate | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0009.md) |
+| AS-ALPHA-A-PROP-0009 | §4.4.2 strong-coupling asymptotic expansion | Proposition candidate | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | PARTIALLY VERIFIED | [Record](claims/A/AS-ALPHA-A-PROP-0009.md) |
 | AS-ALPHA-A-PROP-0010 | §5.1 uniform-response upper bound and non-implication | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0010.md) |
 | AS-ALPHA-A-PROP-0011 | §5.4 response-eigenvalue scale covariance | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0011.md) |
 | AS-ALPHA-A-PROP-0012 | §4.4.3 weak-coupling opposite-sign response assertion | Source-conflict claim | `Arxiv/paper_01_section_04_revised.md` | SOURCE_CONFLICT | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0012.md) |
@@ -240,7 +240,7 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 | 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records | Paper A | Independent review pending |
 | 0.4.0 | Completed independent extraction review of the initial 14 Paper A records; recorded source proof issues and one duplicate | Paper A | Review complete with issues; proof review open |
 | 0.4.1 | Added preliminary Paper A dependency and verification-obligation map | Paper A | Edges provisional; proof review open |
-| 0.4.2 | Added source-conflict claim PROP-0012 and supporting-source inventory | Paper A | Extraction review complete with issues; proof review open |
+| 0.4.3 | Added independent uniform strong-coupling function and derivative derivation; recorded N=4 coefficient correction; PROP-0009 partially verified pending Lean/correspondence | Paper A | Uniform asymptotic derivation complete; formalization and correspondence remain open |
 
 ## 11. Current truth statement
 
