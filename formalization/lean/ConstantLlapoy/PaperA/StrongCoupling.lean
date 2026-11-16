@@ -3,7 +3,7 @@ import ConstantLlapoy.PaperA.WeakCoupling
 namespace ConstantLlapoy.PaperA
 
 /-- Leading coefficient in the fixed-N strong-coupling asymptotic for B - C. -/
-def strongCouplingCoefficient (N : ℕ) : ℝ :=
+noncomputable def strongCouplingCoefficient (N : ℕ) : ℝ :=
   1 / ((N : ℝ) - 1) ^ 3
 
 /-- The strong-coupling leading coefficient is positive for every N ≥ 4. -/
