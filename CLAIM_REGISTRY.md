@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.4.1  
+**Version:** 0.4.2  
 **Status:** 45 source-linked records indexed; Paper A independent extraction review completed with issues; mathematical verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
@@ -64,9 +64,9 @@ The canonical source pins and file digests are maintained in `MANUSCRIPT_SOURCE_
 
 ## 6. Claim index
 
-The registry now contains 45 source-linked records (28 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 14 candidate records from the six-section structural scan; all 14 have undergone independent extraction review, with issues recorded. One record (PROP-0008) is a duplicate of a subclaim in PROP-0001. No record has been mathematically verified.
+The registry now contains 46 source-linked records (29 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 15 source-linked records: 14 initial candidates plus one SOURCE_CONFLICT record (PROP-0012) extracted from Section 4.4.3 after supporting-source reconciliation. All 15 have undergone extraction review; one record (PROP-0008) duplicates a subclaim in PROP-0001. No record has been mathematically verified.
 
-### Paper A — 14 candidate records; extraction review completed with issues
+### Paper A — 15 records; extraction review completed with issues
 
 | Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
 |---|---|---|---|---|---|---|
@@ -85,6 +85,7 @@ The registry now contains 45 source-linked records (28 theorem/proposition/defin
 | AS-ALPHA-A-PROP-0009 | §4.4.2 strong-coupling asymptotic expansion | Proposition candidate | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0009.md) |
 | AS-ALPHA-A-PROP-0010 | §5.1 uniform-response upper bound and non-implication | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0010.md) |
 | AS-ALPHA-A-PROP-0011 | §5.4 response-eigenvalue scale covariance | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0011.md) |
+| AS-ALPHA-A-PROP-0012 | §4.4.3 weak-coupling opposite-sign response assertion | Source-conflict claim | `Arxiv/paper_01_section_04_revised.md` | SOURCE_CONFLICT | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0012.md) |
 
 ### Paper D — structured source records, not a final-manuscript extraction
 
@@ -237,16 +238,16 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 |---|---|---|---|
 | 0.1.0 | Initial registry schema | Registry architecture | Pending |
 | 0.2.0 | Initial source-linked extraction; 38 records | Paper A, D, A1 | Independent review pending |
-| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |\n| 0.4.1 | Added preliminary Paper A dependency and verification-obligation map; all edges explicitly provisional | Paper A | Dependency closure and proof verification open |
+| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |\n| 0.4.1 | Added preliminary Paper A dependency and verification-obligation map; all edges explicitly provisional | Paper A | Dependency closure and proof verification open |\n| 0.4.2 | Added one source-conflict claim from Section 4.4.3; inventoried supplementary/supporting proof files; reconciled Lemma 5.1/5.2 scope and statuses | Paper A | Extraction review complete with issues; proof verification open |
 
 ## 11. Current truth statement
 
-At version 0.4.1:
+At version 0.4.2:
 
-- Source-linked claim records: **45** (28 formal/proposition/definition records and 17 A1 ledger records).
-- Paper A: **14** candidates; all CANDIDATE / NOT_ASSESSED.
+- Source-linked claim records: **46** (29 formal/proposition/definition records and 17 A1 ledger records).
+- Paper A: **15** records (14 initial candidates and one SOURCE_CONFLICT record); all extraction-reviewed, none mathematically verified.
 - Paper A six-section structural scan: **COMPLETED for Pass 1**.
-- Paper A independent extraction review: **COMPLETED WITH ISSUES (14/14 records)**; one duplicate record identified; no proof verified.
+- Paper A independent extraction review: **COMPLETED WITH ISSUES (15/15 records)**; one duplicate and one source conflict identified; no proof verified.
 - Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
 - Paper A1 extraction: **PARTIAL**, limited to Stage A1-1.
 - Constant Llapoy VERIFIED claims: **0**.
@@ -256,7 +257,7 @@ A record's presence is not evidence of correctness. Do not promote a claim to RE
 
 ## 12. Governing documents
 
-- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`\n- `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`
+- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`\n- `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`\n- `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`
 - `VERIFICATION_OBLIGATION_MATRIX.md`
 - `ARCHITECTURE_CHARTER.md`
 - `THREAT_MODEL.md`
