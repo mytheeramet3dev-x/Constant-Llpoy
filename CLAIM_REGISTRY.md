@@ -3,7 +3,7 @@
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
 **Version:** 0.1.0  
-**Status:** Empty registry template; no mathematical claims have yet been registered  
+**Status:** Populated with initial source-linked records; completeness and verification remain open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
 ---
@@ -66,11 +66,43 @@ These rows are intake placeholders only. They do not establish official titles, 
 
 ## 6. Claim index
 
-No claim records have been registered at version 0.1.0. The table below is intentionally empty until authoritative manuscript sources are designated and extracted.
+The registry now contains 21 initial source-linked records. Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
 
-| Claim ID | Paper | Original label | Claim type | Claim version | Source locator | Extraction status | Verification status | Record path |
-|---|---|---|---|---|---|---|---|---|
-| — | — | — | — | — | — | — | — | — |
+### Paper A — partial candidate extraction
+
+| Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
+|---|---|---|---|---|---|---|
+| AS-ALPHA-A-PROP-0001 | §2.5 threshold scaling | Proposition/claim | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0001.md) |
+| AS-ALPHA-A-DEF-0001 | Definition 1 | Definition | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-DEF-0001.md) |
+| AS-ALPHA-A-PROP-0002 | Proposition 1 | Proposition | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0002.md) |
+| AS-ALPHA-A-THM-0001 | §3.2 local normal form | Conditional theorem | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-THM-0001.md) |
+| AS-ALPHA-A-PROP-0003 | §3.3 Picard criterion | Proposition/claim | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0003.md) |
+| AS-ALPHA-A-PROP-0004 | §4.2 scale independence | Proposition/claim | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0004.md) |
+| AS-ALPHA-A-PROP-0005 | §5.2 response-sector identity | Proposition/claim | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0005.md) |
+
+### Paper D — structured source records, not a final-manuscript extraction
+
+| Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
+|---|---|---|---|---|---|---|
+| AS-ALPHA-D-THM-0001 | Theorem 1 | Theorem | `papers/paper-d/02-theorems/theorem_1_quadratic_spectral_zero.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-THM-0001.md) |
+| AS-ALPHA-D-THM-0002 | Candidate Theorem 2 | Candidate theorem | `papers/paper-d/02-theorems/theorem_2_coupling_space_singularity.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-THM-0002.md) |
+| AS-ALPHA-D-THM-0003 | Internal heading: Theorem | Theorem (filename says proposition) | `papers/paper-d/02-theorems/proposition_global_regular_zero_hypersurface.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-THM-0003.md) |
+| AS-ALPHA-D-PROP-0001 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_entropy_regularity_hierarchy.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0001.md) |
+| AS-ALPHA-D-PROP-0002 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_even_field_parity_spectrum.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0002.md) |
+| AS-ALPHA-D-PROP-0003 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_pminus_zero_set_path_connected.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0003.md) |
+| AS-ALPHA-D-PROP-0004 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_pplus_strict_positivity.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0004.md) |
+| AS-ALPHA-D-PROP-0005 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_swap_symmetry_exact_zero.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0005.md) |
+| AS-ALPHA-D-PROP-0006 | Proposition | Proposition | `papers/paper-d/02-theorems/proposition_symmetry_breaking_even_eigenvalue.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/D/AS-ALPHA-D-PROP-0006.md) |
+
+### Paper A1 — Stage A1-1 formal theorem statements
+
+| Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
+|---|---|---|---|---|---|---|
+| AS-ALPHA-A1-THM-0001 | Theorem 1 / OP-2 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0001.md) |
+| AS-ALPHA-A1-THM-0002 | Theorem 2 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0002.md) |
+| AS-ALPHA-A1-THM-0003 | Theorem 3 / OP-3 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0003.md) |
+| AS-ALPHA-A1-THM-0004 | Theorem 4 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0004.md) |
+| AS-ALPHA-A1-THM-0005 | Theorem 5 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0005.md) |
 
 ## 7. Canonical claim record template
 
@@ -186,11 +218,11 @@ At version 0.1.0:
 - Mathematical proof verification: **NOT ESTABLISHED**.
 - Lean/Python/Rust/CAS/SMT evidence: **NOT ASSERTED**.
 
-The next valid operation is to designate the authoritative manuscript sources, freeze their revisions, and execute the Manuscript Extraction Protocol. Do not populate this registry with guessed theorem statements or placeholder IDs presented as real claims.
+The next valid operation is to complete assertion-by-assertion extraction, reconcile the upstream ledgers, and obtain independent extraction review. Do not upgrade any record to REGISTERED or VERIFIED solely because it has been transcribed.
 
 ## 12. Governing documents
 
-- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`
+- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`
 - `VERIFICATION_OBLIGATION_MATRIX.md`
 - `ARCHITECTURE_CHARTER.md`
 - `THREAT_MODEL.md`
