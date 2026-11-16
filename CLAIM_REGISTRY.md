@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.4.0  
+**Version:** 0.4.1  
 **Status:** 45 source-linked records indexed; Paper A independent extraction review completed with issues; mathematical verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
@@ -241,7 +241,7 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 
 ## 11. Current truth statement
 
-At version 0.4.0:
+At version 0.4.1:
 
 - Source-linked claim records: **45** (28 formal/proposition/definition records and 17 A1 ledger records).
 - Paper A: **14** candidates; all CANDIDATE / NOT_ASSESSED.
