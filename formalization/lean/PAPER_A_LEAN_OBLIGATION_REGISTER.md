@@ -2,15 +2,16 @@
 
 **Project:** Constant Llapoy  
 **Scope:** Paper A only  
-**Current module:** ConstantLlapoy/PaperA/WeakCoupling.lean  
+**Current modules:** ConstantLlapoy/PaperA/WeakCoupling.lean; StrongCoupling.lean; ZeroEigenvalueEntropy.lean  
 **Toolchain:** Lean 4.36.0; Mathlib commit 96f6b8b8e029545577421f198a89fb174a4d62e6  
-**Current evidence state:** Initial CI submitted; no successful build has yet been recorded.
+**Latest CI evidence:** Run 43979057358, commit `af6e2eb9515d50801f47dadde7e2ee06a0bd1715`; full Lake build succeeded and axiom-audit checked 13 declarations against the allowlist. `lake test` and `lake lint` were skipped because `lake check-test` and `lake check-lint` failed configuration checks; they are not recorded as passing.
 
 ## Status vocabulary
 
 - **SOURCE_SPECIFIED:** mathematical obligation and source evidence are identified.
 - **FORMALIZED_UNBUILT:** Lean declaration exists but has not passed a pinned build.
 - **BUILD_VERIFIED:** pinned Lean build passed; this is not by itself manuscript correspondence.
+- **AXIOM_AUDITED:** declaration was included in a successful axiom-audit run and its axioms were within the configured allowlist; this is not an independent proof checker.
 - **INDEPENDENTLY_CHECKED:** a second checker or independent proof route has checked the declaration.
 - **OPEN:** no complete formalization yet.
 - **BLOCKED:** a specific obstacle is recorded.
@@ -19,10 +20,10 @@
 
 | ID | Mathematical obligation | Current state | Evidence / next requirement |
 |---|---|---|---|
-| PA-LEAN-001 | Positivity of alpha_N = log(2(N-2)/(N-1))/8 for N >= 4 | FORMALIZED_UNBUILT | WeakCoupling.lean; obtain successful pinned build |
-| PA-LEAN-002 | Positive leading term plus an explicit half-leading-term remainder bound implies positive total | FORMALIZED_UNBUILT | WeakCoupling.lean; obtain successful pinned build |
-| PA-LEAN-003 | Weak-coupling endpoint sign conditional on the explicit remainder bound | FORMALIZED_UNBUILT | WeakCoupling.lean; does not prove the remainder bound itself |
-| PA-LEAN-004 | Chain rule for the entropy contribution -f log f when f(x)>0 | FORMALIZED_UNBUILT | WeakCoupling.lean; obtain successful pinned build |
+| PA-LEAN-001 | Positivity of alpha_N = log(2(N-2)/(N-1))/8 for N >= 4 | BUILD_VERIFIED; AXIOM_AUDITED | WeakCoupling.lean; obtain successful pinned build |
+| PA-LEAN-002 | Positive leading term plus an explicit half-leading-term remainder bound implies positive total | BUILD_VERIFIED; AXIOM_AUDITED | WeakCoupling.lean; obtain successful pinned build |
+| PA-LEAN-003 | Weak-coupling endpoint sign conditional on the explicit remainder bound | BUILD_VERIFIED; AXIOM_AUDITED | WeakCoupling.lean; does not prove the remainder bound itself |
+| PA-LEAN-004 | Chain rule for the entropy contribution -f log f when f(x)>0 | BUILD_VERIFIED; AXIOM_AUDITED | WeakCoupling.lean; obtain successful pinned build |
 | PA-LEAN-005 | Analytic factorization/order of vanishing for a nonnegative eigenvalue branch at a zero | OPEN | Formalize joint analyticity, nonnegativity on a two-sided parameter neighborhood, and the first nonzero Taylor coefficient |
 | PA-LEAN-006 | Directional derivative of -lambda log(lambda) at a rank-changing zero branch | OPEN | Positive-branch bound is now separated as PA-LEAN-016; still need analytic order-of-vanishing at the zero branch and a rigorous entropy derivative limit |
 | PA-LEAN-007 | One-site reduced-state eigenvalue expansion and all required edge derivatives | OPEN | Formalize perturbation expansion with explicit quantified remainder |
@@ -31,16 +32,16 @@
 | PA-LEAN-010 | Pair-entropy remainder derivative, including the large eigenvalue correction | OPEN | Derive from the complete eigenvalue expansions |
 | PA-LEAN-011 | Differentiated weak-coupling remainder O_N(r^3(1+|log r|)) in dimensionless edge coordinates | OPEN | This is the key bridge from formalized local expansions to the endpoint sign |
 | PA-LEAN-012 | Existence of a sufficiently small coupling threshold from the asymptotic remainder | OPEN | Prove the relevant limit/bound; no threshold is currently formalized |
-| PA-LEAN-013 | Positivity of the strong-coupling leading coefficient and conditional sign step | FORMALIZED_UNBUILT | StrongCoupling.lean; obtain successful pinned build |
+| PA-LEAN-013 | Positivity of the strong-coupling leading coefficient and conditional sign step | BUILD_VERIFIED; AXIOM_AUDITED | StrongCoupling.lean; obtain successful pinned build |
 | PA-LEAN-015 | Strong-coupling differentiated remainder and endpoint threshold | OPEN | Prove the model-specific differentiated asymptotic and derive an explicit eventual bound |
-| PA-LEAN-016 | Positive-branch entropy derivative bound under explicit logarithmic control and derivative bound | FORMALIZED_UNBUILT | ZeroEigenvalueEntropy.lean; assumptions must be derived from two-sided eigenvalue factorization and differentiated perturbation estimates |
-| PA-LEAN-017 | First derivative of a nonnegative eigenvalue branch vanishing at an interior point is zero | FORMALIZED_UNBUILT | ZeroEigenvalueEntropy.lean; Fermat local-minimum argument. This does not establish differentiability of -lambda log(lambda) at the zero branch |
+| PA-LEAN-016 | Positive-branch entropy derivative bound under explicit logarithmic control and derivative bound | BUILD_VERIFIED; AXIOM_AUDITED | ZeroEigenvalueEntropy.lean; assumptions must be derived from two-sided eigenvalue factorization and differentiated perturbation estimates |
+| PA-LEAN-017 | A differentiable function at a local minimum has zero derivative | BUILD_VERIFIED; AXIOM_AUDITED | `hasDerivAt_local_min_branch_eq_zero` in ZeroEigenvalueEntropy.lean. The separate conversion from two-sided nonnegativity plus f(x)=0 to `IsLocalMin` is not yet formalized; therefore the original nonnegative-branch obligation remains only partially discharged. This does not establish differentiability of -lambda log(lambda) at the zero branch |
 | PA-LEAN-014 | Exact correspondence between Lean declarations and frozen Paper A manuscript statements | OPEN | Line-level statement and hypothesis mapping, including known source conflicts |
 
 ## Critical logical boundary
 
-The declarations PA-LEAN-001 through PA-LEAN-004 and PA-LEAN-016 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate. PA-LEAN-016 is only an algebraic entropy-derivative estimate under explicit hypotheses; it does not prove those hypotheses. PA-LEAN-017 proves only that the eigenvalue branch has zero first derivative at an interior zero. It does not prove that -lambda log(lambda) is differentiable there. For that, a higher-order analytic order-of-vanishing estimate is still required.
+The declarations PA-LEAN-001 through PA-LEAN-004 and PA-LEAN-016 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate. PA-LEAN-016 is only an algebraic entropy-derivative estimate under explicit hypotheses; it does not prove those hypotheses. PA-LEAN-017 now formalizes Fermat's theorem for a supplied local-minimum hypothesis. The implication from two-sided nonnegativity and a zero value to that local-minimum hypothesis remains an open Lean bridge. It does not prove that -lambda log(lambda) is differentiable at the zero branch. For that, a higher-order analytic order-of-vanishing estimate is still required.
 
-Likewise, a successful lake build checks only that Lean accepts the declarations under the pinned environment. It does not prove that the formal declarations match the manuscript, nor does it validate any unformalized perturbation expansion.
+CI run 43979057358 completed the pinned Lake build and the configured axiom audit successfully. The audit reported 13 declarations, all using only the configured allowlist. The workflow did not execute `lake test` or `lake lint`, because their preliminary `lake check-test` and `lake check-lint` checks failed. A successful Lake build checks only that Lean accepts the declarations under the pinned environment. It does not prove that the formal declarations match the manuscript, nor does it validate any unformalized perturbation expansion.
 
 No theorem status in CLAIM_REGISTRY.md is upgraded by the existence of these initial Lean source files.
