@@ -54,15 +54,13 @@ A claim may be REGISTERED for extraction while its verification status remains U
 
 ## 5. Manuscript source manifest
 
-One source manifest MUST be maintained per manuscript revision.
+The canonical source pins and file digests are maintained in `MANUSCRIPT_SOURCE_MANIFEST.md`. The registry MUST NOT duplicate stale intake placeholders in place of that manifest.
 
-| Paper ID | Official title | Canonical source path | Commit/tag | Source digest(s) | PDF digest | Authority confirmed by | Status |
-|---|---|---|---|---|---|---|---|
-| A | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | SOURCE_NOT_LOCATED |
-| D | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | SOURCE_NOT_LOCATED |
-| A1 | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | UNKNOWN | SOURCE_NOT_LOCATED |
-
-These rows are intake placeholders only. They do not establish official titles, source availability, or paper status.
+| Paper ID | Frozen source | Current scope | Manifest |
+|---|---|---|---|
+| A | `Absolute_Sym` / `paper-a-interval-audit-2026-11-14` / `8deb7de4a49cb2060720246b7101820ee7e08c91` | Six revised sections are authoritative for this extraction pass | [Source manifest](MANUSCRIPT_SOURCE_MANIFEST.md) |
+| D | `Absolute_Sym` / `paper-d-singularity` / `2678e3f581d707ac57e8a72d3f961fadbba29ade` | Nine structured theorem sources only; integrated manuscript not consolidated | [Source manifest](MANUSCRIPT_SOURCE_MANIFEST.md) |
+| A1 | `Absolute_Sym` / `stage-a1-1-repair-review` / `b95f5777dfadaf5d31eef27d813ea56c33540d1c` | Stage A1-1 theorem statements and ledger only | [Source manifest](MANUSCRIPT_SOURCE_MANIFEST.md) |
 
 ## 6. Claim index
 
@@ -235,22 +233,26 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 
 ## 10. Change log
 
-| Registry version | Date | Change | Affected Claim IDs | Reviewer |
-|---|---|---|---|---|
-| 0.1.0 | Initial creation | Empty registry schema established | None | Pending |\n| 0.2.0 | Initial source extraction | Added 38 source-linked records across A, D, and A1 | A/D/A1 | Pending independent review |\n| 0.3.0 | Paper A full extraction pass 1 | Added seven Paper A candidates; indexed 45 records; updated completeness/status truth statements | Paper A | Pending independent review |
+| Registry version | Change | Affected scope | Review state |
+|---|---|---|---|
+| 0.1.0 | Initial registry schema | Registry architecture | Pending |
+| 0.2.0 | Initial source-linked extraction; 38 records | Paper A, D, A1 | Independent review pending |
+| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |
 
 ## 11. Current truth statement
 
 At version 0.3.0:
-- Registered mathematical claims: **0 in this registry**.
-- This count means no claim records have yet been entered here; it does not mean the papers contain zero claims.
-- Manuscript source revisions: **UNKNOWN**.
-- Extraction completeness: **NOT_STARTED**.
-- Independent extraction review: **NOT_STARTED**.
-- Mathematical proof verification: **NOT ESTABLISHED**.
-- Lean/Python/Rust/CAS/SMT evidence: **NOT ASSERTED**.
 
-The next valid operation is to complete assertion-by-assertion extraction, reconcile the upstream ledgers, and obtain independent extraction review. Do not upgrade any record to REGISTERED or VERIFIED solely because it has been transcribed.
+- Source-linked claim records: **45** (28 formal/proposition/definition records and 17 A1 ledger records).
+- Paper A: **14** candidates; all CANDIDATE / NOT_ASSESSED.
+- Paper A six-section structural scan: **COMPLETED for Pass 1**.
+- Paper A independent extraction review: **NOT_RUN**.
+- Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
+- Paper A1 extraction: **PARTIAL**, limited to Stage A1-1.
+- Constant Llapoy VERIFIED claims: **0**.
+- Proof re-derivation, Lean correspondence, axiom/TCB audit, dependency closure, and circularity analysis: **NOT_RUN / NOT_ESTABLISHED**.
+
+A record's presence is not evidence of correctness. Do not promote a claim to REGISTERED or VERIFIED solely because it has been transcribed.
 
 ## 12. Governing documents
 
@@ -264,4 +266,4 @@ The next valid operation is to complete assertion-by-assertion extraction, recon
 ---
 
 **End of document.**  
-**Status:** Registry schema committed; actual claim records await authoritative manuscript sources.
+**Status:** Source-linked records populated; independent extraction review and mathematical verification remain open.
