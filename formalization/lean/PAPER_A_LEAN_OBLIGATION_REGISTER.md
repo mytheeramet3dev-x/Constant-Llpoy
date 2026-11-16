@@ -34,11 +34,12 @@
 | PA-LEAN-013 | Positivity of the strong-coupling leading coefficient and conditional sign step | FORMALIZED_UNBUILT | StrongCoupling.lean; obtain successful pinned build |
 | PA-LEAN-015 | Strong-coupling differentiated remainder and endpoint threshold | OPEN | Prove the model-specific differentiated asymptotic and derive an explicit eventual bound |
 | PA-LEAN-016 | Positive-branch entropy derivative bound under explicit logarithmic control and derivative bound | FORMALIZED_UNBUILT | ZeroEigenvalueEntropy.lean; assumptions must be derived from two-sided eigenvalue factorization and differentiated perturbation estimates |
+| PA-LEAN-017 | First derivative of a nonnegative eigenvalue branch vanishing at an interior point is zero | FORMALIZED_UNBUILT | ZeroEigenvalueEntropy.lean; Fermat local-minimum argument. This does not establish differentiability of -lambda log(lambda) at the zero branch |
 | PA-LEAN-014 | Exact correspondence between Lean declarations and frozen Paper A manuscript statements | OPEN | Line-level statement and hypothesis mapping, including known source conflicts |
 
 ## Critical logical boundary
 
-The declarations PA-LEAN-001 through PA-LEAN-004 and PA-LEAN-016 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate. PA-LEAN-016 is only an algebraic entropy-derivative estimate under explicit hypotheses; it is not yet a zero-eigenvalue theorem and does not prove those hypotheses.
+The declarations PA-LEAN-001 through PA-LEAN-004 and PA-LEAN-016 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate. PA-LEAN-016 is only an algebraic entropy-derivative estimate under explicit hypotheses; it does not prove those hypotheses. PA-LEAN-017 proves only that the eigenvalue branch has zero first derivative at an interior zero. It does not prove that -lambda log(lambda) is differentiable there. For that, a higher-order analytic order-of-vanishing estimate is still required.
 
 Likewise, a successful lake build checks only that Lean accepts the declarations under the pinned environment. It does not prove that the formal declarations match the manuscript, nor does it validate any unformalized perturbation expansion.
 
