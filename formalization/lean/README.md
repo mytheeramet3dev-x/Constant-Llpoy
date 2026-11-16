@@ -16,7 +16,10 @@ The Mathlib commit's own `lean-toolchain` file was checked and matches the pinne
 
 ## First formalized obligations
 
-Module: `ConstantLlapoy/PaperA/WeakCoupling.lean`
+Modules:
+- `ConstantLlapoy/PaperA/WeakCoupling.lean`
+- `ConstantLlapoy/PaperA/StrongCoupling.lean`
+- `ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean` (positive-eigenvalue branch only; not yet the zero-eigenvalue case)
 
 1. Positivity of
    [
@@ -31,8 +34,8 @@ Module: `ConstantLlapoy/PaperA/WeakCoupling.lean`
 
 The following are separate obligations and MUST NOT be inferred from the initial module:
 
-- The joint real-analytic eigenvalue factorization used at rank-changing / zero eigenvalues.
-- The zero-eigenvalue entropy directional-derivative lemma.
+- The joint real-analytic eigenvalue factorization used at rank-changing / zero eigenvalues, including a lower bound sufficient to control the logarithm.
+- The zero-eigenvalue entropy directional-derivative lemma (the positive-branch bound is not a substitute).
 - The reduced-density-matrix perturbation expansions and edge derivatives.
 - The differentiated (O_N(r^3(1+|\ln r|))) remainder.
 - The eventual small-coupling threshold implied by the asymptotic remainder.
