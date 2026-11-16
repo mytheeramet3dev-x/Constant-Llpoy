@@ -151,7 +151,7 @@ Q=S-\frac{|X|^2}{L}.
 
 The cancellation of the coefficient of \(\varepsilon^2\) in \(Q\) is a coefficient identity that must be checked using the complete second-order reduced-state expansion, not merely the order estimates \(X=O(\varepsilon)\), \(S=O(\varepsilon^2)\). If the coefficient vanishes, analyticity of the matrix entries implies \(Q=O_N(\varepsilon^4)\) for the value of the parameter. It does not, by itself, imply a corresponding edge-derivative bound.
 
-A candidate fourth-order coefficient recorded in upstream proof materials is \(1/[8(N-2)(N-1)^4]\). It is not valid unchanged for the full range \(N\ge4\): the independent exact-rational diagnostic gives \(1/648\) at \(N=4\), twice the candidate value, while it matches at \(N=5,6,7,8\). The general \(N\ge5\) formula remains unproved. Every coefficient must be recomputed from one normalized state expansion through the necessary order, with every parity block and branch accounted for.
+A candidate fourth-order coefficient recorded in upstream proof materials is \(1/[8(N-2)(N-1)^4]\). It is not valid unchanged for the full range \(N\ge4\): the independent exact-rational diagnostic gives \(1/648\) at \(N=4\), twice the candidate value, while it matches at \(N=5,6,7,8\). The coefficient formula is now derived for fixed \(N\ge9\) and checked by exact-rational finite calculations for \(N=5,6,7,8\); it is not valid at \(N=4\). Every coefficient must be recomputed from one normalized state expansion through the necessary order, with every parity block and branch accounted for.
 
 ### 3.1 Exact-rational finite-\(N\) diagnostic and a coefficient discrepancy
 
@@ -172,7 +172,7 @@ N & [\varepsilon^4]\lambda_{\rm small} &
 
 The \(N=4\) result differs by a factor of two. It was additionally checked against direct high-precision diagonalization of the full \(2^4\)-dimensional Hamiltonian at \(\varepsilon=0.01\) and \(0.005\). The ratio \(\lambda_{\rm small}/\varepsilon^4\) approaches \(1/648\).
 
-This is a finite-size diagnostic, not a proof of the proposed formula for all \(N\ge5\). It does establish that the inherited expression cannot be used unchanged for the full claimed range \(N\ge4\). The reproducible script and a separate report are stored at:
+A separate symbolic recurrence derivation now establishes the displayed coefficient for every fixed \(N\ge9\), and the exact-rational finite calculations establish it for \(N=5,6,7,8\). The exceptional \(N=4\) coefficient is twice the candidate value. The detailed derivation is recorded in audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md. The reproducible finite-N script and diagnostic report are stored at:
 
 - working/paper-a/finite_n_strong_coupling_exact_diagnostic.py
 - audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md
