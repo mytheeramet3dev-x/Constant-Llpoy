@@ -151,15 +151,33 @@ Q=S-\frac{|X|^2}{L}.
 
 The cancellation of the coefficient of \(\varepsilon^2\) in \(Q\) is a coefficient identity that must be checked using the complete second-order reduced-state expansion, not merely the order estimates \(X=O(\varepsilon)\), \(S=O(\varepsilon^2)\). If the coefficient vanishes, analyticity of the matrix entries implies \(Q=O_N(\varepsilon^4)\) for the value of the parameter. It does not, by itself, imply a corresponding edge-derivative bound.
 
-A candidate fourth-order coefficient recorded in the upstream proof materials is
+A candidate fourth-order coefficient recorded in upstream proof materials is \(1/[8(N-2)(N-1)^4]\). It is not valid unchanged for the full range \(N\ge4\): the independent exact-rational diagnostic gives \(1/648\) at \(N=4\), twice the candidate value, while it matches at \(N=5,6,7,8\). The general \(N\ge5\) formula remains unproved. Every coefficient must be recomputed from one normalized state expansion through the necessary order, with every parity block and branch accounted for.
+
+### 3.1 Exact-rational finite-\(N\) diagnostic and a coefficient discrepancy
+
+An independent exact-rational perturbation recurrence was run in the full even-parity complement-orbit basis for \(N=4,5,6,7,8\). It reconstructs the normalized state, traces out all but two sites, and expands the small eigenvalue of the symmetric parity block. The resulting coefficients are:
 
 \[
-\lambda_{\mathrm{small}}(\varepsilon)
-=\frac{\varepsilon^4}{8(N-2)(N-1)^4}
-+O_N(\varepsilon^6)
+\begin{array}{c|c|c}
+N & [\varepsilon^4]\lambda_{\rm small} &
+1/[8(N-2)(N-1)^4]\\
+\hline
+4 & 1/648 & 1/1296\\
+5 & 1/6144 & 1/6144\\
+6 & 1/20000 & 1/20000\\
+7 & 1/51840 & 1/51840\\
+8 & 1/115248 & 1/115248
+\end{array}
 \]
 
-for a particular small branch. This coefficient is **not adopted as established here**: it must be recomputed from one normalized state expansion through the necessary order, with every parity block and branch accounted for. In particular, the coefficient cannot be inferred from a second-order truncation.
+The \(N=4\) result differs by a factor of two. It was additionally checked against direct high-precision diagonalization of the full \(2^4\)-dimensional Hamiltonian at \(\varepsilon=0.01\) and \(0.005\). The ratio \(\lambda_{\rm small}/\varepsilon^4\) approaches \(1/648\).
+
+This is a finite-size diagnostic, not a proof of the proposed formula for all \(N\ge5\). It does establish that the inherited expression cannot be used unchanged for the full claimed range \(N\ge4\). The reproducible script and a separate report are stored at:
+
+- working/paper-a/finite_n_strong_coupling_exact_diagnostic.py
+- audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md
+
+The discrepancy affects a fourth-order eigenvalue coefficient. It does not, by itself, alter the leading \(O(\varepsilon^2)\) one-site entropy term or prove/disprove the leading \(x^{-2}\) coefficient of \(\mathcal G_N\). It also does not provide any edge-coupling derivative bound.
 
 ## 4. Mutual-information leading coefficient
 
