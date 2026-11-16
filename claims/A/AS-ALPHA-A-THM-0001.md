@@ -99,7 +99,7 @@ Conditional on the stated regularity and nondegeneracy hypotheses. The source ex
 ## Review state
 
 - Verbatim transcription: source excerpt copied from the identified immutable revision.
-- Independent extraction review: NOT_RUN.
+- Independent extraction review: COMPLETED (see `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`).
 - Mathematical proof review: NOT_RUN.
 - Formal proof correspondence: NOT_RUN.
 - Counterexample review: NOT_RUN.
