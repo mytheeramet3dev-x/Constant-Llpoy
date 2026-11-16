@@ -164,7 +164,7 @@ This map does **not** establish:
 ## 8. Newly located supporting-source obligations
 
 - **A-THM-0002:** candidate proof source `docs/tfim_ground_state_simplicity_lemma.md` (blob `472328b596ccdcc82ece65faf5ef65a9dab63e50`) supplies the (cI-H) Perron–Frobenius argument. It is not yet independently verified by Constant Llapoy.
-- **A-PROP-0009:** `docs/lemma_5_1_proof.md` is not the proof of the (\mathcal G_N(x)) expansion cited in Section 4.4.2; it concerns (B-C). The actual (\mathcal G_N) asymptotic proof source remains unresolved.
+- **A-PROP-0009:** `docs/lemma_5_1_proof.md` is not the proof of the (\mathcal G_N(x)) expansion cited in Section 4.4.2; it concerns (B-C). The uniform asymptotic has an independent Constant Llapoy derivation; the frozen upstream citation remains mismatched.
 - **A-PROP-0012:** the weak-coupling opposite-sign response assertion conflicts with the later `docs/lemma_5_2_audit.md`. The original negative-sign derivation omitted an order-(r^2) coherence; the corrected leading sign is positive, but its derivative remainder is not bounded. The full sign claim remains unproved.
 - **Entropy–Schur remainder lemma:** `docs/entropy_schur_remainder_lemma.md` is conditional on model-specific Schur-complement and derivative bounds; it does not itself establish those hypotheses.
 - **Supplementary material:** `Arxiv/supplementary_material.md` supplies an exact Johnson-scheme derivation of the sector identity and finite numerical validation data; these must be separated into exact algebraic support and finite empirical evidence.
