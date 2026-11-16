@@ -40,13 +40,13 @@ For \(N=4\), the discrepancy was additionally checked against direct high-precis
 
 1. The candidate coefficient used in prior proof materials is **not valid uniformly for every \(N\ge4\)** as written.
 2. The exact finite-\(N\) recurrence and independent direct diagonalization agree on the exceptional \(N=4\) coefficient.
-3. For \(N=5,6,7,8\), the recurrence agrees with the proposed expression. Four matching finite sizes do not prove the general \(N\ge5\) formula.
+3. For \(N=5,6,7,8\), the exact-rational recurrence agrees with the proposed expression. A separate symbolic low-Hamming-weight recurrence now derives the same coefficient for every fixed \(N\ge9\); see SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md.
 4. This discrepancy concerns a fourth-order small eigenvalue coefficient. It does not change the leading \(O(\varepsilon^2)\) one-site entropy coefficient or, by itself, disprove the proposed leading \(x^{-2}\) coefficient of \(\mathcal G_N(x)\).
 5. This computation is only at the permutation-symmetric uniform point. It does not establish derivatives with respect to \(J_{13}\) or \(J_{34}\), and therefore does not close the \(B-C\) theorem.
 
 ## 4. Required follow-up
 
-- Derive a closed symbolic expression for the fourth-order small-eigenvalue coefficient as a function of \(N\), with the \(N=4\) case treated explicitly.
+- Preserve the closed symbolic derivation for \(N\ge9\) and the exact finite calculations for \(N=5,6,7,8\); retain the exceptional \(N=4\) value explicitly.
 - Independently verify the recurrence against full-space perturbation theory for additional \(N\).
 - Extend the calculation to independent edge variables before taking the uniform limit.
 - Establish derivative and lower-bound estimates for every small eigenvalue branch before differentiating the entropy.
