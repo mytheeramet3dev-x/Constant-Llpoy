@@ -237,7 +237,7 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 |---|---|---|---|
 | 0.1.0 | Initial registry schema | Registry architecture | Pending |
 | 0.2.0 | Initial source-linked extraction; 38 records | Paper A, D, A1 | Independent review pending |
-| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |
+| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |\n| 0.4.1 | Added preliminary Paper A dependency and verification-obligation map; all edges explicitly provisional | Paper A | Dependency closure and proof verification open |
 
 ## 11. Current truth statement
 
@@ -250,13 +250,13 @@ At version 0.4.0:
 - Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
 - Paper A1 extraction: **PARTIAL**, limited to Stage A1-1.
 - Constant Llapoy VERIFIED claims: **0**.
-- Proof re-derivation, Lean correspondence, axiom/TCB audit, dependency closure, and circularity analysis: **NOT_RUN / NOT_ESTABLISHED**.
+- Preliminary Paper A dependency/obligation map: **CREATED; EDGES PROVISIONAL**. Proof re-derivation, Lean correspondence, axiom/TCB audit, dependency closure, and circularity analysis: **NOT_RUN / NOT_ESTABLISHED**.
 
 A record's presence is not evidence of correctness. Do not promote a claim to REGISTERED or VERIFIED solely because it has been transcribed.
 
 ## 12. Governing documents
 
-- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`
+- `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`\n- `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`
 - `VERIFICATION_OBLIGATION_MATRIX.md`
 - `ARCHITECTURE_CHARTER.md`
 - `THREAT_MODEL.md`
