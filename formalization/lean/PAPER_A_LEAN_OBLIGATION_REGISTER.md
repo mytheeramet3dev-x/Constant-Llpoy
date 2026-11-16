@@ -31,7 +31,8 @@
 | PA-LEAN-010 | Pair-entropy remainder derivative, including the large eigenvalue correction | OPEN | Derive from the complete eigenvalue expansions |
 | PA-LEAN-011 | Differentiated weak-coupling remainder O_N(r^3(1+|log r|)) in dimensionless edge coordinates | OPEN | This is the key bridge from formalized local expansions to the endpoint sign |
 | PA-LEAN-012 | Existence of a sufficiently small coupling threshold from the asymptotic remainder | OPEN | Prove the relevant limit/bound; no threshold is currently formalized |
-| PA-LEAN-013 | Strong-coupling endpoint proof | OPEN | Separate module and independent obligation review |
+| PA-LEAN-013 | Positivity of the strong-coupling leading coefficient and conditional sign step | FORMALIZED_UNBUILT | StrongCoupling.lean; obtain successful pinned build |
+| PA-LEAN-015 | Strong-coupling differentiated remainder and endpoint threshold | OPEN | Prove the model-specific differentiated asymptotic and derive an explicit eventual bound |
 | PA-LEAN-014 | Exact correspondence between Lean declarations and frozen Paper A manuscript statements | OPEN | Line-level statement and hypothesis mapping, including known source conflicts |
 
 ## Critical logical boundary
