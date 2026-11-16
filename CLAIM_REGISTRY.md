@@ -224,9 +224,9 @@ Valid dispositions include DEFINITION_ONLY, NOT_A_CLAIM, EXAMPLE, CONJECTURE, DU
 
 ## 9. Completeness ledger
 
-| Paper ID | Source frozen | Sections scanned | Appendices scanned | Candidates reconciled | Independent review | Completeness status |
+| Paper ID | Source frozen | Sections scanned | Appendices / supplementary | Candidates reconciled | Independent review | Completeness status |
 |---|---|---|---|---|---|---|
-| A | YES | YES (six revised sections) | UNKNOWN | PARTIAL (secondary ledger reconciled; duplicate and source issues recorded) | YES — WITH ISSUES (14/14 records) | EXTRACTION_REVIEW_COMPLETE_WITH_ISSUES; APPENDIX_AND_PROOF_REVIEW_OPEN |
+| A | YES | YES (six revised sections) | Supplementary material inspected; other appendices UNKNOWN | PARTIAL (secondary ledger reconciled; duplicate and source conflict recorded) | YES — WITH ISSUES (15/15 records) | EXTRACTION_REVIEW_COMPLETE_WITH_ISSUES; PROOF_AND_APPENDIX_REVIEW_OPEN |
 | D | YES | PARTIAL (nine structured theorem sources; no integrated manuscript) | UNKNOWN | NO (manuscript scope blocked) | NO | BLOCKED_PENDING_INTEGRATED_MANUSCRIPT |
 | A1 | YES (Stage A1-1 snapshot) | PARTIAL (five theorem statements and 17 ledger rows) | UNKNOWN | PARTIAL | NO | PARTIAL_STAGE_SCOPE; REVIEW_OPEN |
 
@@ -238,7 +238,10 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 |---|---|---|---|
 | 0.1.0 | Initial registry schema | Registry architecture | Pending |
 | 0.2.0 | Initial source-linked extraction; 38 records | Paper A, D, A1 | Independent review pending |
-| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records; corrected completeness metadata | Paper A | Independent review pending |\n| 0.4.0 | Completed independent extraction review of all 14 Paper A records; recorded source proof issues, one duplicate, and excerpt correction | Paper A | Review complete with issues; proof review open |\n| 0.4.1 | Added preliminary Paper A dependency and verification-obligation map; all edges explicitly provisional | Paper A | Dependency closure and proof verification open |\n| 0.4.2 | Added one source-conflict claim from Section 4.4.3; inventoried supplementary/supporting proof files; reconciled Lemma 5.1/5.2 scope and statuses | Paper A | Extraction review complete with issues; proof verification open |
+| 0.3.0 | Added seven Paper A candidates; indexed 45 source-linked records | Paper A | Independent review pending |
+| 0.4.0 | Completed independent extraction review of the initial 14 Paper A records; recorded source proof issues and one duplicate | Paper A | Review complete with issues; proof review open |
+| 0.4.1 | Added preliminary Paper A dependency and verification-obligation map | Paper A | Edges provisional; proof review open |
+| 0.4.2 | Added source-conflict claim PROP-0012 and supporting-source inventory | Paper A | Extraction review complete with issues; proof review open |
 
 ## 11. Current truth statement
 
