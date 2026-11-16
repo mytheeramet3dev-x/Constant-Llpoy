@@ -24,7 +24,7 @@
 | PA-LEAN-003 | Weak-coupling endpoint sign conditional on the explicit remainder bound | FORMALIZED_UNBUILT | WeakCoupling.lean; does not prove the remainder bound itself |
 | PA-LEAN-004 | Chain rule for the entropy contribution -f log f when f(x)>0 | FORMALIZED_UNBUILT | WeakCoupling.lean; obtain successful pinned build |
 | PA-LEAN-005 | Analytic factorization/order of vanishing for a nonnegative eigenvalue branch at a zero | OPEN | Formalize joint analyticity, nonnegativity on a two-sided parameter neighborhood, and the first nonzero Taylor coefficient |
-| PA-LEAN-006 | Directional derivative of -lambda log(lambda) at a rank-changing zero branch | OPEN | Must derive the logarithmic bound from the analytic factorization; an upper bound alone is insufficient |
+| PA-LEAN-006 | Directional derivative of -lambda log(lambda) at a rank-changing zero branch | OPEN | Positive-branch bound is now separated as PA-LEAN-016; still need analytic order-of-vanishing at the zero branch and a rigorous entropy derivative limit |
 | PA-LEAN-007 | One-site reduced-state eigenvalue expansion and all required edge derivatives | OPEN | Formalize perturbation expansion with explicit quantified remainder |
 | PA-LEAN-008 | Two-site odd-block Gram matrix, coherence, positive eigenvalue branch, and edge derivatives | OPEN | Formalize the reduced density matrix and eigenvalue perturbation |
 | PA-LEAN-009 | Even-block Schur-complement cancellation and small-eigenvalue remainder | OPEN | Prove the order-r^2 cancellation and a joint differentiated bound |
@@ -33,11 +33,12 @@
 | PA-LEAN-012 | Existence of a sufficiently small coupling threshold from the asymptotic remainder | OPEN | Prove the relevant limit/bound; no threshold is currently formalized |
 | PA-LEAN-013 | Positivity of the strong-coupling leading coefficient and conditional sign step | FORMALIZED_UNBUILT | StrongCoupling.lean; obtain successful pinned build |
 | PA-LEAN-015 | Strong-coupling differentiated remainder and endpoint threshold | OPEN | Prove the model-specific differentiated asymptotic and derive an explicit eventual bound |
+| PA-LEAN-016 | Positive-branch entropy derivative bound under explicit logarithmic control and derivative bound | FORMALIZED_UNBUILT | ZeroEigenvalueEntropy.lean; assumptions must be derived from two-sided eigenvalue factorization and differentiated perturbation estimates |
 | PA-LEAN-014 | Exact correspondence between Lean declarations and frozen Paper A manuscript statements | OPEN | Line-level statement and hypothesis mapping, including known source conflicts |
 
 ## Critical logical boundary
 
-The declarations PA-LEAN-001 through PA-LEAN-004 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate.
+The declarations PA-LEAN-001 through PA-LEAN-004 and PA-LEAN-016 do **not** prove the weak-coupling endpoint theorem by themselves. PA-LEAN-003 assumes an explicit remainder inequality. PA-LEAN-011 and PA-LEAN-012 are still open and are required to derive that inequality from the analytic asymptotic estimate. PA-LEAN-016 is only an algebraic entropy-derivative estimate under explicit hypotheses; it is not yet a zero-eigenvalue theorem and does not prove those hypotheses.
 
 Likewise, a successful lake build checks only that Lean accepts the declarations under the pinned environment. It does not prove that the formal declarations match the manuscript, nor does it validate any unformalized perturbation expansion.
 
