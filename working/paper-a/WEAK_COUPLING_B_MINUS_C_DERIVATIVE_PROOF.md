@@ -152,130 +152,14 @@ S-\frac{|X|^2}{L}=O_N(r^3).
 
 Thus its small eigenvalue \(\lambda_s\) is a jointly analytic nonnegative branch of order \(O_N(r^3)\), with first edge derivatives of the same order.
 
-The following elementary analytic-positivity observation controls its entropy derivative. If a nonnegative real-analytic eigenvalue branch is \(O(r^3)\) jointly in \(r\) and the edge variables, then at the uniform point either:
-- its first nonzero coefficient in \(r\) is positive, giving a lower bound \(c r^m\) and an entropy derivative \(O(r^m|\ln r|)\), with \(m\ge3\); or
-- that coefficient vanishes at the uniform point, in which case nonnegativity makes its first edge derivative vanish, and one proceeds to the next coefficient; or
-- the branch is identically zero on the uniform path, in which case its entropy directional derivative is zero.
+Apply the reusable analytic nonnegative-eigenvalue entropy lemma in
 
-In every case, the first directional derivative of this branch's entropy at the uniform point is
+audits/paper-a/ANALYTIC_NONNEGATIVE_EIGENVALUE_ENTROPY_DERIVATIVE_LEMMA.md.
+
+Its hypotheses hold for \(\lambda_s\): the block eigenvalue is jointly analytic, nonnegative, and \(O_N(r^3)\) jointly in \(r,\mathbf u\). Therefore its first edge-direction entropy derivative at the uniform point is
 
 \[
 O_N\!\left(r^3(1+|\ln r|)\right).
 \]
 
-The same minimum argument handles the zero branch of \(M_{\rm odd}\).
-
-Let \(\nu\) be the large eigenvalue of the \((++ , --)\) block. Trace one gives
-
-\[
-\nu+q+\lambda_0+\lambda_s=1,
-\]
-
-where \(\lambda_0\) is the small branch of \(M_{\rm odd}\). Therefore
-
-\[
-S(\rho_{12})=H(q)+R_{12},
-\]
-
-where, at the uniform point, the first edge derivatives satisfy
-
-\[
-\partial_{u_e}R_{12}
-=O_N\!\left(r^3(1+|\ln r|)\right).
-\]
-
-This estimate includes the entropy of \(\lambda_s\), the zero branch \(\lambda_0\), and the correction from replacing \(\nu\) by \(1-q\). It does not assume a logarithmic bound from an upper eigenvalue estimate alone.
-
-## 5. Leading derivative of the positive odd-block eigenvalue
-
-At the uniform point,
-
-\[
-p=\frac{N-1}{16}r^2+O_N(r^3),
-\qquad
-q=\frac{N-2}{8}r^2+O_N(r^3).
-\]
-
-The shared-edge derivatives satisfy
-
-\[
-\partial_{u_{13}}p_1
-=\frac{r^2}{8}+O_N(r^3),
-\qquad
-\partial_{u_{13}}q
-=\frac{r^2}{8}+O_N(r^3).
-\]
-
-The other site marginal and the disjoint-edge derivatives have no order-\(r^2\) term:
-
-\[
-\partial_{u_{13}}p_2=O_N(r^3),
-\quad
-\partial_{u_{34}}p_i=O_N(r^3),
-\quad
-\partial_{u_{34}}q=O_N(r^3).
-\]
-
-Since \(I_{12}=H(p_1)+H(p_2)-H(q)-R_{12}\) with the sign convention \(R_{12}\) absorbed into the remainder, and
-
-\[
-H'(t)=\ln\frac{1-t}{t},
-\]
-
-we obtain
-
-\[
-B-C
-=\frac1J\frac{r^2}{8}
-\left[H'(p)-H'(q)\right]
-+O_N\!\left(\frac{r^3}{J}(1+|\ln r|)\right).
-\]
-
-Now
-
-\[
-H'(p)-H'(q)
-=\ln\frac{q}{p}
-+\ln\frac{1-p}{1-q}
-=\ln\!\left(\frac{2(N-2)}{N-1}\right)+O_N(r).
-\]
-
-Consequently,
-
-\[
-\boxed{
-B-C
-=\frac{J}{8h^2}
-\ln\!\left(\frac{2(N-2)}{N-1}\right)
-+O_N\!\left(
-\frac{J^2}{h^3}
-\left[1+\left|\ln(J/h)\right|\right]
-\right).
-}
-\]
-
-For every \(N\ge4\),
-
-\[
-\frac{2(N-2)}{N-1}>1,
-\]
-
-so the leading coefficient is strictly positive. Since \(r|\ln r|\to0\), it follows that for each fixed finite \(N\ge4\) there exists \(\delta_N>0\) such that
-
-\[
-0<J/h<\delta_N
-\quad\Longrightarrow\quad B-C>0
-\]
-
-at the uniform point.
-
-## 6. Scope and open checks
-
-- This proves only a local weak-coupling endpoint asymptotic, not global positivity for every \(J/h\).
-- The conservative \(O(J^2h^{-3}|\ln(J/h)|)\) remainder is used; the stronger \(O(J^3h^{-4})\) source remainder is not claimed.
-- The first-order coherence in the odd block must be retained; omitting it reverses the leading sign.
-- The proof relies on joint analyticity and positivity of the reduced-state eigenvalue branches; the detailed analytic-positivity lemma should be formalized separately.
-- No Lean proof or manuscript correspondence audit has been completed.
-- No Absolute Symmetry file has been modified.
-
-**Conclusion:** The corrected weak-coupling leading sign is positive, not negative. The analytic route supplies a conservative derivative remainder sufficient to establish local positivity for each fixed finite \(N\ge4\), subject to the proof-review obligations above.
+The other small branch \(\lambda_0\) is exactly zero at the uniform point for every sufficiently small \(r\), so the same lemma's zero-branch case gives a zero first entropy directional derivative.
