@@ -175,6 +175,7 @@ The \(N=4\) result differs by a factor of two. It was additionally checked again
 A separate symbolic recurrence derivation now establishes the displayed coefficient for every fixed \(N\ge9\), and the exact-rational finite calculations establish it for \(N=5,6,7,8\). The exceptional \(N=4\) coefficient is twice the candidate value. The detailed derivation is recorded in audits/paper-a/SMALL_EIGENVALUE_COEFFICIENT_GENERAL_N_DERIVATION.md. The reproducible finite-N script and diagnostic report are stored at:
 
 - working/paper-a/finite_n_strong_coupling_exact_diagnostic.py
+- working/paper-a/dicke_even_basis_exact_diagnostic.py
 - audits/paper-a/FINITE_N_STRONG_COUPLING_EIGENVALUE_DIAGNOSTIC.md
 
 The discrepancy affects a fourth-order eigenvalue coefficient. It does not, by itself, alter the leading \(O(\varepsilon^2)\) one-site entropy term or prove/disprove the leading \(x^{-2}\) coefficient of \(\mathcal G_N\). It also does not provide any edge-coupling derivative bound.
