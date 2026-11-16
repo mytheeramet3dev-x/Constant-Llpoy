@@ -2,8 +2,8 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.2.0  
-**Status:** Populated with initial source-linked records; completeness and verification remain open  
+**Version:** 0.3.0  
+**Status:** 45 source-linked records indexed; Paper A structural scan completed, independent extraction review and mathematical verification remain open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
 ---
@@ -66,9 +66,9 @@ These rows are intake placeholders only. They do not establish official titles, 
 
 ## 6. Claim index
 
-The registry now contains 38 initial source-linked records (21 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
+The registry now contains 45 source-linked records (28 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Paper A has 14 candidate records after the full six-section structural scan; all remain unreviewed candidates. Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
 
-### Paper A — partial candidate extraction
+### Paper A — 14 candidate records; structural scan completed, independent review pending
 
 | Claim ID | Original label | Type | Source locator | Extraction | Verification | Record |
 |---|---|---|---|---|---|---|
@@ -79,6 +79,14 @@ The registry now contains 38 initial source-linked records (21 theorem/propositi
 | AS-ALPHA-A-PROP-0003 | §3.3 Picard criterion | Proposition/claim | `Arxiv/paper_01_section_03_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0003.md) |
 | AS-ALPHA-A-PROP-0004 | §4.2 scale independence | Proposition/claim | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0004.md) |
 | AS-ALPHA-A-PROP-0005 | §5.2 response-sector identity | Proposition/claim | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0005.md) |
+
+| AS-ALPHA-A-THM-0002 | §2.1 Perron–Frobenius ground-state nondegeneracy | Theorem candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-THM-0002.md) |
+| AS-ALPHA-A-PROP-0006 | §2.3 positive energy rescaling / dimensionless mutual information | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0006.md) |
+| AS-ALPHA-A-PROP-0007 | §2.4 zero-coupling product state and trivial root | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0007.md) |
+| AS-ALPHA-A-PROP-0008 | §2.5 subcritical exclusion | Proposition candidate | `Arxiv/paper_01_section_02_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0008.md) |
+| AS-ALPHA-A-PROP-0009 | §4.4.2 strong-coupling asymptotic expansion | Proposition candidate | `Arxiv/paper_01_section_04_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0009.md) |
+| AS-ALPHA-A-PROP-0010 | §5.1 uniform-response upper bound and non-implication | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0010.md) |
+| AS-ALPHA-A-PROP-0011 | §5.4 response-eigenvalue scale covariance | Proposition candidate | `Arxiv/paper_01_section_05_revised.md` | CANDIDATE | NOT_ASSESSED | [Record](claims/A/AS-ALPHA-A-PROP-0011.md) |
 
 ### Paper D — structured source records, not a final-manuscript extraction
 
@@ -219,9 +227,9 @@ Valid dispositions include DEFINITION_ONLY, NOT_A_CLAIM, EXAMPLE, CONJECTURE, DU
 
 | Paper ID | Source frozen | Sections scanned | Appendices scanned | Candidates reconciled | Independent review | Completeness status |
 |---|---|---|---|---|---|---|
-| A | NO | NO | NO | NO | NO | NOT_STARTED |
-| D | NO | NO | NO | NO | NO | NOT_STARTED |
-| A1 | NO | NO | NO | NO | NO | NOT_STARTED |
+| A | YES | YES (six revised sections) | UNKNOWN | PARTIAL (secondary ledger reconciled; open scope items remain) | NO | STRUCTURAL_SCAN_COMPLETE; REVIEW_OPEN |
+| D | YES | PARTIAL (nine structured theorem sources; no integrated manuscript) | UNKNOWN | NO (manuscript scope blocked) | NO | BLOCKED_PENDING_INTEGRATED_MANUSCRIPT |
+| A1 | YES (Stage A1-1 snapshot) | PARTIAL (five theorem statements and 17 ledger rows) | UNKNOWN | PARTIAL | NO | PARTIAL_STAGE_SCOPE; REVIEW_OPEN |
 
 Completeness status may be marked COMPLETE only after the protocol's reconciliation and independent review gates are satisfied for the exact source revision.
 
@@ -229,11 +237,11 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 
 | Registry version | Date | Change | Affected Claim IDs | Reviewer |
 |---|---|---|---|---|
-| 0.1.0 | Initial creation | Empty registry schema established | None | Pending |
+| 0.1.0 | Initial creation | Empty registry schema established | None | Pending |\n| 0.2.0 | Initial source extraction | Added 38 source-linked records across A, D, and A1 | A/D/A1 | Pending independent review |\n| 0.3.0 | Paper A full extraction pass 1 | Added seven Paper A candidates; indexed 45 records; updated completeness/status truth statements | Paper A | Pending independent review |
 
 ## 11. Current truth statement
 
-At version 0.1.0:
+At version 0.3.0:
 - Registered mathematical claims: **0 in this registry**.
 - This count means no claim records have yet been entered here; it does not mean the papers contain zero claims.
 - Manuscript source revisions: **UNKNOWN**.
