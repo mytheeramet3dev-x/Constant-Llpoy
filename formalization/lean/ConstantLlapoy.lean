@@ -1,0 +1,2 @@
+import ConstantLlapoy.PaperA.WeakCoupling
+import ConstantLlapoy.PaperA.StrongCoupling
