@@ -6,7 +6,8 @@ We consider an \(N\)-qubit quantum many-body system with pairwise interactions r
 
 \[
 H[\mathbf J]
-=-\sum_{i<j}J_{ij}\sigma_i^z\sigma_j^z
+=-
+\sum_{i<j}J_{ij}\sigma_i^z\sigma_j^z
 -h\sum_{i=1}^{N}\sigma_i^x,
 \qquad h>0,
 \]
