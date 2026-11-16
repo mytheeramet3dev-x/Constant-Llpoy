@@ -112,6 +112,28 @@ Its qualification expressly says Kato/Rellich analyticity of the ground-state pr
 
 This lemma is a useful conditional tool, but it does not close the entropy derivative remainder merely by being present in the repository.
 
+## 5.1 Further gap inside the conditional entropy–Schur derivative lemma
+
+There is an additional issue in the located entropy–Schur lemma's scalar derivative argument. It assumes only
+[
+0\le\lambda(r,u)\le Kr^4,
+\qquad
+|\partial_u\lambda(r,u)|\le Kr^4/J,
+]
+and then claims that (|1+\ln\lambda|) is bounded by a constant times (1+|\ln r|). The upper bound on (lambda) does not imply this: (lambda) may be much smaller than (r^4), making (|\ln\lambda|) arbitrarily larger.
+
+For example, (lambda(r)=e^{-1/r}) satisfies (lambda(r)\le Kr^4) for small (r), and its derivative can satisfy an (O(r^4)) upper bound in a suitable parameter direction while the logarithm is still of order (1/r). Thus the stated hypotheses alone do not justify the claimed derivative entropy bound.
+
+A sufficient repair for a nonzero small eigenvalue branch is a two-sided scale bound
+[
+c r^4\le\lambda(r,u)\le Kr^4
+]
+together with the stated derivative estimate. Another sufficient route is a relative derivative estimate such as (|\partial_u\lambda|\le C\lambda/J), since then (lambda|\ln\lambda|=O(r^4(1+|\ln r|))) for (0\le\lambda\le Kr^4). Zero eigenvalue branches must be handled separately and shown to have the appropriate vanishing derivative.
+
+The model-specific positive leading coefficient (lambda_4>0), if rigorously established with a uniform remainder, could provide the needed lower bound for that particular branch. It does not automatically provide a lower bound for every small eigenvalue branch or for the Schur complement as a whole.
+
+**Disposition:** the entropy–Schur lemma is conditional and its derivative conclusion needs stronger hypotheses than currently displayed. Do not cite it as a closed derivative estimate until this logarithmic lower-bound issue is repaired.
+ 
 ## 6. Additional audit of the cited Lemma 5.1
 
 The located Lemma 5.1 concerns (B-C), not (G_N). Its one-flip leading contribution is a plausible and arithmetically consistent calculation:
@@ -142,7 +164,7 @@ The strong-coupling reconciliation also identifies unresolved derivative estimat
 | Infer endpoint limit from function expansion | PASS, conditional on expansion |
 | Infer derivative expansion from function big-O alone | FAIL (smooth counterexample) |
 | Establish derivative remainder independently | NOT_ESTABLISHED |
-| Entropy–Schur derivative lemma | CONDITIONAL_ONLY |
+| Entropy–Schur derivative lemma | CONDITIONAL_ONLY; displayed scalar derivative bound also needs a lower/relative eigenvalue bound |
 | Close cited Lemma 5.1's (B-C) derivative remainder | NOT_ESTABLISHED |
 | Lean verification | NOT_RUN |
 | Constant Llapoy status | NOT_VERIFIED |
