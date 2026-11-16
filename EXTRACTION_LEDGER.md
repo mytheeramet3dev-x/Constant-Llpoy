@@ -1,7 +1,7 @@
 # Initial Extraction Ledger
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
-**Version:** 0.4.1  
+**Version:** 0.4.2  
 **Status:** Paper A six-section structural scan and independent extraction review completed with issues; mathematical proof review remains open
 
 ---
@@ -12,12 +12,12 @@ The initial extraction pass has inspected the upstream Absolute Symmetry reposit
 
 | Paper | Source material inspected | Initial Constant Llapoy records | Extraction state |
 |---|---|---:|---|
-| A | Six authoritative revised sections, full structural scan pass 1 | 14 | CANDIDATE; structural scan and independent extraction review complete with issues |
+| A | Six revised sections plus supplementary/supporting-source reconciliation | 15 | 14 candidates + 1 SOURCE_CONFLICT; 15/15 extraction-reviewed with issues |
 | D | Nine structured theorem/proposition source files | 9 | Candidate/source records; no integrated manuscript |
 | A1 | Stage A1-1 theorem statement file plus 17-entry epistemic ledger | 22 | TRANSCRIBED; independent review pending |
-| **Total** | — | **45** | **NOT COMPLETE** |
+| **Total** | — | **46** | **NOT COMPLETE** |
 
-The fourteen Paper A records include one definition, two theorem candidates, and eleven proposition/claim candidates. The nine Paper D records include two theorem-source records and seven proposition/theorem-source records. The five Paper A1 records correspond to the five formal theorem statements in Stage A1-1.
+The fifteen Paper A records include one definition, two theorem candidates, eleven initial proposition/claim candidates, and one additional source-conflict claim. PROP-0008 is a duplicate/overlap of a subclaim in PROP-0001. The nine Paper D records include two theorem-source records and seven proposition/theorem-source records. The five Paper A1 records correspond to the five formal theorem statements in Stage A1-1.
 
 ## 2. Paper A extraction findings
 
@@ -68,25 +68,41 @@ The report also identifies unresolved cross-references to Lemma 5.1 and Lemma 5.
 
 The upstream ledger was reconciled item-by-item at the level of scope and epistemic classification. Project-level Lean-source claims and historical Stage V claims were not imported as Paper A manuscript theorems. The retracted inference `F'<0 => dI/dJ<0` remains explicitly rejected; the manuscript's correct upper bound is preserved. The sign of `B-C` remains a numerical conjecture, not a theorem.
 
-**Pass 1 result:** 14 Paper A candidate records; independent extraction review completed for 14/14 with issues; one duplicate record identified; zero Constant Llapoy VERIFIED claims. Six-section structural extraction and record-level review are complete for this pass, but appendix/supplement coverage, proof completeness, and mathematical verification remain open.
+**Pass 1 result:** 14 initial Paper A records; independent extraction review completed for 14/14 with issues; one duplicate record identified; zero Constant Llapoy VERIFIED claims. Six-section structural extraction and record-level review are complete for this initial set, but proof completeness and mathematical verification remain open.
 
 
 ### 2.2 Paper A independent extraction review — Pass 1
 
-Review report: `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`.\n\nPreliminary dependency/obligation map: `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`. It records provisional dependency edges and eight verification-obligation groups. No dependency closure or circularity check is claimed.
+Review report: `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`.\n\nPreliminary dependency/obligation map: `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`. It records provisional dependency edges and nine verification-obligation groups. No dependency closure or circularity check is claimed.
 
-All 14 Paper A claim records were freshly fetched and compared against the six pinned revised sections. The source excerpts and line locators were confirmed for 13/14 records. PROP-0011's source locator was correct but its excerpt initially omitted the numbered-item prefix; the excerpt boundary has now been corrected. PROP-0008 is an exact duplicate/overlap of the subcritical-exclusion assertion already included in PROP-0001 and is retained only for audit traceability pending explicit registry consolidation.
+All 14 initial Paper A claim records were freshly fetched and compared against the six pinned revised sections. A further source-conflict record, PROP-0012, was extracted from Section 4.4.3 after reconciling supporting files in the upstream repository. The source excerpts and line locators were confirmed for 13/14 records. PROP-0011's source locator was correct but its excerpt initially omitted the numbered-item prefix; the excerpt boundary has now been corrected. PROP-0008 is an exact duplicate/overlap of the subcritical-exclusion assertion already included in PROP-0001 and is retained only for audit traceability pending explicit registry consolidation.
 
-The review identified source/proof obligations that must remain visible:
+The initial review identified source/proof obligations that must remain visible:
 
 1. The Perron–Frobenius argument in Section 2.1 uses the wrong shift sign as written: adding (cI) to (H) does not change its negative off-diagonal entries; the standard route applies PF to (cI-H).
 2. Section 3.2 assumes only (C^2) regularity but claims a cubic Taylor remainder and an (O(g-g_c)) branch remainder. Those orders need stronger regularity than stated.
-3. Section 4.4.2's derivative asymptotic does not follow merely by differentiating a function-level big-(O) expansion; it needs a separate derivative remainder estimate. Lemma 5.1 is cited but absent from the pinned Section 5.
+3. Section 4.4.2's derivative asymptotic does not follow merely by differentiating a function-level big-(O) expansion; it needs a separate derivative remainder estimate. Lemma 5.1 is cited but absent from the pinned Section 5; the located `docs/lemma_5_1_proof.md` concerns B-C rather than the G_N expansion, so the citation appears mismatched.
 4. Section 5.2's edge-representation dimensions require an explicit domain, at least (N\ge3).
-5. Lemma 5.2 is also cited by Section 4.4.3 but absent from the pinned Section 5.
+5. Lemma 5.2 is cited by Section 4.4.3 but absent from the pinned Section 5; the original proof file is superseded by an audit correcting its leading sign and leaving the derivative remainder open.
 6. The threshold's infimum and attainment/minimum language still needs clarification.
 
-**Review disposition:** Independent extraction review COMPLETED WITH ISSUES for the 14-record set. A preliminary dependency/obligation map has been created; all edges remain provisional. Proof re-derivation, appendix review, Lean correspondence, dependency closure, circularity analysis, and mathematical verification remain open. Constant Llapoy VERIFIED claims remain zero.
+**Review disposition:** Independent extraction review COMPLETED WITH ISSUES for the initial 14-record set; after supporting-source reconciliation, the current Paper A set is 15/15 reviewed, including PROP-0012 marked SOURCE_CONFLICT. A preliminary dependency/obligation map has been created; all edges remain provisional. Proof re-derivation, appendix review, Lean correspondence, dependency closure, circularity analysis, and mathematical verification remain open. Constant Llapoy VERIFIED claims remain zero.
+
+
+### 2.3 Paper A supporting-source reconciliation
+
+Report: `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`.
+
+The pinned upstream branch contains proof/support files outside the six authoritative sections:
+
+- `docs/tfim_ground_state_simplicity_lemma.md` provides a corrected (cI-H) Perron–Frobenius proof candidate for THM-0002; independent Constant Llapoy verification remains pending.
+- `docs/lemma_5_1_proof.md` concerns asymptotic positivity of (B-C), not the (\mathcal G_N(x)) expansion cited in Section 4.4.2. The actual proof source for that expansion remains unresolved.
+- `docs/lemma_5_2_proof.md` is superseded by `docs/lemma_5_2_audit.md`. The audit identifies an omitted order-(r^2) coherence, corrects the leading sign to positive, and leaves the differentiated remainder unbounded.
+- `docs/entropy_schur_remainder_lemma.md` is conditional on model-specific Schur-complement bounds; it does not establish those bounds for the TFIM.
+- `STRONG_COUPLING_PROOF_RECONCILIATION.md` concludes that the strong-coupling derivative-remainder proof is not closed and the global (B-C>0) claim remains a conjecture.
+- `Arxiv/supplementary_material.md` adds a finite numerical table, solver checks, and an exact Johnson-scheme derivation of the sector identity.
+
+The weak-coupling opposite-sign statement in Section 4.4.3 has been separately registered as `AS-ALPHA-A-PROP-0012` with SOURCE_CONFLICT status. No result is promoted to VERIFIED.
 
 ## 3. Paper D extraction findings
 
