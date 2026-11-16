@@ -1,8 +1,8 @@
 # Manuscript Source Manifest
 **Project:** Constant Llapoy  
 **Document ID:** CL-MSM-001  
-**Version:** 0.1.0  
-**Status:** Initial source freeze records created from inspected GitHub revisions; extraction completeness not established
+**Version:** 0.2.0  
+**Status:** Core source revisions frozen; supplementary and supporting proof-source inventory added; mathematical verification not established
 
 ---
 
@@ -46,6 +46,23 @@ No title, claim, or source is promoted to final status merely because a file exi
 | 6 | `Arxiv/paper_01_section_06_revised.md` | `5e734065c2ddd42ee602dada89e7455d2ad9e7a0` |
 
 The six section files, not the integrated manuscript alone, govern the initial Paper A extraction. The existing claims ledger is a secondary index and contains mixed mathematical, numerical, project-stage, and Lean-source entries; it must not be imported wholesale as a list of manuscript theorems.
+
+
+### Supporting and supplementary sources inspected at the same frozen commit
+
+These files are **not** authoritative replacements for the six revised sections. They are separately inventoried supporting material whose declared status and proof dependencies must be reconciled.
+
+| Path | Blob SHA | Scope / treatment |
+|---|---|---|
+| `Arxiv/supplementary_material.md` | `cdead5041ba89f239b3051bcca41ccfae005a349` | Supplementary numerical protocol, finite data, solver checks, and exact sector-identity derivation |
+| `docs/tfim_ground_state_simplicity_lemma.md` | `472328b596ccdcc82ece65faf5ef65a9dab63e50` | Candidate corrected Perron–Frobenius proof for ground-state simplicity |
+| `docs/lemma_5_1_proof.md` | `db2c552f2d9bea663b20e05aefdc5447d2494a7b` | Proposed strong-coupling (B-C) positivity proof; derivative remainder remains open |
+| `docs/lemma_5_2_proof.md` | `4c1b70a7233f470ca46adaafe59868b2e0779253` | Original weak-coupling negative-sign derivation; superseded by its audit |
+| `docs/lemma_5_2_audit.md` | `a5e47defd859b4eb5ed5e63d65d12eeff320f9c7` | Corrected weak-coupling sign calculation; derivative remainder remains open |
+| `docs/entropy_schur_remainder_lemma.md` | `ef404349c6effa7f13bb14b5cc24f45e3ce6b80e` | Conditional entropy derivative estimate requiring model-specific Schur bounds |
+| `STRONG_COUPLING_PROOF_RECONCILIATION.md` | `8b75e3790cd0aaa223a2ffbbdbaedb2b6f50afbc` | Forensic status reconciliation; strong-coupling derivative proof not closed |
+
+The supporting-source reconciliation is recorded in `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`. In particular, the located Lemma 5.1 concerns (B-C), not the (mathcal G_N(x)) asymptotic cited by Section 4.4.2; do not treat that citation as resolved.
 
 **Source freeze status:** FROZEN for this extraction snapshot. Any upstream change requires a new manifest revision and impact analysis.
 
