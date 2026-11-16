@@ -93,13 +93,13 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 - State that (|T'|<1) is local stability for the scalar Picard iteration only.
 - Do not infer full edge-space stability from scalar stability.
 
-### VO-A-005 — Strong-coupling asymptotics
+### VO-A-005 — Uniform strong-coupling asymptotics
 
-- Locate or reconstruct the missing Lemma 5.1 proof source without inventing its statement.
-- Establish the parity-even low-energy effective description and its error estimates.
-- Prove the entropy expansion for (\mathcal G_N) for the stated (N\ge4) domain.
-- Independently prove the derivative remainder estimate; do not differentiate a big-(O) term without justification.
-- Trace the asymptotic branch-limit conclusions to a valid global-continuation hypothesis.
+- The function expansion and its differentiated remainder are independently derived in Constant Llapoy for each fixed finite N >= 4.
+- Preserve the corrected fourth-order small-eigenvalue coefficient: c_4=1/648; c_N=1/[8(N-2)(N-1)^4] for N >= 5.
+- Complete Lean formalization and proof-to-manuscript correspondence for A-PROP-0009.
+- Keep the frozen manuscript's Lemma 5.1 citation mismatch visible; do not edit upstream without prior authorization.
+- Trace large-parameter branch-limit conclusions to a separate valid global-continuation hypothesis.
 
 ### VO-A-006 — Response representation and sector eigenvalues
 
@@ -122,17 +122,15 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 - The located Lemma 5.1 file concerns (B-C), not the (\mathcal G_N(x)) expansion cited by Section 4.4.2. The uniform (\mathcal G_N) expansion now has an independent Constant Llapoy derivation; the source citation itself remains mismatched.
 - A separate Constant Llapoy derivation now closes the fixed-N strong-coupling (B-C) asymptotic locally; this does not prove global positivity.
 - The original Lemma 5.2 negative-sign proof is superseded by its audit; do not rely on it.
-- Keep dependent claims BLOCKED or OPEN at proof level until the exact source and proof obligations are reconciled.
+- Keep source correspondence and formalization obligations OPEN; the independent Constant Llapoy derivations do not repair the frozen upstream citation.
 - Do not synthesize missing lemmas from surrounding prose.
 
 ### VO-A-010 — General-edge fixed-N strong-coupling response asymptotic
 
-- Audit the joint analytic family in independent edge variables on a compact positive-coupling neighborhood.
-- Verify the first-order pair-block entries and the order-\(\varepsilon^2\) Schur cancellation for both parity blocks.
-- Preserve separate treatment of the positive small eigenvalue branch and the zero branch at the uniform point.
-- Formalize the differentiability of the entropy contribution of the zero branch at an interior minimum.
-- Reproduce the leading one-site response coefficient and the full \(B-C\) remainder order.
-- Formalize the resulting fixed-N statement in Lean and audit correspondence to the supporting Lemma 5.1 text before any upstream manuscript change.
+- Internal analytic review: PASS for fixed finite N >= 4 and the local strong-coupling regime.
+- Full-Hilbert-space finite-difference diagnostic: consistent with the leading coefficient for N=4,5,6.
+- Remaining: independent external review, Lean formalization, and exact correspondence to the supporting Lemma 5.1 statement.
+- Do not infer global B-C positivity, uniformity in N, or an explicit epsilon_N.
 
 ## 5. Circularity and dependency closure
 
@@ -152,11 +150,11 @@ This map does **not** establish:
 
 ## 7. Next actions
 
-1. Resolve A-REVIEW-001 and A-REVIEW-002 with the source authors or a separate derivation; do not edit the frozen upstream revision silently.
-2. Obtain the missing Lemma 5.1 / 5.2 proof sources.
-3. Verify the exact hypotheses and source context for A-PROP-0009 and A-PROP-0005.
-4. Produce a formal dependency graph only after the provisional edges are independently confirmed.
-5. Create claim-specific verification-obligation records and then select exact proof tools; tool selection must follow the obligations, not precede them.
+1. Formalize the independently derived A-PROP-0009 uniform asymptotic result and the supporting fixed-N B-C asymptotic in Lean.
+2. Independently review the joint-analyticity and zero-eigenvalue entropy-direction argument.
+3. Audit the exact correspondence between the Constant Llapoy statements and the frozen Paper A / supporting Lemma 5.1 statements.
+4. Keep all proposed Absolute Symmetry source corrections separate and request authorization before any upstream edit.
+5. Produce a formal dependency graph only after the remaining provisional edges are independently confirmed.
 
 ---
 
