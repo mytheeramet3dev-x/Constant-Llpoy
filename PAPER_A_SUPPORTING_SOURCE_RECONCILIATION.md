@@ -106,3 +106,35 @@ The sector-identity derivation independently supports the algebraic identity in 
 ---
 
 **End of Paper A Supporting-Source Reconciliation.**
+
+
+## Follow-up — independent closure of the fixed-\(N\) strong-coupling \(B-C\) derivative gap
+
+**Date:** 2026-11-17  
+**New working proof:** working/paper-a/GENERAL_EDGE_B_MINUS_C_DERIVATIVE_PROOF.md  
+**Internal review:** audits/paper-a/GENERAL_EDGE_B_MINUS_C_PROOF_AUDIT.md  
+**Numerical diagnostic:** audits/paper-a/EDGE_RESPONSE_FINITE_DIFFERENCE_DIAGNOSTIC.md
+
+The earlier reconciliation correctly found that the source Lemma 5.1 asserted, but did not prove, the required edge derivatives of the small-eigenvalue entropy remainder. A new independent derivation inside Constant Llapoy now supplies that missing chain for fixed finite \(N\ge4\) near the uniform positive-coupling point.
+
+The key steps are:
+1. Joint analyticity of the even-sector ground-state projector in the transverse-field parameter and independent edge perturbations.
+2. Exact first-order pair-block entries depending on \(b_1\pm b_2\), with cancellation of the order-\(\varepsilon^2\) Schur-complement coefficient for both parity blocks throughout the edge neighborhood.
+3. Analytic small eigenvalue branches of order \(\varepsilon^4\), hence edge derivatives of order \(\varepsilon^4/J\).
+4. Separate treatment of the positive small branch (using its positive fourth-order coefficient) and the zero branch (nonnegative analytic eigenvalue with an interior minimum, so the first directional derivative of its entropy contribution is zero).
+5. Exact leading one-site response from \(b_i=h/[2\sum_{j\ne i}J_{ij}]\).
+
+The resulting candidate asymptotic is
+
+\[
+B-C
+=\frac{h^2}{J^3(N-1)^3}
++O_N\!\left(
+\frac{h^4}{J^5}
+\left[1+\left|\ln(h/J)\right|\right]
+\right).
+\]
+
+It implies \(B-C>0\) for sufficiently small \(h/J>0\), for each fixed finite \(N\ge4\). The internal analytic review found no remaining gap under the stated local positive-coupling and fixed-\(N\) hypotheses. Full-Hilbert-space finite-difference calculations for \(N=4,5,6\) independently support the leading coefficient.
+
+**Important boundary:** this is a local strong-coupling result only. It does not establish global \(B-C>0\), an explicit \(\varepsilon_N\), or uniformity in \(N\). It does not alter the manuscript's Section 5.3 conjecture status or any claim status, because the result is not yet formalized in Lean or audited for manuscript correspondence. The original upstream Lemma 5.1 file remains a frozen source snapshot and has not been modified.
