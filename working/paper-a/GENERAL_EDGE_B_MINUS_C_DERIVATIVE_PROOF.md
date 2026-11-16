@@ -192,7 +192,7 @@ Therefore
 =O_N\!\left(\varepsilon^4(1+|\ln\varepsilon|)\right).
 \]
 
-The zero branch requires a different argument; the positive-branch lower bound must not be applied to it. For fixed \(\varepsilon>0\), \(\lambda_-(\varepsilon,\mathbf u)\) is a nonnegative analytic eigenvalue for real \(\mathbf u\), and it attains the value zero at the interior point \(\mathbf u=0\). Thus every first directional derivative vanishes there. Along any edge direction \(u=t v\), analyticity and nonnegativity imply
+The zero branch requires a different argument; the positive-branch lower bound must not be applied to it. Apply the reusable analytic nonnegative-eigenvalue entropy derivative lemma in audits/paper-a/ANALYTIC_NONNEGATIVE_EIGENVALUE_ENTROPY_DERIVATIVE_LEMMA.md. For fixed \(\varepsilon>0\), \(\lambda_-(\varepsilon,\mathbf u)\) is a nonnegative analytic eigenvalue for real \(\mathbf u\), and it attains the value zero at the interior point \(\mathbf u=0\). Thus every first directional derivative vanishes there. Along any edge direction \(u=t v\), analyticity and nonnegativity imply
 
 \[
 \lambda_-(\varepsilon,tv)=O_{\varepsilon,v}(t^2).
