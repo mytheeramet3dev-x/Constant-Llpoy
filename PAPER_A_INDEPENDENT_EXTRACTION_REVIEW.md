@@ -120,3 +120,35 @@ These are preliminary dependency observations, not a completed dependency graph.
 - Constant Llapoy VERIFIED claims: **0**.
 
 No claim is upgraded to VERIFIED. The next step is to correct extraction metadata and record-level review annotations, then create the first explicit dependency/obligation graph without modifying the upstream manuscript.
+
+## 6. Addendum — supporting-source reconciliation and new conflict claim (2026-11-17)
+
+A broader scan of the pinned upstream repository tree located separate supporting documents that were not part of the six revised manuscript sections. The findings are documented in `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`.
+
+### 6.1 Lemma 5.1 and Lemma 5.2 are located, but their status/scope does not close the manuscript claims
+
+- `docs/lemma_5_1_proof.md` exists, but its actual title and subject are asymptotic positivity of (B-C), not the strong-coupling expansion of (\mathcal G_N(x)) cited in Section 4.4.2. The separate `STRONG_COUPLING_PROOF_RECONCILIATION.md` says the derivative-remainder proof is not closed and the global (B-C>0) statement remains a conjecture. Thus Section 4.4.2's Lemma 5.1 reference appears mismatched or incomplete; the proof source for its (\mathcal G_N) expansion remains unresolved.
+- `docs/lemma_5_2_proof.md` exists but is superseded by `docs/lemma_5_2_audit.md`. The audit says the original negative-sign calculation omitted an order-(r^2) coherence and is invalid. The corrected leading sign is positive, but the differentiated remainder remains unbounded; no endpoint theorem or global sign-flip result is established.
+- Section 4.4.3's weak-coupling “opposite-sign response” assertion is therefore now separately registered as `AS-ALPHA-A-PROP-0012`, with extraction status SOURCE_CONFLICT / NOT_VERIFIED.
+
+### 6.2 Ground-state simplicity proof source located
+
+The pinned repository contains `docs/tfim_ground_state_simplicity_lemma.md`, blob `472328b596ccdcc82ece65faf5ef65a9dab63e50`. It correctly applies Perron–Frobenius to (cI-H) and uses connectedness of the spin-flip hypercube. This is a candidate proof dependency for `AS-ALPHA-A-THM-0002`; it does not change the fact that the Section 2.1 proof sentence uses the wrong shift sign. Constant Llapoy has not independently re-derived or formally verified the auxiliary proof.
+
+### 6.3 Conditional entropy remainder source
+
+`docs/entropy_schur_remainder_lemma.md` assumes model-specific Schur-complement bounds (\|Q\|=O(r^4)) and (\|\partial_uQ\|=O(r^4/J)). It derives an entropy derivative estimate conditional on those bounds; it does not establish them for the full TFIM reduced state. The strong-coupling reconciliation report identifies this derivative control as an open gap.
+
+### 6.4 Supplementary material
+
+`Arxiv/supplementary_material.md`, blob `cdead5041ba89f239b3051bcca41ccfae005a349`, was inspected. It contains a Johnson-scheme derivation of the exact sector identity, finite tested numerical values, solver validation checkpoints, and figure caveats. Its exact algebraic derivation supports PROP-0005; its finite numerical data do not prove a universal sign for (B-C).
+
+### 6.5 Updated extraction-review scope
+
+- Initial six-section candidate records: 14/14 independently extraction-reviewed.
+- Additional source-conflict claim extracted from Section 4.4.3: `AS-ALPHA-A-PROP-0012`.
+- Current Paper A record set: **15**; all have extraction review completed (the new record is explicitly SOURCE_CONFLICT).
+- Duplicate record: PROP-0008 remains a duplicate/overlap of PROP-0001.
+- Supporting-source proof closure: **NOT_ESTABLISHED**.
+- Constant Llapoy VERIFIED claims: **0**.
+
