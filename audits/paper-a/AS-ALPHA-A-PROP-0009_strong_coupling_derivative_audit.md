@@ -66,22 +66,14 @@ It satisfies exactly
 [
 R(x)=O\!\left(\frac{\ln x}{x^4}\right),
 ]
-but
+but direct differentiation gives
 [
 R'(x)=
-\left(\frac{1-4\ln x}{x^5}\right)\sin(x^6)
-+\frac{6\ln x}{x^{-?}}\cos(x^6).
+\frac{1-4\ln x}{x^5}\sin(x^6)
++6x\ln x\cos(x^6).
 ]
-More explicitly, differentiating the product gives
-[
-R'(x)=
-\left(\frac{1-4\ln x}{x^5}\right)\sin(x^6)
-+\frac{6\ln x}{x^{-?}}\cos(x^6),
-]
-and since (x^{-4}\cdot 6x^5=6x), the oscillatory term is
-[
-6x\ln x\cos(x^6).
-]
+The second term comes from differentiating `sin(x^6)`; it is of order (x\ln x) along subsequences and does not tend to zero.
+
 Thus (R'(x)) need not be (O(\ln x/x^5)), and need not even tend to zero.
 
 Consequently, from
