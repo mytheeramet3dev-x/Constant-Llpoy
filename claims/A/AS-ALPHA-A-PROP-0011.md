@@ -18,7 +18,7 @@
 The following is transcribed from the pinned source. It is not a rewritten theorem statement.
 
 ```markdown
-Since the ground state depends on (J,h) through (x=J/h), response eigenvalues have the dimensional scaling
+3. **Scale covariance of perturbations.** Since the ground state depends on (J,h) through (x=J/h), response eigenvalues have the dimensional scaling
 \[
 \chi_k(J,h)=h^{-1}\,\widetilde\chi_k(x).
 \]
@@ -47,8 +47,8 @@ This is a dimensional covariance claim for response eigenvalues. The underlying 
 
 ## Independent extraction review — 2026-11-17
 
-- **Review status:** REVIEWED_WITH_MINOR_TRANSCRIPTION_BOUNDARY_FIX
+- **Review status:** REVIEWED — excerpt boundary corrected
 - **Source locator:** Section 5, lines 127–131 is correct.
-- **Finding:** The stored excerpt begins mid-item and omits the source prefix “3. **Scale covariance of perturbations.**”. The mathematical text is otherwise transcribed correctly, but the excerpt is not a fully contiguous verbatim passage.
-- **Disposition:** Retain CANDIDATE / NOT_ASSESSED pending a small excerpt-boundary correction. The (h^{-1}) scaling is a chain-rule consequence once the ground state is a differentiable function of (J/h); differentiability and the response-map domain remain proof obligations.
+- **Finding:** The first extraction omitted the numbered-item prefix; this record now includes the complete contiguous source passage from lines 127–131.
+- **Disposition:** Excerpt boundary corrected. Retain CANDIDATE / NOT_ASSESSED; mathematical proof review remains separate. The (h^{-1}) scaling is a chain-rule consequence once the ground state is a differentiable function of (J/h); differentiability and the response-map domain remain proof obligations.
 - **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
