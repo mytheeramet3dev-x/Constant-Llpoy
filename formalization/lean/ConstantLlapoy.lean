@@ -1,2 +1,3 @@
 import ConstantLlapoy.PaperA.WeakCoupling
 import ConstantLlapoy.PaperA.StrongCoupling
+import ConstantLlapoy.PaperA.ZeroEigenvalueEntropy
