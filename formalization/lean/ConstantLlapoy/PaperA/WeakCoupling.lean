@@ -3,7 +3,7 @@ import Mathlib
 namespace ConstantLlapoy.PaperA
 
 /-- The coefficient of the leading weak-coupling term for the edge response B - C. -/
-def weakCouplingCoefficient (N : ℕ) : ℝ :=
+noncomputable def weakCouplingCoefficient (N : ℕ) : ℝ :=
   Real.log (2 * ((N : ℝ) - 2) / ((N : ℝ) - 1)) / 8
 
 /-- The logarithmic coefficient is strictly positive for every finite N ≥ 4. -/
