@@ -76,3 +76,11 @@ Contains the representation decomposition, response-sector eigenvalues, and exac
 - Independent extraction review: NOT_RUN.
 - Mathematical proof review: NOT_RUN.
 - Overall status: NOT_VERIFIED.
+
+## Independent extraction review — 2026-11-17
+
+- **Review status:** REVIEWED_WITH_DOMAIN_QUALIFICATION
+- **Source transcription and locator:** Exact excerpt; Section 5, lines 42–93.
+- **Finding:** The dimensions (1), (N-1), and (N(N-3)/2) give the standard edge-permutation decomposition for (N\ge3). The displayed residual dimension is not a valid nonnegative dimension at (N=2); the source statement does not explicitly state the lower bound on (N).
+- **Disposition:** Add an explicit (N\ge3) domain obligation and reconcile it with the intended model domain. The exact identity (chi_1-chi_2=(N-2)(B-C)) remains separate from the conjectural sign (B-C>0). Keep CANDIDATE / NOT_VERIFIED.
+- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
