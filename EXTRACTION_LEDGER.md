@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Document ID:** CL-EL-001  
 **Version:** 0.1.0  
-**Status:** Initial claim-candidate records created; full extraction and independent completeness review remain open
+**Status:** Initial source-linked records created; full extraction and independent completeness review remain open
 
 ---
 
@@ -14,8 +14,8 @@ The initial extraction pass has inspected the upstream Absolute Symmetry reposit
 |---|---|---:|---|
 | A | Six authoritative revised sections | 7 | CANDIDATE; partial extraction |
 | D | Nine structured theorem/proposition source files | 9 | Candidate/source records; no integrated manuscript |
-| A1 | Stage A1-1 theorem statement file | 5 | TRANSCRIBED; independent review pending |
-| **Total** | — | **21** | **NOT COMPLETE** |
+| A1 | Stage A1-1 theorem statement file plus 17-entry epistemic ledger | 22 | TRANSCRIBED; independent review pending |
+| **Total** | — | **38** | **NOT COMPLETE** |
 
 The seven Paper A records include one definition, one conditional local theorem, and five proposition/claim records. The nine Paper D records include two theorem-source records and seven proposition/theorem-source records. The five Paper A1 records correspond to the five formal theorem statements in Stage A1-1.
 
@@ -72,7 +72,7 @@ Critical source boundary: the current branch README says the integrated publicat
 
 Source: `Absolute_Sym`, branch `stage-a1-1-repair-review`, commit `b95f5777dfadaf5d31eef27d813ea56c33540d1c`.
 
-Five formal Stage A1-1 theorem statements were transcribed:
+Five formal Stage A1-1 theorem statements and all 17 rows of the Stage A1-1 epistemic claim ledger were transcribed:
 - `AS-ALPHA-A1-THM-0001` — compact uniform C0 convergence.
 - `AS-ALPHA-A1-THM-0002` — analytic regularity, inflection structure, and unique minimizer of the thermodynamic-limit function.
 - `AS-ALPHA-A1-THM-0003` — three-regime uniform bounds, equicoercivity, and Gamma-convergence.
@@ -81,12 +81,12 @@ Five formal Stage A1-1 theorem statements were transcribed:
 
 The upstream README says Stage A1-1 is complete (repaired) and Stage A1-2 is pending. The separate Stage A1-1 claim ledger reports 17 epistemic entries across proven, numerical, incomplete, conjectural, unverified, and incorrect categories. Those 17 entries are not all theorem statements and must not be relabelled as proved. The source's PROVEN labels have not been independently re-proved by Constant Llapoy.
 
-**Completeness:** PARTIAL. Five formal Stage A1-1 theorem statements are transcribed; the 17-row claim ledger, supporting definitions, assumptions, appendices, and any later A1 stages still require reconciliation.
+**Completeness:** PARTIAL. Five formal Stage A1-1 theorem statements and all 17 Stage A1-1 ledger rows are transcribed; supporting definitions, assumptions, appendices, and later A1 stages still require reconciliation.
 
 ## 5. Record status and what has not been done
 
 - Initial source branches and commits: recorded.
-- Individual claim-source records created: 21.
+- Individual claim-source and source-ledger records created: 38.
 - Independent extraction review: NOT_RUN.
 - Mathematical proof re-derivation: NOT_RUN.
 - Lean formalization correspondence: NOT_RUN.
