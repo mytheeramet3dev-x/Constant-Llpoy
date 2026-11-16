@@ -66,7 +66,7 @@ These rows are intake placeholders only. They do not establish official titles, 
 
 ## 6. Claim index
 
-The registry now contains 21 initial source-linked records. Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
+The registry now contains 38 initial source-linked records (21 theorem/proposition/definition source records and 17 Stage A1-1 epistemic-ledger transcriptions). Each linked file preserves a verbatim source excerpt and the upstream branch/commit/blob provenance. A record's presence is not a finding of mathematical correctness.
 
 ### Paper A — partial candidate extraction
 
@@ -103,6 +103,30 @@ The registry now contains 21 initial source-linked records. Each linked file pre
 | AS-ALPHA-A1-THM-0003 | Theorem 3 / OP-3 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0003.md) |
 | AS-ALPHA-A1-THM-0004 | Theorem 4 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0004.md) |
 | AS-ALPHA-A1-THM-0005 | Theorem 5 | Theorem | `Alphabet/paper_a1/stage_a1_1/theorem_statements.md` | TRANSCRIBED | NOT_ASSESSED | [Record](claims/A1/AS-ALPHA-A1-THM-0005.md) |
+
+### Paper A1 — Stage A1-1 epistemic ledger entries
+
+These 17 records preserve the source ledger's mixed epistemic classifications. They are not 17 additional theorems; some overlap with Theorems 1–5, while others are corrections, counterexamples, conjectures, numerical claims, or unresolved items.
+
+| Claim ID | Upstream ID | Source-reported classification | Record |
+|---|---|---|---|
+| AS-ALPHA-A1-CLM-0001 | C1 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0001.md) |
+| AS-ALPHA-A1-CLM-0002 | C2 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0002.md) |
+| AS-ALPHA-A1-CLM-0003 | C3 | INCORRECT | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0003.md) |
+| AS-ALPHA-A1-CLM-0004 | C4 | INCORRECT | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0004.md) |
+| AS-ALPHA-A1-CLM-0005 | C5a | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0005.md) |
+| AS-ALPHA-A1-CLM-0006 | C5b | UNVERIFIED / CONJECTURAL; endpoint claim INCORRECT | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0006.md) |
+| AS-ALPHA-A1-CLM-0007 | C6 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0007.md) |
+| AS-ALPHA-A1-CLM-0008 | C7 | INCORRECT for N=2; UNVERIFIED for small N≥4 | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0008.md) |
+| AS-ALPHA-A1-CLM-0009 | C8 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0009.md) |
+| AS-ALPHA-A1-CLM-0010 | C9 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0010.md) |
+| AS-ALPHA-A1-CLM-0011 | C10 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0011.md) |
+| AS-ALPHA-A1-CLM-0012 | C11 | PROVEN | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0012.md) |
+| AS-ALPHA-A1-CLM-0013 | C12 | SUPPORTED_BUT_INCOMPLETE | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0013.md) |
+| AS-ALPHA-A1-CLM-0014 | C13 | CONJECTURAL | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0014.md) |
+| AS-ALPHA-A1-CLM-0015 | C14 | CONJECTURAL | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0015.md) |
+| AS-ALPHA-A1-CLM-0016 | C15 | INCORRECT for clustering limit; UNVERIFIED for open dynamics | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0016.md) |
+| AS-ALPHA-A1-CLM-0017 | C16 | NUMERICALLY_REPRODUCED | [Record](claims/A1/ledger/AS-ALPHA-A1-CLM-0017.md) |
 
 ## 7. Canonical claim record template
 
