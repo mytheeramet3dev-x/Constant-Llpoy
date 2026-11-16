@@ -11,7 +11,7 @@
 - **Source path:** `Arxiv/paper_01_section_04_revised.md`
 - **Source blob SHA:** `a7570431eac62dd4555194df283edb5a9c87a28d`
 - **Source line range:** 105-120
-- **Claim-specific Verification Obligation Matrix:** Pending extraction review
+- **Claim-specific Verification Obligation Matrix:** Not yet created; proof obligations are recorded in the linked follow-up audits.
 
 ## Verbatim source excerpt
 
@@ -93,10 +93,10 @@ A correction was found in a supporting fourth-order eigenvalue coefficient: the 
 - **Source transcription and locator:** The quoted passage matches Section 4, lines 105–120; the source condition (N\ge4) appears immediately before it at line 103 and is missing from this record's excerpt.
 - **Finding 1 — Context:** The claim's assumptions must include the immediately preceding (N\ge4) condition.
 - **Finding 2 — Missing dependency:** The source cites Lemma 5.1, which is absent from the pinned authoritative Section 5.
-- **Finding 3 — Differentiated remainder:** The asymptotic expansion of (mathcal G_N(x)) does not by itself justify differentiating its (O(ln x/x^4)) remainder. The derivative expansion needs a separate analytic remainder estimate; the source asserts such control but the proof is not available in the six revised sections.
-- **Disposition:** Keep CANDIDATE / NOT_VERIFIED. Split proof obligations for the function expansion and derivative expansion, include the (N\ge4) context, and locate the missing lemma proof. Do not infer derivative asymptotics from the function asymptotic alone.
-- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
+- **Finding 3 — Differentiated remainder (at extraction-review time):** The function big-O term alone does not justify differentiation. This mathematical gap has since been addressed by a separate independent derivation in Constant Llapoy; see the follow-up section below.
+- **Disposition at extraction review:** Keep CANDIDATE / NOT_VERIFIED pending an independent derivation. This disposition is superseded by the 2026-11-17 follow-up, which records PARTIALLY VERIFIED status.
+- **Proof review:** PARTIALLY COMPLETED by the follow-up derivation. Formal verification: NOT_RUN.
 
 ### Supporting-source reconciliation
 
-The file cited by the manuscript as Lemma 5.1 is located at `docs/lemma_5_1_proof.md`, blob `db2c552f2d9bea663b20e05aefdc5447d2494a7b`, but its actual subject is asymptotic positivity of (B-C), not the stated strong-coupling expansion of (mathcal G_N(x)). A separate proof-reconciliation report states that the derivative-remainder chain for (B-C) is not closed. Therefore the Section 4.4.2 Lemma 5.1 citation appears mismatched or incomplete; the proof source for the (mathcal G_N) expansion remains unresolved. Do not treat the located Lemma 5.1 as satisfying this claim's proof dependency.
+The file cited by the manuscript as Lemma 5.1 is located at `docs/lemma_5_1_proof.md`, blob `db2c552f2d9bea663b20e05aefdc5447d2494a7b`, but its actual subject is asymptotic positivity of (B-C), not the stated strong-coupling expansion of (mathcal G_N(x)). A separate proof-reconciliation report states that the derivative-remainder chain for (B-C) is not closed. Therefore the frozen Section 4.4.2 Lemma 5.1 citation remains mismatched or incomplete. The cited file is not the proof source for the uniform (mathcal G_N) expansion. An independent derivation has since been added inside Constant Llapoy; do not treat the upstream Lemma 5.1 citation itself as repaired.
