@@ -62,3 +62,7 @@ The source invokes Perron–Frobenius theory and states nondegeneracy for finite
 - **Finding:** The source says that shifting (H) by a large positive multiple of the identity makes the matrix nonnegative. This is false as written because the off-diagonal spin-flip entries remain (-h). The Perron–Frobenius argument should instead be applied to (cI-H) (or (-H+cI)), with (c) chosen to make the diagonal nonnegative. For finite (N), the spin-flip graph is connected and the off-diagonal entries are (+h), giving the needed irreducibility.
 - **Disposition:** The nondegeneracy conclusion may be recoverable, but the source proof sentence is incorrect. Preserve the source excerpt; keep CANDIDATE / NOT_VERIFIED pending a corrected proof and domain audit.
 - **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
+
+### Supporting proof source located
+
+The pinned upstream branch also contains `docs/tfim_ground_state_simplicity_lemma.md`, blob `472328b596ccdcc82ece65faf5ef65a9dab63e50`. It applies Perron–Frobenius to (cI-H), proves irreducibility from connectedness of the spin-flip hypercube, and states simplicity for finite (N\ge1), (h>0), and real couplings. This is a candidate proof dependency that repairs the sign of the argument in a separate source file. Constant Llapoy has not yet independently re-derived or formally verified that auxiliary proof; THM-0002 remains NOT_VERIFIED.
