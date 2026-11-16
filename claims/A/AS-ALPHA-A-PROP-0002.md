@@ -50,7 +50,7 @@ The source labels this Proposition 1. The proof is present immediately after the
 ## Review state
 
 - Verbatim transcription: source excerpt copied from the identified immutable revision.
-- Independent extraction review: NOT_RUN.
+- Independent extraction review: COMPLETED (see `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`).
 - Mathematical proof review: NOT_RUN.
 - Formal proof correspondence: NOT_RUN.
 - Counterexample review: NOT_RUN.
