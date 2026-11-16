@@ -36,7 +36,7 @@ The following are separate obligations and MUST NOT be inferred from the initial
 - The reduced-density-matrix perturbation expansions and edge derivatives.
 - The differentiated (O_N(r^3(1+|\ln r|))) remainder.
 - The eventual small-coupling threshold implied by the asymptotic remainder.
-- The strong-coupling endpoint proof.
+- The full strong-coupling differentiated remainder and endpoint threshold proof.
 - Exact correspondence between the Lean declarations and the frozen Paper A manuscript.
 
 The current endpoint theorem is deliberately conditional on an explicit remainder inequality. It does not turn a big-O assertion into a verified estimate.
