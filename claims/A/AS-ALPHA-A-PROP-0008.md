@@ -49,3 +49,11 @@ The implication is conditional on positivity of G_N(x) over the considered domai
 - Overall Constant Llapoy status: CANDIDATE / NOT_VERIFIED.
 
 **Important:** Registration or transcription does not establish correctness, completeness, novelty, or Lean verification.
+
+## Independent extraction review — 2026-11-17
+
+- **Review status:** REVIEWED_WITH_ISSUES — DUPLICATE
+- **Source transcription and locator:** Exact excerpt; Section 2, lines 197–206.
+- **Finding:** The identical subcritical-exclusion statement is already included in AS-ALPHA-A-PROP-0001, whose source excerpt spans Section 2, lines 159–206. This record is therefore not a distinct mathematical result.
+- **Disposition:** Preserve this record for audit traceability and mark it DUPLICATE_OF AS-ALPHA-A-PROP-0001. Merge or retire only through an explicit registry migration. Do not count it as an additional distinct theorem.
+- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
