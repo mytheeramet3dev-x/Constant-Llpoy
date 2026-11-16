@@ -37,6 +37,7 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0009 | Strong-coupling expansion of (\mathcal G_N) and its derivative | Missing Lemma 5.1; derivative remainder proof unresolved; (N\ge4) context required |
 | A-PROP-0010 | Uniform-response upper bound and non-implication of response negativity | Source-faithful algebraic bound |
 | A-PROP-0011 | Scale covariance of response eigenvalues | Source excerpt boundary corrected; differentiability remains an obligation |
+| A-PROP-0012 | Weak-coupling lower-branch opposite-sign response assertion | SOURCE_CONFLICT; original Lemma 5.2 derivation superseded by audit |
 
 ## 3. Preliminary dependency edges
 
@@ -55,6 +56,7 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0009 | Section 4.4.2 cites Lemma 5.1, but located `docs/lemma_5_1_proof.md` concerns B-C rather than G_N; actual G_N expansion proof source unresolved | U/A | Need proof of the coefficient, error order, and differentiated remainder; include (N\ge4) |
 | A-PROP-0010 | Section 5.1 definition of (F_J) | D/L | (F_J=g\,\partial_J I_{12}-1); (F_J<0\) gives only the upper bound (\partial_JI_{12}<1/g) |
 | A-PROP-0011 | A-PROP-0006 | D/A | Differentiate the dimensionless dependence with respect to each edge coupling; requires differentiability of the ground-state response map |
+| A-PROP-0012 | `docs/lemma_5_2_proof.md` and `docs/lemma_5_2_audit.md` | U | Original negative-sign proof is superseded; corrected leading sign is positive but differentiated remainder remains unbounded |
 | A-PROP-0005 | (S_N)-invariance of the symmetric Hamiltonian and response map | S/A | Need differentiability, orbit classification of edge pairs, and (N\ge3); algebraic eigenvalue identity is separate from the conjectural sign of (B-C) |
 
 ## 4. Open verification obligations
