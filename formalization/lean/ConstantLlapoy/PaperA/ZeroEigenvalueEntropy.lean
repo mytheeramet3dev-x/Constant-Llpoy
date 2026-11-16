@@ -2,6 +2,8 @@ import ConstantLlapoy.PaperA.WeakCoupling
 
 namespace ConstantLlapoy.PaperA
 
+open Filter
+
 /-- A positive eigenvalue branch whose logarithm is controlled from both sides
 has an entropy derivative bounded by its parameter derivative times a
 logarithmic factor.
@@ -19,12 +21,14 @@ theorem entropy_derivative_bound_of_log_control
       B * r ^ m * (1 + A + (m : ℝ) * |Real.log r|) := by
   have hlogfactor :
       |1 + Real.log (f x)| ≤ 1 + A + (m : ℝ) * |Real.log r| := by
-    calc
-      |1 + Real.log (f x)| ≤ |(1 : ℝ)| + |Real.log (f x)| :=
-        abs_add _ _
-      _ ≤ 1 + (A + (m : ℝ) * |Real.log r|) := by
-        simpa using add_le_add_left hlog 1
-      _ = 1 + A + (m : ℝ) * |Real.log r| := by ring
+    have hlog_bounds :=
+      (abs_le.mp hlog)
+    apply abs_le.mpr
+    constructor
+    · have hlow := hlog_bounds.1
+      linarith
+    · have hupp := hlog_bounds.2
+      linarith
   have hfactor : 0 ≤ 1 + A + (m : ℝ) * |Real.log r| := by positivity
   calc
     |(-(1 + Real.log (f x)) * f')| =
