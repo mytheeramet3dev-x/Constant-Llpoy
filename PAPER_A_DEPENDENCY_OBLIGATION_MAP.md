@@ -1,9 +1,9 @@
 # Paper A Preliminary Dependency and Verification-Obligation Map
 
 - **Document ID:** CL-DEP-A-001
-- **Version:** 0.1.0
+- **Version:** 0.2.0
 - **Source revision:** `Absolute_Sym` / `paper-a-interval-audit-2026-11-14` / `8deb7de4a49cb2060720246b7101820ee7e08c91`
-- **Inputs:** `PAPER_A_FULL_EXTRACTION_AUDIT.md`, `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`, and 14 Paper A claim records
+- **Inputs:** `PAPER_A_FULL_EXTRACTION_AUDIT.md`, `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`, 15 Paper A claim records, and the 2026-11-17 strong-coupling follow-up audits
 - **Status:** PRELIMINARY_MAP; dependencies and proof obligations not yet independently closed
 - **Verified claims:** 0
 
@@ -34,10 +34,11 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0006 | Positive energy rescaling and (I_{12}=\mathcal G_N(J/h)) | Source-faithful; requires ground-state projector uniqueness or a carefully stated spectral-subspace version |
 | A-PROP-0007 | Zero-coupling product state and trivial root | Source-faithful |
 | A-PROP-0008 | Subcritical exclusion | Duplicate/overlap of a subclaim in A-PROP-0001; preserve as trace record |
-| A-PROP-0009 | Strong-coupling expansion of (\mathcal G_N) and its derivative | Missing Lemma 5.1; derivative remainder proof unresolved; (N\ge4) context required |
+| A-PROP-0009 | Strong-coupling expansion of (\mathcal G_N) and its derivative | PARTIALLY VERIFIED by independent fixed-N derivation; Lean/correspondence pending; upstream Lemma 5.1 citation remains mismatched |
 | A-PROP-0010 | Uniform-response upper bound and non-implication of response negativity | Source-faithful algebraic bound |
 | A-PROP-0011 | Scale covariance of response eigenvalues | Source excerpt boundary corrected; differentiability remains an obligation |
 | A-PROP-0012 | Weak-coupling lower-branch opposite-sign response assertion | SOURCE_CONFLICT; original Lemma 5.2 derivation superseded by audit |
+| A-SUPP-LEMMA-5-1 | Supporting fixed-N strong-coupling positivity statement for (B-C) | Independent Constant Llapoy analytic derivation and internal review pass; not an authoritative manuscript theorem; Lean/correspondence pending |
 
 ## 3. Preliminary dependency edges
 
@@ -53,10 +54,11 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0006 | A-THM-0002 | A/L | Positive multiplication by (h) preserves the ground eigenspace; uniqueness is needed for a single ground-state projector |
 | A-PROP-0007 | Hamiltonian at (x=0), Section 2.4 | L | At zero coupling the ground state is the product (|+x\rangle^{\otimes N}), giving zero pairwise mutual information |
 | A-PROP-0008 | A-PROP-0001 | DUPLICATE | Same subcritical-exclusion statement; not an independent theorem |
-| A-PROP-0009 | Section 4.4.2 cites Lemma 5.1, but located `docs/lemma_5_1_proof.md` concerns B-C rather than G_N; actual G_N expansion proof source unresolved | U/A | Need proof of the coefficient, error order, and differentiated remainder; include (N\ge4) |
+| A-PROP-0009 | Independent uniform function/derivative proof and small-eigenvalue coefficient derivation in Constant Llapoy | A/S | Function and differentiated remainder derived for fixed finite N >= 4; the source citation remains mismatched and formalization/correspondence are pending |
 | A-PROP-0010 | Section 5.1 definition of (F_J) | D/L | (F_J=g\,\partial_J I_{12}-1); (F_J<0\) gives only the upper bound (\partial_JI_{12}<1/g) |
 | A-PROP-0011 | A-PROP-0006 | D/A | Differentiate the dimensionless dependence with respect to each edge coupling; requires differentiability of the ground-state response map |
 | A-PROP-0012 | `docs/lemma_5_2_proof.md` and `docs/lemma_5_2_audit.md` | U | Original negative-sign proof is superseded; corrected leading sign is positive but differentiated remainder remains unbounded |
+| A-SUPP-LEMMA-5-1 | General-edge joint-analyticity, parity-block Schur cancellation, positive/zero small-eigenvalue entropy treatment | A/S | Fixed-N strong-coupling asymptotic derived locally; formalization and manuscript correspondence remain open |
 | A-PROP-0005 | (S_N)-invariance of the symmetric Hamiltonian and response map | S/A | Need differentiability, orbit classification of edge pairs, and (N\ge3); algebraic eigenvalue identity is separate from the conjectural sign of (B-C) |
 
 ## 4. Open verification obligations
@@ -105,7 +107,7 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 - Derive the three orbit classes for pairs of edges under (S_N).
 - Derive the eigenvalues and multiplicities from the response operator.
 - Verify the uniform eigenvalue normalization against the convention for changing every edge simultaneously.
-- Keep (B-C>0) as a numerical conjecture, not a theorem.
+- Keep global (B-C>0) as a conjecture. A separate fixed-N local strong-coupling asymptotic is now derived in Constant Llapoy, but is not yet a fully formalized manuscript theorem.
 
 ### VO-A-007 — Response scaling and sign bound
 
@@ -117,10 +119,20 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 ### VO-A-008 — Supporting-lemma scope and source reconciliation
 
 - Lemma 5.1 and Lemma 5.2 files have been located outside the six authoritative sections, but their subject/status must be reconciled with the manuscript references.
-- The located Lemma 5.1 file concerns (B-C), not the (\mathcal G_N(x)) expansion cited by Section 4.4.2; find the actual proof source for that expansion.
+- The located Lemma 5.1 file concerns (B-C), not the (\mathcal G_N(x)) expansion cited by Section 4.4.2. The uniform (\mathcal G_N) expansion now has an independent Constant Llapoy derivation; the source citation itself remains mismatched.
+- A separate Constant Llapoy derivation now closes the fixed-N strong-coupling (B-C) asymptotic locally; this does not prove global positivity.
 - The original Lemma 5.2 negative-sign proof is superseded by its audit; do not rely on it.
 - Keep dependent claims BLOCKED or OPEN at proof level until the exact source and proof obligations are reconciled.
 - Do not synthesize missing lemmas from surrounding prose.
+
+### VO-A-010 — General-edge fixed-N strong-coupling response asymptotic
+
+- Audit the joint analytic family in independent edge variables on a compact positive-coupling neighborhood.
+- Verify the first-order pair-block entries and the order-\(\varepsilon^2\) Schur cancellation for both parity blocks.
+- Preserve separate treatment of the positive small eigenvalue branch and the zero branch at the uniform point.
+- Formalize the differentiability of the entropy contribution of the zero branch at an interior minimum.
+- Reproduce the leading one-site response coefficient and the full \(B-C\) remainder order.
+- Formalize the resulting fixed-N statement in Lean and audit correspondence to the supporting Lemma 5.1 text before any upstream manuscript change.
 
 ## 5. Circularity and dependency closure
 
@@ -133,9 +145,9 @@ This map does **not** establish:
 - exactly two global nontrivial roots for every supercritical parameter;
 - global continuation of the selected upper branch;
 - model-specific negative curvature at the threshold;
-- positivity of (B-C) for all (N) and all parameters;
+- positivity of (B-C) for all parameters or uniformly in (N);
 - full edge-space dynamical stability from scalar Picard stability;
-- the missing Lemmas 5.1 and 5.2;
+- a formal Lean proof of the supporting Lemma 5.1 statement or a repair to its upstream source citation;
 - correctness of any proof merely because a source claim is indexed.
 
 ## 7. Next actions
