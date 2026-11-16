@@ -1,12 +1,12 @@
 # Finite-N Exact-Rational Diagnostic — Strong-Coupling Pair Eigenvalue
 
 **Scope:** Uniform all-to-all TFIM, fixed finite \(N=4,\ldots,8\), \(\varepsilon=h/J\to0^+\).  
-**Method:** Exact-rational Rayleigh–Schrödinger recurrence in the even-parity complement-orbit basis, normalized state reconstruction, partial trace, and symbolic eigenvalue expansion.  
+**Methods:** (1) Exact-rational Rayleigh–Schrödinger recurrence in the even-parity complement-orbit basis; (2) an independent recurrence in the fully permutation-symmetric reduced-Dicke basis. Both reconstruct the normalized state, compute the two-site partial trace, and expand the small eigenvalue. A direct high-precision full-Hilbert-space diagonalization is also used for the N=4 cross-check.  
 **Role:** Diagnostic evidence only. It is not a proof of a formula for all \(N\), nor does it establish any coupling-derivative estimate.
 
 ## 1. Reproducible method
 
-The script finite_n_strong_coupling_exact_diagnostic.py constructs the full even-parity Hilbert space by complement orbits. It uses
+The script finite_n_strong_coupling_exact_diagnostic.py constructs the full even-parity Hilbert space by complement orbits. The independent script dicke_even_basis_exact_diagnostic.py works in the reduced permutation-symmetric Dicke basis. It uses
 
 \[
 H/J=K_0+\varepsilon V,\qquad
@@ -33,8 +33,10 @@ The resulting state is normalized as a formal series, the two-site reduced densi
 | 6 | \(1/20000\) | \(1/20000\) | Yes |
 | 7 | \(1/51840\) | \(1/51840\) | Yes |
 | 8 | \(1/115248\) | \(1/115248\) | Yes |
+| 9 | \(1/229376\) | \(1/229376\) | Yes |
+| 10 | \(1/419904\) | \(1/419904\) | Yes |
 
-For \(N=4\), the discrepancy was additionally checked against direct high-precision diagonalization of the full \(2^N\)-dimensional Hamiltonian at \(\varepsilon=0.01\) and \(0.005\). The ratio \(\lambda_{\rm small}/\varepsilon^4\) approaches \(1/648\), not \(1/1296\).
+For all listed sizes N=4,...,10, the reduced-Dicke-basis implementation independently reproduces the complement-orbit recurrence coefficients. For N=4, the discrepancy was additionally checked against direct high-precision diagonalization of the full 2^N-dimensional Hamiltonian at epsilon=0.01 and 0.005. The ratio lambda_small/epsilon^4 approaches 1/648, not 1/1296.
 
 ## 3. Mathematical interpretation
 
@@ -46,7 +48,7 @@ For \(N=4\), the discrepancy was additionally checked against direct high-precis
 
 ## 4. Required follow-up
 
-- Preserve the closed symbolic derivation for \(N\ge9\) and the exact finite calculations for \(N=5,6,7,8\); retain the exceptional \(N=4\) value explicitly.
+- Preserve the closed symbolic derivation for \(N\ge9\), the exact finite calculations for \(N=5,6,7,8\), and the independent N=4,...,10 Dicke-basis cross-check; retain the exceptional \(N=4\) value explicitly.
 - Independently verify the recurrence against full-space perturbation theory for additional \(N\).
 - Extend the calculation to independent edge variables before taking the uniform limit.
 - Establish derivative and lower-bound estimates for every small eigenvalue branch before differentiating the entropy.
