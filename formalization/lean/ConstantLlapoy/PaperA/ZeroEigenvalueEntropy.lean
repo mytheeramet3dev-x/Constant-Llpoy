@@ -3,8 +3,6 @@ import ConstantLlapoy.PaperA.WeakCoupling
 
 namespace ConstantLlapoy.PaperA
 
-open Filter
-
 /-- A positive eigenvalue branch whose logarithm is controlled from both sides
 has an entropy derivative bounded by its parameter derivative times a
 logarithmic factor.
@@ -22,8 +20,7 @@ theorem entropy_derivative_bound_of_log_control
       B * r ^ m * (1 + A + (m : ℝ) * |Real.log r|) := by
   have hlogfactor :
       |1 + Real.log (f x)| ≤ 1 + A + (m : ℝ) * |Real.log r| := by
-    have hlog_bounds :=
-      (abs_le.mp hlog)
+    have hlog_bounds := (abs_le.mp hlog)
     apply abs_le.mpr
     constructor
     · have hlow := hlog_bounds.1
@@ -52,8 +49,7 @@ theorem hasDerivAt_entropy_comp_with_bound
       B * r ^ m * (1 + A + (m : ℝ) * |Real.log r|) := by
   constructor
   · exact hasDerivAt_neg_mul_log_comp hf hpos
-  · exact entropy_derivative_bound_of_log_control
-      hA hlog hf'bound
+  · exact entropy_derivative_bound_of_log_control hA hlog hf'bound
 
 /-- A differentiable nonnegative eigenvalue branch that vanishes at an
 interior parameter value has zero first derivative there.
@@ -65,10 +61,10 @@ theorem hasDerivAt_nonnegative_branch_eq_zero
     {f : ℝ → ℝ} {f' x : ℝ}
     (hf : HasDerivAt f f' x)
     (hzero : f x = 0)
-    (hnonneg : ∀ᶠ t in 𝓝 x, 0 ≤ f t) :
+    (hnonneg : ∀ᶠ t in Filter.nhds x, 0 ≤ f t) :
     f' = 0 := by
   have hmin : IsLocalMin f x := by
-    change ∀ᶠ t in 𝓝 x, f x ≤ f t
+    change ∀ᶠ t in Filter.nhds x, f x ≤ f t
     simpa [hzero] using hnonneg
   exact hmin.hasDerivAt_eq_zero hf
 
