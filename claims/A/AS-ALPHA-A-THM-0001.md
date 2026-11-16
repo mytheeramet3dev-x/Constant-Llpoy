@@ -106,3 +106,11 @@ Conditional on the stated regularity and nondegeneracy hypotheses. The source ex
 - Overall Constant Llapoy status: CANDIDATE / NOT_VERIFIED.
 
 **Important:** Registration or transcription does not establish correctness, completeness, novelty, or Lean verification.
+
+## Independent extraction review — 2026-11-17
+
+- **Review status:** REVIEWED_WITH_ISSUES
+- **Source transcription and locator:** Exact excerpt; Section 3, lines 96–165.
+- **Finding:** The source assumes only (mathcal G_Nin C^2), but states a cubic Taylor remainder (O(|delta x|^3)) and a branch-expansion error (O(g-g_c)). A (C^2) assumption generally supports only a Peano remainder (o(|delta x|^2)); a cubic bound requires stronger regularity, such as locally bounded third derivative or suitable Lipschitz control of the second derivative.
+- **Disposition:** Do not silently strengthen the theorem hypotheses. Keep CANDIDATE / NOT_VERIFIED until the author specifies sufficient regularity or weakens the remainder claim.
+- **Proof review:** NOT_COMPLETED. Formal verification: NOT_RUN.
