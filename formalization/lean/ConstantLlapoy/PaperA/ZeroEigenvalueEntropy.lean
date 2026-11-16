@@ -12,8 +12,7 @@ factorization and a differentiated perturbation estimate. This lemma does not
 derive either estimate from analyticity by itself. -/
 theorem entropy_derivative_bound_of_log_control
     {f : ℝ → ℝ} {f' x r A B : ℝ} {m : ℕ}
-    (hpos : 0 < f x) (hr : 0 < r)
-    (hA : 0 ≤ A) (hB : 0 ≤ B)
+    (hA : 0 ≤ A)
     (hlog : |Real.log (f x)| ≤ A + (m : ℝ) * |Real.log r|)
     (hf' : |f'| ≤ B * r ^ m) :
     |(-(1 + Real.log (f x)) * f')| ≤
@@ -26,11 +25,8 @@ theorem entropy_derivative_bound_of_log_control
       _ ≤ 1 + (A + (m : ℝ) * |Real.log r|) := by
         simpa using add_le_add_left hlog 1
       _ = 1 + A + (m : ℝ) * |Real.log r| := by ring
-  have hpow : 0 ≤ r ^ m := le_of_lt (pow_pos hr m)
-  have hfactor : 0 ≤ 1 + A + (m : ℝ) * |Real.log r| := by
-    have hm : 0 ≤ (m : ℝ) := Nat.cast_nonneg m
-    have habs : 0 ≤ |Real.log r| := abs_nonneg _
-    positivity
+  have hpow : 0 ≤ r ^ m := by positivity
+  have hfactor : 0 ≤ 1 + A + (m : ℝ) * |Real.log r| := by positivity
   calc
     |(-(1 + Real.log (f x)) * f')| =
         |1 + Real.log (f x)| * |f'| := by rw [abs_mul, abs_neg]
@@ -53,6 +49,6 @@ theorem hasDerivAt_entropy_comp_with_bound
   constructor
   · exact hasDerivAt_neg_mul_log_comp hf hpos
   · exact entropy_derivative_bound_of_log_control
-      hpos hr hA hB hlog hf'bound
+      hA hlog hf'bound
 
 end ConstantLlapoy.PaperA
