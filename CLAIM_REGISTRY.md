@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Status:** Populated with initial source-linked records; completeness and verification remain open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
