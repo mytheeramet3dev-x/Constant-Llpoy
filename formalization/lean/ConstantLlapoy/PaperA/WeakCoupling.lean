@@ -55,7 +55,7 @@ theorem hasDerivAt_neg_mul_log_comp
   have hmul := hid.mul hlog
   have houter : HasDerivAt (fun y : ℝ => -(y * Real.log y))
       (-(1 + Real.log (f x))) (f x) := by
-    convert hmul.neg using 1 <;> simp [ne_of_gt hpos] <;> ring
+    convert hmul.neg using 1; simp [ne_of_gt hpos]; ring
   have hcomp := houter.comp x hf
   simpa [Function.comp_def, add_comm] using hcomp
 
