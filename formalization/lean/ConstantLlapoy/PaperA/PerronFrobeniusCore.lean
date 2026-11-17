@@ -457,3 +457,55 @@ theorem at_most_one_orthogonal_perron_eigenvector
     hprop_i hprop_j (hw_orthogonal i j hij)
 
 end ConstantLlapoy.PaperA
+
+namespace ConstantLlapoy.PaperA
+
+/-- In an orthogonal eigenbasis indexed by the matrix coordinates, a fixed
+positive Perron eigenvalue can occur at most once.  The eigenvector equations
+are supplied for every basis vector; the subtype of indices carrying the
+Perron eigenvalue inherits the nonzero and orthogonality obligations.  This
+is the direct bridge from the one-dimensional Perron eigenspace theorem to
+the eigenvalue list in the finite-dimensional symmetric spectral theorem. -/
+theorem perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
+    {κ : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
+    (A : κ → κ → ℝ) (v : κ → ℝ)
+    (eigenvalue : κ → ℝ) (basisVector : κ → κ → ℝ)
+    (lambdaVal : ℝ)
+    (hA_nonneg : ∀ k l, 0 ≤ A k l)
+    (hv : ∀ k, 0 < v k)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ k, ∑ l, A k l * v l = lambdaVal * v k)
+    (hconnected : ∀ k l,
+      PFReachable (fun a b => 0 < A a b) k l)
+    (hbasis_nonzero : ∀ i, ∃ k, basisVector i k ≠ 0)
+    (hbasis_eigen : ∀ i k,
+      ∑ l, A k l * basisVector i l = eigenvalue i * basisVector i k)
+    (hbasis_orthogonal : ∀ i j, i ≠ j →
+      ∑ k, basisVector i k * basisVector j k = 0) :
+    ∀ i j, eigenvalue i = lambdaVal → eigenvalue j = lambdaVal →
+      i ≠ j → False := by
+  classical
+  let I : Type := {i : κ // eigenvalue i = lambdaVal}
+  let w : I → κ → ℝ := fun i => basisVector i.1
+  have hnonzero : ∀ i : I, ∃ k, w i k ≠ 0 := by
+    intro i
+    exact hbasis_nonzero i.1
+  have heigen : ∀ i : I, ∀ k : κ,
+      ∑ l, A k l * w i l = lambdaVal * w i k := by
+    intro i k
+    rw [hbasis_eigen i.1 k, i.2]
+  have horthogonal : ∀ i j : I, i ≠ j →
+      ∑ k, w i k * w j k = 0 := by
+    intro i j hij
+    exact hbasis_orthogonal i.1 j.1 (by
+      intro h
+      apply hij
+      exact Subtype.ext h)
+  have hunique := at_most_one_orthogonal_perron_eigenvector
+    A v w lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
+    hnonzero heigen horthogonal
+  intro i j hi hj hij
+  exact hunique ⟨i, hi⟩ ⟨j, hj⟩ hij
+
+end ConstantLlapoy.PaperA
+
