@@ -229,7 +229,7 @@ For claims about physical, empirical, computational, or other external targets, 
 
 ### K. Verification-system assurance / meta-verification (L-08, L-10, L-11, L-12)
 
-For each verification route, inventory the validators, parsers, certificate checkers, workflow definitions, evidence schemas, report generators, and status aggregation logic that can affect acceptance. Define their input/output contracts and failure states. Include malformed-input and negative tests, mutation tests where feasible, tests for skipped/stale jobs and mismatched revisions, and independent review of high-impact acceptance logic. Bind every result to the exact checker/workflow revision and configuration. Do not treat self-tests as a complete proof of the verifier's correctness; document shared implementation risks and residual trust.
+For each verification route, apply `META_VERIFICATION_SPECIFICATION.md` as the normative design. Inventory every status-affecting validator, parser, certificate checker, workflow, evidence schema, report generator, and status aggregator; assign stable component IDs, owners, trust classifications, exact revisions, dependencies, and claim impact. Define checker input/output contracts and distinguish ACCEPTED, REJECTED, ERROR, TIMEOUT, INCONCLUSIVE, and NOT_RUN. Execute positive, negative, malformed-input, boundary, mutation, fault-injection, regression, and differential tests as applicable; preserve surviving mutations and shared dependencies. Bind each result to the exact claim, source, checker, schema, workflow, dependency, and artifact revisions. Test fail-closed aggregation against missing, skipped, stale, failed, timed-out, inconclusive, contradictory, and partial evidence. Require independent review for high-impact acceptance logic or explicitly record that it is absent. Self-tests are not a proof of verifier correctness; residual trust and limitations must remain explicit.
 ## 7. Tool selection and applicability rationale
 
 For each tool family below, the matrix MUST record one of REQUIRED, NOT_REQUIRED, NOT_APPLICABLE, or UNKNOWN, plus a rationale.
@@ -274,7 +274,7 @@ These labels describe the evidence relationship, not an absolute guarantee. A cl
 ## 9. Threat and trust-boundary mapping
 
 Every claim MUST link applicable identifiers from:
-- `THREAT_MODEL.md` (T01–T18);
+- `THREAT_MODEL.md` (T01–T21);
 - `TRUST_BOUNDARY_TCB_INVENTORY.md` (TB-01–TB-24);
 - `TOOLCHAIN_DEPENDENCY_INVENTORY.md` (relevant tool/dependency entries).
 
