@@ -422,3 +422,23 @@ theorem exists_uniform_positive_lower_bound_on_compact
   exact hmin hu
 
 end ConstantLlapoy.PaperA
+
+
+/-- Exact remainder identity for a parity-block Schur complement.
+
+Write the leading entries as
+  L = 1/2 + ell,  X = t/2 + x,  S = t^2/2 + s.
+The leading quadratic terms cancel, leaving precisely the displayed
+combination of the entry remainders. This identity is algebraic only:
+model-specific bounds on ell, x, and s (including their edge derivatives)
+must still be established separately. -/
+theorem parity_block_schur_remainder_identity
+    {t x s ell : ℝ}
+    (hL : (1 / 2 : ℝ) + ell ≠ 0) :
+    (t ^ 2 / 2 + s) - (t / 2 + x) ^ 2 / ((1 / 2 : ℝ) + ell) =
+      (s * ((1 / 2 : ℝ) + ell) -
+        (t * x + x ^ 2 - t ^ 2 * ell / 2)) /
+        ((1 / 2 : ℝ) + ell) := by
+  field_simp
+  · ring
+  · exact hL
