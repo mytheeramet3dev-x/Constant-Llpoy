@@ -295,4 +295,42 @@ theorem hasDerivAt_factored_parameter_branch_bound
         mul_le_mul_of_nonneg_left hg' hpow
       _ = B * r ^ m := by ring
 
+
+/-- Analyticity of the scalar quotient gives a locally bounded Fréchet
+derivative. The bound is stated in operator norm, so it applies uniformly
+to every unit parameter direction. This is the regularity input needed
+before transferring a derivative estimate through the factor r^m.
+
+The result is local in the parameter at zero; it is not yet a joint
+uniform estimate in the radial variable r and an auxiliary parameter u. -/
+theorem exists_eventually_fderiv_norm_bound_of_analyticAt
+    {g : ℝ → ℝ}
+    (hg : AnalyticAt ℝ g 0) :
+    ∃ B : ℝ, 0 ≤ B ∧
+      ∀ᶠ u : ℝ in 𝓝 0, ‖fderiv ℝ g u‖ ≤ B := by
+  have hC1 : ContDiffAt ℝ 1 g 0 := hg.contDiffAt
+  have hcont : ContinuousAt (fderiv ℝ g) 0 :=
+    hC1.continuousAt_fderiv (by norm_num)
+  obtain ⟨δ, hδ, hδbound⟩ :=
+    Metric.continuousAt_iff.mp hcont 1 (by norm_num)
+  let B : ℝ := ‖fderiv ℝ g 0‖ + 1
+  refine ⟨B, by positivity, ?_⟩
+  filter_upwards [Metric.ball_mem_nhds 0 hδ] with u hu
+  have hdist : dist (fderiv ℝ g u) (fderiv ℝ g 0) < 1 :=
+    hδbound u hu
+  have hnorm :
+      ‖fderiv ℝ g u‖ ≤
+        ‖fderiv ℝ g u - fderiv ℝ g 0‖ + ‖fderiv ℝ g 0‖ := by
+    calc
+      ‖fderiv ℝ g u‖ =
+          ‖(fderiv ℝ g u - fderiv ℝ g 0) + fderiv ℝ g 0‖ := by
+            congr 1
+            abel
+      _ ≤ _ := norm_add_le _ _
+  have hdistnorm :
+      ‖fderiv ℝ g u - fderiv ℝ g 0‖ < 1 := by
+    simpa [dist_eq_norm] using hdist
+  dsimp [B]
+  linarith
+
 end ConstantLlapoy.PaperA
