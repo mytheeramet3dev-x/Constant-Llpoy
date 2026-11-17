@@ -157,13 +157,13 @@ The resulting transition kernel is stochastic. This is the algebraic bridge
 from a positive Perron eigenvector to the harmonic-ratio uniqueness argument. -/
 theorem perron_transition_kernel_of_positive_eigenvector
     {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (A : ι → ι → ℝ) (v : ι → ℝ) (λ : ℝ)
+    (A : ι → ι → ℝ) (v : ι → ℝ) (lambdaVal : ℝ)
     (hA_nonneg : ∀ i j, 0 ≤ A i j)
     (hv : ∀ i, 0 < v i)
-    (hλ : 0 < λ)
-    (hAv : ∀ i, ∑ j, A i j * v j = λ * v i) :
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i) :
     let P : ι → ι → ℝ :=
-      fun i j => (A i j * v j) / (λ * v i)
+      fun i j => (A i j * v j) / (lambdaVal * v i)
     (∀ i j, 0 ≤ P i j) ∧
     (∀ i, ∑ j, P i j = 1) := by
   dsimp
@@ -171,12 +171,12 @@ theorem perron_transition_kernel_of_positive_eigenvector
   · intro i j
     apply div_nonneg
     · exact mul_nonneg (hA_nonneg i j) (le_of_lt (hv j))
-    · exact le_of_lt (mul_pos hλ (hv i))
+    · exact le_of_lt (mul_pos hlambdaVal (hv i))
   · intro i
-    have hden : 0 < λ * v i := mul_pos hλ (hv i)
+    have hden : 0 < lambdaVal * v i := mul_pos hlambdaVal (hv i)
     calc
-      ∑ j, (A i j * v j) / (λ * v i)
-          = (∑ j, A i j * v j) / (λ * v i) := by
+      ∑ j, (A i j * v j) / (lambdaVal * v i)
+          = (∑ j, A i j * v j) / (lambdaVal * v i) := by
               rw [Finset.sum_div]
       _ = 1 := by
           rw [hAv i]
@@ -188,32 +188,32 @@ eigenvalue gives a harmonic coordinate ratio. Combined with irreducibility,
 the finite harmonic-constancy theorem forces this ratio to be constant. -/
 theorem perron_eigenvector_ratio_is_harmonic
     {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (A : ι → ι → ℝ) (v y : ι → ℝ) (λ : ℝ)
+    (A : ι → ι → ℝ) (v y : ι → ℝ) (lambdaVal : ℝ)
     (hv : ∀ i, 0 < v i)
-    (hλ : 0 < λ)
-    (hAv : ∀ i, ∑ j, A i j * v j = λ * v i)
-    (hAy : ∀ i, ∑ j, A i j * y j = λ * y i) :
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hAy : ∀ i, ∑ j, A i j * y j = lambdaVal * y i) :
     let P : ι → ι → ℝ :=
-      fun i j => (A i j * v j) / (λ * v i)
+      fun i j => (A i j * v j) / (lambdaVal * v i)
     let t : ι → ℝ := fun i => y i / v i
     ∀ i, ∑ j, P i j * t j = t i := by
   dsimp
   intro i
-  have hden : λ * v i ≠ 0 := ne_of_gt (mul_pos hλ (hv i))
+  have hden : lambdaVal * v i ≠ 0 := ne_of_gt (mul_pos hlambdaVal (hv i))
   have hv_ne : ∀ j, v j ≠ 0 := fun j => ne_of_gt (hv j)
   have hterm : ∀ j,
-      ((A i j * v j) / (λ * v i)) * (y j / v j) =
-        (A i j * y j) / (λ * v i) := by
+      ((A i j * v j) / (lambdaVal * v i)) * (y j / v j) =
+        (A i j * y j) / (lambdaVal * v i) := by
     intro j
     field_simp
     ring
   calc
-    ∑ j, ((A i j * v j) / (λ * v i)) * (y j / v j)
-        = ∑ j, (A i j * y j) / (λ * v i) := by
+    ∑ j, ((A i j * v j) / (lambdaVal * v i)) * (y j / v j)
+        = ∑ j, (A i j * y j) / (lambdaVal * v i) := by
             apply Finset.sum_congr rfl
             intro j hj
             exact hterm j
-    _ = (∑ j, A i j * y j) / (λ * v i) := by
+    _ = (∑ j, A i j * y j) / (lambdaVal * v i) := by
           rw [Finset.sum_div]
     _ = y i / v i := by
           rw [hAy i]
