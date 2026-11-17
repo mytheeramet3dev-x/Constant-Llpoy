@@ -169,6 +169,8 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
       linarith
     have hdist : dist r 0 < ε := by
       rw [Real.dist_eq]
+      change |r - 0| < ε
+      rw [abs_of_pos hrpos']
       dsimp [r]
       linarith
     obtain ⟨hgr, hfr, hfac⟩ := hevent r hdist
