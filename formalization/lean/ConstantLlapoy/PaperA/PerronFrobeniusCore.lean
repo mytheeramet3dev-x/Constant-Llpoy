@@ -558,10 +558,10 @@ theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
       ∑ k, basisVector i k * basisVector j k = 0 := by
     intro i j hij
     have hinner :=
-      (orthonormal_iff_ite.mp hA.eigenvectorBasis.orthonormal) i j
+      (orthonormal_iff_ite.mp hA.eigenvectorBasis.orthonormal) j i
     have hinner_zero :
-        inner ℝ (hA.eigenvectorBasis i) (hA.eigenvectorBasis j) = 0 := by
-      simpa [hij] using hinner
+        inner ℝ (hA.eigenvectorBasis j) (hA.eigenvectorBasis i) = 0 := by
+      simpa [Ne.symm hij] using hinner
     have hdot :
         dotProduct ((hA.eigenvectorBasis i).ofLp)
           ((hA.eigenvectorBasis j).ofLp) = 0 := by
