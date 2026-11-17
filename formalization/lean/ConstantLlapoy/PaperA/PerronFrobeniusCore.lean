@@ -485,7 +485,7 @@ theorem perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
     ∀ i j, eigenvalue i = lambdaVal → eigenvalue j = lambdaVal →
       i ≠ j → False := by
   classical
-  let I : Type := {i : κ // eigenvalue i = lambdaVal}
+  let I := {i : κ // eigenvalue i = lambdaVal}
   let w : I → κ → ℝ := fun i => basisVector i.1
   have hnonzero : ∀ i : I, ∃ k, w i k ≠ 0 := by
     intro i
