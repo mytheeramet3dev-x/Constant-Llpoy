@@ -645,3 +645,69 @@ theorem perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum
     i₀ j hi₀ hj hne'
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- For a real symmetric matrix, the characteristic-polynomial root
+multiplicity at a supplied positive Perron eigenvalue is exactly one.
+The proof uses Mathlib's exact multiset identity between characteristic
+roots and the real-spectral eigenvalue list, then counts the unique index.
+This is the algebraic-simplicity conclusion, not merely list-index
+uniqueness. -/
+theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
+    {κ : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
+    (A : Matrix κ κ ℝ) (hA : A.IsHermitian)
+    (v : κ → ℝ) (lambdaVal : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    Polynomial.rootMultiplicity (RCLike.ofReal lambdaVal) A.charpoly = 1 := by
+  classical
+  obtain ⟨i₀, hi₀, hunique⟩ :=
+    perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum
+      A hA v lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
+  have hindex_card :
+      (Finset.univ.filter
+        (fun i : κ => hA.eigenvalues i = lambdaVal)).card = 1 := by
+    apply Finset.card_eq_one.mpr
+    refine ⟨i₀, ?_⟩
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+      Finset.mem_singleton]
+    constructor
+    · intro hi
+      exact (hunique i hi).symm
+    · intro hi
+      subst i
+      exact hi₀
+  have hfiltered_card :
+      (Finset.univ.val.filter
+        (fun i : κ =>
+          RCLike.ofReal lambdaVal =
+            (RCLike.ofReal ∘ hA.eigenvalues) i)).card = 1 := by
+    have hfilter_eq :
+        Finset.univ.filter
+          (fun i : κ =>
+            RCLike.ofReal lambdaVal =
+              (RCLike.ofReal ∘ hA.eigenvalues) i) =
+        Finset.univ.filter
+          (fun i : κ => hA.eigenvalues i = lambdaVal) := by
+      ext i
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+        Function.comp_apply]
+      constructor
+      · intro hi
+        exact (RCLike.ofReal_injective hi).symm
+      · intro hi
+        rw [hi]
+    rw [← Finset.card_coe, hfilter_eq]
+    exact hindex_card
+  rw [← Polynomial.count_roots, hA.roots_charpoly_eq_eigenvalues,
+    Multiset.count_map]
+  simpa using hfiltered_card
+
+end ConstantLlapoy.PaperA
