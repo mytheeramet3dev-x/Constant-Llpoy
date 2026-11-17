@@ -376,3 +376,8 @@ A claim's status must reflect the exact tools and dependencies used in its evide
 > **No invisible tools, no floating versions, no untracked dependencies, and no claim of reproducibility without a reproducible record.**
 
 Constant Llapoy will treat every toolchain as an auditable part of the evidence process, not as an unquestioned authority.
+
+
+## 15. Meta-verification component and dependency snapshot
+
+Use `META_VERIFICATION_COMPONENT_REGISTER.md` as the current observed inventory for the Constant Llpoy Lean workflow and its status-affecting dependencies. The snapshot records the exact workflow blob SHA, the pinned `actions/checkout` and `leanprover/lean-action` commit references, Lean 4.36.0, the Lake project configuration, Mathlib commit, and transitive Lake package revisions. It also records `ubuntu-latest` and GitHub Actions status/log infrastructure as external boundaries whose exact runtime image and retention/attestation configuration are not established by the workflow source alone. SHA pinning and a lockfile improve identity and reproducibility; neither is a substitute for source, dependency, and provenance review. Reconcile this register with this inventory after any workflow, toolchain, manifest, or dependency change.
