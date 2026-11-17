@@ -82,4 +82,43 @@ theorem harmonic_value_equal_on_positive_transition
   exact weighted_average_at_max_forces_positive_weight_coordinates_equal
     w t i hw_nonneg hw_sum ht_max ht_harmonic
 
+
+/-- A globally maximal harmonic function on a finite stochastic support
+graph is constant on every vertex reachable from the maximizing vertex.
+This is the substantive propagation theorem used by the positive-eigenvector
+ratio argument: stochastic rows are the normalized Perron transition kernel. -/
+theorem harmonic_ratio_constant_on_pf_reachable
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (P : ι → ι → ℝ) (t : ι → ℝ) (i : ι)
+    (hP_nonneg : ∀ a b, 0 ≤ P a b)
+    (hP_sum : ∀ a, ∑ b, P a b = 1)
+    (h_harmonic : ∀ a, ∑ b, P a b * t b = t a)
+    (h_max : ∀ b, t b ≤ t i)
+    (h_reachable : ∀ j, PFReachable (fun a b => 0 < P a b) i j) :
+    ∀ j, t j = t i := by
+  have h_step : ∀ a b, t a = t i → 0 < P a b → t b = t a := by
+    intro a b ha hab
+    have h_local_max : ∀ k, t k ≤ t a := by
+      intro k
+      rw [ha]
+      exact h_max k
+    have h_local :=
+      weighted_average_at_max_forces_positive_weight_coordinates_equal
+        (P a) t a (fun k => hP_nonneg a k) (hP_sum a)
+        h_local_max (h_harmonic a)
+    exact (h_local b hab).symm
+  have h_path : ∀ {a b}, PFReachable (fun x y => 0 < P x y) a b →
+      t a = t i → t b = t i := by
+    intro a b hpath
+    induction hpath with
+    | refl a =>
+        intro ha
+        exact ha
+    | step hab htail ih =>
+        intro ha
+        have hnext : t _ = t _ := h_step _ _ ha hab
+        exact ih (hnext.trans ha)
+  intro j
+  exact h_path (h_reachable j) rfl
+
 end ConstantLlapoy.PaperA
