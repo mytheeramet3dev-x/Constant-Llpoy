@@ -642,3 +642,21 @@ theorem hasDerivAt_one_site_leading_entropy_disjoint
       (fun _v : ℝ => -(h ^ 2) / (2 * R ^ 2))
       0 u := by
   exact hasDerivAt_const u _
+
+/-- The incident-edge contribution relative to a disjoint-edge reference
+has the same exact leading derivative: the disjoint reference is constant
+in the varied edge coordinate. This remains a statement about the leading
+one-site correction, not the full reduced-state entropy. -/
+theorem hasDerivAt_one_site_leading_entropy_edge_contrast
+    {h R u : ℝ}
+    (hR : R + u ≠ 0) :
+    HasDerivAt
+      (fun v : ℝ =>
+        (-(h ^ 2) / (2 * (R + v) ^ 2)) -
+          (-(h ^ 2) / (2 * R ^ 2)))
+      (h ^ 2 / (R + u) ^ 3) u := by
+  have hincident := hasDerivAt_one_site_leading_entropy_incident hR
+  have hdisjoint : HasDerivAt
+      (fun _v : ℝ => -(h ^ 2) / (2 * R ^ 2)) 0 u := by
+    exact hasDerivAt_const u _
+  convert hincident.sub hdisjoint using 1 <;> ring
