@@ -227,6 +227,9 @@ For each claim, record the foundations, axioms, transitive assumptions, and join
 
 For claims about physical, empirical, computational, or other external targets, record the target-to-model mapping, omitted mechanisms, idealizations, parameter interpretation, boundary conditions, and applicability regime. Assess whether the theorem's conclusion stays within that regime and whether finite/discrete-to-continuum or thermodynamic extrapolations have a justified bridge. Separate mathematical correctness from model adequacy, empirical fit, explanatory relevance, and predictive validity. For pure mathematical claims, record a reasoned non-applicability decision.
 
+### K. Verification-system assurance / meta-verification (L-08, L-10, L-11, L-12)
+
+For each verification route, inventory the validators, parsers, certificate checkers, workflow definitions, evidence schemas, report generators, and status aggregation logic that can affect acceptance. Define their input/output contracts and failure states. Include malformed-input and negative tests, mutation tests where feasible, tests for skipped/stale jobs and mismatched revisions, and independent review of high-impact acceptance logic. Bind every result to the exact checker/workflow revision and configuration. Do not treat self-tests as a complete proof of the verifier's correctness; document shared implementation risks and residual trust.
 ## 7. Tool selection and applicability rationale
 
 For each tool family below, the matrix MUST record one of REQUIRED, NOT_REQUIRED, NOT_APPLICABLE, or UNKNOWN, plus a rationale.
@@ -395,6 +398,7 @@ A reviewer should be able to answer YES to all applicable questions:
 - Has L-14 model adequacy and applicability been assessed for external/applied claims?
 - Are countermodel searches distinguished from proofs of independence or necessity?
 - Are structural robustness checks distinguished from numerical stability checks?
+- Are validators, parsers, certificate checkers, CI orchestration, report generation, and status aggregation covered by meta-verification obligations (T21)?
 
 A NO or UNKNOWN answer blocks VERIFIED status.
 
