@@ -78,9 +78,9 @@ A layer may be marked Not applicable only with a claim-specific rationale. It ma
 
 ## 5. Highest-priority gaps and design decisions
 
-### G-01 — Meta-verification is only partially specified
+### G-01 — Meta-verification design specified; operational assurance remains open
 
-T21 is explicit in the threat model and obligation matrix. Current controls are allocated across L-08, L-10, L-11, and L-12. This is a cross-layer allocation for now, not a conclusion that a dedicated layer is unnecessary. Determine whether the controls have independent owners, testable acceptance criteria, and evidence not generated solely by the system being assessed.
+`META_VERIFICATION_SPECIFICATION.md` now defines component inventories, checker contracts, challenge tests, mutation/fault-injection requirements, exact revision binding, fail-closed aggregation invariants, independent review, evidence packages, and operational acceptance/failure gates. Provisional ownership remains across L-08, L-10, L-11, and L-12. This closes the design-specification gap only; no implementation, executed challenge suite, independent review, or operational validation is established by the document. The cross-layer versus dedicated-layer decision remains open and must be made only after the criteria in Section 12 of the specification are assessed against populated inventories and real evidence.
 
 ### G-02 — Foundational consistency cannot be promised as a universal pass/fail test
 
@@ -103,7 +103,7 @@ The candidate architecture must not be frozen as final until:
 3. Common-mode dependencies are mapped for every route described as independent.
 4. L-13 distinguishes consistency, satisfiability, realizability, and vacuity without overclaiming decidability.
 5. L-14 is mandatory for applicable external/applied claims and has a justified Not-applicable path for pure mathematics.
-6. T21 meta-verification has concrete negative tests, mutation tests where feasible, and independent review requirements.
+6. T21 meta-verification has a normative specification with concrete negative, malformed-input, mutation, fault-injection, revision-binding, fail-closed aggregation, and independent-review requirements; implementation and execution evidence remain separate acceptance gates.
 7. The verification obligation matrix can represent every row in this failure-mode matrix at claim level.
 8. All open gaps and residual risks are explicitly accepted; no gap is silently converted to a pass.
 
