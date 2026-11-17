@@ -560,14 +560,14 @@ theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
     have hinner :=
       (orthonormal_iff_ite.mp hA.eigenvectorBasis.orthonormal) i j
     have hinner_zero :
-        ⟪hA.eigenvectorBasis i, hA.eigenvectorBasis j⟫_ℝ = 0 := by
+        inner ℝ (hA.eigenvectorBasis i) (hA.eigenvectorBasis j) = 0 := by
       simpa [hij] using hinner
     have hdot :
-        dotProduct ((hA.eigenvectorBasis j).ofLp)
-          ((hA.eigenvectorBasis i).ofLp) = 0 := by
+        dotProduct ((hA.eigenvectorBasis i).ofLp)
+          ((hA.eigenvectorBasis j).ofLp) = 0 := by
       simpa [EuclideanSpace.inner_eq_star_dotProduct, star_trivial] using
         hinner_zero
-    simpa [basisVector, dotProduct, mul_comm] using hdot
+    simpa [basisVector, dotProduct] using hdot
   exact perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
     A v eigenvalue basisVector lambdaVal hA_nonneg hv hlambdaVal hAv
     hconnected hbasis_nonzero hbasis_eigen hbasis_orthogonal
