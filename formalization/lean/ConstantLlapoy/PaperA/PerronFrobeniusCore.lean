@@ -121,4 +121,30 @@ theorem harmonic_ratio_constant_on_pf_reachable
   intro j
   exact h_path (h_reachable j) rfl
 
+
+/-- On a finite nonempty state space, every real-valued harmonic function
+for an irreducible finite stochastic kernel is constant. The finite maximum
+is attained; the preceding propagation theorem then carries that maximum
+along every positive-transition path. -/
+theorem harmonic_function_constant_of_pf_connected
+    {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+    (P : ι → ι → ℝ) (t : ι → ℝ)
+    (hP_nonneg : ∀ a b, 0 ≤ P a b)
+    (hP_sum : ∀ a, ∑ b, P a b = 1)
+    (h_harmonic : ∀ a, ∑ b, P a b * t b = t a)
+    (h_connected : ∀ i j,
+      PFReachable (fun a b => 0 < P a b) i j) :
+    ∀ i j, t i = t j := by
+  classical
+  let i₀ : ι := Finset.univ.max' Finset.univ_nonempty
+  have h_max : ∀ j, t j ≤ t i₀ := by
+    intro j
+    exact Finset.le_max' _ _ (Finset.mem_univ j)
+  have h_constant : ∀ j, t j = t i₀ :=
+    harmonic_ratio_constant_on_pf_reachable
+      P t i₀ hP_nonneg hP_sum h_harmonic h_max
+      (fun j => h_connected i₀ j)
+  intro i j
+  exact (h_constant i).trans (h_constant j).symm
+
 end ConstantLlapoy.PaperA
