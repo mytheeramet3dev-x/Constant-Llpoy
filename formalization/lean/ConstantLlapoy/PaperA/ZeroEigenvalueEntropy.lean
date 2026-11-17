@@ -269,4 +269,30 @@ theorem eventually_factored_branch_two_sided_bounds
   rw [hfac]
   exact ⟨hlow, hupp⟩
 
+
+/-- Differentiate a factored branch with respect to an auxiliary parameter.
+For fixed r, the factor r^m is constant in that parameter. If m is even,
+then r^m is nonnegative on both sides of zero, and a bound on the derivative
+of the quotient transfers directly to the derivative of the full branch.
+
+This is a conditional bridge: it does not establish the required bound on
+the quotient derivative itself, nor uniformity of that bound in r or in
+additional parameters. -/
+theorem hasDerivAt_factored_parameter_branch_bound
+    {g : ℝ → ℝ} {g' u r B : ℝ} {m : ℕ}
+    (hg : HasDerivAt g g' u)
+    (hg' : |g'| ≤ B)
+    (heven : Even m) :
+    HasDerivAt (fun v => r ^ m * g v) (r ^ m * g') u ∧
+    |r ^ m * g'| ≤ B * r ^ m := by
+  have hpow : 0 ≤ r ^ m := heven.pow_nonneg r
+  constructor
+  · exact HasDerivAt.const_mul (r ^ m) hg
+  · calc
+      |r ^ m * g'| = r ^ m * |g'| := by
+        rw [abs_mul, abs_of_nonneg hpow]
+      _ ≤ r ^ m * B :=
+        mul_le_mul_of_nonneg_left hg' hpow
+      _ = B * r ^ m := by ring
+
 end ConstantLlapoy.PaperA
