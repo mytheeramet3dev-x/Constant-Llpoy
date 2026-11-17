@@ -65,4 +65,21 @@ theorem ratio_globally_constant_of_pf_connected
   intro i j
   exact ratio_eq_of_pf_reachable (hconnected i j) hedge
 
+
+/-- A stochastic row whose harmonic value is maximal can place positive
+weight only on coordinates with the same value. This packages the
+weighted-average lemma in the transition-kernel form used by the Perron
+ratio argument. -/
+theorem harmonic_value_equal_on_positive_transition
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (w : ι → ℝ) (t : ι → ℝ)
+    (i : ι)
+    (hw_nonneg : ∀ j, 0 ≤ w j)
+    (hw_sum : ∑ j, w j = 1)
+    (ht_max : ∀ j, t j ≤ t i)
+    (ht_harmonic : ∑ j, w j * t j = t i) :
+    ∀ j, 0 < w j → t j = t i := by
+  exact weighted_average_at_max_forces_positive_weight_coordinates_equal
+    w t i hw_nonneg hw_sum ht_max ht_harmonic
+
 end ConstantLlapoy.PaperA
