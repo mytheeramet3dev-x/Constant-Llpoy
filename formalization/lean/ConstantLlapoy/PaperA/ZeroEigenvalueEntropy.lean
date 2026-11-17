@@ -379,4 +379,24 @@ theorem exists_uniform_fderiv_norm_bound_on_compact_of_contDiff
   intro p hp
   exact (hC p hp).trans (le_max_left C 0)
 
+
+/-- A continuous, strictly positive leading coefficient on a nonempty compact
+parameter set has a uniform strictly positive lower bound.
+
+This is the compactness step needed to prevent the leading coefficient in a
+fixed-order eigenvalue factorization from approaching zero as the auxiliary
+parameter varies. It does not establish that the physical eigenvalue branch
+has a common vanishing order or a continuous leading-coefficient map. -/
+theorem exists_uniform_positive_lower_bound_on_compact
+    {a : ℝ → ℝ} {K : Set ℝ}
+    (hK : IsCompact K)
+    (hne : K.Nonempty)
+    (hcont : ContinuousOn a K)
+    (hpos : ∀ u ∈ K, 0 < a u) :
+    ∃ c : ℝ, 0 < c ∧ ∀ u ∈ K, c ≤ a u := by
+  obtain ⟨u₀, hu₀, hmin⟩ := hK.exists_isMinOn hne hcont
+  refine ⟨a u₀, hpos u₀ hu₀, ?_⟩
+  intro u hu
+  exact hmin.2 u hu
+
 end ConstantLlapoy.PaperA
