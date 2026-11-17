@@ -265,3 +265,35 @@ theorem perron_transition_support_connected
         ih
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- Any two eigenvectors for the same strictly positive eigenvalue are
+proportional when the nonnegative matrix has connected positive support and
+one eigenvector is strictly positive. The proof passes through the stochastic
+Perron normalization and finite harmonic-function constancy. -/
+theorem perron_eigenvector_ratios_constant_of_connected
+    {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+    (A : ι → ι → ℝ) (v y : ι → ℝ) (lambdaVal : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hAy : ∀ i, ∑ j, A i j * y j = lambdaVal * y i)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    ∀ i j, y i / v i = y j / v j := by
+  let P : ι → ι → ℝ :=
+    fun i j => (A i j * v j) / (lambdaVal * v i)
+  let t : ι → ℝ := fun i => y i / v i
+  have hkernel := perron_transition_kernel_of_positive_eigenvector
+    A v lambdaVal hA_nonneg hv hlambdaVal hAv
+  have hharmonic := perron_eigenvector_ratio_is_harmonic
+    A v y lambdaVal hv hlambdaVal hAv hAy
+  have hP_connected := perron_transition_support_connected
+    A v lambdaVal hv hlambdaVal hconnected
+  exact harmonic_function_constant_of_pf_connected
+    P t hkernel.1 hkernel.2 hharmonic hP_connected
+
+end ConstantLlapoy.PaperA
