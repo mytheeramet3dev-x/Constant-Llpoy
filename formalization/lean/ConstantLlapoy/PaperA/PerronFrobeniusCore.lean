@@ -220,3 +220,48 @@ theorem perron_eigenvector_ratio_is_harmonic
 
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- The Doob-normalized Perron transition kernel has exactly the same
+positive-edge support as the original nonnegative matrix. Positivity of the
+eigenvector coordinates and eigenvalue is essential here. -/
+theorem perron_transition_positive_iff
+    {ι : Type*}
+    (A : ι → ι → ℝ) (v : ι → ℝ) (lambdaVal : ℝ)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (i j : ι) :
+    0 < (A i j * v j) / (lambdaVal * v i) ↔ 0 < A i j := by
+  have hden : 0 < lambdaVal * v i := mul_pos hlambdaVal (hv i)
+  constructor
+  · intro h
+    have hnum : 0 < A i j * v j :=
+      (div_pos_iff_of_pos_right hden).mp h
+    exact (mul_pos_iff_of_pos_right (hv j)).mp hnum
+  · intro h
+    exact div_pos (mul_pos h (hv j)) hden
+
+/-- Positive-edge paths in the matrix support transfer unchanged to the
+Perron transition kernel. Thus irreducibility/connectivity is not lost by
+the eigenvector normalization. -/
+theorem perron_transition_support_connected
+    {ι : Type*}
+    (A : ι → ι → ℝ) (v : ι → ℝ) (lambdaVal : ℝ)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    ∀ i j, PFReachable
+      (fun a b => 0 < (A a b * v b) / (lambdaVal * v a)) i j := by
+  intro i j
+  induction hconnected i j with
+  | refl a =>
+      exact PFReachable.refl a
+  | step hab htail ih =>
+      exact PFReachable.step
+        ((perron_transition_positive_iff A v lambdaVal hv hlambdaVal _ _).2 hab)
+        ih
+
+end ConstantLlapoy.PaperA
