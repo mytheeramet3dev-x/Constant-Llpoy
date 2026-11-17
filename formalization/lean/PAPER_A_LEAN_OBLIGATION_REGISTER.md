@@ -65,3 +65,40 @@ This theorem is conditional on explicit eventual nonnegativity, eventual factori
 | PA-LEAN-022 | Transfer a quotient derivative bound through an even-order factorization in an auxiliary parameter | BUILD_VERIFIED; AXIOM_AUDITED | `hasDerivAt_factored_parameter_branch_bound`; pinned CI run 44008011374 at commit `0466f979b334bb7a098ae141acf4001f3892fa18`. For fixed radial variable r, even m, and an explicit bound `|g'| ≤ B`, proves differentiability of `r^m g` in the auxiliary scalar parameter and transfers the bound to `B r^m`. The quotient derivative bound remains a hypothesis; no uniformity in r or additional parameters is proved. |
 
 | PA-LEAN-023 | Local operator-norm boundedness of the derivative of an analytic scalar quotient | BUILD_VERIFIED; AXIOM_AUDITED | `exists_eventually_fderiv_norm_bound_of_analyticAt`; pinned CI run 44009012088 at commit `473a42442f3b0c82717f41864370ba260261f26f`. Analyticity at zero gives a neighborhood on which the Fréchet derivative norm is bounded. This is local in the scalar argument only; it does not yet prove a joint bound in radial and auxiliary parameters or connect the derivative to the physical eigenvalue branch. The run's pinned Lean build and configured axiom audit succeeded; `lake test` and `lake lint` were not run.
+
+
+## ZF-4c / ZF-5 source-to-formalization audit (open)
+
+The frozen conditional source lemma `source_snapshots/paper-a/docs/entropy_schur_remainder_lemma.md`
+assumes a jointly (C^1) positive-semidefinite matrix family (ho(r,u)), a
+(C^1) block change of basis, a uniformly positive large block (L\ge cI),
+and model-specific Schur-complement estimates
+[
+\|Q(r,u)\|\le Kr^4,\qquad
+\|\partial_u Q(r,u)\|\le Kr^4/J.
+]
+None of these matrix-level hypotheses is currently derived from the full TFIM
+ground-state reduced pair in Lean. The generic compact derivative-bound
+lemmas above do not discharge this obligation: an application still needs
+joint regularity of the actual quotient or matrix-valued Schur complement and
+a specified compact parameter set.
+
+**Logarithm correction:** the isolated-eigenvalue paragraph in that source
+lemma says that (0<\lambda\le Kr^4) bounds
+\(|\ln\lambda|\) by (O(1+|\ln r|)). This inference is not valid from an
+upper bound alone: (lambda) may be arbitrarily smaller than (r^4).
+A valid proof needs a lower/relative bound such as
+(c r^m\le\lambda\le C r^m) on the positive branch, or a separate
+analytic order-of-vanishing argument at each fixed parameter together with
+a justified uniformity argument. The existing scalar ZF-2/ZF-3 lemmas
+provide ingredients only pointwise in the radial variable; they do not yet
+supply a common order (m), a compact-uniform positive leading coefficient,
+or the required matrix/eigenvalue derivative estimate.
+
+Accordingly, the entropy–Schur endpoint estimate remains **OPEN** and must
+not be treated as proved by the generic entropy derivative bound or by the
+projector analyticity statement. Next formalization target: derive the
+matrix-level (Q) and (\partial_u Q) estimates from the actual TFIM
+reduced-state block entries, then prove a valid lower/relative eigenvalue
+bound (or use the zero-branch analytic case split) before applying the
+logarithmic entropy estimate. No upstream Absolute Symmetry files were changed.
