@@ -365,7 +365,7 @@ theorem proportional_vector_orthogonal_to_positive_is_zero
         ring
   rw [horth] at hfactor
   have hc_zero : c = 0 :=
-    (mul_eq_zero.mp hfactor).resolve_right (ne_of_gt hsum_pos)
+    (mul_eq_zero.mp hfactor.symm).resolve_right (ne_of_gt hsum_pos)
   intro i
   rw [hc i, hc_zero]
   simp
