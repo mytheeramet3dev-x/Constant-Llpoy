@@ -680,7 +680,7 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
       Finset.mem_singleton]
     constructor
     · intro hi
-      exact (hunique i hi).symm
+      exact hunique i hi
     · intro hi
       subst i
       exact hi₀
@@ -704,8 +704,8 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
         exact (RCLike.ofReal_injective hi).symm
       · intro hi
         rw [hi]
-    rw [← Finset.card_coe, hfilter_eq]
-    exact hindex_card
+    rw [← Finset.filter_val, hfilter_eq]
+    simpa only [Finset.card] using hindex_card
   rw [← Polynomial.count_roots, hA.roots_charpoly_eq_eigenvalues,
     Multiset.count_map]
   simpa using hfiltered_card
