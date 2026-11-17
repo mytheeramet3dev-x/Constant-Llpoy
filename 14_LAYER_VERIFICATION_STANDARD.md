@@ -424,6 +424,11 @@ The earlier catalog contained ten conceptual functions. Their substance is prese
 The following controls apply across all relevant layers; they are not additional numbered layers:
 
 - Stable claim identity and exact source version.
+- **B — Countermodel and independence testing:** use L-03 for scope and assumption challenges, L-06 for exact finite/model checks, and L-09 for adversarial search. Distinguish a discovered counterexample from a bounded search that found none; distinguish constructing a countermodel from formally proving independence or necessity. A search that finds no counterexample is never proof of validity.
+- **C — Proof strategy and circularity audit:** maintain a claim-level dependency graph across definitions, lemmas, theorems, imported results, and assumptions. L-02 and L-11 MUST assess cycles, hidden self-dependence, and whether foundational results are genuinely prior to the claims they support.
+- **E — Robustness and perturbation audit:** L-03 and L-09 MUST distinguish structural robustness (changes to assumptions, parameters, topology, or model class) from numerical stability (rounding, conditioning, and finite precision). State perturbation classes, admissible ranges, quantitative bounds, and failure thresholds where relevant.
+- Foundational consistency, joint satisfiability, and non-vacuity assessment under L-13.
+- Model adequacy and applicability assessment under L-14 whenever a claim refers to an external or applied target.
 - Explicit mathematical assumptions, domains, quantifiers, and side conditions.
 - Semantic correspondence between representations.
 - Claim-specific trust-boundary declaration.
