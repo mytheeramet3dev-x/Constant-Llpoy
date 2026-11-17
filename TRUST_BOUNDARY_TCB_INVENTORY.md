@@ -279,3 +279,8 @@ A claim can be marked Verified only when its mathematical obligations, formal or
 > **Trust as little as necessary; disclose everything that is trusted; independently check what can be checked; never report more certainty than the evidence warrants.**
 
 Constant Llapoy does not seek a mythical zero-trust proof system. It seeks a transparent, minimized, claim-specific, and independently inspectable trust base.
+
+
+## 14. Meta-verification component register
+
+The current observed verification-system components and trust boundaries are catalogued in `META_VERIFICATION_COMPONENT_REGISTER.md`. That register is an initial partial snapshot, not a complete TCB audit. In particular, it records the single observed Lean GitHub Actions workflow, its pinned action references, the `ubuntu-latest` runner boundary, the Lean/Lake toolchain and dependency lock, and the fact that a dedicated repository-owned meta-verification test harness, certificate checker, and status aggregator were not observed in the inspected tracked-tree snapshot. Treat unobserved components as unknown rather than proving their nonexistence. Update this inventory when new status-affecting components are introduced.
