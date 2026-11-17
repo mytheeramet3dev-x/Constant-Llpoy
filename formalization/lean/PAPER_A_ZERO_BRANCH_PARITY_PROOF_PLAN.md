@@ -119,3 +119,44 @@ supply a bound on a parameter derivative, uniform constants over a compact
 set of auxiliary parameters, a two-sided logarithmic estimate on the
 punctured positive branch, or the hypotheses needed by the entropy
 derivative bound.
+
+
+## ZF-4a — Scalar local derivative boundedness from analyticity (verified)
+
+The declaration `exists_eventually_fderiv_norm_bound_of_analyticAt` proves that
+if `g : ℝ → ℝ` is analytic at zero, then there is a nonnegative constant
+`B` and a neighborhood of zero on which
+
+\[
+\|\operatorname{fderiv}_{\mathbb R}(g)(u)\| \le B.
+\]
+
+The proof uses analyticity to obtain `ContDiffAt ℝ 1 g 0`, continuity
+of the Fréchet derivative, and the metric continuity estimate. The bound
+is in operator norm, but the theorem is still one-dimensional and local
+in the argument of this single function. It is **not** a joint estimate
+for a quotient `g(r,u)` uniformly over radial values and auxiliary
+parameters.
+
+**Evidence:** commit `473a42442f3b0c82717f41864370ba260261f26f`,
+CI run [44009012088](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44009012088).
+The pinned Lean/Mathlib build and configured axiom audit succeeded.
+`lake test` and `lake lint` were not run.
+
+## ZF-4b — Transfer a supplied parameter-derivative bound (verified)
+
+The declaration `hasDerivAt_factored_parameter_branch_bound` proves, for
+fixed `r`, that differentiating `r^m g(u)` gives
+`r^m g'(u)`; when `m` is even, an explicit bound
+`|g'(u)| ≤ B` transfers to `|r^m g'(u)| ≤ B r^m`.
+
+**Evidence:** commit `0466f979b334bb7a098ae141acf4001f3892fa18`,
+CI run [44008011374](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44008011374).
+
+**Remaining ZF-4 obligation:** formalize the actual quotient as a joint
+function of radial and auxiliary parameters, establish a compact
+parameter neighborhood on which its derivative is bounded, and ensure
+the same vanishing order and positive leading coefficient persist there.
+A pointwise analytic derivative bound cannot be promoted to that joint
+uniform estimate without additional joint regularity and compactness
+hypotheses.
