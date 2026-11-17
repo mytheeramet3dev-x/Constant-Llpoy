@@ -1,5 +1,6 @@
 import Mathlib
 import ConstantLlapoy.PaperA.WeakCoupling
+import ConstantLlapoy.PaperA.PerronFrobeniusCore
 
 open scoped Topology
 
