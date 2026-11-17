@@ -608,3 +608,33 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
           Ct ^ 2 * Cℓ / 2) * ε ^ 4 := by ring
 
 end ConstantLlapoy.PaperA
+
+
+/-- Exact derivative of the leading one-site entropy correction
+\(-h^2/(2R^2)\) when an edge incident to the observed site changes
+the local coupling sum from (R_0) to (R_0+u).
+This is the leading perturbative term only; it does not include the
+higher-order reduced-state remainder. -/
+theorem hasDerivAt_one_site_leading_entropy_incident
+    {h R u : ℝ}
+    (hR : R + u ≠ 0) :
+    HasDerivAt
+      (fun v : ℝ => -(h ^ 2) / (2 * (R + v) ^ 2))
+      (h ^ 2 / (R + u) ^ 3) u := by
+  have hlin : HasDerivAt (fun v : ℝ => R + v) 1 u := by
+    simpa using (hasDerivAt_id u).const_add R
+  have hinv : HasDerivAt (fun v : ℝ => (R + v)⁻¹)
+      (-((R + u)⁻¹) ^ 2) u := by
+    convert hlin.inv hR using 1 <;> ring
+  have hpow := hinv.pow 2
+  have hscaled := hpow.const_mul (-(h ^ 2 / 2))
+  convert hscaled using 1 <;> field_simp [hR] <;> ring
+
+/-- A disjoint edge does not change the leading one-site entropy
+correction, so its derivative is exactly zero. -/
+theorem hasDerivAt_one_site_leading_entropy_disjoint
+    {h R u : ℝ} :
+    HasDerivAt
+      (fun _v : ℝ => -(h ^ 2) / (2 * R ^ 2))
+      0 u := by
+  exact hasDerivAt_const u _
