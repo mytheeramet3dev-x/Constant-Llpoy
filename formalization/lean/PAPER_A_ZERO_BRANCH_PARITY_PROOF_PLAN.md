@@ -67,3 +67,29 @@ Do not hide the positive/negative witness construction inside an unproved assump
 ## Exact scope of the verified result
 
 The combined theorem takes eventual nonnegativity, eventual factorization, continuity of (g) at zero, and (g(0)\ne0) as explicit hypotheses. The analytic factorization theorem can supply the factorization and nonzero quotient for a nontrivial analytic branch, but the full application still requires passing those outputs and the branch's nonnegativity into the combined theorem. No joint parameter-uniform order or lower bound is established here.
+
+
+## ZF-3a — Scalar quotient bounds (verified)
+
+The declaration `eventually_quotient_two_sided_bounds` in
+`ZeroEigenvalueEntropy.lean` proves that if `g` is continuous at zero and
+`g 0 > 0), then on some neighborhood of zero,
+
+[
+g(0)/2 < g(r) < 3g(0)/2.
+]
+
+This is a scalar continuity estimate for the quotient only. It does not yet
+multiply the estimate through the factorization `f(r)=r^m g(r)`, establish
+bounds for `f`, prove a derivative bound, or establish uniformity in an
+auxiliary parameter.
+
+**Evidence:** commit `d6a92c2e032e10eb8764754d875cc18b145024e3`,
+CI run [44003303543](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44003303543).
+The sole workflow job completed the pinned Lean/Mathlib build and configured
+axiom audit successfully. `lake test` and `lake lint` were not run.
+
+**Next obligations:** combine the quotient estimate with the even-order
+factorization on the correct one-sided or two-sided domain; then prove the
+differentiated coefficient estimate and the two-sided logarithmic control
+needed by the positive-branch entropy derivative lemma.
