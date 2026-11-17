@@ -1,4 +1,4 @@
-# Constant Llapoy — Verification Layer Catalog
+# Constant Llapoy — Verification Layer Catalog (14-Layer Candidate)
 
 **Document status:** Current 12-layer architecture catalog  
 **Version:** 0.2.0  
@@ -17,7 +17,7 @@ The 12-layer architecture is the approved current organization of verification f
 
 This catalog does not claim that all layers are implemented, validated, or applicable to every mathematical claim.
 
-## 2. Current layer catalog
+## 2. Current 14-layer candidate catalog
 
 | ID | Layer | Core responsibility | Initial implementation posture |
 |---|---|---|---|
@@ -33,20 +33,27 @@ This catalog does not claim that all layers are implemented, validated, or appli
 | L-10 | Manuscript-to-Artifact Traceability and Synchronization | Bind claims to exact manuscripts, specifications, proofs, code, certificates, and reports; detect drift | Newly specified as a dedicated layer; end-to-end synchronization controls remain to be established |
 | L-11 | Trust, Axiom, Dependency, and Supply-Chain Audit | Audit TCB, axioms, dependencies, provenance, and common-mode risks | Foundational inventories and some audit mechanisms exist; claim-specific coverage remains incomplete |
 | L-12 | Reproducibility, Independent Review, and Evidence Governance | Reproduce, review, preserve, and honestly report verification evidence | Governance and CI infrastructure exist in part; end-to-end coverage remains incomplete |
+| L-13 | Foundational Consistency, Assumption Satisfiability, and Non-Vacuity Audit | Assess foundational assumptions, joint satisfiability, realizability, and vacuity | Newly specified candidate; no general consistency or satisfiability decision procedure is claimed |
+| L-14 | Mathematical Model Adequacy and Applicability Audit | Assess whether the model supports the intended interpretation and application | Newly specified candidate; claim-specific model maps and adequacy evidence remain to be established |
 
 **Important identifier change:** Lean 4 is **L-04** in version 0.2.0. In the previous ten-function catalog (version 0.1.0), Lean 4 was L-03. Historical references must retain their original context; do not silently rewrite historical records.
 
-## 3. Preservation of the prior ten-function catalog
+## 3. Preservation of prior catalogs and identifier stability
 
 All ten functions in catalog version 0.1.0 are preserved in substance. The previous Mathematical Claim Specification function is integrated with Literature and Prior-Art in L-01. The previous L-02 function remains L-02. Previous L-03 through L-10 functions are retained with new identifiers L-04 through L-12, respectively. The three additions are Literature/Prior-Art (integrated into L-01), Boundary/Domain/Scope-Quantifier Audit (L-03), and Manuscript-to-Artifact Traceability/Synchronization (L-10).
 
-The exact migration table and rationale are maintained in Section 5 of `12_LAYER_VERIFICATION_STANDARD.md`. The prior catalog content remains available in repository history.
+The exact migration table and rationale are maintained in Section 5 of `14_LAYER_VERIFICATION_STANDARD.md`. The previous 12-layer candidate and earlier ten-function catalog remain available in repository history; historical identifiers MUST NOT be silently rewritten.
 
 ## 4. Cross-layer obligations
 
 The following controls apply across all relevant layers and are not additional numbered layers:
 
 - Stable claim identity and exact source revision.
+- Countermodel search versus proof of independence/necessity (L-03, L-06, L-09).
+- Proof-dependency graph and circularity audit (L-02, L-11).
+- Structural robustness and perturbation analysis, distinct from numerical stability (L-03, L-09).
+- Foundational consistency, joint satisfiability, and non-vacuity (L-13).
+- Model adequacy and applicability, when an external/applied target is claimed (L-14).
 - Explicit assumptions, domains, quantifiers, and side conditions.
 - Semantic correspondence between manuscript and formal/computational representations.
 - Claim-specific trust-boundary declaration.
@@ -62,7 +69,7 @@ Every layer must be evaluated against the exact claim and the threat model. A la
 
 Layer applicability is claim-specific and must be recorded in the Verification Obligation Matrix as Required, Conditional, Not applicable (with written justification), or Not assessed.
 
-Layer status and claim status must not be conflated. The normative layer statuses are Specified, Implemented, Validated, Partially Implemented, Not Implemented, Inconclusive, and Failed. Claim statuses remain Verified, Partially Verified, Inconclusive, Failed, and Not Verified, as defined by the Architecture Charter and the 12-layer standard.
+Layer status and claim status must not be conflated. The normative layer statuses are Specified, Implemented, Validated, Partially Implemented, Not Implemented, Inconclusive, and Failed. Claim statuses remain Verified, Partially Verified, Inconclusive, Failed, and Not Verified, as defined by the Architecture Charter and the 14-layer candidate standard.
 
 A green CI result, a source file, a catalog entry, or a completed layer design does not automatically verify a mathematical claim.
 
