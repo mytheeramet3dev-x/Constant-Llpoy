@@ -623,12 +623,16 @@ theorem hasDerivAt_one_site_leading_entropy_incident
       (h ^ 2 / (R + u) ^ 3) u := by
   have hlin : HasDerivAt (fun v : ℝ => R + v) 1 u := by
     simpa using (hasDerivAt_id u).const_add R
-  have hinv : HasDerivAt (fun v : ℝ => (R + v)⁻¹)
-      (-((R + u)⁻¹) ^ 2) u := by
-    convert hlin.inv hR using 1 <;> ring
-  have hpow := hinv.pow 2
-  have hscaled := hpow.const_mul (-(h ^ 2 / 2))
-  convert hscaled using 1 <;> field_simp [hR] <;> ring
+  have hsq := hlin.pow 2
+  have hden : HasDerivAt (fun v : ℝ => 2 * (R + v) ^ 2)
+      (4 * (R + u)) u := by
+    convert hsq.const_mul 2 using 1 <;> ring
+  have hnum : HasDerivAt (fun _v : ℝ => -(h ^ 2)) 0 u :=
+    hasDerivAt_const u _
+  have hden_ne : 2 * (R + u) ^ 2 ≠ 0 :=
+    mul_ne_zero (by norm_num) (pow_ne_zero 2 hR)
+  convert hnum.div hden hden_ne using 1 <;>
+    field_simp [hR] <;> ring
 
 /-- A disjoint edge does not change the leading one-site entropy
 correction, so its derivative is exactly zero. -/
