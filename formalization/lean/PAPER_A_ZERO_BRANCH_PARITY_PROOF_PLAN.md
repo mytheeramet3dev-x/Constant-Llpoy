@@ -2,7 +2,7 @@
 
 **Repository:** Constant Llapoy  
 **Scope:** Paper A, one-variable local branch only  
-**Status:** OPEN — proof target specified; no theorem is claimed until a pinned Lean build verifies it.
+**Status:** BUILD_VERIFIED; AXIOM_AUDITED — the complete ZF-2 conclusion is formalized in `ZeroEigenvalueEntropy.lean` and passed pinned CI run `43998392546` at commit `0c4f6ed29e8ef20d8870d6d9e60c9b8c104ec133`. The workflow's Lean build and configured axiom audit succeeded. `lake test` and `lake lint` were not run.
 
 ## Target
 
@@ -52,3 +52,18 @@ Do not hide the positive/negative witness construction inside an unproved assump
 - The conclusion is pointwise in the base parameter. It does not establish a common order (m), a uniform positive lower bound for (g(0,u)), or compact-neighborhood estimates in (u).
 - The identically-zero analytic branch is excluded by the nontriviality assumption and must be handled separately under ZF-8.
 - No entropy derivative at the zero branch is claimed by this document.
+
+
+## Verified Lean declarations
+
+- `eventually_pos_of_continuousAt_of_pos`: continuity preserves positivity near zero.
+- `eventually_neg_of_continuousAt_of_neg`: continuity preserves negativity near zero.
+- `positive_leading_coefficient_of_nonnegative_factorization`: nonnegativity plus a local factorization and a nonzero continuous quotient force (g(0)>0).
+- `even_order_of_negative_factorization_witness`: the negative-side algebraic parity contradiction.
+- `even_order_and_positive_leading_coefficient_of_nonnegative_factorization`: combines the positive and negative witness constructions to conclude `Even m ∧ 0 < g 0`.
+
+**Evidence:** commit `0c4f6ed29e8ef20d8870d6d9e60c9b8c104ec133`; CI run [43998392546](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/43998392546), job `Pinned Lean and Mathlib build`, including the configured axiom audit.
+
+## Exact scope of the verified result
+
+The combined theorem takes eventual nonnegativity, eventual factorization, continuity of (g) at zero, and (g(0)\ne0) as explicit hypotheses. The analytic factorization theorem can supply the factorization and nonzero quotient for a nontrivial analytic branch, but the full application still requires passing those outputs and the branch's nonnegativity into the combined theorem. No joint parameter-uniform order or lower bound is established here.
