@@ -371,3 +371,47 @@ theorem proportional_vector_orthogonal_to_positive_is_zero
   simp
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- Two nonzero vectors that are both proportional to the same strictly
+positive vector cannot be orthogonal. This isolates the contradiction needed
+to show that an orthonormal eigenbasis contains at most one vector for the
+Perron eigenvalue. -/
+theorem nonzero_proportional_vectors_not_orthogonal
+    {ι : Type*} [Fintype ι] [Nonempty ι]
+    (v y z : ι → ℝ)
+    (hv : ∀ i, 0 < v i)
+    (hy_nonzero : ∃ i, y i ≠ 0)
+    (hz_nonzero : ∃ i, z i ≠ 0)
+    (hprop_y : ∃ c : ℝ, ∀ i, y i = c * v i)
+    (hprop_z : ∃ d : ℝ, ∀ i, z i = d * v i)
+    (horth : ∑ i, y i * z i = 0) :
+    False := by
+  classical
+  obtain ⟨c, hcy⟩ := hprop_y
+  obtain ⟨d, hdz⟩ := hprop_z
+  have hc_ne : c ≠ 0 := by
+    intro hc
+    obtain ⟨i, hi⟩ := hy_nonzero
+    apply hi
+    rw [hcy i, hc]
+    simp
+  have horth_v : ∑ i, v i * z i = 0 := by
+    have hmul : c * (∑ i, v i * z i) = 0 := by
+      calc
+        c * (∑ i, v i * z i) = ∑ i, (c * v i) * z i := by
+          rw [Finset.mul_sum]
+        _ = ∑ i, y i * z i := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          rw [hcy i]
+        _ = 0 := horth
+    exact (mul_eq_zero.mp hmul).resolve_left hc_ne
+  have hz_zero := proportional_vector_orthogonal_to_positive_is_zero
+    v z hv horth_v hprop_z
+  obtain ⟨i, hi⟩ := hz_nonzero
+  exact hi (hz_zero i)
+
+end ConstantLlapoy.PaperA
