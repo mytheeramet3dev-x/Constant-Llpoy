@@ -655,7 +655,8 @@ theorem hasDerivAt_one_site_leading_entropy_edge_contrast
         (-(h ^ 2) / (2 * (R + v) ^ 2)) -
           (-(h ^ 2) / (2 * R ^ 2)))
       (h ^ 2 / (R + u) ^ 3) u := by
-  have hincident := hasDerivAt_one_site_leading_entropy_incident hR
+  have hincident := hasDerivAt_one_site_leading_entropy_incident
+    (h := h) (R := R) (u := u) hR
   have hdisjoint : HasDerivAt
       (fun _v : ℝ => -(h ^ 2) / (2 * R ^ 2)) 0 u := by
     exact hasDerivAt_const u _
