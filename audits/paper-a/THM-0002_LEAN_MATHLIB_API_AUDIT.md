@@ -75,3 +75,46 @@ It may **not**:
 ## 6. Next bounded task
 
 Complete a declaration-level audit of the pinned Mathlib matrix and finite-dimensional spectral files, recording exact candidate declarations and assumptions. If no applicable PF simplicity theorem exists, design a separate, reviewable finite-dimensional PF development before connecting it to the TFIM matrix. Keep this work inside Constant Llapoy.
+
+
+## 7. Deeper spectral API inspection
+
+A second pass inspected these pinned files:
+
+- `Mathlib/Analysis/Matrix/Spectrum.lean`
+  - For Hermitian matrices: `Matrix.IsHermitian.eigenvalues`, `eigenvectorBasis`, `mulVec_eigenvectorBasis`, `eigenvalues_mem_spectrum_real`, and `spectral_theorem`.
+  - The eigenvalue indexing is ordered antitonically through `eigenvalues₀_antitone`.
+- `Mathlib/Analysis/InnerProductSpace/Spectrum.lean`
+  - General finite-dimensional self-adjoint spectral decomposition and eigenspace orthogonality.
+- `Mathlib/LinearAlgebra/Eigenspace/Matrix.lean`
+  - Matrix/linear-map spectrum equivalences and diagonal matrix eigenvalue facts.
+- `Mathlib/LinearAlgebra/Matrix/PosDef.lean`
+  - Positive-semidefinite and positive-definite quadratic-form interfaces.
+- `Mathlib/LinearAlgebra/Matrix/Irreducible/Defs.lean`
+  - Positive-entry quiver and strong-connectivity interface.
+
+These results provide the real-symmetric spectral foundation and matrix irreducibility interface, but the inspected declarations still do not give the PF conclusion (a strictly positive top eigenvector and one-dimensional top eigenspace) for a general irreducible entrywise-nonnegative symmetric matrix.
+
+## 8. Candidate self-contained symmetric PF proof (not yet formalized)
+
+For a finite index type and a real symmetric matrix A with nonnegative entries and connected positive-entry graph:
+
+1. By the symmetric spectral theorem, the largest eigenvalue λ exists and is the maximum Rayleigh quotient.
+2. For a maximizing unit vector x, the coordinatewise absolute-value vector |x| has the same norm and satisfies
+   `⟪|x|, A |x|⟫ ≥ ⟪x, A x⟫`,
+   because every A_ij is nonnegative and `|x_i||x_j| ≥ x_i x_j`.
+3. Maximality forces |x| to be a maximizer too, hence an eigenvector for λ.
+4. The eigen-equation and graph connectivity imply every coordinate of this nonnegative eigenvector is strictly positive: if one coordinate were zero, the eigen-equation forces all positive-neighbors to be zero; connectivity propagates this to every coordinate, contradicting unit norm.
+5. For any other top eigenvector y, equality in the Rayleigh absolute-value inequality forces no positive edge to join coordinates of opposite nonzero signs. Since the positive-entry graph is connected and the strictly positive top eigenvector exists, the top eigenspace must be one-dimensional. A formal proof must handle zero coordinates and the equality condition carefully; this step is not accepted as complete merely from the outline.
+
+This is a candidate proof architecture, not a Lean proof and not a claim that all required inequalities/API lemmas have been located. In particular, the equality case in step 5 must be formalized rigorously.
+
+## 9. Updated disposition
+
+- Symmetric spectral decomposition API: LOCATED.
+- Positive-entry irreducibility API: LOCATED.
+- Ready-made symmetric Perron–Frobenius simplicity theorem: NOT LOCATED in inspected files.
+- Candidate elementary proof route: IDENTIFIED; equality-case proof still open.
+- TFIM Hamiltonian encoding and correspondence: NOT_STARTED.
+- THM-0002 Lean formalization: NOT_STARTED.
+- Full claim: NOT_VERIFIED.
