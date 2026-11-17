@@ -169,11 +169,11 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
       linarith
     have hdist : dist r 0 < ε := by
       rw [Real.dist_eq]
-      change |r - 0| < ε
+      simp only [sub_zero]
       rw [abs_of_pos hrpos']
       dsimp [r]
       linarith
-    obtain ⟨hgr, hfr, hfac⟩ := hevent r hdist
+    obtain ⟨hgr, hfr, hfac⟩ := hevent hdist
     have hrpow : 0 < r ^ m := pow_pos hrpos' m
     have hprod : r ^ m * g r < 0 := mul_pos_of_pos_of_neg hrpow hgr
     rw [hfac] at hfr
