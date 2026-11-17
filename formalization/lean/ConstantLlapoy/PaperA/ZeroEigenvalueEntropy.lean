@@ -233,11 +233,13 @@ theorem eventually_quotient_two_sided_bounds
     (h0 : 0 < g 0) :
     ∀ᶠ r : ℝ in 𝓝 0,
       g 0 / 2 < g r ∧ g r < (3 / 2) * g 0 := by
-  have hinterval : g 0 ∈ Set.Ioo (g 0 / 2) ((3 / 2) * g 0) := by
-    constructor <;> nlinarith
+  have hleft : g 0 / 2 < g 0 := by nlinarith
+  have hright : g 0 < (3 / 2) * g 0 := by nlinarith
+  have hinterval : Set.Ioo (g 0 / 2) ((3 / 2) * g 0) ∈ 𝓝 (g 0) :=
+    Ioo_mem_nhds hleft hright
   have hevent : ∀ᶠ r : ℝ in 𝓝 0,
       g r ∈ Set.Ioo (g 0 / 2) ((3 / 2) * g 0) :=
-    hg.eventually (Ioo_mem_nhds hinterval)
+    hg.eventually hinterval
   filter_upwards [hevent] with r hr
   exact hr
 
