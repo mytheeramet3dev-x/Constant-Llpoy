@@ -637,8 +637,11 @@ theorem perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum
   refine ⟨i₀, hi₀, ?_⟩
   intro j hj
   by_contra hne
+  have hne' : i₀ ≠ j := by
+    intro h
+    exact hne h.symm
   exact perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
     A hA v lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
-    i₀ j hi₀ hj hne.symm
+    i₀ j hi₀ hj hne'
 
 end ConstantLlapoy.PaperA
