@@ -158,14 +158,20 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
   rcases lt_or_gt_of_ne hgne with hneg | hpos
   · have hgneg : ∀ᶠ r : ℝ in 𝓝 0, g r < 0 :=
       eventually_neg_of_continuousAt_of_neg hg hneg
-    have hrpos : ∀ᶠ r : ℝ in 𝓝 0, 0 < r :=
-      Ioi_mem_nhds (show (0 : ℝ) < 1)
-    have hbad : ∀ᶠ r : ℝ in 𝓝 0,
-        0 < r ∧ g r < 0 ∧ 0 ≤ f r ∧ f r = r ^ m * g r := by
-      filter_upwards [hrpos, hgneg, hnonneg, hfactor] with r hr hgr hfr hfac
-      exact ⟨hr, hgr, hfr, hfac⟩
-    obtain ⟨r, hr⟩ := hbad.exists
-    rcases hr with ⟨hrpos', hgr, hfr, hfac⟩
+    have hbase : ∀ᶠ r : ℝ in 𝓝 0,
+        g r < 0 ∧ 0 ≤ f r ∧ f r = r ^ m * g r := by
+      filter_upwards [hgneg, hnonneg, hfactor] with r hgr hfr hfac
+      exact ⟨hgr, hfr, hfac⟩
+    obtain ⟨ε, hε, hevent⟩ := (Metric.eventually_nhds_iff.mp hbase)
+    let r : ℝ := ε / 2
+    have hrpos' : 0 < r := by
+      dsimp [r]
+      linarith
+    have hdist : dist r 0 < ε := by
+      rw [Real.dist_eq]
+      dsimp [r]
+      linarith
+    obtain ⟨hgr, hfr, hfac⟩ := hevent r hdist
     have hrpow : 0 < r ^ m := pow_pos hrpos' m
     have hprod : r ^ m * g r < 0 := mul_pos_of_pos_of_neg hrpow hgr
     rw [hfac] at hfr
