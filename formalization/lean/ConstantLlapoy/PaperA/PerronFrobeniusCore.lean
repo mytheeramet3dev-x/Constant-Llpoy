@@ -639,6 +639,6 @@ theorem perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum
   by_contra hne
   exact perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
     A hA v lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
-    i₀ j hi₀ hj hne
+    i₀ j hi₀ hj hne.symm
 
 end ConstantLlapoy.PaperA
