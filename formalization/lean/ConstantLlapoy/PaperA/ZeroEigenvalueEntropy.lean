@@ -444,6 +444,48 @@ theorem parity_block_schur_remainder_bound_of_numerator_and_inverse_bound
     _ = (C * D) * ε ^ 4 := by ring
 
 
+
+/-- Conditional differentiated transfer for a Schur remainder written as
+numerator times inverse pivot.
+
+If both the numerator and its edge derivative are O(ε⁴), while the inverse
+pivot and its edge derivative are uniformly bounded, then the Schur
+remainder's edge derivative is O(ε⁴). All four bounds are explicit
+hypotheses: this lemma does not establish them for the TFIM reduced state. -/
+theorem hasDerivAt_parity_block_schur_remainder_bound
+    {num invL : ℝ → ℝ} {num' invL' u ε Cn Cn' D D' : ℝ}
+    (hnum : HasDerivAt num num' u)
+    (hinv : HasDerivAt invL invL' u)
+    (hε : 0 ≤ ε)
+    (hCn : 0 ≤ Cn)
+    (hCn' : 0 ≤ Cn')
+    (hD : 0 ≤ D)
+    (hD' : 0 ≤ D')
+    (hnumValue : |num u| ≤ Cn * ε ^ 4)
+    (hnumDeriv : |num'| ≤ Cn' * ε ^ 4)
+    (hinvValue : |invL u| ≤ D)
+    (hinvDeriv : |invL'| ≤ D') :
+    HasDerivAt (fun v => num v * invL v)
+      (num' * invL u + num u * invL') u ∧
+    |num' * invL u + num u * invL'| ≤
+      (Cn' * D + Cn * D') * ε ^ 4 := by
+  constructor
+  · exact hnum.mul hinv
+  · have hε4 : 0 ≤ ε ^ 4 := by positivity
+    calc
+      |num' * invL u + num u * invL'| ≤
+          |num' * invL u| + |num u * invL'| := abs_add _ _
+      _ = |num'| * |invL u| + |num u| * |invL'| := by
+        rw [abs_mul, abs_mul]
+      _ ≤ (Cn' * ε ^ 4) * D + (Cn * ε ^ 4) * D' := by
+        apply add_le_add
+        · exact mul_le_mul hnumDeriv hinvValue
+            (abs_nonneg (invL u)) (by positivity)
+        · exact mul_le_mul hnumValue hinvDeriv
+            (abs_nonneg invL') (by positivity)
+      _ = (Cn' * D + Cn * D') * ε ^ 4 := by ring
+
+
 end ConstantLlapoy.PaperA
 
 
