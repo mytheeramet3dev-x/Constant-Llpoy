@@ -180,4 +180,46 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
     exact (not_le_of_gt hprod hfr).elim
   · exact hpos
 
+
+/-- Full ZF-2 conclusion for a nontrivial nonnegative analytic branch:
+the finite vanishing order is even and the leading coefficient is positive.
+
+The factorization, continuity, and nonnegativity hypotheses are stated
+explicitly so that the theorem remains reusable independently of the
+analytic factorization theorem. -/
+theorem even_order_and_positive_leading_coefficient_of_nonnegative_factorization
+    {f g : ℝ → ℝ} {m : ℕ}
+    (hg : ContinuousAt g 0)
+    (hgne : g 0 ≠ 0)
+    (hnonneg : ∀ᶠ r : ℝ in 𝓝 0, 0 ≤ f r)
+    (hfactor : ∀ᶠ r : ℝ in 𝓝 0, f r = r ^ m * g r) :
+    Even m ∧ 0 < g 0 := by
+  have hpos0 : 0 < g 0 :=
+    positive_leading_coefficient_of_nonnegative_factorization
+      hg hgne hnonneg hfactor
+  have hgpos : ∀ᶠ r : ℝ in 𝓝 0, 0 < g r :=
+    eventually_pos_of_continuousAt_of_pos hg hpos0
+  have hbase : ∀ᶠ r : ℝ in 𝓝 0,
+      0 < g r ∧ 0 ≤ f r ∧ f r = r ^ m * g r := by
+    filter_upwards [hgpos, hnonneg, hfactor] with r hgr hfr hfac
+    exact ⟨hgr, hfr, hfac⟩
+  have hparity : Even m := by
+    rcases Nat.even_or_odd m with heven | hodd
+    · exact heven
+    · obtain ⟨ε, hε, hevent⟩ := Metric.eventually_nhds_iff.mp hbase
+      let r : ℝ := -ε / 2
+      have hrneg : r < 0 := by
+        dsimp [r]
+        linarith
+      have hdist : dist r 0 < ε := by
+        rw [Real.dist_eq]
+        simp only [sub_zero]
+        rw [abs_of_neg hrneg]
+        dsimp [r]
+        linarith
+      obtain ⟨hgr, hfr, hfac⟩ := hevent hdist
+      exact even_order_of_negative_factorization_witness
+        hodd hrneg hgr hfr hfac
+  exact ⟨hparity, hpos0⟩
+
 end ConstantLlapoy.PaperA
