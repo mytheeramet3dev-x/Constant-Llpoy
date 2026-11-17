@@ -432,8 +432,8 @@ bound. It does not derive either one from the TFIM Hamiltonian. -/
 theorem parity_block_schur_remainder_bound_of_numerator_and_inverse_bound
     {num invL ε C D : ℝ}
     (hC : 0 ≤ C)
-    (hD : 0 ≤ D)
-    (hε : 0 ≤ ε)
+    (_hD : 0 ≤ D)
+    (_hε : 0 ≤ ε)
     (hnum : |num| ≤ C * ε ^ 4)
     (hinv : |invL| ≤ D) :
     |num * invL| ≤ (C * D) * ε ^ 4 := by
@@ -456,11 +456,11 @@ theorem hasDerivAt_parity_block_schur_remainder_bound
     {num invL : ℝ → ℝ} {num' invL' u ε Cn Cn' D D' : ℝ}
     (hnum : HasDerivAt num num' u)
     (hinv : HasDerivAt invL invL' u)
-    (hε : 0 ≤ ε)
+    (_hε : 0 ≤ ε)
     (hCn : 0 ≤ Cn)
     (hCn' : 0 ≤ Cn')
-    (hD : 0 ≤ D)
-    (hD' : 0 ≤ D')
+    (_hD : 0 ≤ D)
+    (_hD' : 0 ≤ D')
     (hnumValue : |num u| ≤ Cn * ε ^ 4)
     (hnumDeriv : |num'| ≤ Cn' * ε ^ 4)
     (hinvValue : |invL u| ≤ D)
@@ -508,7 +508,7 @@ theorem parity_block_schur_remainder_identity
     intro h
     apply hL
     nlinarith
-  field_simp [hD] <;> ring
+  field_simp [hD]; ring
 
 
 namespace ConstantLlapoy.PaperA
@@ -523,7 +523,7 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
     (hε0 : 0 ≤ ε)
     (hε1 : ε ≤ 1)
     (hCℓ : 0 ≤ Cℓ)
-    (hCx : 0 ≤ Cx)
+    (_hCx : 0 ≤ Cx)
     (hCs : 0 ≤ Cs)
     (hCt : 0 ≤ Ct)
     (hell : |ell| ≤ Cℓ * ε ^ 2)
@@ -556,7 +556,7 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
     |s * ((1 / 2 : ℝ) + ell) -
         (t * x + x ^ 2 - t ^ 2 * ell / 2)|
         = |s * ((1 / 2 : ℝ) + ell) +
-          -(t * x + x ^ 2 - t ^ 2 * ell / 2)| := by congr 1 <;> ring
+          -(t * x + x ^ 2 - t ^ 2 * ell / 2)| := by congr 1
     _ ≤ |s * ((1 / 2 : ℝ) + ell)| +
           |t * x + x ^ 2 - t ^ 2 * ell / 2| :=
       (abs_add_le (s * ((1 / 2 : ℝ) + ell))
@@ -626,13 +626,13 @@ theorem hasDerivAt_one_site_leading_entropy_incident
   have hsq := hlin.pow 2
   have hden : HasDerivAt (fun v : ℝ => 2 * (R + v) ^ 2)
       (4 * (R + u)) u := by
-    convert hsq.const_mul 2 using 1 <;> ring
+    convert hsq.const_mul 2 using 1; ring
   have hnum : HasDerivAt (fun _v : ℝ => -(h ^ 2)) 0 u :=
     hasDerivAt_const u _
   have hden_ne : 2 * (R + u) ^ 2 ≠ 0 :=
     mul_ne_zero (by norm_num) (pow_ne_zero 2 hR)
-  convert hnum.div hden hden_ne using 1 <;>
-    field_simp [hR] <;> ring
+  convert hnum.div hden hden_ne using 1;
+    field_simp [hR]; ring
 
 /-- A disjoint edge does not change the leading one-site entropy
 correction, so its derivative is exactly zero. -/
@@ -660,4 +660,4 @@ theorem hasDerivAt_one_site_leading_entropy_edge_contrast
   have hdisjoint : HasDerivAt
       (fun _v : ℝ => -(h ^ 2) / (2 * R ^ 2)) 0 u := by
     exact hasDerivAt_const u _
-  convert hincident.sub hdisjoint using 1 <;> ring
+  convert hincident.sub hdisjoint using 1; ring
