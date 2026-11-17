@@ -4,7 +4,7 @@
 - **Paper:** A
 - **Claim version:** 0.1.0 (first extraction record)
 - **Extraction status:** CANDIDATE
-- **Constant Llapoy verification status:** NOT_ASSESSED
+- **Constant Llapoy verification status:** MATHEMATICAL_REVIEW_PASS; LEAN_FORMALIZATION_PENDING
 - **Canonical source repository:** `mytheeramet3dev-x/Absolute_Sym`
 - **Source branch:** `paper-a-interval-audit-2026-11-14`
 - **Source commit:** `8deb7de4a49cb2060720246b7101820ee7e08c91`
@@ -66,3 +66,18 @@ The source invokes Perron–Frobenius theory and states nondegeneracy for finite
 ### Supporting proof source located
 
 The pinned upstream branch also contains `docs/tfim_ground_state_simplicity_lemma.md`, blob `472328b596ccdcc82ece65faf5ef65a9dab63e50`. It applies Perron–Frobenius to (cI-H), proves irreducibility from connectedness of the spin-flip hypercube, and states simplicity for finite (N\ge1), (h>0), and real couplings. This is a candidate proof dependency that repairs the sign of the argument in a separate source file. Constant Llapoy has not yet independently re-derived or formally verified that auxiliary proof; THM-0002 remains NOT_VERIFIED.
+
+
+## Independent mathematical proof review — 2026-11-17
+
+- **Review status:** MATHEMATICAL_PROOF_PASS.
+- **Scope:** Finite-dimensional Hamiltonian, finite $N\ge1$, $h>0$, arbitrary finite real $J_{ij}$.
+- **Corrected operator:** $K=cI-H$, with $c=1+\max_s H_{ss}$ in the computational basis.
+- **Entrywise positivity:** Diagonal entries are at least $1$; single-spin-flip entries are $+h>0$; all other off-diagonal entries are zero.
+- **Irreducibility:** The positive-entry graph is the connected $N$-dimensional hypercube.
+- **Spectral identification:** Real symmetry identifies the Perron eigenvalue with $\lambda_{\max}(K)=c-E_{\min}(H)$, hence the ground eigenvalue of $H$ is simple.
+- **Coupling domain:** The proof is valid for arbitrary real finite $J_{ij}$ because the couplings enter only the diagonal.
+- **Formalization:** NOT_RUN. Do not mark the claim fully VERIFIED until Lean formalization and Hamiltonian/matrix correspondence are completed.
+- **Review artifact:** `audits/paper-a/THM-0002_PERRON_FROBENIUS_INDEPENDENT_REVIEW.md`.
+
+The original source excerpt and its incorrect shift sentence remain preserved unchanged. No upstream Absolute Symmetry file was modified.
