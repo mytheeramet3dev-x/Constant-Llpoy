@@ -297,3 +297,35 @@ theorem perron_eigenvector_ratios_constant_of_connected
     P t hkernel.1 hkernel.2 hharmonic hP_connected
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- Connectedness and a strictly positive eigenvector force every real
+eigenvector for the same positive eigenvalue to be a scalar multiple of it.
+This is the explicit one-dimensional-eigenspace statement (geometric
+simplicity); algebraic simplicity still requires the symmetric spectral
+theorem bridge. -/
+theorem perron_eigenvector_proportional_of_connected
+    {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
+    (A : ι → ι → ℝ) (v y : ι → ℝ) (lambdaVal : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hAy : ∀ i, ∑ j, A i j * y j = lambdaVal * y i)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    ∃ c : ℝ, ∀ i, y i = c * v i := by
+  obtain ⟨i₀⟩ := ‹Nonempty ι›
+  have hratio := perron_eigenvector_ratios_constant_of_connected
+    A v y lambdaVal hA_nonneg hv hlambdaVal hAv hAy hconnected
+  refine ⟨y i₀ / v i₀, ?_⟩
+  intro i
+  have h := hratio i i₀
+  have hv0 : v i₀ ≠ 0 := ne_of_gt (hv i₀)
+  have hvi : v i ≠ 0 := ne_of_gt (hv i)
+  field_simp at h ⊢
+  nlinarith
+
+end ConstantLlapoy.PaperA
