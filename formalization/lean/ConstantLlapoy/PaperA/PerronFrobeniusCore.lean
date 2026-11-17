@@ -505,7 +505,10 @@ theorem perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
     A v w lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
     hnonzero heigen horthogonal
   intro i j hi hj hij
-  exact hunique ⟨i, hi⟩ ⟨j, hj⟩ hij
+  exact hunique ⟨i, hi⟩ ⟨j, hj⟩ (by
+    intro hsub
+    apply hij
+    exact congrArg Subtype.val hsub)
 
 end ConstantLlapoy.PaperA
 
