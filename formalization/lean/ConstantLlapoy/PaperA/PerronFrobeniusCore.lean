@@ -136,10 +136,11 @@ theorem harmonic_function_constant_of_pf_connected
       PFReachable (fun a b => 0 < P a b) i j) :
     ∀ i j, t i = t j := by
   classical
-  let i₀ : ι := Finset.univ.max' Finset.univ_nonempty
+  obtain ⟨i₀, hi₀, h_i₀_max⟩ :=
+    Finset.exists_max_image (Finset.univ : Finset ι) t Finset.univ_nonempty
   have h_max : ∀ j, t j ≤ t i₀ := by
     intro j
-    exact Finset.le_max' _ _ (Finset.mem_univ j)
+    exact h_i₀_max j (Finset.mem_univ j)
   have h_constant : ∀ j, t j = t i₀ :=
     harmonic_ratio_constant_on_pf_reachable
       P t i₀ hP_nonneg hP_sum h_harmonic h_max
@@ -149,6 +150,7 @@ theorem harmonic_function_constant_of_pf_connected
 
 end ConstantLlapoy.PaperA
 
+namespace ConstantLlapoy.PaperA
 
 /-- Normalize a nonnegative matrix by a strictly positive right eigenvector.
 The resulting transition kernel is stochastic. This is the algebraic bridge
@@ -217,3 +219,6 @@ theorem perron_eigenvector_ratio_is_harmonic
           rw [hAy i]
           field_simp
           ring
+
+
+end ConstantLlapoy.PaperA
