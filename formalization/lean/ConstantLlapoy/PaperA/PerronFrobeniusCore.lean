@@ -206,7 +206,7 @@ theorem perron_eigenvector_ratio_is_harmonic
         (A i j * y j) / (lambdaVal * v i) := by
     intro j
     field_simp
-    ring
+    ring_nf
   calc
     ∑ j, ((A i j * v j) / (lambdaVal * v i)) * (y j / v j)
         = ∑ j, (A i j * y j) / (lambdaVal * v i) := by
@@ -218,7 +218,6 @@ theorem perron_eigenvector_ratio_is_harmonic
     _ = y i / v i := by
           rw [hAy i]
           field_simp
-          ring
 
 
 end ConstantLlapoy.PaperA
