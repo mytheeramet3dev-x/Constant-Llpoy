@@ -317,7 +317,7 @@ theorem exists_eventually_fderiv_norm_bound_of_analyticAt
   refine ⟨B, by positivity, ?_⟩
   filter_upwards [Metric.ball_mem_nhds 0 hδ] with u hu
   have hdist : dist (fderiv ℝ g u) (fderiv ℝ g 0) < 1 :=
-    hδbound u hu
+    hδbound hu
   have hnorm :
       ‖fderiv ℝ g u‖ ≤
         ‖fderiv ℝ g u - fderiv ℝ g 0‖ + ‖fderiv ℝ g 0‖ := by
