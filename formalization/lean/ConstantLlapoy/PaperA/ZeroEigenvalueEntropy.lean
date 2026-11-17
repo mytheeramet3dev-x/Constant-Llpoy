@@ -397,6 +397,6 @@ theorem exists_uniform_positive_lower_bound_on_compact
   obtain ⟨u₀, hu₀, hmin⟩ := hK.exists_isMinOn hne hcont
   refine ⟨a u₀, hpos u₀ hu₀, ?_⟩
   intro u hu
-  exact hmin.2 u hu
+  exact hmin u hu
 
 end ConstantLlapoy.PaperA
