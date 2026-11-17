@@ -243,4 +243,30 @@ theorem eventually_quotient_two_sided_bounds
   filter_upwards [hevent] with r hr
   exact hr
 
+
+/-- Transfer the local quotient bounds through an even-order factorization.
+The evenness hypothesis is essential on a two-sided neighborhood: it makes
+r^m nonnegative for negative as well as positive r. The resulting bounds are
+non-strict because multiplication by r^m can be zero at r = 0. -/
+theorem eventually_factored_branch_two_sided_bounds
+    {f g : ℝ → ℝ} {m : ℕ}
+    (hg : ContinuousAt g 0)
+    (h0 : 0 < g 0)
+    (heven : Even m)
+    (hfactor : ∀ᶠ r : ℝ in 𝓝 0, f r = r ^ m * g r) :
+    ∀ᶠ r : ℝ in 𝓝 0,
+      r ^ m * (g 0 / 2) ≤ f r ∧
+      f r ≤ r ^ m * ((3 / 2) * g 0) := by
+  have hquot := eventually_quotient_two_sided_bounds hg h0
+  filter_upwards [hquot, hfactor] with r hq hfac
+  have hpow : 0 ≤ r ^ m := heven.pow_nonneg r
+  have hlow :
+      r ^ m * (g 0 / 2) ≤ r ^ m * g r :=
+    mul_le_mul_of_nonneg_left (le_of_lt hq.1) hpow
+  have hupp :
+      r ^ m * g r ≤ r ^ m * ((3 / 2) * g 0) :=
+    mul_le_mul_of_nonneg_left (le_of_lt hq.2) hpow
+  rw [hfac]
+  exact ⟨hlow, hupp⟩
+
 end ConstantLlapoy.PaperA
