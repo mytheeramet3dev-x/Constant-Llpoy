@@ -335,13 +335,15 @@ If these criteria are not met, retain meta-verification as a normative cross-lay
 | `TRUST_BOUNDARY_TCB_INVENTORY.md` | Every status-affecting component is classified and its TCB relationship recorded |
 | `TOOLCHAIN_DEPENDENCY_INVENTORY.md` | Exact versions, immutable references, dependency graph, and provenance feed the assurance package |
 | `14_LAYER_VERIFICATION_STANDARD.md` | L-08/L-10/L-11/L-12 retain the allocated responsibilities unless architecture review changes them |
-| `LAYER_CATALOG.md` | Catalog points to this specification without implying implementation or validation |
+| `LAYER_CATALOG.md` | Catalog points to this specification and the current component register without implying implementation or validation |
+| `META_VERIFICATION_COMPONENT_REGISTER.md` | Evidence-based snapshot of observed repository components, external boundaries, exact revisions, and current assurance gaps |
 
 ## 14. Current status and limitations
 
 - **Specified:** This document defines the meta-verification design requirements.
-- **Implemented:** Not established by this document.
-- **Validated:** Not established by this document.
+- **Component inventory:** An initial partial snapshot is recorded in `META_VERIFICATION_COMPONENT_REGISTER.md`; it identifies one Lean CI workflow, pinned action references, Lean/Lake configuration, locked dependencies, exploratory diagnostics, and external GitHub runner/status boundaries.
+- **Implemented:** The existence of the Lean workflow is observed; implementation of the required meta-verification challenge harness, mutation tests, and fail-closed aggregator is not established.
+- **Validated:** Meta-verification is not validated. One historical Lean workflow run is recorded as successful for its own commit, not for the current repository snapshot.
 - **Claim-level application:** Not yet populated by this document.
 - **Independent review:** Not yet evidenced by this document.
 - **Residual risk:** The checker, its test harness, the operating environment, reviewers, and evidence infrastructure may still share defects or assumptions. Assurance is bounded by declared contracts, tested failure classes, and the trust boundary.
