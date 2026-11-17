@@ -517,6 +517,7 @@ namespace ConstantLlapoy.PaperA
 remainders have their expected orders.  This is a conditional algebraic
 estimate: the hypotheses on ell, x, s, and t still have to be derived
 from the TFIM reduced state. -/
+set_option maxHeartbeats 1000000 in
 theorem parity_block_schur_numerator_bound_of_entry_bounds
     {ell x s t ε Cℓ Cx Cs Ct : ℝ}
     (hε0 : 0 ≤ ε)
