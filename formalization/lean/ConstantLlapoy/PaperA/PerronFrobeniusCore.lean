@@ -542,9 +542,9 @@ theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
       hA.eigenvectorBasis.orthonormal.1 i
     by_contra h
     push_neg at h
-    have hzero : ⇑(hA.eigenvectorBasis i) = 0 := funext h
-    have hzero' : hA.eigenvectorBasis i = 0 :=
-      DFunLike.coe_injective hzero
+    have hzero' : hA.eigenvectorBasis i = 0 := by
+      ext k
+      exact h k
     have hnorm_zero := congrArg norm hzero'
     rw [norm_zero] at hnorm_zero
     linarith
@@ -553,7 +553,7 @@ theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
         eigenvalue i * basisVector i k := by
     intro i k
     have hmul := congrFun (hA.mulVec_eigenvectorBasis i) k
-    simpa [basisVector, eigenvalue, Matrix.mulVec] using hmul
+    simpa [basisVector, eigenvalue, Matrix.mulVec, dotProduct] using hmul
   have hbasis_orthogonal : ∀ i j, i ≠ j →
       ∑ k, basisVector i k * basisVector j k = 0 := by
     intro i j hij
@@ -563,12 +563,11 @@ theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
         ⟪hA.eigenvectorBasis i, hA.eigenvectorBasis j⟫_ℝ = 0 := by
       simpa [hij] using hinner
     have hdot :
-        dotProduct (⇑(hA.eigenvectorBasis j))
-          (⇑(hA.eigenvectorBasis i)) = 0 := by
+        dotProduct ((hA.eigenvectorBasis j).ofLp)
+          ((hA.eigenvectorBasis i).ofLp) = 0 := by
       simpa [EuclideanSpace.inner_eq_star_dotProduct, star_trivial] using
         hinner_zero
-    rw [dotProduct] at hdot
-    simpa [basisVector, mul_comm] using hdot
+    simpa [basisVector, dotProduct, mul_comm] using hdot
   exact perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
     A v eigenvalue basisVector lambdaVal hA_nonneg hv hlambdaVal hAv
     hconnected hbasis_nonzero hbasis_eigen hbasis_orthogonal
