@@ -22,7 +22,7 @@ The prior ten functions are preserved in substance and mapped to the new archite
 
 The number fourteen is a provisional organization of the current catalog, **not an approved permanent count or a cap on the architecture**. The Architecture Charter remains controlling: a layer may be split, merged, replaced, or supplemented when a documented threat or verification obligation requires it. Any such change requires versioned rationale and migration analysis. Twelve is not a quality score, completion target, or guarantee that all possible failure modes have been eliminated.
 
-This document specifies architecture and acceptance requirements. It does not certify that all twelve layers have been implemented, that every layer applies to every claim, or that any paper is thereby verified.
+This document specifies architecture and acceptance requirements. It does not certify that all fourteen candidate layers have been implemented, that every layer applies to every claim, or that any paper is thereby verified.
 
 ## 2. Foundational rules
 
