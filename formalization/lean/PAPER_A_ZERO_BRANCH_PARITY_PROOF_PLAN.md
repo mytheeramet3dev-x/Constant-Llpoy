@@ -93,3 +93,29 @@ axiom audit successfully. `lake test` and `lake lint` were not run.
 factorization on the correct one-sided or two-sided domain; then prove the
 differentiated coefficient estimate and the two-sided logarithmic control
 needed by the positive-branch entropy derivative lemma.
+
+
+## ZF-3b — Transfer through the even-order factorization (verified)
+
+The declaration `eventually_factored_branch_two_sided_bounds` proves that,
+if `g` is continuous at zero, `g(0)>0`, `m` is even, and
+`f(r)=r^m g(r)` eventually, then eventually
+
+\[
+r^m\frac{g(0)}2 \le f(r) \le r^m\frac{3g(0)}2.
+\]
+
+The inequalities are deliberately non-strict: at the center, when the
+vanishing order is positive, the factor \(r^m\) can be zero. Evenness
+ensures \(r^m\ge0\) on both sides of zero, so multiplying the quotient
+bounds preserves their order.
+
+**Evidence:** commit `d6a92c2e032e10eb8764754d875cc18b145024e3`,
+CI run [44003303543](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44003303543);
+the pinned Lean/Mathlib build and configured axiom audit both succeeded.
+
+**Remaining:** this is still a scalar, one-variable estimate. It does not
+supply a bound on a parameter derivative, uniform constants over a compact
+set of auxiliary parameters, a two-sided logarithmic estimate on the
+punctured positive branch, or the hypotheses needed by the entropy
+derivative bound.
