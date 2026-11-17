@@ -509,3 +509,82 @@ theorem parity_block_schur_remainder_identity
     apply hL
     nlinarith
   field_simp [hD] <;> ring
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- The Schur numerator is O(ε⁴) if the four parity-block entry
+remainders have their expected orders.  This is a conditional algebraic
+estimate: the hypotheses on ell, x, s, and t still have to be derived
+from the TFIM reduced state. -/
+theorem parity_block_schur_numerator_bound_of_entry_bounds
+    {ell x s t ε Cℓ Cx Cs Ct : ℝ}
+    (hε0 : 0 ≤ ε)
+    (hε1 : ε ≤ 1)
+    (hCℓ : 0 ≤ Cℓ)
+    (hCx : 0 ≤ Cx)
+    (hCs : 0 ≤ Cs)
+    (hCt : 0 ≤ Ct)
+    (hell : |ell| ≤ Cℓ * ε ^ 2)
+    (hx : |x| ≤ Cx * ε ^ 3)
+    (hs : |s| ≤ Cs * ε ^ 4)
+    (ht : |t| ≤ Ct * ε) :
+    |s * ((1 / 2 : ℝ) + ell) -
+      (t * x + x ^ 2 - t ^ 2 * ell / 2)| ≤
+        (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+          Ct ^ 2 * Cℓ / 2) * ε ^ 4 := by
+  have hε2 : ε ^ 2 ≤ 1 := by
+    nlinarith [sq_nonneg (1 - ε)]
+  have hε4 : 0 ≤ ε ^ 4 := by positivity
+  have hε6 : ε ^ 6 ≤ ε ^ 4 := by
+    calc
+      ε ^ 6 = ε ^ 4 * ε ^ 2 := by ring
+      _ ≤ ε ^ 4 * 1 := mul_le_mul_of_nonneg_left hε2 hε4
+      _ = ε ^ 4 := by ring
+  have hℓ : |ell| ≤ Cℓ := by
+    calc
+      |ell| ≤ Cℓ * ε ^ 2 := hell
+      _ ≤ Cℓ * 1 := mul_le_mul_of_nonneg_left hε2 hCℓ
+      _ = Cℓ := by ring
+  have hL : |(1 / 2 : ℝ) + ell| ≤ 1 / 2 + Cℓ := by
+    calc
+      |(1 / 2 : ℝ) + ell| ≤ |(1 / 2 : ℝ)| + |ell| := abs_add_le _ _
+      _ ≤ 1 / 2 + Cℓ := by rw [abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2)]; linarith
+  have ht0 : |t| ≤ Ct * ε := ht
+  calc
+    |s * ((1 / 2 : ℝ) + ell) -
+        (t * x + x ^ 2 - t ^ 2 * ell / 2)|
+        ≤ |s * ((1 / 2 : ℝ) + ell)| +
+          |t * x + x ^ 2 - t ^ 2 * ell / 2| := abs_sub_le _ _
+    _ ≤ |s| * |(1 / 2 : ℝ) + ell| +
+          (|t * x| + |x ^ 2| + |t ^ 2 * ell / 2|) := by
+      have hsum := abs_sub_le (t * x + x ^ 2) (t ^ 2 * ell / 2)
+      have hadd := abs_add_le (t * x) (x ^ 2)
+      rw [abs_mul]
+      linarith
+    _ ≤ (Cs * ε ^ 4) * (1 / 2 + Cℓ) +
+          ((Ct * ε) * (Cx * ε ^ 3) +
+            (Cx * ε ^ 3) ^ 2 +
+            ((Ct * ε) ^ 2 * (Cℓ * ε ^ 2) / 2)) := by
+      have htx : |t * x| ≤ (Ct * ε) * (Cx * ε ^ 3) := by
+        rw [abs_mul]
+        exact mul_le_mul ht hx (abs_nonneg x) (by positivity)
+      have hx2 : |x ^ 2| ≤ (Cx * ε ^ 3) ^ 2 := by
+        rw [abs_pow]
+        exact pow_le_pow_left₀ (abs_nonneg x) hx 2
+      have ht2ell : |t ^ 2 * ell / 2| ≤
+          (Ct * ε) ^ 2 * (Cℓ * ε ^ 2) / 2 := by
+        rw [abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 2), abs_mul,
+          abs_pow]
+        have ht2 : |t| ^ 2 ≤ (Ct * ε) ^ 2 :=
+          pow_le_pow_left₀ (abs_nonneg t) ht 2
+        have hprod := mul_le_mul ht2 hell (abs_nonneg ell) (by positivity)
+        nlinarith
+      have hsL : |s| * |(1 / 2 : ℝ) + ell| ≤
+          (Cs * ε ^ 4) * (1 / 2 + Cℓ) :=
+        mul_le_mul hs hL (abs_nonneg ((1 / 2 : ℝ) + ell)) (by positivity)
+      linarith
+    _ = (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+          Ct ^ 2 * Cℓ / 2) * ε ^ 4 := by ring
+
+end ConstantLlapoy.PaperA
