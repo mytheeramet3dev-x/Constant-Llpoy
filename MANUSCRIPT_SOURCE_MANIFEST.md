@@ -153,4 +153,37 @@ This is a Stage A1-1 source freeze, not a claim that all of Paper A1 is a comple
 
 ---
 
+
+## 5. Paper B source snapshot and redesign record
+
+| Field | Value |
+|---|---|
+| Upstream repository | `mytheeramet3dev-x/Absolute_Sym` |
+| Branch | `main` |
+| Frozen commit at retrieval | `122a62b48484715a660200dfd792a452ea0bdfa1` |
+| Commit date | 2026-11-15T16:33:08Z |
+| Upstream canonical draft | `Alphabet/paper_b/paper_02_manuscript.md` |
+| Upstream blob SHA | `7aeace0eedbcaa47c156f8e8c7170e2413541851` |
+| Constant Llpoy immutable snapshot | `source_snapshots/paper-b/paper_02_manuscript_original.md` |
+| Snapshot creation commit | `84244c71354c3372933baa0496ccb3e6099b6552` |
+| Source character count | 21,585 |
+| Snapshot treatment | Verbatim archival copy; no scope rewrite applied to the source snapshot |
+
+The former Paper B draft is a linear-response study of the permutation-symmetric fixed point, including the edge-space (S_N) decomposition and the conditional sign question (B-C>0). It substantially overlaps the representation/response setup already present in Paper A. It is therefore preserved as historical source material and is **not** the scope of the redesigned Paper B.
+
+The redesigned Paper B working programme is recorded separately:
+- `working/paper-b/README.md`
+- `working/paper-b/PAPER_B_SCOPE_CHARTER.md`
+- `working/paper-b/PAPER_B_THEOREM_OBLIGATIONS.md`
+- `working/paper-b/PAPER_B_ASSUMPTION_REGISTER.md`
+
+The new official working title is:
+
+**Equivariant Bifurcation, Isotropy Classification, Representation-Resolved Stability, and Nonlinear Branch Structure in Self-Consistent Quantum Interaction Networks**
+
+The new scope targets model-specific nonlinear nonuniform branches, isotropy classification, representation-resolved stability, and local nonlinear branch structure. It also introduces a mandatory entropy-regularity gate: the smoothness of the ground-state projector does not by itself establish the differentiability of von Neumann mutual information when reduced density matrices have zero eigenvalues.
+
+**Important:** The Paper B scope charter is a research specification only. Its theorem families remain OPEN or NOT YET INVESTIGATED unless later proof artifacts establish otherwise. No file in the upstream `Absolute_Sym` repository was modified during this redesign.
+
+
 **End of manifest.**
