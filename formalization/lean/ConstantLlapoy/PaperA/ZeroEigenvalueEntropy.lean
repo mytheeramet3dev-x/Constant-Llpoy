@@ -421,6 +421,29 @@ theorem exists_uniform_positive_lower_bound_on_compact
   intro u hu
   exact hmin hu
 
+
+/-- Conditional transfer of an order-ε⁴ numerator estimate through a
+uniformly bounded inverse Schur pivot.
+
+This isolates the final algebraic estimate after the model-specific entry
+remainders have been combined. The hypotheses deliberately expose both
+missing analytical inputs: the numerator estimate and the inverse-pivot
+bound. It does not derive either one from the TFIM Hamiltonian. -/
+theorem parity_block_schur_remainder_bound_of_numerator_and_inverse_bound
+    {num invL ε C D : ℝ}
+    (hC : 0 ≤ C)
+    (hD : 0 ≤ D)
+    (hε : 0 ≤ ε)
+    (hnum : |num| ≤ C * ε ^ 4)
+    (hinv : |invL| ≤ D) :
+    |num * invL| ≤ (C * D) * ε ^ 4 := by
+  calc
+    |num * invL| = |num| * |invL| := abs_mul num invL
+    _ ≤ (C * ε ^ 4) * D :=
+      mul_le_mul hnum hinv (abs_nonneg invL) (by positivity)
+    _ = (C * D) * ε ^ 4 := by ring
+
+
 end ConstantLlapoy.PaperA
 
 
