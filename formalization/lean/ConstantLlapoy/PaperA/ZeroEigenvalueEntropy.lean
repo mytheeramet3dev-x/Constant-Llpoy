@@ -125,4 +125,23 @@ theorem even_order_of_negative_factorization_witness
   rw [hfactor] at hnonneg
   exact (not_le_of_gt hproductneg hnonneg).elim
 
+
+/-- Continuity preserves strict positivity on some neighborhood of the
+base point. This is the positive-sign half of ZF-2a. -/
+theorem eventually_pos_of_continuousAt_of_pos
+    {g : ℝ → ℝ}
+    (hg : ContinuousAt g 0)
+    (h0 : 0 < g 0) :
+    ∀ᶠ r : ℝ in 𝓝 0, 0 < g r := by
+  exact hg.eventually (Ioi_mem_nhds h0)
+
+/-- Continuity preserves strict negativity on some neighborhood of the
+base point. This is the negative-sign half of ZF-2a. -/
+theorem eventually_neg_of_continuousAt_of_neg
+    {g : ℝ → ℝ}
+    (hg : ContinuousAt g 0)
+    (h0 : g 0 < 0) :
+    ∀ᶠ r : ℝ in 𝓝 0, g r < 0 := by
+  exact hg.eventually (Iio_mem_nhds h0)
+
 end ConstantLlapoy.PaperA
