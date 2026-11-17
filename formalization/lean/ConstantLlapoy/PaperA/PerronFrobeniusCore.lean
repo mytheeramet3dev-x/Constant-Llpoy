@@ -420,3 +420,40 @@ theorem nonzero_proportional_vectors_not_orthogonal
   exact hi (hz_zero i)
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- An orthogonal family of nonzero eigenvectors for a fixed positive
+eigenvalue of a nonnegative matrix with connected positive support has at
+most one member, provided the matrix has a strictly positive eigenvector
+for that eigenvalue. This is the finite-dimensional eigenspace-to-multiplicity
+bridge needed before instantiating the Hermitian spectral theorem. -/
+theorem at_most_one_orthogonal_perron_eigenvector
+    {κ ι : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
+    [Fintype ι] [DecidableEq ι]
+    (A : κ → κ → ℝ) (v : κ → ℝ) (w : ι → κ → ℝ)
+    (lambdaVal : ℝ)
+    (hA_nonneg : ∀ k l, 0 ≤ A k l)
+    (hv : ∀ k, 0 < v k)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ k, ∑ l, A k l * v l = lambdaVal * v k)
+    (hconnected : ∀ k l,
+      PFReachable (fun a b => 0 < A a b) k l)
+    (hw_nonzero : ∀ i, ∃ k, w i k ≠ 0)
+    (hw_eigen : ∀ i k, ∑ l, A k l * w i l = lambdaVal * w i k)
+    (hw_orthogonal : ∀ i j, i ≠ j →
+      ∑ k, w i k * w j k = 0) :
+    ∀ i j, i ≠ j → False := by
+  intro i j hij
+  have hprop_i := perron_eigenvector_proportional_of_connected
+    A v (w i) lambdaVal hA_nonneg hv hlambdaVal hAv
+    (hw_eigen i) hconnected
+  have hprop_j := perron_eigenvector_proportional_of_connected
+    A v (w j) lambdaVal hA_nonneg hv hlambdaVal hAv
+    (hw_eigen j) hconnected
+  exact nonzero_proportional_vectors_not_orthogonal
+    v (w i) (w j) hv (hw_nonzero i) (hw_nonzero j)
+    hprop_i hprop_j (hw_orthogonal i j hij)
+
+end ConstantLlapoy.PaperA
