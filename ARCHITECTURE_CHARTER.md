@@ -1,7 +1,7 @@
 # Constant Llapoy — Architecture Charter
 
 **Document status:** Initial charter  
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Scope:** Independent proof and verification infrastructure for the Absolute Symmetry research program  
 **Normative language:** MUST and MUST NOT are mandatory requirements; SHOULD is a strong recommendation; MAY is optional.
 
@@ -193,6 +193,8 @@ Each verification layer MUST address one or more identified threats or obligatio
 
 The architecture MUST NOT add layers merely to increase their count. It MUST NOT cap the number of layers for convenience. The design is complete only to the extent that identified risks and verification obligations are addressed with justified, auditable controls; residual risks MUST remain visible.
 
+The current catalog is organized into twelve named layers in `12_LAYER_VERIFICATION_STANDARD.md`, indexed by `LAYER_CATALOG.md`. This is the approved current organization, not a permanent upper bound or a claim that all twelve layers are implemented. The detailed standard defines layer responsibilities, acceptance conditions, migration from the previous ten-function catalog, and claim-specific applicability. Any future structural change MUST follow the change-control requirements in that standard and this Charter.
+
 ## 10. Dependency and supply-chain integrity
 
 The repository MUST maintain explicit, versioned dependency and toolchain records.
@@ -254,7 +256,7 @@ The initial implementation MUST begin with:
 5. A proof-to-manuscript correspondence process.
 6. A transparent status and reporting protocol.
 
-The detailed layer architecture MUST be designed from those artifacts rather than assumed in advance.
+The current detailed layer architecture is specified in `12_LAYER_VERIFICATION_STANDARD.md` and cataloged in `LAYER_CATALOG.md`. Its implementation and validation MUST still be derived from the claim-specific threat model and verification obligations; the existence of the architecture documents does not establish that any layer is operational or that any claim is verified.
 
 ## 15. Governing statement
 
