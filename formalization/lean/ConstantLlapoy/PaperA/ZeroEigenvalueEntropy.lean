@@ -554,14 +554,24 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
   calc
     |s * ((1 / 2 : ℝ) + ell) -
         (t * x + x ^ 2 - t ^ 2 * ell / 2)|
-        ≤ |s * ((1 / 2 : ℝ) + ell)| +
-          |t * x + x ^ 2 - t ^ 2 * ell / 2| := abs_sub_le _ _
+        = |s * ((1 / 2 : ℝ) + ell) +
+          -(t * x + x ^ 2 - t ^ 2 * ell / 2)| := by congr 1 <;> ring
+    _ ≤ |s * ((1 / 2 : ℝ) + ell)| +
+          |t * x + x ^ 2 - t ^ 2 * ell / 2| := abs_add_le _ _
     _ ≤ |s| * |(1 / 2 : ℝ) + ell| +
           (|t * x| + |x ^ 2| + |t ^ 2 * ell / 2|) := by
-      have hsum := abs_sub_le (t * x + x ^ 2) (t ^ 2 * ell / 2)
-      have hadd := abs_add_le (t * x) (x ^ 2)
+      have hsum : |t * x + x ^ 2 - t ^ 2 * ell / 2| ≤
+          |t * x| + |x ^ 2| + |t ^ 2 * ell / 2| := by
+        calc
+          |t * x + x ^ 2 - t ^ 2 * ell / 2|
+              = |(t * x + x ^ 2) + -(t ^ 2 * ell / 2)| := by congr 1 <;> ring
+          _ ≤ |t * x + x ^ 2| + |-(t ^ 2 * ell / 2)| := abs_add_le _ _
+          _ = |t * x + x ^ 2| + |t ^ 2 * ell / 2| := by rw [abs_neg]
+          _ ≤ |t * x| + |x ^ 2| + |t ^ 2 * ell / 2| := by
+            have hadd := abs_add_le (t * x) (x ^ 2)
+            linarith
       rw [abs_mul]
-      linarith
+      exact add_le_add le_rfl hsum
     _ ≤ (Cs * ε ^ 4) * (1 / 2 + Cℓ) +
           ((Ct * ε) * (Cx * ε ^ 3) +
             (Cx * ε ^ 3) ^ 2 +
@@ -583,7 +593,14 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
       have hsL : |s| * |(1 / 2 : ℝ) + ell| ≤
           (Cs * ε ^ 4) * (1 / 2 + Cℓ) :=
         mul_le_mul hs hL (abs_nonneg ((1 / 2 : ℝ) + ell)) (by positivity)
-      linarith
+      have hrest := add_le_add htx (add_le_add hx2 ht2ell)
+      exact add_le_add hsL hrest
+    _ = (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+          Ct ^ 2 * Cℓ / 2) * ε ^ 4 + Cx ^ 2 * ε ^ 6 := by ring
+    _ ≤ (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+          Ct ^ 2 * Cℓ / 2) * ε ^ 4 + Cx ^ 2 * ε ^ 4 := by
+      exact add_le_add_left
+        (mul_le_mul_of_nonneg_left hε6 (sq_nonneg Cx)) _
     _ = (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
           Ct ^ 2 * Cℓ / 2) * ε ^ 4 := by ring
 
