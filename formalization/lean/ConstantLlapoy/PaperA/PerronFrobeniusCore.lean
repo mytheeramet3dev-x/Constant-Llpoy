@@ -106,7 +106,7 @@ theorem harmonic_ratio_constant_on_pf_reachable
       weighted_average_at_max_forces_positive_weight_coordinates_equal
         (P a) t a (fun k => hP_nonneg a k) (hP_sum a)
         h_local_max (h_harmonic a)
-    exact (h_local b hab).symm
+    exact h_local b hab
   have h_path : ∀ {a b}, PFReachable (fun x y => 0 < P x y) a b →
       t a = t i → t b = t i := by
     intro a b hpath
