@@ -160,8 +160,13 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
       eventually_neg_of_continuousAt_of_neg hg hneg
     have hrpos : ∀ᶠ r : ℝ in 𝓝 0, 0 < r :=
       Ioi_mem_nhds (show (0 : ℝ) < 1)
-  · filter_upwards [hrpos, hgneg, hnonneg, hfactor] with r hr hgr hfr hfac
-    have hrpow : 0 < r ^ m := pow_pos hr m
+    have hbad : ∀ᶠ r : ℝ in 𝓝 0,
+        0 < r ∧ g r < 0 ∧ 0 ≤ f r ∧ f r = r ^ m * g r := by
+      filter_upwards [hrpos, hgneg, hnonneg, hfactor] with r hr hgr hfr hfac
+      exact ⟨hr, hgr, hfr, hfac⟩
+    obtain ⟨r, hr⟩ := hbad.exists
+    rcases hr with ⟨hrpos', hgr, hfr, hfac⟩
+    have hrpow : 0 < r ^ m := pow_pos hrpos' m
     have hprod : r ^ m * g r < 0 := mul_pos_of_pos_of_neg hrpow hgr
     rw [hfac] at hfr
     exact (not_le_of_gt hprod hfr).elim
