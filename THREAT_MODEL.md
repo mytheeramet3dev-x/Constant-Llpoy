@@ -505,6 +505,22 @@ Each threat below includes the failure mode, possible impact, required controls,
 
 **Residual risk:** Model adequacy is domain-dependent and may remain partly empirical or judgment-based. A proof of the model's theorem does not eliminate this risk.
 
+### T21 — Verification-system and meta-verification failure
+
+**Threat:** The verification infrastructure itself—validators, parsers, certificate checkers, report generators, orchestration logic, CI gates, or status aggregation—behaves incorrectly and accepts, mislabels, omits, or misattributes evidence.
+
+**Failure modes:**
+- A checker accepts malformed or semantically incomplete certificates.
+- A parser or importer changes the meaning of a theorem, assumptions file, test manifest, or evidence record.
+- A report generator labels skipped, stale, partial, or failed checks as passed.
+- CI orchestration omits a required job, uses an unintended revision, or accepts a stale artifact.
+- A status aggregator computes VERIFIED despite missing required obligations.
+- Tests of the verification system share the same implementation defect as the system under test.
+- An update to a checker, workflow, schema, or agent silently changes acceptance semantics.
+
+**Required controls:** L-08 must validate certificate-checker contracts and negative cases; L-10 must bind reports to exact source, configuration, and evidence revisions; L-11 must inventory validators, parsers, workflows, and status machinery within the trust boundary; L-12 must require independent review, negative/mutation tests, reproducible execution, and explicit skipped/stale/failed states. Add claim-specific meta-verification obligations to the Verification Obligation Matrix.
+
+**Residual risk:** The verification system cannot fully establish its own correctness merely by running its own tests. Independent implementations, external review, minimal trusted components, mutation testing, and explicit residual-risk statements reduce but do not eliminate this risk.
 ## 5. Cross-cutting attack scenarios
 
 The following scenarios illustrate how multiple individually plausible failures can combine.
@@ -658,6 +674,7 @@ This threat model MUST be reviewed when any of the following occurs:
 
 - A new proof assistant, CAS, language, compiler, checker, or major dependency is introduced.
 - A new verification layer or external oracle is added.
+- A validator, parser, certificate checker, CI workflow, status aggregator, or evidence schema changes or is found defective.
 - A foundational inconsistency, vacuous theorem, unsatisfiable hypothesis set, or model-to-target mismatch is discovered.
 - A theorem's statement, definitions, or assumptions change.
 - A manuscript revision affects an audited claim.
