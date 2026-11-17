@@ -193,7 +193,7 @@ Each verification layer MUST address one or more identified threats or obligatio
 
 The architecture MUST NOT add layers merely to increase their count. It MUST NOT cap the number of layers for convenience. The design is complete only to the extent that identified risks and verification obligations are addressed with justified, auditable controls; residual risks MUST remain visible.
 
-The current catalog is organized into twelve named layers in `12_LAYER_VERIFICATION_STANDARD.md`, indexed by `LAYER_CATALOG.md`. This is the approved current organization, not a permanent upper bound or a claim that all twelve layers are implemented. The detailed standard defines layer responsibilities, acceptance conditions, migration from the previous ten-function catalog, and claim-specific applicability. Any future structural change MUST follow the change-control requirements in that standard and this Charter.
+The current provisional candidate catalog is organized into fourteen named layers in `14_LAYER_VERIFICATION_STANDARD.md`, indexed by `LAYER_CATALOG.md`. This is not a permanent upper bound, a completeness claim, or a claim that all fourteen layers are implemented. The detailed standard defines layer responsibilities, acceptance conditions, migration history, and claim-specific applicability. Any future structural change MUST follow the change-control requirements in that standard and this Charter.
 
 ## 10. Dependency and supply-chain integrity
 
