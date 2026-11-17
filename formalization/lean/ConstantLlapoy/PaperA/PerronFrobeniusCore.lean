@@ -440,11 +440,11 @@ theorem at_most_one_orthogonal_perron_eigenvector
     (hAv : ∀ k, ∑ l, A k l * v l = lambdaVal * v k)
     (hconnected : ∀ k l,
       PFReachable (fun a b => 0 < A a b) k l)
-    (hw_nonzero : ∀ i, ∃ k, w i k ≠ 0)
-    (hw_eigen : ∀ i k, ∑ l, A k l * w i l = lambdaVal * w i k)
-    (hw_orthogonal : ∀ i j, i ≠ j →
+    (hw_nonzero : ∀ i : ι, ∃ k, w i k ≠ 0)
+    (hw_eigen : ∀ i : ι, ∀ k : κ, ∑ l, A k l * w i l = lambdaVal * w i k)
+    (hw_orthogonal : ∀ i j : ι, i ≠ j →
       ∑ k, w i k * w j k = 0) :
-    ∀ i j, i ≠ j → False := by
+    ∀ i j : ι, i ≠ j → False := by
   intro i j hij
   have hprop_i := perron_eigenvector_proportional_of_connected
     A v (w i) lambdaVal hA_nonneg hv hlambdaVal hAv
