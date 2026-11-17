@@ -517,7 +517,7 @@ namespace ConstantLlapoy.PaperA
 remainders have their expected orders.  This is a conditional algebraic
 estimate: the hypotheses on ell, x, s, and t still have to be derived
 from the TFIM reduced state. -/
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 1000000
 theorem parity_block_schur_numerator_bound_of_entry_bounds
     {ell x s t ε Cℓ Cx Cs Ct : ℝ}
     (hε0 : 0 ≤ ε)
@@ -558,7 +558,9 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
         = |s * ((1 / 2 : ℝ) + ell) +
           -(t * x + x ^ 2 - t ^ 2 * ell / 2)| := by congr 1 <;> ring
     _ ≤ |s * ((1 / 2 : ℝ) + ell)| +
-          |t * x + x ^ 2 - t ^ 2 * ell / 2| := abs_add_le _ _
+          |t * x + x ^ 2 - t ^ 2 * ell / 2| :=
+      abs_add_le (s * ((1 / 2 : ℝ) + ell))
+        (-(t * x + x ^ 2 - t ^ 2 * ell / 2))
     _ ≤ |s| * |(1 / 2 : ℝ) + ell| +
           (|t * x| + |x ^ 2| + |t ^ 2 * ell / 2|) := by
       have hsum : |t * x + x ^ 2 - t ^ 2 * ell / 2| ≤
@@ -595,10 +597,10 @@ theorem parity_block_schur_numerator_bound_of_entry_bounds
           (Cs * ε ^ 4) * (1 / 2 + Cℓ) :=
         mul_le_mul hs hL (abs_nonneg ((1 / 2 : ℝ) + ell)) (by positivity)
       have hrest := add_le_add htx (add_le_add hx2 ht2ell)
-      exact add_le_add hsL hrest
-    _ = (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+      simpa [add_assoc] using add_le_add hsL hrest
+    _ = (Cs * (1 / 2 + Cℓ) + Ct * Cx +
           Ct ^ 2 * Cℓ / 2) * ε ^ 4 + Cx ^ 2 * ε ^ 6 := by ring
-    _ ≤ (Cs * (1 / 2 + Cℓ) + Ct * Cx + Cx ^ 2 +
+    _ ≤ (Cs * (1 / 2 + Cℓ) + Ct * Cx +
           Ct ^ 2 * Cℓ / 2) * ε ^ 4 + Cx ^ 2 * ε ^ 4 := by
       exact add_le_add_left
         (mul_le_mul_of_nonneg_left hε6 (sq_nonneg Cx)) _
