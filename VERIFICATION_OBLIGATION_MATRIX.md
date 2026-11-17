@@ -218,6 +218,15 @@ Numerical agreement, plots, and finite sampling cannot establish a universal the
 - **H07 — Status approval:** Has the required reviewer approved the exact claim version?
 - **H08 — Change impact:** Have changes since the last verified revision triggered re-evaluation of affected obligations?
 
+
+### I. Foundations, satisfiability, and non-vacuity (L-13)
+
+For each claim, record the foundations, axioms, transitive assumptions, and joint hypotheses. Assess whether the hypotheses can hold simultaneously and whether the intended domain contains admissible instances. Distinguish consistency of a logic, relative consistency of a theory, satisfiability of a hypothesis set, and realizability in an intended model. Record witnesses/models or relative-consistency evidence where available. Do not treat a failed search as proof of inconsistency, or kernel acceptance as a consistency proof. Unknown or undecidable questions remain open.
+
+### J. Model adequacy and applicability (L-14)
+
+For claims about physical, empirical, computational, or other external targets, record the target-to-model mapping, omitted mechanisms, idealizations, parameter interpretation, boundary conditions, and applicability regime. Assess whether the theorem's conclusion stays within that regime and whether finite/discrete-to-continuum or thermodynamic extrapolations have a justified bridge. Separate mathematical correctness from model adequacy, empirical fit, explanatory relevance, and predictive validity. For pure mathematical claims, record a reasoned non-applicability decision.
+
 ## 7. Tool selection and applicability rationale
 
 For each tool family below, the matrix MUST record one of REQUIRED, NOT_REQUIRED, NOT_APPLICABLE, or UNKNOWN, plus a rationale.
@@ -382,6 +391,10 @@ A reviewer should be able to answer YES to all applicable questions:
 - Can evidence be reproduced and independently inspected?
 - Does the manuscript say no more than the evidence establishes?
 - Are unresolved risks and limitations visible?
+- Have L-13 consistency, joint satisfiability, and non-vacuity obligations been assessed where material?
+- Has L-14 model adequacy and applicability been assessed for external/applied claims?
+- Are countermodel searches distinguished from proofs of independence or necessity?
+- Are structural robustness checks distinguished from numerical stability checks?
 
 A NO or UNKNOWN answer blocks VERIFIED status.
 
@@ -404,6 +417,7 @@ The next population task is to inspect authoritative manuscript and source revis
 
 This matrix MUST be read together with:
 - `ARCHITECTURE_CHARTER.md` — governing mission, principles, evidence policy, and verification architecture.
+- `14_LAYER_VERIFICATION_STANDARD.md` — provisional 14-layer candidate standard.
 - `THREAT_MODEL.md` — threat catalogue and adversarial failure scenarios.
 - `TRUST_BOUNDARY_TCB_INVENTORY.md` — trust boundaries and trusted computing base inventory.
 - `TOOLCHAIN_DEPENDENCY_INVENTORY.md` — candidate tools, dependency controls, and environment acceptance gates.
