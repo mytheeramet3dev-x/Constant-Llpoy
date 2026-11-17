@@ -577,9 +577,10 @@ end ConstantLlapoy.PaperA
 
 namespace ConstantLlapoy.PaperA
 
-/-- A supplied nonzero eigenvector places its eigenvalue in the real spectrum.
-For a Hermitian matrix, Mathlib's spectral-range theorem then identifies that
-value with an entry of the indexed eigenvalue list. -/
+/-- A supplied nonzero eigenvector places its eigenvalue in the real
+spectrum. The matrix/linear-map algebra equivalence transfers spectrum
+membership back to the matrix, and the Hermitian spectral theorem identifies
+that value with an entry of the indexed eigenvalue list. -/
 theorem perron_eigenvalue_occurs_in_real_symmetric_spectrum
     {κ : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
     (A : Matrix κ κ ℝ) (hA : A.IsHermitian)
@@ -596,17 +597,16 @@ theorem perron_eigenvalue_occurs_in_real_symmetric_spectrum
   have hlin : A.toLin' v = lambdaVal • v := by
     ext i
     simpa [Matrix.toLin'_apply, Matrix.mulVec, dotProduct] using hAv i
-  have heig : (A.toLin').HasEigenvector lambdaVal v := by
+  have heig : Module.End.HasEigenvector (A.toLin') lambdaVal v := by
     rw [Module.End.hasEigenvector_iff, Module.End.mem_eigenspace_iff]
     exact ⟨hlin, hv_ne⟩
   have hspec_lin : lambdaVal ∈ spectrum ℝ A.toLin' :=
-    (hasEigenvalue_of_hasEigenvector heig).mem_spectrum
-  have hspec : lambdaVal ∈ spectrum ℝ A := by
-    rw [← AlgEquiv.spectrum_eq
-      (Matrix.toLinAlgEquiv (Pi.basisFun ℝ κ))]
-    exact hspec_lin
-  obtain ⟨i, hi⟩ :=
-    Set.mem_range.mp (hA.spectrum_real_eq_range_eigenvalues.mp hspec)
-  exact ⟨i, hi.symm⟩
+    (Module.End.hasEigenvalue_of_hasEigenvector heig).mem_spectrum
+  have hspec_eq : spectrum ℝ A.toLin' = spectrum ℝ A := by
+    exact AlgEquiv.spectrum_eq
+      (Matrix.toLinAlgEquiv (Pi.basisFun ℝ κ)) A
+  have hspec : lambdaVal ∈ spectrum ℝ A := hspec_eq ▸ hspec_lin
+  rw [hA.spectrum_real_eq_range_eigenvalues] at hspec
+  exact Set.mem_range.mp hspec
 
 end ConstantLlapoy.PaperA
