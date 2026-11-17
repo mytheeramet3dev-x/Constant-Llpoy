@@ -610,3 +610,35 @@ theorem perron_eigenvalue_occurs_in_real_symmetric_spectrum
   exact Set.mem_range.mp hspec
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- A strictly positive eigenvector of a real symmetric matrix with
+nonnegative entries and connected positive support identifies an eigenvalue
+that occurs at exactly one index in Mathlib's orthonormal spectral list.
+Existence comes from the supplied eigenvector; uniqueness comes from the
+one-dimensional Perron eigenspace and orthogonality of the spectral basis.
+This is an exact list-level multiplicity statement, not yet the
+characteristic-polynomial root-multiplicity theorem. -/
+theorem perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum
+    {κ : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
+    (A : Matrix κ κ ℝ) (hA : A.IsHermitian)
+    (v : κ → ℝ) (lambdaVal : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    ∃! i, hA.eigenvalues i = lambdaVal := by
+  obtain ⟨i₀, hi₀⟩ :=
+    perron_eigenvalue_occurs_in_real_symmetric_spectrum A hA v lambdaVal hv hAv
+  refine ⟨i₀, hi₀, ?_⟩
+  intro j hj
+  by_contra hne
+  exact perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
+    A hA v lambdaVal hA_nonneg hv hlambdaVal hAv hconnected
+    i₀ j hi₀ hj hne
+
+end ConstantLlapoy.PaperA
