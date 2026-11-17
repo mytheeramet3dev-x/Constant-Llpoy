@@ -329,3 +329,45 @@ theorem perron_eigenvector_proportional_of_connected
   nlinarith
 
 end ConstantLlapoy.PaperA
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- A vector proportional to a strictly positive vector cannot be both
+nonzero and orthogonal to it. This is the orthogonality contradiction needed
+when the real symmetric spectral theorem supplies an orthonormal eigenbasis:
+two basis vectors belonging to the same eigenvalue would contradict the
+one-dimensional Perron eigenspace result. -/
+theorem proportional_vector_orthogonal_to_positive_is_zero
+    {ι : Type*} [Fintype ι] [Nonempty ι]
+    (v y : ι → ℝ)
+    (hv : ∀ i, 0 < v i)
+    (horth : ∑ i, v i * y i = 0)
+    (hprop : ∃ c : ℝ, ∀ i, y i = c * v i) :
+    ∀ i, y i = 0 := by
+  classical
+  obtain ⟨c, hc⟩ := hprop
+  have hsum_pos : 0 < ∑ i, v i * v i := by
+    apply Finset.sum_pos
+    · intro i hi
+      exact mul_pos (hv i) (hv i)
+    · exact Finset.univ_nonempty
+  have hfactor : ∑ i, v i * y i = c * (∑ i, v i * v i) := by
+    calc
+      ∑ i, v i * y i = ∑ i, v i * (c * v i) := by
+        apply Finset.sum_congr rfl
+        intro i hi
+        rw [hc i]
+      _ = c * (∑ i, v i * v i) := by
+        rw [Finset.mul_sum]
+        apply Finset.sum_congr rfl
+        intro i hi
+        ring
+  rw [horth] at hfactor
+  have hc_zero : c = 0 :=
+    (mul_eq_zero.mp hfactor).resolve_right (ne_of_gt hsum_pos)
+  intro i
+  rw [hc i, hc_zero]
+  simp
+
+end ConstantLlapoy.PaperA
