@@ -512,3 +512,65 @@ theorem perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
 
 end ConstantLlapoy.PaperA
 
+
+
+namespace ConstantLlapoy.PaperA
+
+/-- Instantiate the orthogonal-eigenbasis multiplicity bound with Mathlib's
+actual orthonormal eigenvector basis for a real symmetric matrix. This is
+still an at-most-once statement; existence of the Perron eigenvalue in the
+spectral list and the characteristic-polynomial multiplicity count are
+separate obligations. -/
+theorem perron_eigenvalue_occurs_at_most_once_in_real_symmetric_spectrum
+    {κ : Type*} [Fintype κ] [DecidableEq κ] [Nonempty κ]
+    (A : Matrix κ κ ℝ) (hA : A.IsHermitian)
+    (v : κ → ℝ) (lambdaVal : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv : ∀ i, 0 < v i)
+    (hlambdaVal : 0 < lambdaVal)
+    (hAv : ∀ i, ∑ j, A i j * v j = lambdaVal * v i)
+    (hconnected : ∀ i j,
+      PFReachable (fun a b => 0 < A a b) i j) :
+    ∀ i j, hA.eigenvalues i = lambdaVal →
+      hA.eigenvalues j = lambdaVal → i ≠ j → False := by
+  let eigenvalue : κ → ℝ := hA.eigenvalues
+  let basisVector : κ → κ → ℝ :=
+    fun i k => ⇑(hA.eigenvectorBasis i) k
+  have hbasis_nonzero : ∀ i, ∃ k, basisVector i k ≠ 0 := by
+    intro i
+    have hnorm : ‖hA.eigenvectorBasis i‖ = 1 :=
+      hA.eigenvectorBasis.orthonormal.1 i
+    by_contra h
+    push_neg at h
+    have hzero : ⇑(hA.eigenvectorBasis i) = 0 := funext h
+    have hzero' : hA.eigenvectorBasis i = 0 :=
+      DFunLike.coe_injective hzero
+    have hnorm_zero := congrArg norm hzero'
+    rw [norm_zero] at hnorm_zero
+    linarith
+  have hbasis_eigen : ∀ i k,
+      ∑ l, A k l * basisVector i l =
+        eigenvalue i * basisVector i k := by
+    intro i k
+    have hmul := congrFun (hA.mulVec_eigenvectorBasis i) k
+    simpa [basisVector, eigenvalue, Matrix.mulVec] using hmul
+  have hbasis_orthogonal : ∀ i j, i ≠ j →
+      ∑ k, basisVector i k * basisVector j k = 0 := by
+    intro i j hij
+    have hinner :=
+      (orthonormal_iff_ite.mp hA.eigenvectorBasis.orthonormal) i j
+    have hinner_zero :
+        ⟪hA.eigenvectorBasis i, hA.eigenvectorBasis j⟫_ℝ = 0 := by
+      simpa [hij] using hinner
+    have hdot :
+        dotProduct (⇑(hA.eigenvectorBasis j))
+          (⇑(hA.eigenvectorBasis i)) = 0 := by
+      simpa [EuclideanSpace.inner_eq_star_dotProduct, star_trivial] using
+        hinner_zero
+    rw [dotProduct] at hdot
+    simpa [basisVector, mul_comm] using hdot
+  exact perron_eigenvalue_occurs_at_most_once_in_orthogonal_eigenbasis
+    A v eigenvalue basisVector lambdaVal hA_nonneg hv hlambdaVal hAv
+    hconnected hbasis_nonzero hbasis_eigen hbasis_orthogonal
+
+end ConstantLlapoy.PaperA
