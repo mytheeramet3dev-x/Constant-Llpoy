@@ -205,8 +205,8 @@ theorem perron_eigenvector_ratio_is_harmonic
       ((A i j * v j) / (lambdaVal * v i)) * (y j / v j) =
         (A i j * y j) / (lambdaVal * v i) := by
     intro j
-    field_simp
-    ring_nf
+    field_simp [hv_ne j, hden]
+    ring
   calc
     ∑ j, ((A i j * v j) / (lambdaVal * v i)) * (y j / v j)
         = ∑ j, (A i j * y j) / (lambdaVal * v i) := by
