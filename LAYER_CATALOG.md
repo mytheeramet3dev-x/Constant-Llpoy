@@ -1,9 +1,9 @@
 # Constant Llapoy — Verification Layer Catalog (14-Layer Candidate)
 
-**Document status:** Current 12-layer architecture catalog  
+**Document status:** Current 14-layer candidate catalog; architecture remains provisional  
 **Version:** 0.2.0  
 **Effective date:** 2026-11-18  
-**Normative specification:** `12_LAYER_VERIFICATION_STANDARD.md`  
+**Normative specification:** `14_LAYER_VERIFICATION_STANDARD.md`  
 **Parent documents:** `ARCHITECTURE_CHARTER.md`, `THREAT_MODEL.md`  
 **Scope:** Conceptual inventory and implementation-status index for Constant Llapoy
 
@@ -11,9 +11,9 @@
 
 ## 1. Purpose and authority
 
-This file is the concise catalog and navigation index for the current **12-layer verification architecture**. The normative purpose, threat model, inputs, outputs, acceptance/failure conditions, migration mapping, applicability rules, and status protocol are specified in `12_LAYER_VERIFICATION_STANDARD.md`.
+This file is the concise catalog and navigation index for the current **14-layer candidate verification architecture**. The normative purpose, threat model, inputs, outputs, acceptance/failure conditions, applicability rules, and status protocol are specified in `14_LAYER_VERIFICATION_STANDARD.md`.
 
-The 12-layer architecture is the approved current organization of verification functions. It is not a permanent upper bound: the Architecture Charter continues to permit layers to be split, merged, replaced, or supplemented when documented threats and obligations justify doing so.
+The 14-layer architecture is a provisional organization of current verification functions, not a final approval or completeness claim. It is not a permanent upper bound: the Architecture Charter continues to permit layers to be split, merged, replaced, or supplemented when documented threats and obligations justify doing so.
 
 This catalog does not claim that all layers are implemented, validated, or applicable to every mathematical claim.
 
@@ -42,7 +42,7 @@ This catalog does not claim that all layers are implemented, validated, or appli
 
 All ten functions in catalog version 0.1.0 are preserved in substance. The previous Mathematical Claim Specification function is integrated with Literature and Prior-Art in L-01. The previous L-02 function remains L-02. Previous L-03 through L-10 functions are retained with new identifiers L-04 through L-12, respectively. The three additions are Literature/Prior-Art (integrated into L-01), Boundary/Domain/Scope-Quantifier Audit (L-03), and Manuscript-to-Artifact Traceability/Synchronization (L-10).
 
-The exact migration table and rationale are maintained in Section 5 of `14_LAYER_VERIFICATION_STANDARD.md`. The previous 12-layer candidate and earlier ten-function catalog remain available in repository history; historical identifiers MUST NOT be silently rewritten.
+The exact migration table and rationale are maintained in Section 5 of `14_LAYER_VERIFICATION_STANDARD.md`. Earlier catalogs remain available in repository history; historical identifiers MUST NOT be silently rewritten.
 
 ## 4. Cross-layer obligations
 
@@ -73,6 +73,10 @@ Layer status and claim status must not be conflated. The normative layer statuse
 
 A green CI result, a source file, a catalog entry, or a completed layer design does not automatically verify a mathematical claim.
 
-## 6. Governing statement
+## 6. Meta-verification specification
+
+The cross-layer assurance requirements for checkers, parsers, CI/workflow orchestration, evidence revision binding, mutation testing, independent review, and fail-closed status aggregation are specified in `META_VERIFICATION_SPECIFICATION.md`. This is a design requirement, not evidence that those controls have been implemented or validated. Current provisional ownership is L-08, L-10, L-11, and L-12; no dedicated L-15 has been approved.
+
+## 7. Governing statement
 
 > **The catalog names the current verification functions; only claim-specific, auditable evidence can establish that an obligation has been met.**
