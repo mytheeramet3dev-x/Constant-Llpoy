@@ -474,6 +474,37 @@ Each threat below includes the failure mode, possible impact, required controls,
 
 **Evidence:** Archive manifest, reproduction instructions, retained logs, external-source register, reproducibility report.
 
+
+### T19 — Foundational inconsistency, unsatisfiable assumptions, and vacuity
+
+**Threat:** A claim is accepted under contradictory foundations or mutually incompatible hypotheses, or a formally valid implication is vacuous because its hypotheses have no intended instances. A consistency assertion may also exceed what the available metatheory establishes.
+
+**Failure modes:**
+- An inconsistent axiom set permits arbitrary conclusions by explosion.
+- Individually plausible assumptions cannot hold simultaneously.
+- The theorem's domain or parameter constraints are empty or exclude every intended case.
+- A vacuous implication is reported as a substantive mathematical or scientific result.
+- Relative consistency is misreported as absolute consistency, or formal acceptance is mistaken for a consistency proof.
+
+**Required controls:** L-13 assumption inventory; transitive axiom inspection; joint satisfiability/non-vacuity analysis; explicit witness/model or relative-consistency evidence where available; clear statement of undecidable or unresolved limits. L-04/L-05 kernel acceptance alone does not discharge this threat.
+
+**Residual risk:** General consistency and satisfiability questions may be undecidable or inaccessible from the chosen metatheory. Unknown must remain visible.
+
+### T20 — Mathematical model inadequacy and invalid applicability
+
+**Threat:** A theorem or computation is correct for a mathematical model that does not adequately represent the intended target, or conclusions are extrapolated beyond the model's justified regime.
+
+**Failure modes:**
+- Unsupported mapping from a physical/empirical system to mathematical objects or parameters.
+- Material mechanisms or constraints are omitted without justification.
+- Idealizations, truncations, finite-size assumptions, or boundary conditions invalidate the intended interpretation.
+- A finite/discrete result is presented as a continuum or thermodynamic conclusion without a valid limiting bridge.
+- A mathematically correct result is presented as empirically predictive or explanatory without adequate validation.
+
+**Required controls:** L-14 model specification, target-to-model correspondence, assumption/idealization register, applicability regime, sensitivity to reasonable modeling alternatives, and explicit distinction among mathematical validity, model adequacy, empirical fit, and predictive validity.
+
+**Residual risk:** Model adequacy is domain-dependent and may remain partly empirical or judgment-based. A proof of the model's theorem does not eliminate this risk.
+
 ## 5. Cross-cutting attack scenarios
 
 The following scenarios illustrate how multiple individually plausible failures can combine.
@@ -627,6 +658,7 @@ This threat model MUST be reviewed when any of the following occurs:
 
 - A new proof assistant, CAS, language, compiler, checker, or major dependency is introduced.
 - A new verification layer or external oracle is added.
+- A foundational inconsistency, vacuous theorem, unsatisfiable hypothesis set, or model-to-target mismatch is discovered.
 - A theorem's statement, definitions, or assumptions change.
 - A manuscript revision affects an audited claim.
 - A vulnerability, soundness issue, or relevant tool defect is disclosed.
@@ -645,7 +677,7 @@ At the time this document is created:
 - No threat is considered mitigated solely by this document.
 - No verification layer is declared operational by this document.
 - No paper or theorem is declared verified by this document.
-- The next design task is to convert the threat register into claim-specific verification obligations, a trust-boundary inventory, and a control implementation matrix.
+- The 14-layer candidate standard maps threats to candidate controls; claim-specific verification obligations, implementation evidence, and residual-risk assessments remain to be populated.
 
 ## 13. Governing rule
 
