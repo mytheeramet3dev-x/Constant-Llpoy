@@ -100,4 +100,29 @@ theorem hasDerivAt_nonnegative_branch_eq_zero
     simpa [hzero] using hnonneg
   exact hmin.hasDerivAt_eq_zero hf
 
+
+/-- A negative-side witness rules out odd vanishing order when the branch
+has a nonnegative factorization and a positive quotient at that witness.
+
+This is the algebraic core of the parity argument. The separate topological
+obligation is to obtain such a witness from eventual hypotheses near zero. -/
+theorem even_order_of_negative_factorization_witness
+    {f g : ℝ → ℝ} {m : ℕ} {r : ℝ}
+    (hodd : Odd m)
+    (hr : r < 0)
+    (hg : 0 < g r)
+    (hnonneg : 0 ≤ f r)
+    (hfactor : f r = r ^ m * g r) :
+    Even m := by
+  have hnegbase : 0 < -r := neg_pos.mpr hr
+  have hpowpos : 0 < (-r) ^ m := pow_pos hnegbase m
+  have hpowneg : r ^ m < 0 := by
+    have hrewrite : r = -(-r) := by ring
+    rw [hrewrite, hodd.neg_pow]
+    exact neg_neg_of_pos hpowpos
+  have hproductneg : r ^ m * g r < 0 :=
+    mul_neg_of_neg_of_pos hpowneg hg
+  rw [hfactor] at hnonneg
+  exact (not_le_of_gt hproductneg hnonneg).elim
+
 end ConstantLlapoy.PaperA
