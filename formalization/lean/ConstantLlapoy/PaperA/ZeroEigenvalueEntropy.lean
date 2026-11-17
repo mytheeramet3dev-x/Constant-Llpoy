@@ -439,4 +439,8 @@ theorem parity_block_schur_remainder_identity
       (s * ((1 / 2 : ℝ) + ell) -
         (t * x + x ^ 2 - t ^ 2 * ell / 2)) /
         ((1 / 2 : ℝ) + ell) := by
-  field_simp [hL] <;> ring_nf
+  have hD : 1 + 2 * ell ≠ 0 := by
+    intro h
+    apply hL
+    nlinarith
+  field_simp [hD] <;> ring
