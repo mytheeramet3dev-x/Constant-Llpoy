@@ -118,3 +118,30 @@ This is a candidate proof architecture, not a Lean proof and not a claim that al
 - TFIM Hamiltonian encoding and correspondence: NOT_STARTED.
 - THM-0002 Lean formalization: NOT_STARTED.
 - Full claim: NOT_VERIFIED.
+
+
+## 10. Refined uniqueness argument via a stochastic edge kernel
+
+The equality-case step in the preceding candidate proof can be replaced by a cleaner ratio argument, once a strictly positive top eigenvector v and positivity of the top eigenvalue λ have been established.
+
+Let A be symmetric, entrywise nonnegative, with connected positive-entry graph. Assume λ>0 and v_i>0 for every i, with Av=λv. For any other real eigenvector y with Ay=λy, define t_i=y_i/v_i and
+`P(i,j)=A_{ij}v_j/(λv_i)`.
+
+Then:
+
+- P(i,j)≥0.
+- `∑_j P(i,j)=1`, by Av=λv.
+- `t_i=∑_j P(i,j)t_j`, by Ay=λy.
+- Since the finite index set has a maximum M=max_i t_i, at an index i attaining M, the weighted-average identity forces t_j=M for every j with A_ij>0.
+- Connectivity propagates t_j=M to all vertices, hence y=Mv.
+
+Thus every real eigenvector for λ is proportional to v. Since A is symmetric, the spectral theorem identifies algebraic multiplicity with eigenspace dimension, so λ is simple.
+
+The proof still requires formalizing:
+1. λ>0 from a positive off-diagonal entry (e.g. a positive Rayleigh quotient on the all-ones vector);
+2. the existence of a nonnegative maximizing eigenvector using the absolute-value Rayleigh inequality;
+3. strict positivity of that eigenvector by zero-propagation along connected positive edges;
+4. finite maximum and weighted-average propagation;
+5. translation from one-dimensional eigenspace to simplicity in the exact matrix/eigenvalue API used.
+
+This ratio argument avoids a delicate equality characterization in the absolute-value inequality. It is still only a proof plan; no Lean theorem has been committed.
