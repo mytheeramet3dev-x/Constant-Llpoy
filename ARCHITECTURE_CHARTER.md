@@ -256,7 +256,7 @@ The initial implementation MUST begin with:
 5. A proof-to-manuscript correspondence process.
 6. A transparent status and reporting protocol.
 
-The current detailed layer architecture is specified in `12_LAYER_VERIFICATION_STANDARD.md` and cataloged in `LAYER_CATALOG.md`. Its implementation and validation MUST still be derived from the claim-specific threat model and verification obligations; the existence of the architecture documents does not establish that any layer is operational or that any claim is verified.
+The current provisional 14-layer candidate architecture is specified in `14_LAYER_VERIFICATION_STANDARD.md` and cataloged in `LAYER_CATALOG.md`. The candidate count is not a completeness guarantee or a permanent cap; further layers or redesigns require documented threat-based justification. Its implementation and validation MUST still be derived from the claim-specific threat model and verification obligations; the existence of the architecture documents does not establish that any layer is operational or that any claim is verified.
 
 ## 15. Governing statement
 
