@@ -2,7 +2,7 @@
 
 **Repository:** Constant Llapoy  
 **Scope:** Paper A only  
-**Status:** Mathematical proof obligations specified; partial Lean lemmas compile. Latest pinned CI (run 43979057358, commit `af6e2eb9515d50801f47dadde7e2ee06a0bd1715`) passed the full Lake build and axiom audit. The factorisation theorem itself remains open.
+**Status:** Partial Lean formalization verified. Latest pinned CI (run 43983006064, commit `e4129b888a7ffe1bc00028fe23e840b83ed5f087`) passed the pinned Lean/Mathlib build and configured axiom audit. The analytic finite-order factorization wrapper and the nonnegative-branch-to-local-minimum lemma compile. The parity/positive-leading-coefficient theorem and the entropy derivative at the zero branch remain open. `lake test` and `lake lint` were not run.
 
 ## 1. Target statement
 
@@ -38,7 +38,7 @@ The Lean module ZeroEigenvalueEntropy.lean currently formalizes the chain rule a
 
 ## 3. Why the zero branch needs a separate argument
 
-If lambda(0,u0)=0 and lambda >= 0 on a two-sided neighborhood, Fermat's theorem gives partial_r lambda(0,u0)=0. The Lean declaration `hasDerivAt_local_min_branch_eq_zero` formalizes Fermat's theorem under an explicit `IsLocalMin` hypothesis. The conversion from two-sided nonnegativity plus `lambda(0,u0)=0` to `IsLocalMin` is not yet formalized.
+If lambda(0,u0)=0 and lambda >= 0 on a two-sided neighborhood, Fermat's theorem gives partial_r lambda(0,u0)=0. The Lean declarations `hasDerivAt_local_min_branch_eq_zero` and `hasDerivAt_nonnegative_branch_eq_zero` formalize Fermat's theorem and the conversion from two-sided eventual nonnegativity plus a zero value to `IsLocalMin`.
 
 That fact alone is insufficient to differentiate -lambda log lambda at the zero branch. A differentiable nonnegative function can vanish to a rate that is too slow for the product with its logarithm to have the desired derivative. The analytic finite-order factorisation (or a stronger explicit modulus estimate) is required.
 
@@ -57,9 +57,9 @@ No uniform-in-u, uniform-in-N, or global-in-coupling conclusion may be inferred 
 
 The planned proof is split into independently reviewable obligations:
 
-- **ZF-1:** formalize the local power-series coefficient representation for the real-analytic branch. This is the next mathematical formalization target; do not assume a fixed order m without proving or explicitly stratifying it.
-- **ZF-2:** prove the first nonzero order is even at a two-sided nonnegative zero.
-- **ZF-3:** factor r^m and prove continuity/analyticity of the quotient g.
+- **ZF-1:** formalize the finite-order local factorization for a nontrivial real-analytic one-variable branch. Partially discharged by `exists_local_power_factorization_of_analytic_nontrivial`, which wraps the pinned Mathlib isolated-zero theorem and returns analytic `g`, `g(0) ≠ 0`, and eventual equality `f(r)=r^m g(r)`. This is not yet a coefficient-by-coefficient Taylor development, nor does it use nonnegativity.
+- **ZF-2:** prove the first nonzero order is even and the leading coefficient is positive at a two-sided nonnegative zero. OPEN; this is the next target.
+- **ZF-3:** factor `r^m` and prove regularity of the quotient `g`. Analyticity of `g` is supplied by the ZF-1 wrapper at a single base point; the remaining work is to connect the factorization to the model's joint `(r,u)` branch and uniform parameter estimates.
 - **ZF-4:** establish compact-neighborhood lower and upper bounds for g.
 - **ZF-5:** establish the differentiated coefficient bound for partial_u g.
 - **ZF-6:** derive the two-sided logarithmic control for lambda from the proved lower/upper factorisation bounds; do not assume the log-control bound independently in the final application.
@@ -68,3 +68,15 @@ The planned proof is split into independently reviewable obligations:
 - **ZF-9:** verify the resulting estimates match the exact eigenvalue branches and edge derivative in the frozen Paper A manuscript.
 
 Each obligation requires its own assumptions, constants, domains, and proof. None is marked complete by the current positive-branch algebraic lemma.
+
+
+## 6. Latest verified Lean state
+
+At commit `e4129b888a7ffe1bc00028fe23e840b83ed5f087`, CI run [43983006064](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/43983006064) completed successfully. Its only job, “Pinned Lean and Mathlib build”, completed the build and configured axiom audit successfully. This run did not execute `lake test` or `lake lint`.
+
+The module now contains:
+- `exists_local_power_factorization_of_analytic_nontrivial`: finite-order factorization for a nontrivial analytic branch in one real variable;
+- `hasDerivAt_nonnegative_branch_eq_zero`: derivative of a differentiable branch is zero if it vanishes and is eventually nonnegative on a two-sided neighborhood;
+- the positive-branch entropy chain-rule and conditional logarithmic derivative bound.
+
+The first item does not establish that `m` is even or `g 0 > 0). The second item concerns only the eigenvalue branch, not the entropy function at its zero. Do not infer the zero-branch entropy derivative from it.
