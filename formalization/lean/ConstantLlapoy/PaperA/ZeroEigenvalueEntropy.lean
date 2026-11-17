@@ -222,4 +222,23 @@ theorem even_order_and_positive_leading_coefficient_of_nonnegative_factorization
         hodd hrneg hgr hfr hfac
   exact ⟨hparity, hpos0⟩
 
+
+/-- A continuous quotient with positive value at the base point is bounded
+above and bounded away from zero on a sufficiently small neighborhood.
+This is the scalar local estimate needed before deriving two-sided bounds
+for the factored eigenvalue branch. -/
+theorem eventually_quotient_two_sided_bounds
+    {g : ℝ → ℝ}
+    (hg : ContinuousAt g 0)
+    (h0 : 0 < g 0) :
+    ∀ᶠ r : ℝ in 𝓝 0,
+      g 0 / 2 < g r ∧ g r < (3 / 2) * g 0 := by
+  have hinterval : g 0 ∈ Set.Ioo (g 0 / 2) ((3 / 2) * g 0) := by
+    constructor <;> nlinarith
+  have hevent : ∀ᶠ r : ℝ in 𝓝 0,
+      g r ∈ Set.Ioo (g 0 / 2) ((3 / 2) * g 0) :=
+    hg.eventually (Ioo_mem_nhds hinterval)
+  filter_upwards [hevent] with r hr
+  exact hr
+
 end ConstantLlapoy.PaperA
