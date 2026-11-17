@@ -114,9 +114,9 @@ Observed modules under `formalization/lean/ConstantLlapoy/PaperA/`:
 | Module | Blob SHA |
 |---|---|
 | `PerronFrobeniusCore.lean` | `78942634383ca8eba93b487f5f6fb58e38dbb6ac` |
-| `StrongCoupling.lean` | not captured in this initial register |
+| `StrongCoupling.lean` | `4ffbbc0e39616cfc4e27c00a86e4110331190b27` |
 | `WeakCoupling.lean` | `10ae888e5f2c89565621213237c0fa7067a42744` |
-| `ZeroEigenvalueEntropy.lean` | not captured in this initial register |
+| `ZeroEigenvalueEntropy.lean` | `4088d32b90369da91f6703d0146ff3c0359767b7` |
 
 These are proof inputs, not independent checkers. The Lean kernel's acceptance is the primary formal evidence route under the declared Lean toolchain and assumptions. The repository's obligation register distinguishes build-verified and axiom-audited declarations from open obligations; that distinction must be preserved.
 
