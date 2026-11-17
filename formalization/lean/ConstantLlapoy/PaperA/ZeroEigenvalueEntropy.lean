@@ -474,7 +474,7 @@ theorem hasDerivAt_parity_block_schur_remainder_bound
   · have hε4 : 0 ≤ ε ^ 4 := by positivity
     calc
       |num' * invL u + num u * invL'| ≤
-          |num' * invL u| + |num u * invL'| := abs_add _ _
+          |num' * invL u| + |num u * invL'| := abs_add_le _ _
       _ = |num'| * |invL u| + |num u| * |invL'| := by
         rw [abs_mul, abs_mul]
       _ ≤ (Cn' * ε ^ 4) * D + (Cn * ε ^ 4) * D' := by
