@@ -5,6 +5,28 @@ open scoped Topology
 
 namespace ConstantLlapoy.PaperA
 
+/-- Exact cancellation of the quadratic Schur term in the plus parity block.
+This certifies only the displayed leading-order algebra
+(S = (b₁+b₂)²/2, X = (b₁+b₂)/2, L = 1/2);
+it does not establish that the physical reduced-state entries have these
+expansions or control their remainders. -/
+theorem plus_parity_leading_schur_cancellation
+    (b₁ b₂ : ℝ) :
+    (b₁ + b₂) ^ 2 / 2 -
+      (((b₁ + b₂) / 2) ^ 2) / (1 / 2 : ℝ) = 0 := by
+  ring
+
+/-- Exact cancellation of the quadratic Schur term in the minus parity block.
+As above, this is an algebraic identity for the leading coefficients only;
+the model-specific expansion and differentiated remainder remain separate
+obligations. -/
+theorem minus_parity_leading_schur_cancellation
+    (b₁ b₂ : ℝ) :
+    (b₁ - b₂) ^ 2 / 2 -
+      (((b₁ - b₂) / 2) ^ 2) / (1 / 2 : ℝ) = 0 := by
+  ring
+
+
 /-- A positive eigenvalue branch whose logarithm is controlled from both sides
 has an entropy derivative bounded by its parameter derivative times a
 logarithmic factor.
