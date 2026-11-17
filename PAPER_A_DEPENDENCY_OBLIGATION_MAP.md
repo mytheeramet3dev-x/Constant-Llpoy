@@ -184,3 +184,14 @@ This map does **not** establish:
 - Verify the conservative O(r^3 |ln r|) derivative remainder in dimensionless edge coordinates.
 - Check the leading derivative identity ∂u13 p1 = ∂u13 q = r^2/8 + O(r^3), with all disjoint-edge leading derivatives zero.
 - Formalize the fixed-N result in Lean and audit correspondence before any upstream change.
+
+
+## 9. THM-0002 Lean dependency audit — 2026-11-17
+
+- The independent mathematical proof review remains PASS; this is separate from Lean verification.
+- The pinned Mathlib revision is `96f6b8b8e029545577421f198a89fb174a4d62e6`.
+- The audited file `Mathlib/LinearAlgebra/Matrix/Irreducible/Defs.lean` supplies `Matrix.IsIrreducible`, positive-entry quiver connectivity, and `Matrix.isIrreducible_iff_exists_pow_pos`.
+- The bounded API search did not identify a ready-made Perron–Frobenius theorem proving simplicity of the maximal eigenvalue for an irreducible nonnegative matrix. This is an API-search finding, not a proof of nonexistence; a declaration-level audit of the pinned spectral files remains required.
+- Consequently, THM-0002 Lean formalization has not started. No abstract PF assumption, axiom, `sorry`, or `admit` is accepted as a substitute for the spectral theorem.
+- Required sequence: (i) complete the declaration-level Mathlib audit; (ii) formalize the computational-basis Hamiltonian and (K=cI-H); (iii) prove hypercube irreducibility; (iv) prove or locate a fully justified PF simplicity theorem; (v) transfer the result back to H.
+- Detailed API audit: `audits/paper-a/THM-0002_LEAN_MATHLIB_API_AUDIT.md`.
