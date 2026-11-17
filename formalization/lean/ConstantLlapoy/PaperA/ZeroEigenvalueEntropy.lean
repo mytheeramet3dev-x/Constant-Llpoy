@@ -333,4 +333,27 @@ theorem exists_eventually_fderiv_norm_bound_of_analyticAt
   dsimp [B]
   linarith
 
+
+/-- A jointly continuous auxiliary-parameter derivative is uniformly bounded
+on any compact subset of the (radial, auxiliary-parameter) plane.
+
+The continuity of the partial derivative is an explicit hypothesis. In an
+application it must be derived from the joint regularity of the quotient
+function; pointwise analyticity in the auxiliary parameter alone is not
+silently promoted to joint continuity. -/
+theorem exists_uniform_partial_deriv_bound_on_compact_of_continuousOn
+    {g : ℝ × ℝ → ℝ} {K : Set (ℝ × ℝ)}
+    (hK : IsCompact K)
+    (hcont : ContinuousOn
+      (fun p : ℝ × ℝ => deriv (fun u : ℝ => g (p.1, u)) p.2) K) :
+    ∃ B : ℝ, 0 ≤ B ∧
+      ∀ p ∈ K,
+        |deriv (fun u : ℝ => g (p.1, u)) p.2| ≤ B := by
+  obtain ⟨C, hC⟩ := hK.exists_bound_of_continuousOn hcont
+  refine ⟨max C 0, le_max_right C 0, ?_⟩
+  intro p hp
+  have hnorm := hC p hp
+  rw [Real.norm_eq_abs] at hnorm
+  exact hnorm.trans (le_max_left C 0)
+
 end ConstantLlapoy.PaperA
