@@ -144,4 +144,27 @@ theorem eventually_neg_of_continuousAt_of_neg
     ∀ᶠ r : ℝ in 𝓝 0, g r < 0 := by
   exact hg.eventually (Iio_mem_nhds h0)
 
+
+/-- A nonnegative branch cannot have a negative leading coefficient in a
+finite-order factorization. The witness is chosen on the positive side,
+where r^m is strictly positive for every natural m. -/
+theorem positive_leading_coefficient_of_nonnegative_factorization
+    {f g : ℝ → ℝ} {m : ℕ}
+    (hg : ContinuousAt g 0)
+    (hgne : g 0 ≠ 0)
+    (hnonneg : ∀ᶠ r : ℝ in 𝓝 0, 0 ≤ f r)
+    (hfactor : ∀ᶠ r : ℝ in 𝓝 0, f r = r ^ m * g r) :
+    0 < g 0 := by
+  rcases lt_or_gt_of_ne hgne with hneg | hpos
+  · have hgneg : ∀ᶠ r : ℝ in 𝓝 0, g r < 0 :=
+      eventually_neg_of_continuousAt_of_neg hg hneg
+    have hrpos : ∀ᶠ r : ℝ in 𝓝 0, 0 < r :=
+      Ioi_mem_nhds (show (0 : ℝ) < 1)
+  · filter_upwards [hrpos, hgneg, hnonneg, hfactor] with r hr hgr hfr hfac
+    have hrpow : 0 < r ^ m := pow_pos hr m
+    have hprod : r ^ m * g r < 0 := mul_pos_of_pos_of_neg hrpow hgr
+    rw [hfac] at hfr
+    exact (not_le_of_gt hprod hfr).elim
+  · exact hpos
+
 end ConstantLlapoy.PaperA
