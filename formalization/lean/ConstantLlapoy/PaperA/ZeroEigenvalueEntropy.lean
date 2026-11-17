@@ -175,7 +175,7 @@ theorem positive_leading_coefficient_of_nonnegative_factorization
       linarith
     obtain ⟨hgr, hfr, hfac⟩ := hevent hdist
     have hrpow : 0 < r ^ m := pow_pos hrpos' m
-    have hprod : r ^ m * g r < 0 := mul_pos_of_pos_of_neg hrpow hgr
+    have hprod : r ^ m * g r < 0 := mul_neg_of_pos_of_neg hrpow hgr
     rw [hfac] at hfr
     exact (not_le_of_gt hprod hfr).elim
   · exact hpos
