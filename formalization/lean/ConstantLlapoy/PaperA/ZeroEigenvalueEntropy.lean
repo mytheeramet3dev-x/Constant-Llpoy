@@ -356,4 +356,27 @@ theorem exists_uniform_partial_deriv_bound_on_compact_of_continuousOn
   rw [Real.norm_eq_abs] at hnorm
   exact hnorm.trans (le_max_left C 0)
 
+
+/-- A jointly C¹ quotient has a uniformly bounded full Fréchet derivative
+on every compact subset of its parameter domain.
+
+Unlike a family of pointwise one-variable estimates, this theorem starts
+from joint C¹ regularity of g on ℝ × ℝ. The norm bound controls every
+direction simultaneously. It remains an abstract compact-set result:
+an application must identify a compact neighborhood on which the physical
+quotient is jointly C¹. -/
+theorem exists_uniform_fderiv_norm_bound_on_compact_of_contDiff
+    {g : ℝ × ℝ → ℝ} {K : Set (ℝ × ℝ)}
+    (hK : IsCompact K)
+    (hg : ContDiff ℝ 1 g) :
+    ∃ B : ℝ, 0 ≤ B ∧
+      ∀ p ∈ K, ‖fderiv ℝ g p‖ ≤ B := by
+  have hcont : Continuous (fderiv ℝ g) :=
+    hg.continuous_fderiv (by norm_num)
+  have hcontOn : ContinuousOn (fderiv ℝ g) K := hcont.continuousOn
+  obtain ⟨C, hC⟩ := hK.exists_bound_of_continuousOn hcontOn
+  refine ⟨max C 0, le_max_right C 0, ?_⟩
+  intro p hp
+  exact (hC p hp).trans (le_max_left C 0)
+
 end ConstantLlapoy.PaperA
