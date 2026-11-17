@@ -30,7 +30,7 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 | A-PROP-0003 | Exact scalar Picard local-attractivity criterion | Source-faithful; scalar iteration only |
 | A-PROP-0004 | Root-by-root dimensionless scale independence | Source-faithful; root existence/branch selection not proved |
 | A-PROP-0005 | Edge-space representation decomposition and exact `chi_1-chi_2` identity | Source-faithful; explicit (N\ge3) domain obligation |
-| A-THM-0002 | Finite-(N), (h>0) ground-state nondegeneracy | Source proof has incorrect shift sign; conclusion not yet independently proved |
+| A-THM-0002 | Finite-(N), (h>0) ground-state nondegeneracy | Independent finite-dimensional Perron–Frobenius proof review PASS for all finite real couplings; Lean formalization and exact Hamiltonian correspondence remain OPEN |
 | A-PROP-0006 | Positive energy rescaling and (I_{12}=\mathcal G_N(J/h)) | Source-faithful; requires ground-state projector uniqueness or a carefully stated spectral-subspace version |
 | A-PROP-0007 | Zero-coupling product state and trivial root | Source-faithful |
 | A-PROP-0008 | Subcritical exclusion | Duplicate/overlap of a subclaim in A-PROP-0001; preserve as trace record |
@@ -65,11 +65,11 @@ A dependency edge must not be treated as a proof. If a claim's proof uses an ass
 
 ### VO-A-001 — Ground-state nondegeneracy
 
-- Re-derive the Perron–Frobenius argument for finite (N), (h>0).
+- **Mathematical review completed:** corrected the shift to (K=cI-H), proved entrywise nonnegativity and hypercube irreducibility, and identified the Perron eigenvalue with the ground eigenvalue. See `audits/paper-a/THM-0002_PERRON_FROBENIUS_INDEPENDENT_REVIEW.md`.
 - Use (cI-H) with explicit (c); prove entrywise nonnegativity.
 - Prove irreducibility via connectedness of the single-spin-flip hypercube graph.
 - State whether the result covers all finite real (J_{ij}) or only the source's reference domain (J_{ij}\ge0).
-- Confirm the conclusion is simplicity of the lowest eigenvalue of (H).
+- **Mathematical conclusion:** the lowest eigenvalue of (H) is simple for finite (N≥1), (h>0), and arbitrary finite real (J_ij). **Still open:** Lean formalization and exact correspondence to the formal Hamiltonian definition.
 
 ### VO-A-002 — Threshold definition and attainment
 
