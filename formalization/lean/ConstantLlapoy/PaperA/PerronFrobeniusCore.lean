@@ -401,16 +401,21 @@ theorem nonzero_proportional_vectors_not_orthogonal
   have horth_v : ∑ i, v i * z i = 0 := by
     have hmul : c * (∑ i, v i * z i) = 0 := by
       calc
-        c * (∑ i, v i * z i) = ∑ i, (c * v i) * z i := by
-          rw [Finset.mul_sum]
+        c * (∑ i, v i * z i)
+            = ∑ i, c * (v i * z i) := by
+                rw [Finset.mul_sum]
+        _ = ∑ i, (c * v i) * z i := by
+              apply Finset.sum_congr rfl
+              intro i hi
+              ring
         _ = ∑ i, y i * z i := by
-          apply Finset.sum_congr rfl
-          intro i hi
-          rw [hcy i]
+              apply Finset.sum_congr rfl
+              intro i hi
+              rw [hcy i]
         _ = 0 := horth
     exact (mul_eq_zero.mp hmul).resolve_left hc_ne
   have hz_zero := proportional_vector_orthogonal_to_positive_is_zero
-    v z hv horth_v hprop_z
+    v z hv horth_v ⟨d, hdz⟩
   obtain ⟨i, hi⟩ := hz_nonzero
   exact hi (hz_zero i)
 
