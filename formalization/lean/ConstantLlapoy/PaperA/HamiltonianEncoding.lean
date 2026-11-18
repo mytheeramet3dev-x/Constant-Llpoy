@@ -271,7 +271,7 @@ theorem shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive
     (hKv : ∀ s,
       ∑ t, shiftedTFIMHamiltonian J h s t * v t = lambdaVal * v s) :
     ∀ s, 0 < v s := by
-  apply _root_.nonneg_eigenvector_strictly_positive_of_pf_connected
+  apply nonneg_eigenvector_strictly_positive_of_pf_connected
   · exact shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le
   · exact hv_nonneg
   · exact hv_ne_zero

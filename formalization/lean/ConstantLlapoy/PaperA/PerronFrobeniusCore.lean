@@ -252,7 +252,7 @@ theorem perron_transition_support_connected
     (hv : ∀ i, 0 < v i)
     (hlambdaVal : 0 < lambdaVal)
     (hconnected : ∀ i j,
-      ConstantLlapoy.PaperA.PFReachable (fun a b => 0 < A a b) i j) :
+      PFReachable (fun a b => 0 < A a b) i j) :
     ∀ i j, PFReachable
       (fun a b => 0 < (A a b * v b) / (lambdaVal * v a)) i j := by
   intro i j
@@ -710,8 +710,7 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
     Multiset.count_map]
   simpa using hfiltered_card
 
-end ConstantLlapoy.PaperA
-
+namespace ConstantLlapoy.PaperA
 
 /-- For a nonnegative matrix, replacing every coordinate of a real vector by
 its absolute value cannot decrease the associated quadratic form. This is
@@ -748,11 +747,11 @@ theorem nonneg_eigenvector_strictly_positive_of_pf_connected
     (hv_nonneg : ∀ i, 0 ≤ v i)
     (hv_ne_zero : v ≠ 0)
     (hAv : ∀ i, ∑ j, A i j * v j = r * v i)
-    (hconnected : ∀ i j, ConstantLlapoy.PaperA.PFReachable (fun a b => 0 < A a b) i j) :
+    (hconnected : ∀ i j, PFReachable (fun a b => 0 < A a b) i j) :
     ∀ i, 0 < v i := by
   classical
   have hzero_propagates :
-      ∀ {a b}, ConstantLlapoy.PaperA.PFReachable (fun x y => 0 < A x y) a b →
+      ∀ {a b}, PFReachable (fun x y => 0 < A x y) a b →
         v a = 0 → v b = 0 := by
     intro a b hpath
     induction hpath with
@@ -791,3 +790,5 @@ theorem nonneg_eigenvector_strictly_positive_of_pf_connected
   obtain ⟨j, hj⟩ := hpositive_exists
   have hj_zero : v j = 0 := hzero_propagates (hconnected i j) hi_zero
   linarith
+
+end ConstantLlapoy.PaperA

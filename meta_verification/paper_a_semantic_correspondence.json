@@ -13,7 +13,7 @@
   "lean_modules": [
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean",
-      "blob_sha": "dd57b31a447fe5050faa7c5ea383ca7e197f85a1"
+      "blob_sha": "6b87632a775b7afbfc1931b58189b8e3a52bcd88"
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean",
@@ -29,7 +29,7 @@
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
-      "blob_sha": "8a4307961279169b8c0def5e5c695f4d1272456a"
+      "blob_sha": "5d2bb280d01f5f63989d2773ff2be7cbedfd45f8"
     }
   ],
   "claims": [
