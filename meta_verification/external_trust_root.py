@@ -193,6 +193,8 @@ def verify_package(root: Path, *, trust_root_repository: str, trust_root_reposit
     require(actual_remote.lower() == trust_root_repository.lower(), "trust-root checkout remote mismatch")
     actual_commit = _git(root, "rev-parse", "HEAD")
     require(actual_commit == trust_root_commit, "trust-root checkout commit mismatch")
+    require(_git(root, "status", "--porcelain") == "",
+            "trust-root checkout has uncommitted or untracked modifications")
 
     manifest_file = root / manifest_path
     signature_file = root / signature_path
