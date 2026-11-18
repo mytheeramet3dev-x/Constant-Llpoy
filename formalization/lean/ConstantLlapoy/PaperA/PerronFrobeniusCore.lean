@@ -252,7 +252,7 @@ theorem perron_transition_support_connected
     (hv : ∀ i, 0 < v i)
     (hlambdaVal : 0 < lambdaVal)
     (hconnected : ∀ i j,
-      PFReachable (fun a b => 0 < A a b) i j) :
+      ConstantLlapoy.PaperA.PFReachable (fun a b => 0 < A a b) i j) :
     ∀ i j, PFReachable
       (fun a b => 0 < (A a b * v b) / (lambdaVal * v a)) i j := by
   intro i j
@@ -752,7 +752,7 @@ theorem nonneg_eigenvector_strictly_positive_of_pf_connected
     ∀ i, 0 < v i := by
   classical
   have hzero_propagates :
-      ∀ {a b}, PFReachable (fun x y => 0 < A x y) a b →
+      ∀ {a b}, ConstantLlapoy.PaperA.PFReachable (fun x y => 0 < A x y) a b →
         v a = 0 → v b = 0 := by
     intro a b hpath
     induction hpath with
