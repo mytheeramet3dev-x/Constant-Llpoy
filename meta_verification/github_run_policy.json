@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "workflow_id": 422027462,
   "workflow_path": ".github/workflows/meta-verification.yml",
-  "workflow_blob_sha": "2e8ddf283ab7019e5be86f7ce7f1219c4f90cfe1",
+  "workflow_blob_sha": "651501d9883f6b4acd9f06035aeac5030b1f1c6e",
   "evaluator_path": "meta_verification/status_evaluator.py",
   "evaluator_blob_sha": "9105fc63a2b6a15ce3b97e16d3a3f72c6a020dfa",
   "required_jobs": [
@@ -12,6 +12,7 @@
     "Fail-closed policy evaluator unit tests": [
       "Checkout repository",
       "Set up Python",
+      "Validate Paper A semantic-audit source bindings (structural only)",
       "Run adversarial unit tests"
     ]
   },
