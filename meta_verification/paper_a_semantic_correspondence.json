@@ -13,7 +13,7 @@
   "lean_modules": [
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean",
-      "blob_sha": "c37608d3ae2ca26d1daf03b4009cbcb6f67ce4aa"
+      "blob_sha": "519423ac0bf6319e45668621c7320d1d4df6321f"
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean",

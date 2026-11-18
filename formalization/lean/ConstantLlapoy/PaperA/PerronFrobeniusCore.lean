@@ -1,4 +1,5 @@
 import Mathlib
+import Mathlib.Algebra.Star.UnitaryStarAlgAut
 
 namespace ConstantLlapoy.PaperA
 
@@ -169,7 +170,7 @@ theorem scalar_identity_sub_posSemidef_of_eigenvalue_upper_bound
         lambda • (1 : Matrix ι ι ℝ) := by
     ext i j
     simp [conjStarAlgAut_apply, Matrix.diagonal, Matrix.mul_apply,
-      U.coe_mul_star_self]
+      Unitary.coe_mul_star_self U]
   have hspec :
       A = conjStarAlgAut ℝ _ U (Matrix.diagonal hA.eigenvalues) := by
     simpa [U] using hA.spectral_theorem
