@@ -48,3 +48,8 @@ Passing these tests demonstrates only the listed local test cases. It does not e
 ## Mutation adequacy (selected set)
 
 `test_policy_activation_mutations.py` applies nine controlled weakenings to the activation gate in isolated temporary copies and requires the adversarial gate suite to fail through assertions. The selected mutants cover authority pin, activation pin, ACTIVE-state distinction, sequence binding, policy digest, exact policy-object/bytes binding, expiry, threshold, and Ed25519 signature verification. The score is bounded to these nine authored mutants and is not complete mutation coverage or evidence of independent external governance.
+
+
+## Observed validation record
+
+On commit `b09293fc018144d43829c3a1b6b2dbbed93beef8`, the full harness run [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests in 16.004 seconds. The activation-gate mutation suite killed all 9/9 selected mutants through assertion-driven failures. Evidence producer run [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded; separate provenance verifier run [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported `VERIFIED` for that exact source commit and one attestation (subject SHA-256 `1735f3a778ebf7f7fe16ca1980fbcdd01f46d4c028a8c63232d6a7c86ed71902`). These are repository CI observations for the named revision, not independent governance or mathematical proof validation.

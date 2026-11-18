@@ -156,3 +156,6 @@ The design, status semantics, trust boundary, and non-activation limitations are
 ### Policy activation gate mutation testing
 
 `test_policy_activation_mutations.py` applies nine selected activation-gate weakenings in isolated copies and requires the gate test suite to kill each through assertion failures. The selected cases cover external pins, ACTIVE-state distinction, sequence, policy digest, exact bytes/object binding, expiry, threshold, and signature verification. Results are bounded to this authored mutant set.
+
+
+Activation-gate validation: full harness [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests; 9/9 selected activation-gate mutants were killed by assertion-driven tests. Producer [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded and separate verifier [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported `VERIFIED` for the exact source commit. External activation remains NOT ACTIVE.

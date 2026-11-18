@@ -588,3 +588,6 @@ The implementation is a prototype only. No external authority repository, indepe
 
 
 The activation-gate implementation also has a selected mutation suite (`test_policy_activation_mutations.py`) covering nine deliberate bypasses of the authority pin, active-record pin, ACTIVE state, sequence, policy digest, exact parsed-policy binding, expiry, signature threshold, and Ed25519 verification. A mutation score is limited to this selected set and does not establish exhaustive robustness.
+
+
+Observed bounded validation for the activation-gate revision `b09293fc018144d43829c3a1b6b2dbbed93beef8`: full harness [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests; the nine selected activation-gate mutants were all killed; evidence producer [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded; separate provenance verifier [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported VERIFIED for that exact commit. This is bounded CI evidence and does not activate an external policy authority.
