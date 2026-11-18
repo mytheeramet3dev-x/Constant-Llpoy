@@ -8,6 +8,7 @@ on:
       - ".github/workflows/meta-verification.yml"
       - ".github/workflows/meta-verification-evidence.yml"
       - ".github/workflows/meta-verification-provenance-verify.yml"
+      - ".github/workflows/meta-trust-root-bootstrap.yml"
       - "META_VERIFICATION_SPECIFICATION.md"
       - "META_VERIFICATION_COMPONENT_REGISTER.md"
   pull_request:
