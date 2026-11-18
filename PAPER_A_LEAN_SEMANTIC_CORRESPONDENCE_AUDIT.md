@@ -54,7 +54,7 @@ Classifications:
 - Source conflict retained: **PROP-0012**.
 - No claim status is upgraded by this audit.
 
-**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. For THM-0002, the remaining obligations are shifted-matrix Hermiticity, spectral transfer from `K=cI-H`, and construction of a strictly positive top eigenvector.
+**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. For THM-0002, the remaining obligations are construction of a strictly positive top eigenvector at the top eigenvalue and spectral/characteristic-root multiplicity transfer from `K=cI-H` to the ground eigenvalue of H.
 
 ## Reproducibility
 
@@ -67,7 +67,7 @@ The audit is intentionally conservative. It does not infer equivalence from name
 
 The audit now binds five Lean modules, including \`HamiltonianEncoding.lean\`, at the exact module blob SHA. THM-0002 remains **PARTIAL_SUPPORT_ONLY**. The formalization now includes the Boolean-hypercube path theorem \`singleSpinFlip_pf_connected\` and its transfer to positive support of the shifted TFIM matrix, \`shiftedTFIMHamiltonian_pf_connected\`.
 
-Still not established: Hermiticity of the shifted matrix as a separate Lean theorem, the algebraic transfer from \(K=cI-H\) to the ground eigenvalue of \(H\), and existence of a strictly positive eigenvector at the top eigenvalue. This update does not promote THM-0002 to verified.
+Still not established: existence of a strictly positive eigenvector at the top eigenvalue and the algebraic transfer from \(K=cI-H\) to the ground eigenvalue of \(H\). This update does not promote THM-0002 to verified.
 
 
 ## 2026-11-18 shifted-matrix Hermiticity update
