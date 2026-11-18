@@ -46,6 +46,9 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-018 | Separate signed-provenance verifier workflow | Independent evidence verification | Downloads producer artifact and verifies signature, certificate identity, source commit, timestamp, and subject digest | Run 44210006677 completed successfully; report artifact 14384409245 uploaded |
 | MVC-019 | Provenance policy verifier and adversarial tests | Evidence-policy checker | Applies repo ID, source ref/commit, signer commit, predicate, timestamp, and digest policy after gh verification | 18 adversarial tests included in 52-test suite; run 44209941107 passed |
 | MVC-020 | GitHub CLI provenance verifier | Cryptographic verification dependency | Verifies Sigstore signature, certificate chain, transparency evidence, and signer policy | Runner-provided `gh` version 2.103.3 is pinned in policy and checked fail-closed; exact binary provenance remains external |
+| MVC-021 | External trust-root package verifier | Trust-anchor policy checker | Checks immutable external repository checkout, clean tree, manifest/key digests, Ed25519 signature, repository IDs, signer/builder identities, and validity window | Implemented in `meta_verification/external_trust_root.py`; 24 adversarial tests included in 76-test harness, run 44211075577 passed |
+| MVC-022 | External trust-root bootstrap workflow | Protected trust-anchor activation gate | Manually checks out a separately governed trust-root package under `meta-trust-root` Environment protection | Implemented in `.github/workflows/meta-trust-root-bootstrap.yml`; not yet run because external root and protected Environment are not provisioned |
+| MVC-023 | Independent trusted-builder authority | Build/signing authority | Supplies a reusable workflow pinned to a separately administered repository and commit | Contract specified; no external builder repository provisioned and current producer does not delegate to it |
 
 ## 3. Observed repository-owned components
 
@@ -181,7 +184,7 @@ This is a bounded observation about the inspected tracked tree only. It does not
 
 | Priority | Gap | Why it matters | Required next action |
 |---|---|---|---|
-| P0 | Signed provenance still depends on repository-governed policy and GitHub-hosted public Sigstore | A repository administrator able to change both workflows/policy remains inside the trust boundary; hosted trust infrastructure is not an independently governed root | Add a trusted reusable builder or external policy authority with independently governed identity and change control |
+| P0 | External trust-root bootstrap is implemented but not activated | No separate trust-root repository, Ed25519 private key custody, protected Environment reviewers/pins, or external trusted-builder repository has been provisioned; current producer still signs inside the relying-party repository | Provision the three separately governed repositories/roles, configure protected Environment and independent branch/ruleset review, run bootstrap, then delegate signing to the pinned reusable builder |
 | P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |
 | P0 | Evaluator correctness beyond the current test set is not established | Passing tests cover only enumerated cases and may share assumptions with the evaluator | Independent review, additional property-based/mutation tests, and retained external challenge evidence are still required |
 | P1 | Runner image is `ubuntu-latest` | Environment can change without source revision changes | Capture exact runner metadata and bind it to evidence |
@@ -202,10 +205,11 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - **GitHub run collector and adversarial tests:** implemented; combined 34-test suite passed in run `44208176534` on commit `4d1c97e6c4c25ec6569ecbae33062bcc4b9bdb17`.
 - **Post-run API collection:** run `44208206996` completed successfully; collector reported `ACCEPTED` for run `44208176534`; artifact `14385166179` was uploaded. A cancelled upstream run (`44208158463`) was recorded as `REJECTED`, not accepted.
 - **Signed provenance:** bounded end-to-end validation passed. Harness run `44209941107` passed 52 tests; producer run `44209966698` accepted that run and signed its evidence; separate verifier run `44210006677` reported `VERIFIED` for one attestation. Producer artifact `14386160694`; verifier report artifact `14384409245`.
+- **External trust-root verifier:** 24 additional adversarial tests, including real Ed25519 signature verification, GitHub repository-ID binding, immutable checkout and tampered-manifest rejection; combined harness run `44211075577` passed 76 tests on commit `4b98268c4acae2823f7a975de9b45e559c7692b2`.
 - **Pinned provenance tooling:** `actions/attest` commit `1e69f48acb82d1966a394da916b4c1698aa569d6`; `actions/download-artifact` commit `d3f86a106a0bac45b974a628896c90dbdf5c8093`; GitHub CLI version `2.103.3` enforced by policy.
-- **Not implemented:** independently governed external trust root, reusable trusted builder outside repository maintainer control, mutation runner against Lean, independent certificate-semantics checker beyond GitHub CLI, and theorem-status aggregation.
+- **Not active:** independent external trust-root repository/key, protected Environment/reviewer configuration, and reusable trusted builder. The verifier and bootstrap workflow are implemented but cannot establish independent governance until those external controls are provisioned. Mutation runner against Lean, independent certificate-semantics checker beyond GitHub CLI, and theorem-status aggregation also remain absent.
 
-**Overall register status: PARTIAL INVENTORY / SIGNED-PROVENANCE END-TO-END VALIDATED (BOUNDED).**
+**Overall register status: PARTIAL INVENTORY / SIGNED-PROVENANCE VALIDATED (BOUNDED) / EXTERNAL TRUST-ROOT BOOTSTRAP IMPLEMENTED BUT NOT ACTIVATED.**
 
 ## 9. Required follow-up sequence
 
