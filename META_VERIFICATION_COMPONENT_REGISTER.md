@@ -311,3 +311,21 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Test development record:** initial executions failed on missing job-ID validation and three test-fixture masking conditions. The implementation and fixtures were corrected before the successful run.
 - **Status:** Implemented and validated for the named test and mutant set. This is not exhaustive testing, a formal proof of collector correctness, or an independent audit of GitHub's API.
 
+
+
+## 17. GitHub API response contract and replay resistance
+
+### MVC-031 — Exact attempt binding and bounded API response parsing
+
+- **Implementation:** `meta_verification/github_run_collector.py`.
+- **Producer workflow:** `.github/workflows/meta-verification-evidence.yml` passes the upstream event's `run_attempt` in addition to run ID and head SHA.
+- **Unit/adversarial suite:** `meta_verification/test_github_run_collector.py`.
+- **Mutation suite:** `meta_verification/test_collector_mutations.py`.
+- **Attempt binding:** API run attempt must equal the event-supplied attempt; each job's run ID and run attempt must equal the parent run/attempt.
+- **API JSON contract:** UTF-8 object only; duplicate keys, non-standard constants, non-object roots, invalid UTF-8, and bodies over 10 MiB are rejected.
+- **Transport behavior:** HTTP errors and timeouts fail closed.
+- **Pagination:** jobs requested with `per_page=100`; mismatched `total_count`, incomplete result, or more than 100 jobs is rejected. No silent first-page acceptance.
+- **Selected mutations:** 17, including boolean identity confusion, attempt mismatch, job/run attempt mixing, API duplicate-key acceptance, repository identity, pagination, and immutable workflow/evaluator blob pin bypass.
+- **Observed result:** all 17/17 selected collector mutants killed; full harness run [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`.
+- **Status:** Implemented and validated for the selected contract and mutation cases. This is not independent validation of GitHub's API or exhaustive replay resistance.
+

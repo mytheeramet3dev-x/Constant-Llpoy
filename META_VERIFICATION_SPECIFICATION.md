@@ -483,3 +483,32 @@ Thirteen selected mutants were tested:
 **Observed result:** 13/13 selected collector mutants were killed. GitHub Actions run [44230994871](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230994871) passed 164 tests on commit `8d23997fd0d746ba04f2528a5e34721293ae5514`.
 
 The first runs correctly failed: they exposed missing job-ID validation and three mutation fixtures that were masked by adjacent identity checks. The collector guard and fixtures were corrected; the successful run confirms each mutant was independently detected. The mutation score is limited to these thirteen authored changes. It is not exhaustive assurance, and the collector still relies on the GitHub API response and the repository's configured policy/trust boundary.
+
+
+## 22. GitHub API response contract and replay binding
+
+The collector now binds evidence to the exact upstream workflow run attempt supplied by the GitHub `workflow_run` event, not merely to the run ID and head commit.
+
+### Exact run and job attempt binding
+
+- The producer passes `github.event.workflow_run.run_attempt` to the collector as `UPSTREAM_RUN_ATTEMPT`.
+- The collector requires a positive exact-integer expected attempt and requires the API run's `run_attempt` to equal it.
+- Every returned job must carry the exact expected `run_id` and `run_attempt`, each as exact positive integers.
+- This prevents a previous or later rerun attempt's jobs from being mixed into the evidence for the triggering attempt.
+- The normalized evidence retains the validated `run_attempt`.
+
+### API response parsing and boundedness
+
+- API JSON must decode as a UTF-8 JSON object.
+- Duplicate object keys, non-standard JSON constants, non-object top-level values, invalid UTF-8, and responses larger than 10 MiB are rejected.
+- HTTP errors, network errors, and timeouts fail closed.
+- The jobs endpoint is requested with `per_page=100`. The collector deliberately rejects any response whose `total_count` differs from the number of returned jobs or exceeds 100; it does not silently accept a first page as a complete result or attempt unbounded pagination.
+- The job list must be bound to the exact run and attempt, have positive unique job IDs, and match the exact policy job set.
+
+### Adversarial and mutation evidence
+
+New tests cover stale/replayed run attempts, expected attempt type/range, job-to-run and job-to-attempt binding, oversized job pages, duplicate JSON keys, non-standard JSON constants, invalid UTF-8, non-object responses, a 10 MiB response bound, HTTP 503, and timeout behavior.
+
+The collector mutation suite now contains 17 selected mutants, adding run-attempt equality, job run ID, job attempt, and duplicate-key rejection bypasses. GitHub Actions run [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`; the log explicitly records all 17 collector mutants killed.
+
+This is bounded API-contract and replay-resistance testing. It does not authenticate GitHub's API independently, prove the API is truthful, or protect against a privileged repository administrator who can change the producer and policy. Pagination is fail-closed at 100 jobs rather than fully traversed; a future policy needing more than 100 jobs requires an explicit cursor/next-page contract and tests before enabling it.

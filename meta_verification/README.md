@@ -112,3 +112,14 @@ The collector now validates exact integer identity fields, requires a positive r
 The mutation harness applies 13 selected weakenings to the collector and requires the adversarial test suite to detect each through assertion failures. All 13/13 were killed. GitHub Actions run [44230994871](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230994871) passed 164 tests on commit `8d23997fd0d746ba04f2528a5e34721293ae5514`.
 
 Initial runs exposed missing job-ID validation and three test fixtures that were masked by adjacent checks; both implementation and fixtures were corrected before the passing run. Coverage remains bounded to the 13 authored mutants. The collector is still an API evidence collector, not a cryptographic attestation verifier or an independent trust root.
+
+
+## GitHub API response contract and replay resistance
+
+The evidence producer now passes the triggering `workflow_run.run_attempt` to the collector. The collector requires the API run and every job to match the exact run ID and attempt, preventing cross-attempt job mixing. It also requires job IDs to be positive and unique.
+
+API JSON parsing is bounded and strict: UTF-8 JSON object only, duplicate keys and non-standard constants rejected, top-level arrays/scalars rejected, and a 10 MiB response limit. HTTP errors and timeouts fail closed. The jobs endpoint is requested at 100 per page and the collector rejects incomplete counts or more than 100 jobs rather than accepting a partial page.
+
+The test suite covers stale attempts, job/run mismatch, malformed/ambiguous JSON, oversized responses, HTTP errors, and timeouts. The mutation suite now tests 17 selected collector regressions; all 17/17 were killed. Full harness [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`.
+
+This remains bounded testing against GitHub API responses; it is not an independent API trust root. Pagination intentionally fails closed above 100 jobs until a separately specified and tested multi-page contract is implemented.
