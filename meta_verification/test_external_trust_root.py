@@ -183,12 +183,31 @@ class ExternalTrustRootTests(unittest.TestCase):
     def test_tampered_manifest_digest_rejected(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            (root / "x").write_text("x")
-            with self.assertRaises(TrustRootError):
-                # Digest mismatch is checked before any signature operation.
-                from external_trust_root import SHA256
-                self.assertRegex("0" * 64, SHA256)
-                raise TrustRootError("trust-root manifest digest mismatch")
+            subprocess.run(["git", "init", str(root)], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(root), "config", "user.email", "test@example.invalid"], check=True)
+            subprocess.run(["git", "-C", str(root), "config", "user.name", "Test"], check=True)
+            subprocess.run(["git", "-C", str(root), "remote", "add", "origin",
+                            "https://github.com/" + ROOT + ".git"], check=True)
+            (root / "trust-root.json").write_text(json.dumps(manifest()))
+            (root / "trust-root.sig").write_bytes(b"not-a-signature")
+            (root / "trust-root.pub").write_bytes(b"not-a-public-key")
+            subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+            subprocess.run(["git", "-C", str(root), "commit", "-m", "tampered root"], check=True,
+                           capture_output=True)
+            commit = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"],
+                                    check=True, capture_output=True, text=True).stdout.strip()
+            with self.assertRaisesRegex(TrustRootError, "manifest digest mismatch"):
+                verify_package(
+                    root, trust_root_repository=ROOT, trust_root_repository_id=ROOT_ID,
+                    trust_root_commit=commit, manifest_path="trust-root.json",
+                    signature_path="trust-root.sig", public_key_path="trust-root.pub",
+                    expected_manifest_sha256="0" * 64,
+                    expected_public_key_sha256=hashlib.sha256(b"not-a-public-key").hexdigest(),
+                    relying_repository=RELYING, relying_repository_id=RELYING_ID,
+                    expected_signer_workflow=SIGNER_WORKFLOW, expected_signer_ref="refs/heads/main",
+                    expected_signer_commit=COMMIT, expected_builder_repository=BUILDER,
+                    expected_builder_repository_id=BUILDER_ID, expected_builder_workflow=BUILDER_WORKFLOW,
+                    expected_builder_commit=BUILDER_COMMIT)
 
 
 if __name__ == "__main__":
