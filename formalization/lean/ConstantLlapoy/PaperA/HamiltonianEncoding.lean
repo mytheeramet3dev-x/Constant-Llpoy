@@ -258,6 +258,27 @@ theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
 
 
 
+/-- Model-level positivity propagation: once a nonzero, coordinatewise
+nonnegative eigenvector of the shifted TFIM matrix is supplied, the strictly
+positive transverse field and Boolean-hypercube connectivity force every
+coordinate to be strictly positive. This does not construct the eigenvector. -/
+theorem shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive
+    {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h)
+    (v : SpinConfig N → ℝ) (lambdaVal : ℝ)
+    (hv_nonneg : ∀ s, 0 ≤ v s)
+    (hv_ne_zero : v ≠ 0)
+    (hKv : ∀ s,
+      ∑ t, shiftedTFIMHamiltonian J h s t * v t = lambdaVal * v s) :
+    ∀ s, 0 < v s := by
+  apply _root_.nonneg_eigenvector_strictly_positive_of_pf_connected
+  · exact shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le
+  · exact hv_nonneg
+  · exact hv_ne_zero
+  · exact hKv
+  · exact shiftedTFIMHamiltonian_pf_connected J h hh
+
+
 /-- The shifted computational-basis TFIM matrix remains real symmetric:
 the scalar diagonal shift is symmetric and the single-spin-flip adjacency
 relation is symmetric. -/
@@ -299,6 +320,28 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
     (shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le)
     hv hlambdaVal hKv
     (shiftedTFIMHamiltonian_pf_connected J h hh)
+
+
+/-- The model-level characteristic-root simplicity theorem no longer
+needs strict positivity as an external assumption: it follows from any
+supplied nonzero nonnegative eigenvector. Existence of such an eigenvector
+at the relevant top eigenvalue remains a separate obligation. -/
+theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one_of_nonneg_eigenvector
+    {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h)
+    (v : SpinConfig N → ℝ) (lambdaVal : ℝ)
+    (hv_nonneg : ∀ s, 0 ≤ v s)
+    (hv_ne_zero : v ≠ 0)
+    (hlambdaVal : 0 < lambdaVal)
+    (hKv : ∀ s,
+      ∑ t, shiftedTFIMHamiltonian J h s t * v t = lambdaVal * v s) :
+    Polynomial.rootMultiplicity (RCLike.ofReal lambdaVal)
+      (shiftedTFIMHamiltonian J h).charpoly = 1 := by
+  have hv : ∀ s, 0 < v s :=
+    shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive
+      J h hh v lambdaVal hv_nonneg hv_ne_zero hKv
+  exact shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
+    J h hh v lambdaVal hv hlambdaVal hKv
 
 
 /-- The shifted TFIM matrix acts as cI - H on every vector. This is the
