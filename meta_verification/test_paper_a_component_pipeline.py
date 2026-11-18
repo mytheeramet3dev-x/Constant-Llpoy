@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
  def test_layer_plan_rejects_stale_evidence(self):
   (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
   (self.root/"e.json").write_text(json.dumps({"source_commit":"b"*40,"status":"PASS","component_id":"C"}))
-  with self.assertRaisesRegex(ValueError,"did not complete successfully"): p.build_layer_plan(self.root,self.commit,"trace.json",["e.json"])
+  with self.assertRaisesRegex(ValueError,"missing, stale or has invalid status"): p.build_layer_plan(self.root,self.commit,"trace.json",["e.json"])
  def test_candidate_links_do_not_claim_correspondence(self):
   self.assertEqual(p.CLAIM_ARTIFACTS["AS-ALPHA-A-PROP-0009"][0][2],"NOT_ESTABLISHED")
 
