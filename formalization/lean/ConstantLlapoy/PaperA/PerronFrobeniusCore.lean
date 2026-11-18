@@ -710,6 +710,8 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
     Multiset.count_map]
   simpa using hfiltered_card
 
+end ConstantLlapoy.PaperA
+
 namespace ConstantLlapoy.PaperA
 
 /-- For a nonnegative matrix, replacing every coordinate of a real vector by
