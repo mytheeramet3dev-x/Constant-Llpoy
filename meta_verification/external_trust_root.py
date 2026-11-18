@@ -161,6 +161,7 @@ def _normalise_remote(remote: str) -> str:
 
 
 def fetch_github_repository_id(repository: str, token: str = "") -> int:
+    _repo(repository, "GitHub repository")
     request = Request(
         "https://api.github.com/repos/" + repository,
         headers={
