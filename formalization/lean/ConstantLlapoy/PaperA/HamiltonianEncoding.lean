@@ -321,7 +321,7 @@ theorem PFPath.toReachable {N : ℕ}
 noncomputable def PFPath.toQuiverPath {N : ℕ}
     {R : SpinConfig N → SpinConfig N → Prop} {s t : SpinConfig N}
     [Quiver (SpinConfig N)]
-    (edge : ∀ a b, R a b → a ⟶ b)
+    (edge : ∀ (a b : SpinConfig N), R a b → Quiver.Hom a b)
     (p : PFPath R s t) :
     Quiver.Path s t := by
   induction p with
@@ -339,7 +339,7 @@ noncomputable def singleSpinFlip_pf_path {N : ℕ} :
         (Finset.univ.filter (fun i : Fin N => s i ≠ t i)).card = n →
           PFPath SingleSpinFlip s t := by
     intro n
-    induction n using Nat.strong_induction_on with
+    induction n using Nat.strongRecOn with
     | ind n ih =>
       intro s t hcard
       let D : Finset (Fin N) :=
@@ -418,8 +418,8 @@ theorem shiftedTFIMHamiltonian_isIrreducible {N : ℕ}
     Matrix.toQuiver (shiftedTFIMHamiltonian J h)
   intro s t
   have hreach := shiftedTFIMHamiltonian_pf_path J h hh s t
-  have hedge : ∀ a b,
-      (0 < shiftedTFIMHamiltonian J h a b) → a ⟶ b :=
+  have hedge : ∀ (a b : SpinConfig N),
+      (0 < shiftedTFIMHamiltonian J h a b) → Quiver.Hom a b :=
     fun a b hp => ⟨hp⟩
   have p : Quiver.Path s t := PFPath.toQuiverPath hedge hreach
   have hdiag : 0 < shiftedTFIMHamiltonian J h s s := by
