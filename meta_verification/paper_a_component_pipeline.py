@@ -85,7 +85,7 @@ def build_traceability(root,commit,expected=15):
   for path,relation,state in CLAIM_ARTIFACTS.get(c["claim_id"],[]):
    info=file_info(root,path); c["candidate_artifact_links"].append({"path":path,"sha256":info["sha256"],"relation":relation,"correspondence":state})
   c["semantic_correspondence"]="NOT_ESTABLISHED"
- lean=["formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean","formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean","formalization/lean/ConstantLlapoy/PaperA/WeakCoupling.lean","formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean"]
+ lean=["formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean","formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean","formalization/lean/ConstantLlapoy/PaperA/WeakCoupling.lean","formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean","formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean"]
  diags=["working/paper-a/dicke_even_basis_exact_diagnostic.py","working/paper-a/finite_n_strong_coupling_exact_diagnostic.py","working/paper-a/edge_response_finite_difference_diagnostic.py","working/paper-a/edge_response_weak_coupling_diagnostic.py"]
  return {"schema_version":"1.0","component_id":"PAPER_A_CLAIM_TRACEABILITY","status":"PASS",
   "status_meaning":"All registered Paper A rows, records and frozen local snapshots were located and hashed.",

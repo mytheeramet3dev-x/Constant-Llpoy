@@ -246,3 +246,10 @@ Current exact source revision \`1aff68f49d95c2d186576362cd1d392ae474269b\`: 275 
 ### TFIM formalization increment
 
 The Paper A Lean source now includes a kernel-checked computational-basis TFIM matrix and an explicit nonnegative shift \(K=cI-H\), with exact single-spin-flip positive support. At commit \`4f6efbe9a1140007d73250940ed7c0ee97411842\), Lean built 18,266 jobs and axiom-audit checked 103 declarations against the configured allowlist. The producer and separate provenance verifier succeeded. Hypercube connectivity, positive top-eigenvector existence, and spectral transfer remain open; Paper A remains NOT_VERIFIED.
+
+
+## Paper A L-02 audit integrity checker
+
+Added \`paper_a_semantic_audit_validator.py\` and adversarial tests. The checker recomputes Git blob identities for all 15 frozen claim records and all five Lean modules, enforces the exact claim registry set, checks listed declaration names exist in the pinned modules, recomputes classification counts, rejects duplicate JSON keys and unknown statuses, and prevents a structural check from promoting L-02 or claim verification.
+
+Its only success status is \`STRUCTURALLY_VALID_NOT_SEMANTICALLY_VERIFIED\`. It does **not** establish that a Lean declaration is mathematically equivalent to a manuscript claim, that model hypotheses are discharged, or that the audit classifications are correct. L-02 remains BLOCKED pending independent mathematical review and model-specific formalization.

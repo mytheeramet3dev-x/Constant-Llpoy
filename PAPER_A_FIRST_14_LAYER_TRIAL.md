@@ -153,3 +153,16 @@ New formalized results in \`HamiltonianEncoding.lean\`:
 6. For \(h>0\), a distinct off-diagonal entry of \(K\) is positive exactly when the configurations differ at one spin.
 
 This advances THM-0002's model-to-matrix bridge, but it does **not** yet prove hypercube connectivity in \`PFReachable\`, Hermitian/spectral transfer for the shifted matrix, or existence of a strictly positive eigenvector for its top eigenvalue. Thus L-04 remains PARTIAL and THM-0002 remains not formally verified. L-02 remains BLOCKED.
+
+
+## Updated verified Paper A trial — commit 232686de6761b63ebcce6073d5de0867ef320405
+
+- Lean workflow run \`44330440325\`: SUCCESS; build completed 18,266 jobs; axiom audit covered 107 declarations, all within \`propext\`, \`Classical.choice\`, and \`Quot.sound\`.
+- Component producer run \`44330440437\`: SUCCESS; all five execution components returned PASS: Lean build, exact Dicke diagnostic, exact strong-coupling diagnostic, finite-difference diagnostic, and weak-coupling numerical diagnostic.
+- Claim traceability: 15/15 registry records located and hashed; semantic correspondence remains NOT_ESTABLISHED.
+- Four diagnostic commands exited 0. These are finite-N / sampled execution results, not theorem proofs.
+- The 14-row assessment was: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+- External trust root: NOT_ACTIVE. Independent external review: NOT_COMPLETED. Overall Paper A: NOT_VERIFIED.
+- Separate provenance verifier run \`44330971751\` succeeded for the exact source commit and evidence artifact.
+
+The successful Lean build verifies compilation of the current formalized declarations only. It does not complete the manuscript's full 14-layer verification or prove the ground-state Perron–Frobenius claim.

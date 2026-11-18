@@ -116,8 +116,13 @@ The matrix does not discharge PA-LEAN-014. An independent reviewer must check th
 
 
 | PA-LEAN-024 | Abstract real-symmetric Perron core: uniqueness of supplied positive eigenvalue and characteristic-root multiplicity one | BUILD_VERIFIED; AXIOM_AUDITED | \`PerronFrobeniusCore.lean\`; exact current-source build run 44323177442 at commit \`1aff68f49d95c2d186576362cd1d392ae474269b\`. The audit covered 79 declarations, all within the configured allowlist. The theorem assumes a supplied matrix, nonnegative entries, positive eigenvector/eigenvalue, and connected positive support. |
-| PA-LEAN-025 | Encode the finite-N TFIM computational-basis Hamiltonian and prove exact matrix entries / real symmetry | OPEN | Define the computational-basis configuration space, diagonal ZZ energy and single-spin-flip transverse-field entries; prove equality with the source Hamiltonian and matrix symmetry. |
+| PA-LEAN-025 | Encode the finite-N TFIM computational-basis Hamiltonian and prove exact matrix entries / real symmetry | BUILD_VERIFIED; AXIOM_AUDITED | `HamiltonianEncoding.lean`: `SpinConfig`, `isingDiagonalEnergy`, `transverseIsingHamiltonian`, and `transverseIsingHamiltonian_isHermitian`. Exact matrix entries are proved for diagonal, single-spin-flip and other off-diagonal cases. The source Hamiltonian-to-matrix identification is formalized by this explicit definition; independent semantic review remains pending. |
 | PA-LEAN-026 | Derive nonnegative irreducible shifted matrix \(K=cI-H\) from the encoded Hamiltonian | OPEN | Prove \(c-H_{ss}>0\), off-diagonal entries are nonnegative, positive support is exactly single-spin-flip adjacency, and the hypercube support graph is connected for \(h>0\). |
 | PA-LEAN-027 | Produce a strictly positive eigenvector at the top eigenvalue and transfer algebraic simplicity to the ground eigenvalue of \(H\) | OPEN | Current Perron core assumes a supplied strictly positive eigenvector; a model-level existence argument and spectral shift correspondence remain to be formalized. |
 
-The Paper A producer run 44326401521 and verifier run 44327033995 authenticated the current build evidence. PA-LEAN-025 and PA-LEAN-026 are now build-verified; PA-LEAN-027 through PA-LEAN-029 remain open. THM-0002 is not yet fully verified.
+The Paper A producer run 44330440437 and verifier run 44330971751 authenticated the current evidence for commit `232686de6761b63ebcce6073d5de0867ef320405`. Lean build succeeded and the axiom audit checked 107 declarations against the configured allowlist. PA-LEAN-025 and PA-LEAN-026 are build-verified; PA-LEAN-027 through PA-LEAN-029 remain open. THM-0002 is not yet fully verified.
+
+
+### Hypercube connectivity evidence update
+
+\`singleSpinFlip_pf_connected\` proves finite reachability by successively correcting the coordinates on which two Boolean configurations differ. \`shiftedTFIMHamiltonian_pf_connected\` transfers each single-spin flip to a strictly positive off-diagonal entry when \(h>0\). These declarations close the connectivity sub-obligation of PA-LEAN-026. They do not establish a positive eigenvector or the shifted-matrix spectral bridge.

@@ -61,3 +61,10 @@ Classifications:
 The machine-readable companion `meta_verification/paper_a_semantic_correspondence.json` binds the 15 claim-record blob SHAs, frozen source commit, audited repository revision, Lean toolchain, Mathlib revision, and exact module blob SHAs.
 
 The audit is intentionally conservative. It does not infer equivalence from names, comments, nearby formulas, compilation, or numerical diagnostics.
+
+
+## 2026-11-18 model-encoding update
+
+The audit now binds five Lean modules, including \`HamiltonianEncoding.lean\`, at the exact module blob SHA. THM-0002 remains **PARTIAL_SUPPORT_ONLY**. The formalization now includes the Boolean-hypercube path theorem \`singleSpinFlip_pf_connected\` and its transfer to positive support of the shifted TFIM matrix, \`shiftedTFIMHamiltonian_pf_connected\`.
+
+Still not established: Hermiticity of the shifted matrix as a separate Lean theorem, the algebraic transfer from \(K=cI-H\) to the ground eigenvalue of \(H\), and existence of a strictly positive eigenvector at the top eigenvalue. This update does not promote THM-0002 to verified.

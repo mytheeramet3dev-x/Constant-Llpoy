@@ -7,7 +7,7 @@
     "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
   },
   "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
-  "audited_commit": "4f6efbe9a1140007d73250940ed7c0ee97411842",
+  "audited_commit": "232686de6761b63ebcce6073d5de0867ef320405",
   "lean_toolchain": "leanprover/lean4:v4.36.0",
   "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
   "lean_modules": [
@@ -29,7 +29,7 @@
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
-      "blob_sha": "b58fbe7f76679403f3960f44a6662edf076d3cde"
+      "blob_sha": "1e298c950afaef0fca4ae8d63a3df8fd560bc173"
     }
   ],
   "claims": [
@@ -170,10 +170,12 @@
         "shiftedTFIMHamiltonian",
         "shiftedTFIMHamiltonian_entrywise_nonneg",
         "shiftedTFIMHamiltonian_positive_iff_single_flip",
+        "singleSpinFlip_pf_connected",
+        "shiftedTFIMHamiltonian_pf_connected",
         "perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum",
         "perron_eigenvalue_has_characteristic_root_multiplicity_one"
       ],
-      "gap": "The computational-basis Hamiltonian matrix, Hermitian property, explicit scalar shift, entrywise nonnegativity, and exact single-spin-flip positive support are now formalized. Still open: prove hypercube connectivity in PFReachable, prove the shifted matrix is Hermitian and establish the spectral shift/eigenvalue transfer in Lean, and construct a strictly positive eigenvector at the top eigenvalue rather than assume one."
+      "gap": "The computational-basis Hamiltonian, Hermitian property, explicit scalar shift, entrywise nonnegativity, exact single-spin-flip support, and Boolean-hypercube reachability in PFReachable are now formalized. Still open: prove the shifted matrix is Hermitian, establish the spectral shift/eigenvalue transfer in Lean, and construct a strictly positive eigenvector at the top eigenvalue rather than assume one."
     }
   ],
   "summary": {

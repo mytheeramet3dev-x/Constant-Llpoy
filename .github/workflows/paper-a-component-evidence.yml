@@ -54,6 +54,8 @@ jobs:
             --input formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean \
             --input formalization/lean/ConstantLlapoy/PaperA/WeakCoupling.lean \
             --input formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean \
+            --input formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean \
+            --input formalization/lean/ConstantLlapoy.lean \
             --output evidence/paper-a-lean-build.json --timeout 2400 -- lake build
       - name: Run exact Dicke-basis diagnostic
         continue-on-error: true
