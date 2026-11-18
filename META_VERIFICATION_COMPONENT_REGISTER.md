@@ -37,9 +37,9 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-009 | Python/SymPy/MPmath diagnostic scripts | Exploratory computational tools | Numerical/exact finite diagnostics; not decisive proof checkers | Observed; explicitly documented as diagnostic evidence |
 | MVC-010 | GitHub-hosted runner (`ubuntu-latest`) | External execution environment | Hosts workflow steps | Observed as moving runner label; exact image/build not pinned in workflow |
 | MVC-011 | GitHub artifact/log storage and status API | External evidence infrastructure | Retains/exposes run evidence | Service dependency inferred from workflow/status use; exact retention/attestation policy not inventoried |
-| MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Should test checker and status logic | Not observed in tracked tree snapshot |
+| MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Exercises evidence-policy logic and selected adversarial cases | Initial policy evaluator and unit tests implemented; no mutation runner against the Lean checker |
 | MVC-013 | Dedicated certificate parser/checker | Certificate validation | Would validate certificate evidence independently | Not observed in tracked tree snapshot |
-| MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | Not observed in tracked tree snapshot |
+| MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | A limited fail-closed evidence-policy evaluator exists; no GitHub job-status ingestion or release/report aggregator |\n| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs the evaluator's adversarial unit tests | Implemented; exact-commit run pending inspection |
 
 ## 3. Observed repository-owned components
 
@@ -167,7 +167,7 @@ The recursive tree contained 151 entries. The following dedicated repository-own
 - fault-injection tests for CI/workflow status;
 - a repository-owned status aggregator or report generator;
 - a second independent formal prover workflow;
-- a workflow job that tests stale/missing/skipped evidence aggregation.
+- a workflow job that independently ingests and verifies GitHub's actual job-status/evidence records.
 
 This is a bounded observation about the inspected tracked tree only. It does not establish that no such capability exists outside this repository, in a hosted service, or in an untracked local environment.
 
@@ -175,11 +175,11 @@ This is a bounded observation about the inspected tracked tree only. It does not
 
 | Priority | Gap | Why it matters | Required next action |
 |---|---|---|---|
-| P0 | No observed meta-verification test harness or aggregation tests | The workflow's own false-acceptance paths are not challenged by repository tests | Add a small, deterministic test suite for status decisions and workflow evidence validation |
-| P0 | Current workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |
+| P0 | No independent certificate-semantics checker or evidence authenticity verifier | The policy evaluator cannot establish that an accepted artifact is a valid proof or genuine CI output | Design a distinct checker/attestation route and independent review; do not promote policy acceptance to theorem verification |
+| P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |\n| P0 | The evaluator's own tests have not yet been confirmed on the exact implementation commit | Source presence alone does not establish test execution | Inspect the exact-commit GitHub Actions run and retain its job/step evidence |
 | P1 | Runner image is `ubuntu-latest` | Environment can change without source revision changes | Capture exact runner metadata and bind it to evidence |
 | P1 | No exact current-head status evidence returned | Current snapshot cannot inherit historical run success | Trigger or inspect a run for the exact current commit and bind its SHA |
-| P1 | No separate status aggregator implementation observed | No tested policy currently demonstrates fail-closed claim aggregation | Implement a small pure status evaluator with exhaustive state-table tests before using aggregate badges/status |
+| P1 | Evaluator is not connected to actual GitHub job/artifact ingestion | Its current JSON input is supplied externally and is not authenticated | Define a separately reviewed evidence collector/attestation path before operational claim aggregation |
 | P2 | Diagnostic scripts are not wired into a controlled test harness | Outputs may be run ad hoc and are not revision-bound by a standard evidence package | Define reproducible commands, environment pins, and raw-output capture for any diagnostic used as evidence |
 | P2 | External action/toolchain supply chain not independently reviewed | SHA pinning alone does not establish trustworthiness | Perform source/dependency/TCB review and record residual trust |
 
@@ -191,7 +191,7 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - **Lean proof inputs:** Observed; mathematical obligations remain claim-specific.
 - **Python diagnostics:** Observed; exploratory only, not proof checkers.
 - **Status and artifact infrastructure:** external dependency; assurance evidence incomplete.
-- **Dedicated checker/mutation/status harness:** not observed in the tracked snapshot.
+- **Meta-verification policy evaluator and adversarial unit tests:** implemented in `meta_verification/`; exact-commit CI validation pending.\n- **Dedicated certificate semantics checker, mutation runner against Lean, authenticated evidence collector, and production status aggregator:** not implemented.
 
 **Overall register status: PARTIAL INVENTORY / NOT VALIDATED.**
 
