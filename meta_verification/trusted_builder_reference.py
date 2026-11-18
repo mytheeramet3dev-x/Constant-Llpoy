@@ -217,7 +217,7 @@ def main(argv: list[str] | None = None) -> int:
         payload = json.loads(Path(args.input).read_text(encoding="utf-8"),
                              object_pairs_hook=_unique_object)
         report = validate_subject(**payload)
-        Path(args.output).write_text(json.dumps(report, indent=2, sort_keys=True) + "\\n",
+        Path(args.output).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n",
                                      encoding="utf-8")
         print(json.dumps({"status": report["status"], "signing_performed": False,
                           "subject_sha256": report["subject_sha256"]}, sort_keys=True))
