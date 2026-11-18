@@ -330,7 +330,7 @@ theorem shiftedTFIMHamiltonian_mulVec_identity {N : ℕ}
               ring_nf
     _ = (∑ t, (if s = t then isingShiftConstant J else 0) * v t) -
           ∑ t, transverseIsingHamiltonian J h s t * v t :=
-            Finset.sum_sub_distrib
+            sum_sub_distrib
     _ = isingShiftConstant J * v s -
           ∑ t, transverseIsingHamiltonian J h s t * v t := by rw [hdiag]
 
