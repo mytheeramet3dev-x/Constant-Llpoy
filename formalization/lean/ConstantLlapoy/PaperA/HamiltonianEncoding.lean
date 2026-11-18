@@ -190,7 +190,7 @@ theorem singleSpinFlip_pf_connected {N : ℕ} :
         (Finset.univ.filter (fun i : Fin N => s i ≠ t i)).card = n →
           PFReachable SingleSpinFlip s t := by
     intro n
-    induction n using Nat.strong_induction_on with
+    induction n using Nat.strongRecOn with
     | ind n ih =>
       intro s t hcard
       let D : Finset (Fin N) :=
@@ -318,7 +318,7 @@ theorem PFPath.toReachable {N : ℕ}
   | @step a b c hab hbc ih => exact PFReachable.step hab ih
 
 /-- Turn a data-carrying relation path into a quiver path. -/
-def PFPath.toQuiverPath {N : ℕ}
+noncomputable def PFPath.toQuiverPath {N : ℕ}
     {R : SpinConfig N → SpinConfig N → Prop} {s t : SpinConfig N}
     [Quiver (SpinConfig N)]
     (edge : ∀ a b, R a b → a ⟶ b)
@@ -398,12 +398,13 @@ noncomputable def shiftedTFIMHamiltonian_pf_path {N : ℕ}
   | @step a b c hab hbc ih =>
       let i : Fin N := Classical.choose hab
       have hflip : b = flipAt a i := Classical.choose_spec hab
-      subst b
-      have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
-      have hpos :
-          0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
-        (shiftedTFIMHamiltonian_positive_iff_single_flip J h hh hne).2
-          ⟨i, rfl⟩
+      have hne : a ≠ b := by
+        rw [hflip]
+        exact Ne.symm (flipAt_ne_self a i)
+      have hpos : 0 < shiftedTFIMHamiltonian J h a b := by
+        rw [hflip]
+        exact (shiftedTFIMHamiltonian_positive_iff_single_flip J h hh
+          (Ne.symm (flipAt_ne_self a i))).2 ⟨i, rfl⟩
       exact PFPath.step hpos ih
 
 /-- The shifted TFIM matrix is irreducible in Mathlib's matrix/quiver sense.
