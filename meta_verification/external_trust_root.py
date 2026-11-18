@@ -177,6 +177,33 @@ def fetch_github_repository_id(repository: str, token: str = "") -> int:
     require(isinstance(payload, dict), "GitHub repository metadata is malformed")
     return _positive_int(payload.get("id"), f"GitHub repository ID for {repository}")
 
+def _safe_package_file(root: Path, relative: str) -> Path:
+    rel = Path(relative)
+    require(bool(relative) and not rel.is_absolute() and ".." not in rel.parts,
+            "trust-root package paths must be non-empty relative paths without parent traversal")
+    candidate = root
+    for part in rel.parts:
+        candidate = candidate / part
+        require(not candidate.is_symlink(), "trust-root package path must not traverse symlinks")
+    try:
+        resolved_root = root.resolve(strict=True)
+        resolved = candidate.resolve(strict=True)
+    except OSError:
+        raise TrustRootError("trust-root package file does not exist") from None
+    require(resolved.is_relative_to(resolved_root), "trust-root package file escapes checkout root")
+    require(resolved.is_file(), "trust-root package path is not a regular file")
+    return resolved
+
+def _require_ed25519_public_key(public_key: Path) -> None:
+    try:
+        result = subprocess.run(["openssl", "pkey", "-pubin", "-in", str(public_key),
+                                 "-text", "-noout"], capture_output=True, text=True,
+                                timeout=20, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise TrustRootError(f"cannot inspect trust-root public key: {exc}") from None
+    require(result.returncode == 0 and re.search(r"^ED25519 Public-Key:", result.stdout, re.MULTILINE) is not None,
+            "trust-root public key must be a valid Ed25519 public key")
+
 def verify_package(root: Path, *, trust_root_repository: str, trust_root_repository_id: int,
                    trust_root_commit: str, manifest_path: str, signature_path: str,
                    public_key_path: str, expected_manifest_sha256: str,
@@ -196,11 +223,10 @@ def verify_package(root: Path, *, trust_root_repository: str, trust_root_reposit
     require(_git(root, "status", "--porcelain") == "",
             "trust-root checkout has uncommitted or untracked modifications")
 
-    manifest_file = root / manifest_path
-    signature_file = root / signature_path
-    public_key_file = root / public_key_path
-    for item in (manifest_file, signature_file, public_key_file):
-        require(item.is_file() and not item.is_symlink(), f"required trust-root file missing or unsafe: {item.name}")
+    manifest_file = _safe_package_file(root, manifest_path)
+    signature_file = _safe_package_file(root, signature_path)
+    public_key_file = _safe_package_file(root, public_key_path)
+    _require_ed25519_public_key(public_key_file)
     manifest_bytes = manifest_file.read_bytes()
     signature_bytes = signature_file.read_bytes()
     public_key_bytes = public_key_file.read_bytes()
