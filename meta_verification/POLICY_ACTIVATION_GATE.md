@@ -69,3 +69,8 @@ The gate CLI now requires `--provenance-policy` and `--expected-provenance-polic
 Receipt schema 2.0 contains no caller-supplied `status: VERIFIED`. It contains only subject digest, source commit, attestation run ID/attempt, and attestation workflow revision. The final status is `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`; it is not theorem acceptance.
 
 The authenticator's tests use fake GitHub CLI output. No live component artifact has been authenticated, and the current evidence producer signs only `github-run-evidence.json`, not every component artifact. The external provenance-policy pin and the external authority pins remain unprovisioned. Therefore the integration is implemented and testable but NOT ACTIVE for production decisions.
+
+
+## Validation for the component-provenance integration
+
+Commit `e8da7e8923440716a1b1dbf85c6f2c7b0408c9dc` passed 263 tests in harness run [44238894962](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238894962). Selected mutation suites killed 10/10 component-provenance, 12/12 aggregator, and 9/9 activation mutants. Producer [44238972702](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238972702) and verifier [44239010485](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44239010485) succeeded. The verified provenance subject remains the collector evidence JSON; no real per-component artifact attestation has been produced or verified. Production activation remains NOT ACTIVE.
