@@ -328,3 +328,28 @@ The Lean build completed 18,266 build jobs. The configured axiom audit checked 1
 | L-14 | NOT_ASSESSED |
 
 **Overall Paper A status remains `NOT_VERIFIED`.** The `ACCEPTED` result is strictly about bundle policy, byte digests, and GitHub/Sigstore provenance. It does not verify any manuscript claim. L-02 remains blocked because source/hash/declaration-reference integrity is not semantic equivalence; L-04 remains partial because the current Lean development formalizes selected obligations rather than the full paper. External trust root remains `NOT_ACTIVE`, and independent external review remains `NOT_COMPLETED`.
+
+
+## Model-level Perron positivity bridge and pinned-verifier trial — 2026-11-18
+
+- Source commit: \`2d4a7e285f1d2d25b743d1eee107bca886643859\`.
+- Paper A component producer run \`44416810208\`: SUCCESS.
+- Separate Paper A component verifier run \`44417378656\`: SUCCESS; report status \`PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED\`; all eight component subjects authenticated, aggregation \`ACCEPTED\`.
+- The verifier installed GitHub CLI \`2.103.3\` from the pinned official release archive and verified its SHA-256 before running attestation verification.
+- The producer's Lean build completed 18,266 build jobs. Axiom audit checked 160 declarations under \`ConstantLlapoy\`; all were within \`[propext, Classical.choice, Quot.sound]\`.
+- All four exact/numerical diagnostic commands, claim traceability, semantic-audit integrity, and 14-layer plan production returned successful execution statuses.
+- Semantic structural audit: 15 claim records, five Lean modules, 28 declaration references; 10 \`NO_DIRECT_FORMALIZATION\`, 4 \`PARTIAL_SUPPORT_ONLY\`, 1 \`SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY\`. It remains \`STRUCTURALLY_VALID_NOT_SEMANTICALLY_VERIFIED\`.
+
+### New conditional model-level theorem bridge
+
+The Lean development now contains:
+- \`shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive\`: for the shifted TFIM matrix, any supplied nonzero coordinatewise nonnegative eigenvector is strictly positive, using the proved matrix nonnegativity and connected positive-support graph.
+- \`shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one_of_nonneg_eigenvector\`: derives the existing characteristic-root simplicity conclusion from that nonnegative eigenvector, rather than requiring strict positivity as a separate input.
+
+This is a genuine reduction in assumptions for the model-level conditional theorem. It does **not** construct the required nonzero nonnegative eigenvector at the top eigenvalue. That existence step and the complete transfer to the physical ground-state claim remain open.
+
+### 14-layer assessment remains unchanged
+
+L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+
+**Overall Paper A remains \`NOT_VERIFIED\`.** The authenticated bundle and green Lean build certify the integrity and execution of selected artifacts, not all mathematical claims. External trust root remains \`NOT_ACTIVE\`; independent external review remains \`NOT_COMPLETED\`.
