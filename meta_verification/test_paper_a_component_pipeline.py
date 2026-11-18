@@ -1,12 +1,18 @@
 import hashlib, json, tempfile, unittest
 from pathlib import Path
 import paper_a_component_pipeline as p
+
 class Tests(unittest.TestCase):
- def setUp(self): self.tmp=tempfile.TemporaryDirectory(); self.root=Path(self.tmp.name); self.commit="a"*40
+ def setUp(self):
+  self.tmp=tempfile.TemporaryDirectory(); self.root=Path(self.tmp.name); self.commit="a"*40
  def tearDown(self): self.tmp.cleanup()
  def test_run_hashes_inputs_and_limits_pass_to_execution(self):
-  (self.root/"in").write_text("fixed")
-  x=p.run_command("TEST",self.commit,str(self.root/"out.json"),".",["in"],10,["python","-c","print('ok')"])
+  fixture=Path.cwd()/".paper-a-pipeline-test-input"
+  fixture.write_text("fixed")
+  try:
+   x=p.run_command("TEST",self.commit,str(self.root/"out.json"),".",[fixture.name],10,["python","-c","print('ok')"])
+  finally:
+   fixture.unlink(missing_ok=True)
   self.assertEqual(x["status"],"PASS"); self.assertEqual(x["mathematical_correctness"],"NOT_ASSESSED")
   self.assertEqual(x["input_files"][0]["sha256"],hashlib.sha256(b"fixed").hexdigest())
  def test_nonzero_exit_is_fail(self):
@@ -18,7 +24,7 @@ class Tests(unittest.TestCase):
   (self.root/"CLAIM_REGISTRY.md").write_text("| AS-ALPHA-A-THM-0001 | T | theorem | Arxiv/a.md | CANDIDATE | NOT_ASSESSED | [Record](claims/A/a.md) |")
   (self.root/"MANUSCRIPT_SOURCE_MANIFEST.md").write_text("## 2. Paper A source freeze\n| Frozen commit | bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb |\n## 3. Paper D\n")
   with self.assertRaisesRegex(ValueError,"expected 15"): p.build_traceability(self.root,self.commit)
- def test_layer_plan_has_fourteen_rows_and_no_theorem_pass(self):
+ def test_fourteen_layer_plan_has_no_theorem_pass(self):
   (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
   ev=[]
   for i in range(5):
@@ -29,7 +35,8 @@ class Tests(unittest.TestCase):
  def test_layer_plan_rejects_stale_evidence(self):
   (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
   (self.root/"e.json").write_text(json.dumps({"source_commit":"b"*40,"status":"PASS","component_id":"C"}))
-  with self.assertRaisesRegex(ValueError,"not complete"): p.build_layer_plan(self.root,self.commit,"trace.json",["e.json"])
+  with self.assertRaisesRegex(ValueError,"did not complete successfully"): p.build_layer_plan(self.root,self.commit,"trace.json",["e.json"])
  def test_candidate_links_do_not_claim_correspondence(self):
   self.assertEqual(p.CLAIM_ARTIFACTS["AS-ALPHA-A-PROP-0009"][0][2],"NOT_ESTABLISHED")
+
 if __name__=="__main__": unittest.main(verbosity=2)
