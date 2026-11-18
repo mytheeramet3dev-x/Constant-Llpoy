@@ -235,3 +235,19 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - Commit `d8494c4f13aecf133ae156510e72ec689ee16fef` passed 117 tests in harness run [44217266945](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44217266945). It adds descriptor-relative no-follow path traversal, FIFO rejection, bounded descriptor reads, and non-standard JSON constant rejection. Evidence producer run [44217302386](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44217302386) accepted the exact harness run, and separate verifier run [44217348019](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44217348019) reported `VERIFIED` for one attestation and subject SHA-256 `215bc65558198d13f520266d0f6ec7e20363e44013c4c982c3a63010a0278a6d`. This remains bounded in-repository provenance, not an independent builder.
 
 This local implementation is not an external builder and does not satisfy independent trust-root, signer, or builder governance. The normative activation gate remains NOT ACTIVE.
+
+
+## 12. Trusted-builder black-box conformance suite
+
+### MVC-026 — Local trusted-builder CLI conformance harness
+
+- **Implementation under test:** `meta_verification/trusted_builder_reference.py`.
+- **Independent test driver:** `meta_verification/test_trusted_builder_conformance.py`.
+- **Method:** separate-process CLI invocation; the conformance tests do not import the implementation module. The test driver independently creates a known-answer evidence record and checks process exit status, JSON stdout, output report fields, and output-file framing.
+- **Positive control:** accepts a known-answer evidence subject only as `VALIDATED_LOCAL_UNTRUSTED`; asserts signing, attestation, and trust flags are false.
+- **Negative vectors:** subject digest substitution; caller repository ID/workflow/ref mismatch; failed and incomplete upstream run; replayed run ID; source revision mismatch; absolute and traversal paths; subject and parent-directory symlinks; duplicate JSON keys; malformed UTF-8; non-standard JSON constants; unknown evidence fields; stale canonical record digest; rejected evidence; oversized subject.
+- **Observed result:** harness run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270) passed 137 tests on commit `7eae9f587f8426407b54abc58d9c1e78e374827c`. Producer run [44220345819](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220345819) completed successfully and signed the exact harness evidence. Separate verifier run [44220402372](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220402372) completed successfully and reported `VERIFIED` for one attestation, exact signer source commit `7eae9f587f8426407b54abc58d9c1e78e374827c`, and subject SHA-256 `40ec934fbc0c1e4dff64bb78260cf9a396333c86412b4307c16a56a4e7593ee8`; verifier report artifact `14389712788`.
+- **Independence limitation:** black-box relative to the Python implementation, but the test suite remains in the same repository and CI governance. It is not a reviewer-controlled external test authority, does not authenticate caller/upstream metadata independently, and does not test real external OIDC/Sigstore signing.
+- **Status:** Implemented and validated for the local reference CLI's stated input class; external trusted-builder contract remains NOT ACTIVE.
+
+This component is an implementation-level conformance harness, not a trusted-builder deployment. Its positive result must never be interpreted as signed provenance or as evidence of independent administration.

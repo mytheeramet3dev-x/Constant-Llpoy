@@ -75,7 +75,7 @@ The adversarial suite covers parent-directory symlinks, FIFOs, and non-standard 
 
 `test_trusted_builder_conformance.py` does not import this module. It independently constructs the evidence fixture and invokes the CLI as a subprocess, then checks exit status, machine-readable stdout, report contents, and output-file framing. The negative suite challenges digest substitution, caller and upstream identity mismatches, replay, stale source, path traversal, symlinks, malformed/ambiguous JSON, unknown fields, rejected evidence, and size limits.
 
-The positive control explicitly requires `VALIDATED_LOCAL_UNTRUSTED`, `signing_performed=false`, `attestation_created=false`, and `trust_established=false`. The suite caught and now guards a CLI output-framing defect: the report file must end with an actual newline, not the two literal characters backslash-n.
+The positive control explicitly requires `VALIDATED_LOCAL_UNTRUSTED`, `signing_performed=false`, `attestation_created=false`, and `trust_established=false`. The suite guards the CLI output-framing contract: the report file must end with an actual newline, not the two literal characters backslash-n.
 
 The full harness passed 137 tests on commit `7eae9f587f8426407b54abc58d9c1e78e374827c` (run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270)). This run has no matching end-to-end provenance verification for its own evidence artifact in the evidence inspected here; the separate verifier run [44220332663](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220332663) verified the previous producer's artifact from commit `d1d7db78e2c3bc32a3fbace9b10f41a5ac860148`. Do not conflate those two source revisions.
 
