@@ -124,7 +124,7 @@ def evaluate(policy: Any, evidence: Any, expected_commit: str) -> dict[str, Any]
     for oid in p["required_obligations"]:
         item = seen[oid]
         result = item["result"]
-        if result not in RESULTS:
+        if not isinstance(result, str) or result not in RESULTS:
             raise EvaluationError(f"obligation {oid}: unsupported result state")
         encoded = item["artifact_base64"]
         digest = item["artifact_sha256"]
