@@ -393,3 +393,17 @@ The final status is now `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. 
 
 
 **Validation record — component provenance integration:** on commit `e8da7e8923440716a1b1dbf85c6f2c7b0408c9dc`, the full harness passed 263 tests (28.235 seconds); component provenance mutation 10/10, aggregator mutation 12/12, activation mutation 9/9. Evidence producer run [44238972702](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238972702) succeeded; separate verifier run [44239010485](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44239010485) reported VERIFIED for the collector evidence subject only. No live per-component attestation was authenticated.
+
+
+## 10. Paper A first execution-pipeline components
+
+| Component | Implementation | Evidence scope | Explicit non-claim |
+|---|---|---|---|
+| Lean build | Paper A evidence producer workflow and component pipeline script | Pinned Lean build, configured axiom audit, captured lake build transcript and module/dependency hashes | Does not prove unformalized claims or manuscript correspondence |
+| Exact diagnostics | Same producer workflow | Two finite-N symbolic diagnostic outputs | Not a proof or uniform-in-N result |
+| Numerical diagnostics | Same producer workflow | High-precision finite-difference outputs for bounded N and parameter samples | Numerical evidence only |
+| Claim traceability | Traceability generator | Resolves all 15 Paper A registry rows to records and frozen source snapshots; hashes files and candidate links | Candidate links do not establish semantic correspondence |
+| 14-layer plan | Layer-plan generator | Emits applicability, status, and rationale for all 14 layers | Plan generation is not a layer PASS |
+| Component verifier | Component authenticator and separate workflow | Verifies seven exact subjects and binds producer run ID, attempt, and source revision | Policy digest remains same-checkout; external trust is not active |
+
+The pipeline's overall status is scoped to execution evidence and provenance. The report must retain overall_paper_status as NOT_VERIFIED.

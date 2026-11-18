@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "repository": "mytheeramet3dev-x/Constant-Llpoy",
+  "repository_id": 1460417275,
+  "signer_workflow": "mytheeramet3dev-x/Constant-Llpoy/.github/workflows/paper-a-component-evidence.yml",
+  "source_ref": "refs/heads/main",
+  "oidc_issuer": "https://token.actions.githubusercontent.com",
+  "predicate_type": "https://slsa.dev/provenance/v1",
+  "require_verified_timestamps": true,
+  "deny_self_hosted_runners": true,
+  "gh_cli_version": "2.103.3"
+}

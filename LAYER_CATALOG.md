@@ -80,3 +80,8 @@ The cross-layer assurance requirements for checkers, parsers, CI/workflow orches
 ## 7. Governing statement
 
 > **The catalog names the current verification functions; only claim-specific, auditable evidence can establish that an obligation has been met.**
+
+
+## 8. Paper A trial execution entry point
+
+The first bounded execution pipeline is defined in PAPER_A_FIRST_14_LAYER_TRIAL.md. It executes real Lean and diagnostic commands, emits source-linked claim records, and creates a 14-row layer assessment plan. Its producer and verifier workflows authenticate seven exact evidence subjects. This is a first trial harness, not a declaration that all layers are validated or that Paper A is verified.

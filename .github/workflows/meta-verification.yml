@@ -10,6 +10,8 @@ on:
       - ".github/workflows/meta-verification-provenance-verify.yml"
       - ".github/workflows/meta-trust-root-bootstrap.yml"
       - ".github/workflows/component-provenance-live-smoke.yml"
+      - ".github/workflows/paper-a-component-evidence.yml"
+      - ".github/workflows/paper-a-component-evidence-verify.yml"
       - "META_VERIFICATION_SPECIFICATION.md"
       - "META_VERIFICATION_COMPONENT_REGISTER.md"
   pull_request:

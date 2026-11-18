@@ -192,3 +192,10 @@ This is a real-signature integration test for one collector evidence subject, no
 On commit `7d5f778e9cd05cd1ef1095dd23f139d83aba8248`, the harness passed 267 tests (run [44240363793](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240363793)); selected component-provenance, aggregator, and activation mutants were killed 10/10, 12/12, and 9/9. Producer run [44240436570](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240436570) and separate provenance verifier run [44240468328](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468328) succeeded. Crucially, live smoke run [44240468560](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468560) verified the actual collector evidence artifact with the component authenticator and aggregator; it reported `LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED`, one verified attestation, and aggregator `ACCEPTED`.
 
 This validates one real GitHub/Sigstore subject path only. It does not produce or authenticate all Paper A/Lean/numerical evidence, does not activate external policy pins, and does not establish mathematical correctness.
+
+
+## Paper A first 14-layer trial pipeline
+
+The new Paper A producer workflow runs the pinned Lean build and four bounded diagnostics, generates a source-linked manifest for all 15 Paper A claim records, and emits a 14-row layer assessment plan. Each of the seven evidence JSON subjects is separately attested with GitHub/Sigstore. A distinct verifier workflow downloads the artifact from the exact producer run and authenticates every subject before fail-closed aggregation.
+
+A component PASS means only that the named execution or manifest-generation task completed. It does not mean that the associated mathematical claim passed. The layer report preserves PARTIAL, BLOCKED, NOT_RUN, and NOT_ASSESSED states. Overall Paper A remains NOT_VERIFIED. The provenance-policy digest is currently computed from the same checkout, so this is bounded in-repository provenance verification, not external trust-root activation.

@@ -605,3 +605,14 @@ The repository now has a separate post-producer smoke workflow that downloads th
 ### Observed real-signature smoke validation
 
 The live component-provenance smoke workflow was exercised successfully on signer commit `7d5f778e9cd05cd1ef1095dd23f139d83aba8248`. Harness run [44240363793](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240363793) passed 267 tests; producer [44240436570](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240436570), separate verifier [44240468328](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468328), and live component smoke [44240468560](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468560) all succeeded. The smoke authenticated one real collector-evidence subject and the aggregator returned `ACCEPTED`. This is not external trust activation, not coverage of all mathematical components, and not a theorem status.
+
+
+## 13. Paper A first full-layer trial execution pipeline
+
+The first Paper A execution pipeline is implemented by the Paper A component pipeline script and the producer/verifier workflows under .github/workflows.
+
+The producer executes the pinned Lean/Mathlib build and configured axiom audit, captures a lake build transcript, runs two exact finite-N symbolic diagnostics and two high-precision finite-difference diagnostics, generates a source-linked traceability manifest for the 15 Paper A claim records, and generates a 14-row layer assessment plan. Each of the seven evidence subjects is separately attested. A separate workflow downloads the exact producer-run artifact and verifies each attestation against repository, signer workflow, OIDC issuer, SLSA predicate, source revision, subject digest, and invocation identity before aggregation.
+
+A component PASS means that its declared execution or manifest-generation operation completed. It is not a theorem status. The conservative layer outcomes are: L-01/L-03/L-04/L-06/L-07/L-08/L-09/L-10/L-11/L-12 PARTIAL; L-02 BLOCKED; L-05 and L-13 NOT_RUN; L-14 NOT_ASSESSED. Overall Paper A remains NOT_VERIFIED.
+
+The provenance-policy digest is computed from the same source checkout. The workflow therefore exercises real GitHub/Sigstore signatures but does not supply an independently administered trust anchor. External trust-root activation, a separately administered trusted builder, independent external review, complete semantic correspondence, and whole-paper mathematical verification remain open.
