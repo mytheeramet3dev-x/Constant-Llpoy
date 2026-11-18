@@ -2,6 +2,7 @@
 """Adversarial tests for the non-signing local trusted-builder reference."""
 import hashlib
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -119,6 +120,18 @@ class TrustedBuilderReferenceTests(unittest.TestCase):
         link.symlink_to(self.subject)
         self.reject(subject_path="link.json")
 
+    def test_symlink_parent_directory_rejected(self):
+        with tempfile.TemporaryDirectory() as outside:
+            external = Path(outside)
+            (external / "evidence.json").write_bytes(self.subject.read_bytes())
+            (self.root / "linked-dir").symlink_to(external, target_is_directory=True)
+            self.reject(subject_path="linked-dir/evidence.json")
+
+    def test_fifo_subject_rejected_without_blocking(self):
+        fifo = self.root / "pipe.json"
+        os.mkfifo(fifo)
+        self.reject(subject_path="pipe.json")
+
     def test_directory_rejected(self):
         self.reject(subject_path=".")
 
@@ -137,6 +150,11 @@ class TrustedBuilderReferenceTests(unittest.TestCase):
 
     def test_malformed_json_rejected(self):
         self.subject.write_text("{not-json", encoding="utf-8")
+        self.refresh_digest()
+        self.reject()
+
+    def test_nonstandard_nan_constant_rejected(self):
+        self.subject.write_text('{"value":NaN}', encoding="utf-8")
         self.refresh_digest()
         self.reject()
 

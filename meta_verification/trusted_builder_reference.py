@@ -37,36 +37,70 @@ def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_constant(value: str) -> None:
+    raise BuilderValidationError(f"non-standard JSON constant is forbidden: {value}")
+
+
 def _strict_json(data: bytes) -> dict[str, Any]:
     try:
         decoded = data.decode("utf-8", errors="strict")
-        value = json.loads(decoded, object_pairs_hook=_unique_object)
+        value = json.loads(decoded, object_pairs_hook=_unique_object, parse_constant=_reject_constant)
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise BuilderValidationError(f"subject is not strict UTF-8 JSON: {exc}") from None
     _require(isinstance(value, dict), "evidence subject must be a JSON object")
     return value
 
 
-def _safe_subject(root: Path, relative_path: str) -> Path:
+def _read_subject(root: Path, relative_path: str, max_bytes: int) -> bytes:
+    """Read through directory file descriptors; reject symlinks without TOCTOU path checks."""
     _require(isinstance(relative_path, str) and bool(relative_path), "subject_path must be non-empty")
     _require(chr(92) not in relative_path, "backslash path separators are not accepted")
     posix = PurePosixPath(relative_path)
     _require(not posix.is_absolute(), "absolute subject path is forbidden")
     _require(all(part not in ("", ".", "..") for part in relative_path.split("/")),
              "non-canonical or traversal subject path is forbidden")
-    root_real = root.resolve(strict=True)
-    candidate = root_real
-    for part in posix.parts:
-        candidate = candidate / part
-        _require(not candidate.is_symlink(), "symlink subject paths are forbidden")
+    _require(hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY"),
+             "platform lacks required no-follow directory-open flags")
+
+    root_fd = None
+    current_fd = None
+    file_fd = None
     try:
-        resolved = candidate.resolve(strict=True)
-        resolved.relative_to(root_real)
-    except (OSError, ValueError):
-        raise BuilderValidationError("subject path is missing or escapes checkout root") from None
-    mode = resolved.stat().st_mode
-    _require(stat.S_ISREG(mode), "subject must be a regular file")
-    return resolved
+        root_real = root.resolve(strict=True)
+        root_fd = os.open(root_real, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        _require(stat.S_ISDIR(os.fstat(root_fd).st_mode), "checkout root is not a directory")
+        current_fd = root_fd
+        for part in posix.parts[:-1]:
+            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                              dir_fd=current_fd)
+            if current_fd != root_fd:
+                os.close(current_fd)
+            current_fd = next_fd
+
+        file_fd = os.open(posix.parts[-1], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK,
+                          dir_fd=current_fd)
+        _require(stat.S_ISREG(os.fstat(file_fd).st_mode), "subject must be a regular file")
+        chunks: list[bytes] = []
+        total = 0
+        while total <= max_bytes:
+            chunk = os.read(file_fd, min(65536, max_bytes + 1 - total))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            total += len(chunk)
+        _require(0 < total <= max_bytes, "subject is empty or exceeds size limit")
+        return b"".join(chunks)
+    except BuilderValidationError:
+        raise
+    except (OSError, ValueError) as exc:
+        raise BuilderValidationError(f"subject path could not be safely opened: {exc}") from None
+    finally:
+        if file_fd is not None:
+            os.close(file_fd)
+        if current_fd is not None and current_fd != root_fd:
+            os.close(current_fd)
+        if root_fd is not None:
+            os.close(root_fd)
 
 
 def _validate_evidence(record: dict[str, Any], *, source_commit: str,
@@ -141,10 +175,8 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
     _require(upstream.get("workflow") == expected_workflow, "upstream workflow mismatch")
     _require(upstream.get("ref") == expected_ref, "upstream ref mismatch")
 
-    subject = _safe_subject(Path(checkout_root), subject_path)
-    size = subject.stat().st_size
-    _require(0 < size <= max_subject_bytes, "subject is empty or exceeds size limit")
-    raw = subject.read_bytes()
+    raw = _read_subject(Path(checkout_root), subject_path, max_subject_bytes)
+    size = len(raw)
     actual_sha256 = hashlib.sha256(raw).hexdigest()
     _require(actual_sha256 == expected_subject_sha256, "subject SHA-256 mismatch")
     record = _strict_json(raw)
