@@ -125,7 +125,7 @@ class TrustedBuilderReferenceTests(unittest.TestCase):
         self.reject()
 
     def test_invalid_utf8_rejected(self):
-        self.subject.write_bytes(b"\\xff")
+        self.subject.write_bytes(bytes([0xff]))
         self.refresh_digest()
         self.reject()
 

@@ -49,7 +49,7 @@ def _strict_json(data: bytes) -> dict[str, Any]:
 
 def _safe_subject(root: Path, relative_path: str) -> Path:
     _require(isinstance(relative_path, str) and bool(relative_path), "subject_path must be non-empty")
-    _require("\\\\" not in relative_path, "backslash path separators are not accepted")
+    _require(chr(92) not in relative_path, "backslash path separators are not accepted")
     posix = PurePosixPath(relative_path)
     _require(not posix.is_absolute(), "absolute subject path is forbidden")
     _require(all(part not in ("", ".", "..") for part in relative_path.split("/")),
