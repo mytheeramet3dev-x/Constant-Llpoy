@@ -28,9 +28,10 @@ self-hosted runners. The verifier additionally checks the certificate's
 repository ID, source ref, source commit, signer commit, verified timestamp
 evidence, and the SHA-256 digest of the exact local subject bytes.
 
-The verifier fails closed on missing or ambiguous subjects, stale commits,
-wrong repository identity, missing timestamps, malformed output, or failed
-signature verification. Its JSON output is a verification report, not itself
+The verifier pins GitHub CLI to version `2.103.3` and fails closed if the runner
+provides another version. It also fails closed on missing or ambiguous subjects,
+stale commits, wrong repository identity, missing timestamps, malformed output,
+or failed signature verification. Its JSON output is a verification report, not itself
 a cryptographic attestation.
 
 This is **bounded cryptographic provenance verification**, not proof that the
