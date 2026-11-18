@@ -7,7 +7,7 @@
     "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
   },
   "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
-  "audited_commit": "5e8475fe7a90bc4e27158ba983c752900bd6e2df",
+  "audited_commit": "d58bcc55f156418959df11b6e36ccf2f9d3f988e",
   "lean_toolchain": "leanprover/lean4:v4.36.0",
   "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
   "lean_modules": [
@@ -29,7 +29,7 @@
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
-      "blob_sha": "6fcaf490c7f19314172754caf631e065e8854e43"
+      "blob_sha": "76a11351aba83040ba67e6e0a0e240e808ab6da6"
     }
   ],
   "claims": [
@@ -180,9 +180,11 @@
         "PFPath.toQuiverPath",
         "singleSpinFlip_pf_path",
         "shiftedTFIMHamiltonian_pf_path",
-        "shiftedTFIMHamiltonian_isIrreducible"
+        "shiftedTFIMHamiltonian_isIrreducible",
+        "shiftedTFIMHamiltonian_mulVec_identity",
+        "shiftedTFIMHamiltonian_eigenvector_iff"
       ],
-      "gap": "The computational-basis Hamiltonian, its Hermitian property, scalar shift, entrywise nonnegativity, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and Mathlib Matrix.IsIrreducible property are now formalized. A conditional model-level characteristic-root multiplicity-one theorem is also available. Still open: construct a strictly positive eigenvector at the top eigenvalue without assuming one, and transfer algebraic multiplicity through K=cI-H to the ground eigenvalue of H."
+      "gap": "The computational-basis Hamiltonian, Hermitian property, scalar shift, entrywise nonnegativity, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, Mathlib Matrix.IsIrreducible property, exact K=cI-H matrix-action identity, and eigenvector correspondence are formalized. A conditional model-level characteristic-root multiplicity-one theorem is also available. Still open: construct a strictly positive eigenvector at the top eigenvalue without assuming one, and transfer algebraic multiplicity through the scalar shift to the ground eigenvalue of H."
     }
   ],
   "summary": {
@@ -199,6 +201,7 @@
     "A declaration's presence or successful compilation does not establish equivalence to a manuscript claim.",
     "The audit does not certify that all Lean hypotheses are discharged by the physical model.",
     "The source conflict for PROP-0012 is preserved; no upstream source was modified.",
-    "Independent review of this correspondence matrix remains required."
+    "Independent review of this correspondence matrix remains required.",
+    "The 2026-11-19 source-binding refresh updates the audited Lean module revision and records the new algebraic eigenvector correspondence; it does not constitute an independent semantic-equivalence review."
   ]
 }
