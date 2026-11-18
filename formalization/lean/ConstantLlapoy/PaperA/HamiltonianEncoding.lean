@@ -299,4 +299,47 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
     hv hlambdaVal hKv
     (shiftedTFIMHamiltonian_pf_connected J h hh)
 
+
+
+/-- Convert the custom finite positive-support reachability witness into a
+Mathlib quiver path. The constructor order mirrors path composition: first
+a path to an intermediate vertex, then one final edge. -/
+theorem pfReachable_to_quiverPath
+    {ι : Type*} [Quiver ι] {R : ι → ι → Prop} {s t : ι}
+    (edge : ∀ a b, R a b → a ⟶ b)
+    (hreach : PFReachable R s t) :
+    Quiver.Path s t := by
+  induction hreach with
+  | refl a => exact Quiver.Path.nil
+  | @step a b c hab hbc ih =>
+      exact (Quiver.Path.nil.cons (edge a b hab)).comp ih
+
+/-- The shifted TFIM matrix is irreducible in Mathlib's matrix/quiver sense.
+The custom Boolean-hypercube connectivity theorem supplies paths between
+all configurations; the strictly positive diagonal shift supplies a
+positive-length loop even when the two endpoints coincide. -/
+theorem shiftedTFIMHamiltonian_isIrreducible {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h) :
+    Matrix.IsIrreducible (shiftedTFIMHamiltonian J h) := by
+  refine ⟨shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le, ?_⟩
+  letI : Quiver (SpinConfig N) :=
+    Matrix.toQuiver (shiftedTFIMHamiltonian J h)
+  intro s t
+  have hreach :
+      PFReachable
+        (fun a b => 0 < shiftedTFIMHamiltonian J h a b) s t :=
+    shiftedTFIMHamiltonian_pf_connected J h hh s t
+  have hedge : ∀ a b,
+      (0 < shiftedTFIMHamiltonian J h a b) → a ⟶ b :=
+    fun a b hp => ⟨hp⟩
+  have p : Quiver.Path s t :=
+    pfReachable_to_quiverPath hedge hreach
+  have hdiag : 0 < shiftedTFIMHamiltonian J h s s := by
+    rw [shiftedTFIMHamiltonian_diag]
+    have hs := isingDiagonalEnergy_lt_shiftConstant J s
+    linarith
+  let loop : Quiver.Path s s := Quiver.Path.nil.cons ⟨hdiag⟩
+  refine ⟨loop.comp p, ?_⟩
+  simp [loop]
+
 end ConstantLlapoy.PaperA
