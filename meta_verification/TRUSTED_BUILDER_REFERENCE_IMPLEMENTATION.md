@@ -89,3 +89,12 @@ The black-box suite is also challenged by `test_trusted_builder_mutations.py`. S
 All seven were killed by the black-box suite (7/7 for this selected mutant set). The full harness passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901` in run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161). The mutation driver rejects syntax/import failures as evidence of a kill; each mutant must cause the conformance suite itself to fail.
 
 This is a bounded mutation-adequacy result, not an exhaustive security proof. The local reference remains non-signing and untrusted.
+
+
+## Adversarial metadata and report-path hardening
+
+The local reference now rejects unknown or missing caller/upstream metadata fields rather than ignoring them, and the CLI request parser rejects duplicate keys and non-standard JSON constants. The report writer uses no-follow directory traversal, exclusive creation, and refuses to overwrite existing output files. Tests cover a symlink as the output file, a symlink in the parent path, and preservation of an existing target.
+
+The expanded suite also covers boolean-as-integer identity confusion and missing/extra metadata fields. GitHub Actions run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358) passed 150 tests on commit `32befb3a3bda45705794e4484f94abe8cbb9b677`; all seven selected mutation tests remained killed.
+
+This hardening applies only to the local reference CLI. It does not turn its metadata into authenticated claims or make its output trusted.

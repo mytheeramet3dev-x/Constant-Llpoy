@@ -409,3 +409,19 @@ The current mutation set contains seven security-relevant mutants:
 **Observed result:** all seven selected mutants were killed (7/7, 100% for this explicit mutation set) by the conformance suite. The full GitHub Actions harness passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901` in run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161). The job log explicitly records all seven mutant names as killed.
 
 This score is limited to the seven authored mutants. It is not a general mutation-adequacy guarantee, does not establish complete security coverage, and does not turn the local reference into an independently trusted builder. Future work should expand the mutant catalogue based on the threat model, including malformed identity types, missing/extra metadata, report-field tampering, filesystem race attempts, and producer/verifier policy mutations where safely testable.
+
+
+## 19. Adversarial input-space expansion and safe report output
+
+The local reference CLI's adversarial suite now covers JSON/type and metadata boundary cases beyond the original threat vectors:
+
+- Boolean-vs-integer confusion for caller repository IDs and upstream run IDs.
+- Missing and unexpected keys in caller and upstream identity objects; these objects now require exact key sets rather than silently ignoring extension fields.
+- Duplicate top-level request keys and non-standard JSON constants in the CLI request file.
+- Report output final-component symlink, parent-directory symlink, and pre-existing-file attacks.
+
+The CLI now creates report files using directory file descriptors, no-follow opens for every parent component, and exclusive creation of a new final file. It refuses platforms lacking the required no-follow flags and does not overwrite an existing report. This is a fail-closed local-reference hardening measure; it does not authenticate request metadata or establish builder trust.
+
+The provenance policy validator now rejects boolean values for `repository_id` instead of accepting Python's boolean-as-integer subtype behavior.
+
+**Observed result:** commit `32befb3a3bda45705794e4484f94abe8cbb9b677` passed the full harness: 150 tests in run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358). The same run's logs also explicitly show all seven previously selected mutation cases killed. The mutation score remains bounded to those seven authored mutants.

@@ -266,3 +266,19 @@ This component is an implementation-level conformance harness, not a trusted-bui
 - **Status:** Implemented and validated for the enumerated mutant set. This is a bounded adequacy result, not proof of exhaustive test strength or independent builder trust.
 
 The suite's path-traversal test includes a matching byte-identical subject outside the checkout root. This ensures that bypassing the traversal guard cannot be accidentally masked by the later subject-digest check.
+
+
+## 14. Adversarial input-space expansion and safe report output
+
+### MVC-028 — Trusted-builder reference CLI boundary hardening
+
+- **Implementation:** `trusted_builder_reference.py`; **black-box suite:** `test_trusted_builder_conformance.py`.
+- **Metadata shape:** caller and upstream objects now reject both missing and unknown keys; boolean values are rejected where exact integer identifiers are required.
+- **Request parser:** duplicate JSON keys and non-standard JSON constants are rejected at the CLI boundary.
+- **Output path:** report creation traverses parent directories using directory file descriptors and no-follow opens, rejects symlink components, uses exclusive creation, and refuses to overwrite an existing file.
+- **Provenance policy:** `repository_id` must have exact integer type; booleans are rejected.
+- **Adversarial tests:** boolean caller repository ID; boolean upstream run ID; extra/missing caller fields; extra/missing upstream fields; duplicate request key; NaN request constant; output symlink; output parent symlink; existing output preservation; boolean provenance policy repository ID.
+- **Observed result:** run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358) passed 150 tests on commit `32befb3a3bda45705794e4484f94abe8cbb9b677`. Its job log also records all seven selected mutation tests as killed.
+- **Status:** Implemented and validated for these explicit local CLI and policy-validation cases. No claim of exhaustive adversarial coverage or external builder activation.
+
+The safe output writer is deliberately local and fail-closed. It does not make the request inputs authoritative, and a report remains `VALIDATED_LOCAL_UNTRUSTED`.

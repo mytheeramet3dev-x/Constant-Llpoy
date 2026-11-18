@@ -85,3 +85,12 @@ This is black-box testing relative to the Python implementation, not an independ
 The current seven mutants target: subject-byte digest comparison, canonical evidence-record digest, `ACCEPTED` status, caller repository ID, upstream run ID/replay, path traversal, and escalation to `SIGNED`. The path-traversal vector uses a byte-identical file outside the checkout root so the later digest check cannot mask a traversal bypass.
 
 **Observed result:** 7/7 selected mutants were killed. GitHub Actions run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161) passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901`; logs explicitly report each mutant as killed. The 100% score applies only to this deliberately selected set and is not a claim of complete mutation coverage or external trust.
+
+
+## Adversarial input-space expansion
+
+The reference CLI now requires exact caller/upstream metadata key sets, rejects boolean-as-integer identity values, rejects duplicate JSON request keys and non-standard constants, and creates report files without following symlinks in parent or final path components. It uses exclusive file creation and preserves any pre-existing output rather than overwriting it. The provenance policy also requires an exact integer repository ID.
+
+These defenses are covered by black-box CLI tests and provenance policy tests. GitHub Actions run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358) passed 150 tests on commit `32befb3a3bda45705794e4484f94abe8cbb9b677`; all seven selected mutation tests remained killed.
+
+Coverage is explicit and bounded. The local reference still does not authenticate caller/upstream metadata, sign, create attestations, or establish trust.
