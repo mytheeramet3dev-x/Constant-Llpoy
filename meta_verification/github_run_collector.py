@@ -70,6 +70,9 @@ def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: 
     jobs=jobs_response["jobs"]
     require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs),"jobs response is empty or paginated/incomplete")
     names=[j.get("name") if isinstance(j,dict) else None for j in jobs]
+    job_ids=[j.get("id") if isinstance(j,dict) else None for j in jobs]
+    require(all(type(x) is int and x>0 for x in job_ids),"job IDs must be positive integers")
+    require(len(job_ids)==len(set(job_ids)),"duplicate job IDs")
     require(len(names)==len(set(names)),"duplicate job names")
     require(set(names)==set(p["required_jobs"]),"actual job set differs from policy")
     normalized=[]; failures=[]
