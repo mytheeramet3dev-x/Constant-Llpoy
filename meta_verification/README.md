@@ -185,3 +185,10 @@ Implementation: `component_provenance_authenticator.py`; adversarial tests: `tes
 `.github/workflows/component-provenance-live-smoke.yml` runs after the signed evidence producer and downloads that exact producer run's subject artifact. `component_provenance_live_smoke.py` builds a one-component bundle for the downloaded `github-run-evidence.json`, binds the actual producer run ID/attempt and source revision, calls the direct GitHub/Sigstore authenticator, and requires the existing aggregator to accept the authenticated smoke bundle. The report is uploaded as a workflow artifact.
 
 This is a real-signature integration test for one collector evidence subject, not a per-Paper/per-Lean component producer. The policy digest is computed from the repository checkout solely for this smoke test; it is not an external trust pin. External policy activation remains NOT ACTIVE, and the result is not mathematical verification. Adapter unit tests are in `test_component_provenance_live_smoke.py`.
+
+
+### Observed live smoke result
+
+On commit `7d5f778e9cd05cd1ef1095dd23f139d83aba8248`, the harness passed 267 tests (run [44240363793](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240363793)); selected component-provenance, aggregator, and activation mutants were killed 10/10, 12/12, and 9/9. Producer run [44240436570](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240436570) and separate provenance verifier run [44240468328](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468328) succeeded. Crucially, live smoke run [44240468560](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468560) verified the actual collector evidence artifact with the component authenticator and aggregator; it reported `LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED`, one verified attestation, and aggregator `ACCEPTED`.
+
+This validates one real GitHub/Sigstore subject path only. It does not produce or authenticate all Paper A/Lean/numerical evidence, does not activate external policy pins, and does not establish mathematical correctness.

@@ -600,3 +600,8 @@ The policy activation component includes a CLI contract requiring explicit polic
 ## Component-provenance live integration smoke test
 
 The repository now has a separate post-producer smoke workflow that downloads the exact signed `github-run-evidence.json` artifact from the producer run and verifies that exact subject through the component-provenance authenticator. The workflow binds the producer run ID/attempt and source revision, then requires the component aggregator to accept a one-component test bundle. This is evidence that the verifier integration works with one real GitHub/Sigstore attestation once the workflow succeeds. It is not a producer for the mathematical verification components, does not activate external trust pins, and cannot establish theorem correctness. The smoke policy digest is locally computed and must not be represented as an external trust anchor.
+
+
+### Observed real-signature smoke validation
+
+The live component-provenance smoke workflow was exercised successfully on signer commit `7d5f778e9cd05cd1ef1095dd23f139d83aba8248`. Harness run [44240363793](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240363793) passed 267 tests; producer [44240436570](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240436570), separate verifier [44240468328](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468328), and live component smoke [44240468560](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468560) all succeeded. The smoke authenticated one real collector-evidence subject and the aggregator returned `ACCEPTED`. This is not external trust activation, not coverage of all mathematical components, and not a theorem status.

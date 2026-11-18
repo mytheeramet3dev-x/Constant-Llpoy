@@ -71,13 +71,13 @@ The selected mutation suite deliberately weakens policy-pin checking, evidence d
 
 The following remain explicitly NOT ACTIVE / NOT ESTABLISHED:
 - No current component-evidence producer workflow emits a separate attestation for every component artifact. The existing evidence producer attests `github-run-evidence.json`; that does not automatically attest arbitrary component subjects.
-- No real component-evidence bundle with per-component attestations has been authenticated end to end.
+- One real one-component smoke bundle for the collector's `github-run-evidence.json` has been authenticated end to end (see Section 9). No Paper A, Lean-module, numerical-diagnostic, or other mathematical component artifact has yet been authenticated.
 - The provenance-policy SHA-256 pin must be supplied from a separately administered protected source; the relying repository does not provide an independent pin merely by storing a JSON policy file.
 - The external authority/activation pins and trusted-time source remain unprovisioned.
 - GitHub CLI is version-pinned, but its binary/runtime is runner-provided and not independently installed from a pinned binary digest.
 - Repository administrators who can alter the relying repository's workflows and policies remain inside the trust boundary.
 
-A green test suite proves only that the declared tests ran and passed on the named revision. It does not activate external trust, verify real component attestations, or prove mathematical claims.
+A green test suite proves only that the declared tests ran and passed on the named revision. The live smoke test below validates one real collector-evidence attestation path; it does not activate external trust, authenticate every mathematical component, or prove mathematical claims.
 
 
 ## 7. Observed CI validation
@@ -92,3 +92,15 @@ A separate workflow, `.github/workflows/component-provenance-live-smoke.yml`, ex
 The smoke adapter constructs a one-component bundle for the exact downloaded `github-run-evidence.json` bytes. Its receipt binds the producer workflow run ID, run attempt, and source revision. The direct authenticator must verify the actual attestation and its SLSA invocation ID; the normal aggregator must then accept the one-component smoke bundle. The workflow uploads a report only after that sequence succeeds.
 
 **Interpretation boundary:** this demonstrates that the current GitHub CLI / Sigstore integration can authenticate one real subject emitted by the existing producer. It does not create attestations for Paper A, Lean modules, numerical diagnostics, or every future component. It also does not activate the external authority, active-policy, or provenance-policy trust roots. The smoke workflow computes the policy digest from the checked-out policy file; this is deliberately a local integration-test pin, not an independently governed production pin. Its final status is `LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED`, never a theorem status.
+
+
+## 9. Observed live attestation integration result
+
+On signer source commit `7d5f778e9cd05cd1ef1095dd23f139d83aba8248`:
+- Harness run [44240363793](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240363793) passed 267 tests in 22.096 seconds.
+- The selected component-provenance, aggregator, and activation mutation suites killed 10/10, 12/12, and 9/9 mutants, respectively.
+- Evidence producer run [44240436570](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240436570) succeeded and signed the exact collector evidence subject.
+- Separate provenance verifier run [44240468328](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468328) succeeded and reported `VERIFIED` for subject SHA-256 `b2cbc1a74afc06e47ba9b0cba2feee31aca9fb59f459562338329ce5964119aa`.
+- Live component-provenance smoke run [44240468560](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44240468560) succeeded. It downloaded the exact artifact from producer run `44240436570`, passed the actual GitHub/Sigstore attestation through the component authenticator, checked run ID `44240436570` / attempt `1`, and obtained aggregator status `ACCEPTED`. The smoke report states `production_activation=NOT_ACTIVE` and `mathematical_correctness=NOT_ASSESSED`.
+
+This is the first observed real-signature end-to-end exercise of the component authenticator. It is limited to one collector evidence subject and a locally computed smoke-test policy digest. It is not independent external policy governance, a production component producer, or a theorem-verification result.
