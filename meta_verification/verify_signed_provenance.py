@@ -54,7 +54,7 @@ def validate_policy(policy: Any) -> dict:
 def validate_cli_version(version_output: str, policy: Any) -> str:
     p = validate_policy(policy)
     require(isinstance(version_output, str), "GitHub CLI version output must be text")
-    match = re.search(r"^gh version ([0-9]+\\.[0-9]+\\.[0-9]+)", version_output, re.MULTILINE)
+    match = re.search(r"^gh version ([0-9]+\.[0-9]+\.[0-9]+)", version_output, re.MULTILINE)
     require(match is not None and match.group(1) == p["gh_cli_version"],
             "GitHub CLI version does not match the pinned policy version")
     return match.group(1)
@@ -139,9 +139,7 @@ def verify_with_gh(subject_path: Path, policy: Any, source_sha: str) -> dict:
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise ProvenanceError(f"cannot inspect GitHub CLI version: {exc}") from None
     require(version_result.returncode == 0, "gh version command failed")
-    version_match = re.search(r"^gh version ([0-9]+\.[0-9]+\.[0-9]+)", version_result.stdout, re.MULTILINE)
-    require(version_match is not None and version_match.group(1) == p["gh_cli_version"],
-            "GitHub CLI version does not match the pinned policy version")
+    validate_cli_version(version_result.stdout, p)
     require(subject_path.is_file() and not subject_path.is_symlink(),
             "subject must be a regular non-symlink file")
     try:
