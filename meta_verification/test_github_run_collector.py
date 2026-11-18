@@ -102,6 +102,14 @@ class CollectorTests(unittest.TestCase):
     def test_boolean_jobs_total_count_rejected(self):
         x=fixture(); x[2]["total_count"]=True
         with self.assertRaises(CollectionError): check(x)
+    def test_duplicate_job_ids_rejected_independently(self):
+        x=fixture()
+        second="Second required job"
+        x[0]["required_jobs"].append(second)
+        x[0]["required_steps"][second]=list(STEP_NAMES)
+        duplicate=copy.deepcopy(x[2]["jobs"][0]); duplicate["name"]=second
+        x[2]["jobs"].append(duplicate); x[2]["total_count"]=2
+        with self.assertRaises(CollectionError): check(x)
     def test_record_digest_is_deterministic(self):
         self.assertEqual(check(fixture())["record_sha256"],check(fixture())["record_sha256"])
 
