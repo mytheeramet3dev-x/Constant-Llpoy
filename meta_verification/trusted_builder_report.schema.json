@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://constant-llpoy.invalid/schemas/trusted-builder-report-1.0.json",
+  "title": "Constant Llpoy Trusted Builder Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "builder",
+    "caller",
+    "source_commit",
+    "subject",
+    "attestation"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "status": { "enum": ["SIGNED", "REJECTED"] },
+    "builder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "repository_id", "workflow", "workflow_commit"],
+      "properties": {
+        "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "workflow": { "type": "string", "minLength": 1 },
+        "workflow_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+      }
+    },
+    "caller": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "repository_id", "workflow", "ref"],
+      "properties": {
+        "repository": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$" },
+        "repository_id": { "type": "integer", "minimum": 1 },
+        "workflow": { "type": "string", "minLength": 1 },
+        "ref": { "type": "string", "pattern": "^refs/heads/.+$" }
+      }
+    },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "size_bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["predicate_type", "oidc_issuer", "status"],
+      "properties": {
+        "predicate_type": { "const": "https://slsa.dev/provenance/v1" },
+        "oidc_issuer": { "const": "https://token.actions.githubusercontent.com" },
+        "status": { "enum": ["CREATED", "NOT_CREATED"] },
+        "attestation_url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}
