@@ -80,6 +80,11 @@ class GateTests(unittest.TestCase):
     activation=self.make_record()
     with self.assertRaisesRegex(ActivationError,"policy digest"):
       verify_activation(self.policy+b"x",self.policy_obj,self.authorities,activation,**self.args(activation))
+ def test_separately_supplied_policy_object_cannot_diverge_from_pinned_bytes(self):
+    activation=self.make_record()
+    altered=copy.deepcopy(self.policy_obj); altered["claim_id"]="ATTACKER-CLAIM"
+    with self.assertRaisesRegex(ActivationError,"does not match"):
+      verify_activation(self.policy,altered,self.authorities,activation,**self.args(activation))
  def test_wrong_policy_id_rejected(self):
     activation=self.make_record()
     with self.assertRaisesRegex(ActivationError,"policy ID"):

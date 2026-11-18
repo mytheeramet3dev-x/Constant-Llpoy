@@ -59,6 +59,9 @@ def verify_activation(policy_bytes: bytes, policy: Any, authority_bytes: bytes, 
             "external authority pin is missing or malformed")
     require(isinstance(expected_activation_sha256, str) and SHA256.fullmatch(expected_activation_sha256) is not None,
             "external active-policy pin is missing or malformed")
+    require(type(now_epoch) is int, "trusted time must be an integer epoch value")
+    parsed_policy = strict_json(policy_bytes, "policy bytes")
+    require(parsed_policy == policy, "parsed policy object does not match the exact pinned policy bytes")
     require(digest(authority_bytes) == expected_authority_sha256, "authority-set digest differs from external pin")
     require(digest(activation_bytes) == expected_activation_sha256, "activation-record digest differs from external pin")
     authorities = exact(strict_json(authority_bytes, "authority set"), AUTHORITY_KEYS, "authority set")
