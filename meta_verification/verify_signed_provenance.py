@@ -13,7 +13,7 @@ from typing import Any
 POLICY_KEYS = {
     "schema_version", "repository", "repository_id", "signer_workflow",
     "source_ref", "oidc_issuer", "predicate_type", "require_verified_timestamps",
-    "deny_self_hosted_runners",
+    "deny_self_hosted_runners", "gh_cli_version",
 }
 SHA1 = re.compile(r"^[0-9a-f]{40}$")
 
@@ -46,6 +46,9 @@ def validate_policy(policy: Any) -> dict:
             "verified timestamps must be required")
     require(policy["deny_self_hosted_runners"] is True,
             "self-hosted runners must be denied")
+    require(isinstance(policy["gh_cli_version"], str) and
+            re.fullmatch(r"[0-9]+\\.[0-9]+\\.[0-9]+", policy["gh_cli_version"]) is not None,
+            "gh_cli_version must be an exact semantic version")
     return policy
 
 def _validate_entry(entry: Any, expected_digest: str, policy: dict,
@@ -122,6 +125,15 @@ def validate_cli_output(output: Any, subject_bytes: bytes, policy: Any, source_s
 
 def verify_with_gh(subject_path: Path, policy: Any, source_sha: str) -> dict:
     p = validate_policy(policy)
+    try:
+        version_result = subprocess.run(["gh", "version"], capture_output=True, text=True,
+                                        timeout=20, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise ProvenanceError(f"cannot inspect GitHub CLI version: {exc}") from None
+    require(version_result.returncode == 0, "gh version command failed")
+    version_match = re.search(r"^gh version ([0-9]+\\.[0-9]+\\.[0-9]+)", version_result.stdout, re.MULTILINE)
+    require(version_match is not None and version_match.group(1) == p["gh_cli_version"],
+            "GitHub CLI version does not match the pinned policy version")
     require(subject_path.is_file() and not subject_path.is_symlink(),
             "subject must be a regular non-symlink file")
     try:
