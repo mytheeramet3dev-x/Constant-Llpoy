@@ -12,36 +12,34 @@ workflow-file and evaluator-file blob SHAs, exact job set, required steps, and
 completion conclusions. It emits a normalized JSON record with a deterministic
 SHA-256 digest.
 
-## Signed provenance generation and verification
-`meta-verification-evidence.yml` checks out the exact default-branch commit
-associated with the workflow-run event, collects the upstream run record, and
-uses the pinned `actions/attest` action to generate a GitHub/Sigstore-signed
-SLSA provenance attestation for the exact evidence file bytes.
+## Signed provenance generation and independent verification
+`.github/workflows/meta-verification-evidence.yml` runs after the harness,
+checks out the exact default-branch commit associated with the event, collects
+the upstream run record, and uses the commit-pinned `actions/attest` action to
+create a Sigstore-signed SLSA provenance attestation for the exact evidence bytes.
 
-`verify_signed_provenance.py` invokes `gh attestation verify` against the
-repository's attestation API (not a caller-supplied bundle), enforcing:
-- exact repository and signer workflow identity;
-- GitHub Actions OIDC issuer;
-- SLSA provenance v1 predicate;
-- `refs/heads/main` source ref and exact source commit;
-- no self-hosted runner;
-- signing certificate repository ID;
-- verified transparency-log/timestamp evidence; and
-- SHA-256 of the exact local subject bytes.
+A separate `.github/workflows/meta-verification-provenance-verify.yml` runs
+after the producer workflow completes. It checks out the producer run's exact
+source commit, downloads the evidence artifact from that run, and invokes
+`gh attestation verify` without accepting a caller-supplied attestation bundle.
+It enforces repository and signer-workflow identity, GitHub Actions OIDC issuer,
+SLSA provenance v1, source branch and exact source commit, and rejects
+self-hosted runners. The verifier additionally checks the certificate's
+repository ID, source ref, source commit, signer commit, verified timestamp
+evidence, and the SHA-256 digest of the exact local subject bytes.
 
 The verifier fails closed on missing or ambiguous subjects, stale commits,
 wrong repository identity, missing timestamps, malformed output, or failed
 signature verification. Its JSON output is a verification report, not itself
 a cryptographic attestation.
 
-This is a **bounded cryptographic provenance check**, not proof that the
+This is **bounded cryptographic provenance verification**, not proof that the
 collector's predicate claims are true, that the collector is defect-free, or
-that the mathematical proof is correct. The SLSA predicate body is producer
+that the mathematical proof is correct. SLSA predicate contents are producer
 controlled; policy relies on verified certificate fields and exact subject
-digest. A repository administrator able to change the workflow and policy can
-still alter the trust policy. Independent governance/branch protection and a
-trusted reusable builder outside the producer's control remain residual
-requirements.
+digest. Repository administrators able to change both producer and verifier
+workflows/policy remain inside the trust boundary. A separately governed
+reusable trusted builder or external policy authority is still future work.
 
 Artifact attestations are supported here because this repository is public.
 The implementation uses GitHub's hosted public Sigstore trust infrastructure;
@@ -51,6 +49,6 @@ it is not an independently operated trust root.
 ```sh
 python -m unittest discover -s meta_verification -p 'test_*.py' -v
 ```
-Tests use fixed certificate/statement fixtures and mock-free policy validation;
-the actual signature and certificate-chain verification is delegated to the
-GitHub CLI's `gh attestation verify` implementation in CI.
+Tests use fixed certificate/statement fixtures to test policy enforcement.
+The actual signature and certificate-chain verification is delegated to
+GitHub CLI's `gh attestation verify` in the separate verification workflow.
