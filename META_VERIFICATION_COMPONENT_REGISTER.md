@@ -449,3 +449,10 @@ This is an ACCEPTED evidence bundle, not an ACCEPTED mathematical result. The re
 At exact source revision \`4f6efbe9a1140007d73250940ed7c0ee97411842\`, Lean run 44326403470 succeeded with 18,266 build jobs and axiom audit of 103 declarations (all within the configured allowlist). Producer run 44326401521 and separate provenance verifier 44327033995 succeeded; final component status \`PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED\`.
 
 The new \`HamiltonianEncoding.lean\` formalizes the computational-basis Hamiltonian, Hermitian property, explicit \(K=cI-H\) shift, entrywise nonnegativity, and exact single-spin-flip positive support for \(h>0\). It does not yet prove support-graph connectivity, Hermitian/spectral transfer for \(K\), or existence of a positive top eigenvector. The mathematical result remains NOT_VERIFIED.
+
+
+### Paper A evidence pipeline snapshot — 2026-11-18
+
+For source commit \`5eed2081099023631f41e31da9533a3741670b16\`, Paper A producer run \`44331504302\` succeeded and emitted seven attested evidence subjects. Its Lean build input list explicitly includes all five Paper A modules, including \`HamiltonianEncoding.lean\`, and the root \`ConstantLlapoy.lean\`. The separate Paper A provenance verifier run \`44332051326\` succeeded for the exact producer artifact.
+
+The observed 14-layer assessment remains L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED. The overall Paper A status remains NOT_VERIFIED.

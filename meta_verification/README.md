@@ -253,3 +253,8 @@ The Paper A Lean source now includes a kernel-checked computational-basis TFIM m
 Added \`paper_a_semantic_audit_validator.py\` and adversarial tests. The checker recomputes Git blob identities for all 15 frozen claim records and all five Lean modules, enforces the exact claim registry set, checks listed declaration names exist in the pinned modules, recomputes classification counts, rejects duplicate JSON keys and unknown statuses, and prevents a structural check from promoting L-02 or claim verification.
 
 Its only success status is \`STRUCTURALLY_VALID_NOT_SEMANTICALLY_VERIFIED\`. It does **not** establish that a Lean declaration is mathematically equivalent to a manuscript claim, that model hypotheses are discharged, or that the audit classifications are correct. L-02 remains BLOCKED pending independent mathematical review and model-specific formalization.
+
+
+### Collector pin recovery — 2026-11-18
+
+After adding the L-02 structural validator to the harness, the next evidence-collection run correctly failed closed because the collector policy still pinned the previous harness workflow blob. The policy is now updated to the exact current workflow blob and exact required step set. No failed run was treated as accepted evidence.

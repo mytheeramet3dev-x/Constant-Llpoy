@@ -33,7 +33,7 @@ Classifications:
 | PROP-0011 — Scale covariance of edge-response eigenvalues | NO_DIRECT_FORMALIZATION | No scale-covariance theorem. |
 | PROP-0012 — Weak-coupling opposite-sign response | SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY | `weakCouplingCoefficient_pos` and `weakCoupling_response_positive_of_remainder` prove a positive coefficient and a conditional final sign step only. They do not prove the model-specific differentiated remainder; this is not verification of the frozen opposite-sign assertion. |
 | THM-0001 — Conditional local saddle-node normal form | NO_DIRECT_FORMALIZATION | No formal Taylor/branch theorem or corresponding regularity bridge. |
-| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, Hermitian property, explicit scalar shift, entrywise nonnegativity, and single-spin-flip positive support now compile. Hypercube connectivity, K-Hermitian/spectral transfer, and positive top-eigenvector existence remain open. |
+| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, Hermitian property, scalar shift, nonnegative entries, exact single-spin-flip support, and Boolean-hypercube connectivity are formalized. Still missing: shifted-matrix Hermiticity, spectral-shift transfer, and existence of a strictly positive top eigenvector. |
 
 ## Audited Lean modules
 
@@ -42,7 +42,7 @@ Classifications:
 | `PerronFrobeniusCore.lean` | Positive-eigenvector ratio/harmonic arguments; one-dimensional Perron eigenspace; unique real-symmetric spectral index; characteristic-root multiplicity one | Abstract matrix theorem only; physical Hamiltonian encoding remains open. |
 | `StrongCoupling.lean` | Positive leading coefficient; conditional sign under explicit remainder bound | Does not prove the asymptotic expansion or its remainder. |
 | `WeakCoupling.lean` | Positive logarithmic coefficient; conditional sign; positive-branch entropy derivative | Does not derive the model-specific differentiated remainder or verify the source's opposite-sign statement. |
-| `HamiltonianEncoding.lean` | Computational-basis TFIM matrix, Hermitian proof, explicit `cI-H` shift, entrywise nonnegativity, and characterization of positive off-diagonal support | Does not prove hypercube connectivity, positive eigenvector existence, or the spectral transfer to the ground state. |
+| `HamiltonianEncoding.lean` | Computational-basis TFIM matrix, Hermitian proof, explicit `cI-H` shift, entrywise nonnegativity, single-spin-flip support, and Boolean-hypercube connectivity | Does not prove shifted-matrix Hermiticity, positive eigenvector existence, or spectral transfer to the ground state. |
 | `ZeroEigenvalueEntropy.lean` | Parity/Schur algebra, scalar analytic factorization and bounds, generic entropy derivative estimates, leading one-site edge derivative | Generic and leading-order tools; their hypotheses are not yet derived from the complete TFIM reduced-state model. |
 
 ## Result
@@ -54,7 +54,7 @@ Classifications:
 - Source conflict retained: **PROP-0012**.
 - No claim status is upgraded by this audit.
 
-**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. For THM-0002, the remaining formal obligations are hypercube connectivity, Hermitian/spectral transfer for the shifted matrix, and construction of a strictly positive top eigenvector before any Paper A theorem is labelled formally verified.
+**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. For THM-0002, the remaining obligations are shifted-matrix Hermiticity, spectral transfer from `K=cI-H`, and construction of a strictly positive top eigenvector.
 
 ## Reproducibility
 

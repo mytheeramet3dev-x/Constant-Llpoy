@@ -166,3 +166,15 @@ This advances THM-0002's model-to-matrix bridge, but it does **not** yet prove h
 - Separate provenance verifier run \`44330971751\` succeeded for the exact source commit and evidence artifact.
 
 The successful Lean build verifies compilation of the current formalized declarations only. It does not complete the manuscript's full 14-layer verification or prove the ground-state Perron–Frobenius claim.
+
+
+## Updated evidence run — commit 5eed2081099023631f41e31da9533a3741670b16
+
+- Lean workflow \`44331504425\`: SUCCESS; 18,266 build jobs; axiom audit covered 107 declarations, all within the configured allowlist.
+- Paper A evidence producer \`44331504302\`: SUCCESS; all five execution components PASS.
+- The Lean evidence manifest includes all five Paper A Lean modules and the root \`ConstantLlapoy.lean\`, including the new \`HamiltonianEncoding.lean\` module.
+- Claim traceability: 15/15 records located and hashed; semantic correspondence remains NOT_ESTABLISHED.
+- Four computational diagnostics executed successfully, but remain finite-N / sampled diagnostics rather than theorem proofs.
+- Separate component provenance verifier \`44332051326\`: SUCCESS for the exact producer artifact.
+- 14-layer assessment unchanged: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+- External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
