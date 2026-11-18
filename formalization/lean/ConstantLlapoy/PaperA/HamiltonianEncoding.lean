@@ -165,4 +165,89 @@ theorem shiftedTFIMHamiltonian_positive_iff_single_flip {N : ℕ}
     rw [shiftedTFIMHamiltonian_single_flip J h hst hflip]
     exact hh
 
+
+
+theorem flipAt_ne_self {N : ℕ} (s : SpinConfig N) (i : Fin N) :
+    flipAt s i ≠ s := by
+  intro h
+  have hi := congrFun h i
+  cases hs : s i <;> simp [flipAt, hs] at hi
+
+theorem singleSpinFlip_ne {N : ℕ} {s t : SpinConfig N}
+    (h : SingleSpinFlip s t) : s ≠ t := by
+  rcases h with ⟨i, rfl⟩
+  exact flipAt_ne_self s i
+
+/-- The Boolean hypercube is connected under single-coordinate flips.
+The proof constructs a path by successively correcting every coordinate
+on which the two configurations differ. -/
+theorem singleSpinFlip_pf_connected {N : ℕ} :
+    ∀ s t : SpinConfig N, PFReachable SingleSpinFlip s t := by
+  classical
+  have hmain :
+      ∀ n, ∀ s t : SpinConfig N,
+        (Finset.univ.filter (fun i : Fin N => s i ≠ t i)).card = n →
+          PFReachable SingleSpinFlip s t := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro s t hcard
+      let D : Finset (Fin N) :=
+        Finset.univ.filter (fun i : Fin N => s i ≠ t i)
+      by_cases hD : D = ∅
+      · have hst : s = t := by
+          funext i
+          by_contra hne
+          have hi : i ∈ D := by simp [D, hne]
+          simpa [hD] using hi
+        subst t
+        exact PFReachable.refl s
+      · have hDnonempty : D.Nonempty :=
+          Finset.nonempty_iff_ne_empty.mpr hD
+        obtain ⟨i, hiD⟩ := hDnonempty
+        have hdiff : s i ≠ t i := by
+          simpa [D] using hiD
+        let u : SpinConfig N := flipAt s i
+        have hsu : SingleSpinFlip s u := ⟨i, rfl⟩
+        have hui : u i = t i := by
+          dsimp [u, flipAt]
+          cases hs : s i <;> cases ht : t i <;> simp_all
+        have hD' :
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)) =
+              D.erase i := by
+          ext j
+          by_cases hji : j = i
+          · subst j
+            simp [D, hui, hiD]
+          · simp [D, u, flipAt, hji]
+        have hcard' :
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card < n := by
+          rw [hD', Finset.card_erase_of_mem hiD, ← hcard]
+          omega
+        exact PFReachable.step hsu (ih _ hcard' u t rfl)
+  intro s t
+  exact hmain _ s t rfl
+
+/-- The positive-support graph of the shifted TFIM matrix is precisely the
+single-spin-flip hypercube away from the diagonal, and is therefore connected
+for every strictly positive transverse field. -/
+theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h) :
+    ∀ s t : SpinConfig N,
+      PFReachable
+        (fun a b => 0 < shiftedTFIMHamiltonian J h a b) s t := by
+  intro s t
+  have hreach := singleSpinFlip_pf_connected s t
+  induction hreach with
+  | refl a =>
+      exact PFReachable.refl a
+  | @step a b c hab hbc ih =>
+      rcases hab with ⟨i, rfl⟩
+      have hne : a ≠ flipAt a i := flipAt_ne_self a i
+      have hpos :
+          0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
+        (shiftedTFIMHamiltonian_positive_iff_single_flip J h hh hne).2
+          ⟨i, rfl⟩
+      exact PFReachable.step hpos ih
+
 end ConstantLlapoy.PaperA
