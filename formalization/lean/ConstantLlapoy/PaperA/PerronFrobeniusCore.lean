@@ -174,7 +174,7 @@ theorem scalar_identity_sub_posSemidef_of_eigenvalue_upper_bound
       Unitary.conjStarAlgAut ℝ _ U (Matrix.diagonal (fun _ : ι => lambda)) =
         lambda • (1 : Matrix ι ι ℝ) := by
     rw [hdiag_const]
-    simp
+    simp [Matrix.one_apply]
   have hspec :
       A = Unitary.conjStarAlgAut ℝ _ U (Matrix.diagonal hA.eigenvalues) := by
     simpa [U] using hA.spectral_theorem
