@@ -39,17 +39,17 @@ collector's predicate claims are true, that the collector is defect-free, or
 that the mathematical proof is correct. SLSA predicate contents are producer
 controlled; policy relies on verified certificate fields and exact subject
 digest. Repository administrators able to change both producer and verifier
-workflows/policy remain inside the trust boundary. A separately governed
-reusable trusted builder or external policy authority is still future work.
+workflows/policy remain inside the trust boundary. A separately governed trust-root bootstrap verifier now exists in `meta_verification/external_trust_root.py`, with a manual workflow at `.github/workflows/meta-trust-root-bootstrap.yml`. It verifies an Ed25519-signed external manifest, pinned manifest/key digests, immutable external checkout commit, actual GitHub repository IDs, signer identity, trusted-builder identity, and validity window. It fails closed when protected Environment inputs are missing.
+
+**Activation is not complete:** no independent trust-root repository, external signing key, protected `meta-trust-root` Environment, or trusted-builder repository has been provisioned and verified. The current evidence producer still signs in the relying-party repository. The external manifest's builder identity is an authorization contract only; it is not yet the active builder. The bootstrap workflow also requires independently configured Environment reviewers and branch/ruleset protection. A repository administrator able to change both workflow code and Environment governance remains privileged.
 
 Artifact attestations are supported here because this repository is public.
-The implementation uses GitHub's hosted public Sigstore trust infrastructure;
-it is not an independently operated trust root.
+The current evidence attestation uses GitHub's hosted public Sigstore trust infrastructure; the new Ed25519 root-package verifier is designed to consume a separately governed root but is not active until external provisioning is completed.
 
 ## Tests
 ```sh
 python -m unittest discover -s meta_verification -p 'test_*.py' -v
 ```
 Tests use fixed certificate/statement fixtures to test policy enforcement.
-The actual signature and certificate-chain verification is delegated to
-GitHub CLI's `gh attestation verify` in the separate verification workflow.
+The actual evidence signature and certificate-chain verification is delegated to
+GitHub CLI's `gh attestation verify` in the separate verification workflow. The external trust-root package uses OpenSSL Ed25519 verification and pinned SHA-256 values. Neither route is a mathematical proof checker.
