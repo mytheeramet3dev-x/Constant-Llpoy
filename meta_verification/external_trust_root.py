@@ -226,7 +226,6 @@ def verify_package(root: Path, *, trust_root_repository: str, trust_root_reposit
     manifest_file = _safe_package_file(root, manifest_path)
     signature_file = _safe_package_file(root, signature_path)
     public_key_file = _safe_package_file(root, public_key_path)
-    _require_ed25519_public_key(public_key_file)
     manifest_bytes = manifest_file.read_bytes()
     signature_bytes = signature_file.read_bytes()
     public_key_bytes = public_key_file.read_bytes()
@@ -235,6 +234,7 @@ def verify_package(root: Path, *, trust_root_repository: str, trust_root_reposit
     require(hashlib.sha256(public_key_bytes).hexdigest() == expected_public_key_sha256,
             "trust-root public-key fingerprint mismatch")
     require(bool(signature_bytes) and bool(public_key_bytes), "trust-root signature or public key is empty")
+    _require_ed25519_public_key(public_key_file)
 
     try:
         manifest = json.loads(manifest_bytes.decode("utf-8"), object_pairs_hook=_unique_object)
