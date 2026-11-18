@@ -59,8 +59,8 @@ class AggregatorTests(unittest.TestCase):
         p,b=fixture(); b["components"][0]["status"]="FAIL"
         self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
     def test_missing_component_is_inconclusive(self):
-        p,b=fixture(); b["components"].pop()
-        self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
+        p,b=fixture(); auth=authenticated(b); b["components"].pop()
+        self.assertEqual(aggregate(p,b,COMMIT,auth)["status"],"INCONCLUSIVE")
     def test_duplicate_component_is_inconclusive(self):
         p,b=fixture(); b["components"].append(copy.deepcopy(b["components"][0]))
         self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
@@ -72,8 +72,8 @@ class AggregatorTests(unittest.TestCase):
         p,b=fixture(); b["components"].append(component("C-X"))
         self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
     def test_stale_commit_is_inconclusive(self):
-        p,b=fixture(); b["source_commit"]="d"*40
-        self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
+        p,b=fixture(); auth=authenticated(b); b["source_commit"]="d"*40
+        self.assertEqual(aggregate(p,b,COMMIT,auth)["status"],"INCONCLUSIVE")
     def test_stale_policy_revision_is_inconclusive(self):
         p,b=fixture(); b["policy_revision"]="d"*40
         self.assertEqual(aggregate(p,b,COMMIT)["status"],"INCONCLUSIVE")
