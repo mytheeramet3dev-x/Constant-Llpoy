@@ -276,3 +276,14 @@ The meta-verification workflow installs the pinned \`sympy==1.14.0\` dependency 
 ## Reproducible GitHub CLI verifier runtime
 
 All attestation-verification workflows install GitHub CLI \`2.103.3\` from its official Linux amd64 release archive before invoking \`gh attestation verify\`. The archive SHA-256 is pinned in \`install_pinned_gh_cli.sh\` and checked with \`sha256sum --check\`; the verifier no longer trusts the runner's preinstalled CLI version. The installer still relies on the runner's \`curl\`, \`tar\`, \`sha256sum\`, TLS trust store, and GitHub-hosted runner image; these remain explicit runtime dependencies, not independently attested components.
+
+
+## Pinned GitHub CLI runtime validation — 2026-11-18
+
+- Source commit: \`2d4a7e285f1d2d25b743d1eee107bca886643859\`.
+- The shared installer \`meta_verification/install_pinned_gh_cli.sh\` downloads the official \`gh_2.103.3_linux_amd64.tar.gz\` archive and checks SHA-256 \`4c806978ffce1cec70853302a56d70ac6da4f19bae7adca4e1a8ab00633dd91d\` before installation.
+- Harness run \`44416810486\`: 291 tests passed, including \`test_installer_pins_exact_release_and_asset_digest\`.
+- Signed-provenance verifier run \`44416915897\`: \`VERIFIED\` for source commit \`2d4a7e285f1d2d25b743d1eee107bca886643859\`, using GitHub CLI \`2.103.3\`.
+- Live component-provenance smoke test run \`44416915649\`: \`LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED\`; aggregator \`ACCEPTED\`, one attestation verified, external policy pin still \`NOT_INDEPENDENTLY_GOVERNED\`, and production activation remains \`NOT_ACTIVE\`.
+
+The pinned archive digest prevents runner preinstallation drift from changing the CLI binary used by the verifier. It does not pin the GitHub-hosted runner image, \`curl\`, \`tar\`, \`sha256sum\`, or TLS trust store; these remain explicit dependencies in the trust boundary.

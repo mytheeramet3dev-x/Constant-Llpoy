@@ -484,3 +484,14 @@ The meta-verification collector policy now pins workflow blob `557c2aa8d1a52335a
 ## GitHub CLI verifier runtime hardening
 
 The three workflows that invoke \`gh attestation verify\` now call \`meta_verification/install_pinned_gh_cli.sh\`. The script installs the exact GitHub CLI version declared by provenance policy (\`2.103.3\`) and checks the official release archive digest \`4c806978ffce1cec70853302a56d70ac6da4f19bae7adca4e1a8ab00633dd91d\`. This avoids silently accepting or rejecting based on mutable runner preinstallation. The runner image and the \`curl\`/\`tar\`/\`sha256sum\` utilities remain external runtime dependencies.
+
+
+## Pinned GitHub CLI runtime validation — 2026-11-18
+
+- Source commit: \`2d4a7e285f1d2d25b743d1eee107bca886643859\`.
+- The shared installer \`meta_verification/install_pinned_gh_cli.sh\` downloads the official \`gh_2.103.3_linux_amd64.tar.gz\` archive and checks SHA-256 \`4c806978ffce1cec70853302a56d70ac6da4f19bae7adca4e1a8ab00633dd91d\` before installation.
+- Harness run \`44416810486\`: 291 tests passed, including \`test_installer_pins_exact_release_and_asset_digest\`.
+- Signed-provenance verifier run \`44416915897\`: \`VERIFIED\` for source commit \`2d4a7e285f1d2d25b743d1eee107bca886643859\`, using GitHub CLI \`2.103.3\`.
+- Live component-provenance smoke test run \`44416915649\`: \`LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED\`; aggregator \`ACCEPTED\`, one attestation verified, external policy pin still \`NOT_INDEPENDENTLY_GOVERNED\`, and production activation remains \`NOT_ACTIVE\`.
+
+The pinned archive digest prevents runner preinstallation drift from changing the CLI binary used by the verifier. It does not pin the GitHub-hosted runner image, \`curl\`, \`tar\`, \`sha256sum\`, or TLS trust store; these remain explicit dependencies in the trust boundary.
