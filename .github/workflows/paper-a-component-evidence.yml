@@ -11,6 +11,9 @@ on:
       - "MANUSCRIPT_SOURCE_MANIFEST.md"
       - "PAPER_A_DEPENDENCY_OBLIGATION_MAP.md"
       - "meta_verification/paper_a_component_pipeline.py"
+      - "meta_verification/paper_a_semantic_correspondence.json"
+      - "meta_verification/paper_a_semantic_audit_validator.py"
+      - "meta_verification/test_paper_a_semantic_audit_validator.py"
       - "meta_verification/paper_a_component_provenance_policy.json"
       - ".github/workflows/paper-a-component-evidence.yml"
   workflow_dispatch:
