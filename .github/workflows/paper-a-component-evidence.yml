@@ -27,7 +27,7 @@ jobs:
       - name: Checkout exact source revision
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: \${{ github.sha }}
+          ref: ${{ github.sha }}
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
@@ -43,7 +43,7 @@ jobs:
           axiom-audit: true
       - name: Capture exact Lean build output
         env:
-          SOURCE_COMMIT: \${{ github.sha }}
+          SOURCE_COMMIT: ${{ github.sha }}
         run: |
           mkdir -p evidence
           python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_LEAN_BUILD --source-commit "$SOURCE_COMMIT" --cwd formalization/lean \
@@ -54,36 +54,36 @@ jobs:
             --input formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean \
             --output evidence/paper-a-lean-build.json --timeout 2400 -- lake build
       - name: Run exact Dicke-basis diagnostic
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_DICKE_EXACT_DIAGNOSTIC --source-commit "$SOURCE_COMMIT" \
             --input working/paper-a/dicke_even_basis_exact_diagnostic.py --output evidence/paper-a-dicke-exact.json \
             --timeout 900 -- python working/paper-a/dicke_even_basis_exact_diagnostic.py --n 4 5 6
       - name: Run exact finite-N strong-coupling diagnostic
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC --source-commit "$SOURCE_COMMIT" \
             --input working/paper-a/finite_n_strong_coupling_exact_diagnostic.py --output evidence/paper-a-strong-coupling-exact.json \
             --timeout 900 -- python working/paper-a/finite_n_strong_coupling_exact_diagnostic.py --n 4 5 6
       - name: Run high-precision finite-difference diagnostic
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC --source-commit "$SOURCE_COMMIT" \
             --input working/paper-a/edge_response_finite_difference_diagnostic.py --output evidence/paper-a-finite-difference.json \
             --timeout 1200 -- python working/paper-a/edge_response_finite_difference_diagnostic.py --n 4 5 --h 0.2 0.1 --step 1e-4 --dps 40
       - name: Run high-precision weak-coupling diagnostic
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC --source-commit "$SOURCE_COMMIT" \
             --input working/paper-a/edge_response_weak_coupling_diagnostic.py --output evidence/paper-a-weak-coupling-numerical.json \
             --timeout 1200 -- python working/paper-a/edge_response_weak_coupling_diagnostic.py --n 4 5 --J 0.005 0.001 --h 1 --dps 50
       - name: Build source-linked Paper A claim traceability manifest
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py traceability --source-commit "$SOURCE_COMMIT" --expected-claims 15 \
             --output evidence/paper-a-claim-traceability.json
       - name: Build explicit 14-layer Paper A trial assessment
-        env: { SOURCE_COMMIT: \${{ github.sha }} }
+        env: { SOURCE_COMMIT: ${{ github.sha }} }
         run: |
           python meta_verification/paper_a_component_pipeline.py layer-plan --source-commit "$SOURCE_COMMIT" \
             --traceability evidence/paper-a-claim-traceability.json \
@@ -114,7 +114,7 @@ jobs:
       - name: Upload exact component evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: paper-a-component-evidence-\${{ github.run_id }}
+          name: paper-a-component-evidence-${{ github.run_id }}
           path: evidence/*.json
           if-no-files-found: error
           retention-days: 90

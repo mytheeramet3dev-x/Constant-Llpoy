@@ -10,21 +10,21 @@ permissions:
   contents: read
 jobs:
   verify-paper-a-components:
-    if: \${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Checkout exact producer source revision
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: \${{ github.event.workflow_run.head_sha }}
+          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Download evidence from exact producer run
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: paper-a-component-evidence-\${{ github.event.workflow_run.id }}
-          github-token: \${{ github.token }}
-          repository: \${{ github.repository }}
-          run-id: \${{ github.event.workflow_run.id }}
+          name: paper-a-component-evidence-${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
           path: evidence
       - name: Verify GitHub CLI
         run: |
@@ -32,10 +32,10 @@ jobs:
           gh attestation verify --help >/dev/null
       - name: Authenticate every component and aggregate fail-closed
         env:
-          GH_TOKEN: \${{ github.token }}
-          SOURCE_COMMIT: \${{ github.event.workflow_run.head_sha }}
-          PRODUCER_RUN_ID: \${{ github.event.workflow_run.id }}
-          PRODUCER_RUN_ATTEMPT: \${{ github.event.workflow_run.run_attempt }}
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          PRODUCER_RUN_ID: ${{ github.event.workflow_run.id }}
+          PRODUCER_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
         run: |
           POLICY_SHA256="$(sha256sum meta_verification/paper_a_component_provenance_policy.json | awk '{print $1}')"
           python meta_verification/paper_a_component_pipeline.py verify \
@@ -49,7 +49,7 @@ jobs:
       - name: Upload component verification report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: paper-a-component-verification-\${{ github.event.workflow_run.id }}
+          name: paper-a-component-verification-${{ github.event.workflow_run.id }}
           path: paper-a-component-verification.json
           if-no-files-found: error
           retention-days: 90
