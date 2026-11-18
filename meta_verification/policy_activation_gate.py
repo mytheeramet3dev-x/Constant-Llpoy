@@ -60,6 +60,11 @@ def verify_activation(policy_bytes: bytes, policy: Any, authority_bytes: bytes, 
     require(isinstance(expected_activation_sha256, str) and SHA256.fullmatch(expected_activation_sha256) is not None,
             "external active-policy pin is missing or malformed")
     require(type(now_epoch) is int, "trusted time must be an integer epoch value")
+    require(isinstance(expected_policy_id, str) and expected_policy_id.strip(), "expected policy ID must be non-empty")
+    require(type(expected_policy_sequence) is int and expected_policy_sequence > 0,
+            "expected policy sequence must be a positive integer")
+    require(len(policy_bytes) <= 1024 * 1024 and len(authority_bytes) <= 1024 * 1024
+            and len(activation_bytes) <= 1024 * 1024, "policy activation input exceeds 1 MiB limit")
     parsed_policy = strict_json(policy_bytes, "policy bytes")
     require(parsed_policy == policy, "parsed policy object does not match the exact pinned policy bytes")
     require(digest(authority_bytes) == expected_authority_sha256, "authority-set digest differs from external pin")

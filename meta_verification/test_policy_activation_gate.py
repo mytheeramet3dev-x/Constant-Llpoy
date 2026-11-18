@@ -99,10 +99,14 @@ class GateTests(unittest.TestCase):
     with self.assertRaisesRegex(ActivationError,"validity interval"):
       verify_activation(self.policy,self.policy_obj,self.authorities,activation,**self.args(activation))
  def test_wrong_authority_binding_rejected(self):
-    activation=self.make_record()
-    changed=activation.replace(digest(self.authorities).encode(),b"0"*64)
-    with self.assertRaises(ActivationError):
-      verify_activation(self.policy,self.policy_obj,self.authorities,changed,**self.args(activation))
+    activation=self.make_record(authority_digest_override="0"*64)
+    with self.assertRaisesRegex(ActivationError,"authority-set digest mismatch"):
+      verify_activation(self.policy,self.policy_obj,self.authorities,activation,**self.args(activation))
+ def test_boolean_expected_sequence_rejected(self):
+    activation=self.make_record(sequence=1)
+    with self.assertRaisesRegex(ActivationError,"positive integer"):
+      verify_activation(self.policy,self.policy_obj,self.authorities,activation,
+        **self.args(activation,expected_policy_sequence=True))
  def test_bad_threshold_signature_rejected(self):
     activation=self.make_record()
     record=__import__("json").loads(activation); record["signatures"]=record["signatures"][:1]
