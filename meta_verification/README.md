@@ -94,3 +94,12 @@ The reference CLI now requires exact caller/upstream metadata key sets, rejects 
 These defenses are covered by black-box CLI tests and provenance policy tests. GitHub Actions run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358) passed 150 tests on commit `32befb3a3bda45705794e4484f94abe8cbb9b677`; all seven selected mutation tests remained killed.
 
 Coverage is explicit and bounded. The local reference still does not authenticate caller/upstream metadata, sign, create attestations, or establish trust.
+
+
+## Signed-provenance verifier mutation tests
+
+`test_provenance_mutations.py` tests whether `test_signed_provenance.py` detects ten controlled regressions in `verify_signed_provenance.py`: certificate repository ID, source ref, source commit, signer commit, timestamp, predicate type, subject digest, ambiguous subject matching, boolean repository ID policy, and pinned CLI version.
+
+All 10/10 selected mutants were killed. GitHub Actions run [44230310401](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230310401) passed 151 tests on commit `8740ee0c024d4c30105d766d54679f563ee211cc`. The first attempt revealed a fixture-masking issue for the boolean-ID mutant; the fixture was corrected to isolate that check, and the corrected run killed it.
+
+The score is bounded to the ten authored mutants and does not replace real attestation verification or external review.

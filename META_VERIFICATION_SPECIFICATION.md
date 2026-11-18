@@ -425,3 +425,26 @@ The CLI now creates report files using directory file descriptors, no-follow ope
 The provenance policy validator now rejects boolean values for `repository_id` instead of accepting Python's boolean-as-integer subtype behavior.
 
 **Observed result:** commit `32befb3a3bda45705794e4484f94abe8cbb9b677` passed the full harness: 150 tests in run [44229925358](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229925358). The same run's logs also explicitly show all seven previously selected mutation cases killed. The mutation score remains bounded to those seven authored mutants.
+
+
+## 20. Signed-provenance verifier mutation adequacy
+
+`meta_verification/test_provenance_mutations.py` adds controlled mutation testing for the separate signed-provenance verifier. It creates isolated copies of `verify_signed_provenance.py` and `test_signed_provenance.py`, applies one targeted weakening, syntax-checks the mutant, and requires the unit suite to execute and fail through an assertion. Import/syntax failures do not count as kills.
+
+Ten verifier mutants are currently tested:
+1. certificate repository-ID binding bypass;
+2. certificate source-ref binding bypass;
+3. certificate source-commit binding bypass;
+4. signer-workflow commit binding bypass;
+5. verified timestamp requirement bypass;
+6. SLSA predicate-type binding bypass;
+7. exact subject-byte digest matching bypass;
+8. ambiguous duplicate matching subject acceptance;
+9. boolean repository-ID policy acceptance; and
+10. pinned GitHub CLI version comparison bypass.
+
+**Observed result:** all 10/10 selected verifier mutants were killed. Full harness run [44230310401](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230310401) passed 151 tests on commit `8740ee0c024d4c30105d766d54679f563ee211cc`. The job log records all ten `PROVENANCE MUTANT KILLED` lines and the run concluded success.
+
+An initial run exposed a test-fixture masking issue: the boolean repository-ID mutant was not detected because the fixture's certificate ID did not match the mutated policy value. The fixture was corrected to align those values so the test isolates the exact type guard. The corrected run killed the mutant. This demonstrates why mutation testing is useful for detecting weaknesses in tests as well as in the implementation.
+
+The 10/10 score applies only to these ten authored mutations. It is not an exhaustive proof of verifier correctness, and the unit suite does not replace actual GitHub CLI/Sigstore verification against live attestations.

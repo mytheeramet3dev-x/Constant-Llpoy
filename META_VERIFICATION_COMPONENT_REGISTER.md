@@ -282,3 +282,17 @@ The suite's path-traversal test includes a matching byte-identical subject outsi
 - **Status:** Implemented and validated for these explicit local CLI and policy-validation cases. No claim of exhaustive adversarial coverage or external builder activation.
 
 The safe output writer is deliberately local and fail-closed. It does not make the request inputs authoritative, and a report remains `VALIDATED_LOCAL_UNTRUSTED`.
+
+
+## 15. Signed-provenance verifier mutation harness
+
+### MVC-029 — Mutation adequacy for provenance verification
+
+- **Test driver:** `meta_verification/test_provenance_mutations.py`.
+- **System under test:** `meta_verification/verify_signed_provenance.py`.
+- **Oracle tests:** `meta_verification/test_signed_provenance.py`.
+- **Method:** isolated temporary source copies; one targeted mutation at a time; syntax validation; execute the existing test suite; count only assertion-driven suite failures as kills.
+- **Ten mutants:** certificate repository ID, source ref, source commit, signer workflow commit, verified timestamp requirement, predicate type, subject digest, unique subject matching, boolean repository ID policy, and exact pinned CLI version.
+- **Observed result:** 10/10 selected mutants killed. Harness run [44230310401](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230310401) passed 151 tests on commit `8740ee0c024d4c30105d766d54679f563ee211cc`; log explicitly records all ten kills.
+- **Test-quality correction:** the first run showed the boolean-ID mutant survived because another certificate-ID mismatch independently rejected the fixture. The fixture was corrected to align the certificate field with the boolean policy so the type-validation control is isolated; the rerun killed the mutant.
+- **Status:** Implemented and validated for this selected set. No claim of exhaustive coverage or independent external assurance.
