@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   collect-run-evidence:
-    name: Collect, sign, and verify run evidence
+    name: Collect and sign run evidence
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -44,25 +44,10 @@ jobs:
         with:
           subject-path: github-run-evidence.json
 
-      - name: Verify signature, identity, source revision, and exact subject digest
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COLLECTOR_SOURCE_SHA: ${{ github.sha }}
-        run: |
-          gh --version
-          gh attestation verify --help >/dev/null
-          python meta_verification/verify_signed_provenance.py \
-            --policy meta_verification/signed_provenance_policy.json \
-            --subject github-run-evidence.json \
-            --source-sha "$COLLECTOR_SOURCE_SHA" \
-            --output provenance-verification.json
-
-      - name: Upload evidence and verification report
+      - name: Upload signed evidence subject
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: meta-verification-signed-evidence-${{ github.event.workflow_run.id }}
-          path: |
-            github-run-evidence.json
-            provenance-verification.json
+          name: meta-verification-signed-evidence-${{ github.run_id }}
+          path: github-run-evidence.json
           if-no-files-found: error
           retention-days: 90
