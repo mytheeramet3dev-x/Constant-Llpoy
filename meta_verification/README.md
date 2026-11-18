@@ -268,3 +268,6 @@ The exact harness workflow pin is now aligned with the current workflow blob. Th
 ### Paper A Mathlib irreducibility update
 
 The current TFIM model file now constructs data-carrying Boolean-hypercube paths, converts them to Mathlib quiver paths, and proves the shifted matrix is \`Matrix.IsIrreducible\`. The pinned Lean build and axiom audit succeeded for 154 declarations. The Paper A producer and separate provenance verifier also succeeded. This does not yet prove existence of a strictly positive top eigenvector or the full Paper A ground-state claim.
+
+
+The meta-verification workflow installs the pinned \`sympy==1.14.0\` dependency before running the black-box Paper A strong-coupling coefficient regression test. The diagnostic itself remains an execution check, not an asymptotic theorem proof.
