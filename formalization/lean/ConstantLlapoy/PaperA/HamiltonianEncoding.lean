@@ -378,6 +378,26 @@ theorem singleSpinFlip_pf_path {N : ℕ} :
   intro s t
   exact hmain _ s t rfl
 
+/-- Transfer the explicit Boolean-hypercube path to positive support of
+the shifted TFIM matrix when the transverse field is strictly positive. -/
+theorem shiftedTFIMHamiltonian_pf_path {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h) :
+    ∀ s t : SpinConfig N,
+      PFPath
+        (fun a b => 0 < shiftedTFIMHamiltonian J h a b) s t := by
+  intro s t
+  have hpath := singleSpinFlip_pf_path s t
+  induction hpath with
+  | refl a => exact PFPath.refl a
+  | @step a b c hab hbc ih =>
+      rcases hab with ⟨i, rfl⟩
+      have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
+      have hpos :
+          0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
+        (shiftedTFIMHamiltonian_positive_iff_single_flip J h hh hne).2
+          ⟨i, rfl⟩
+      exact PFPath.step hpos ih
+
 /-- The shifted TFIM matrix is irreducible in Mathlib's matrix/quiver sense.
 The Boolean-hypercube path supplies connectivity, while the strictly
 positive diagonal shift supplies a positive-length loop at every vertex. -/
