@@ -442,3 +442,10 @@ Exact source revision \`1aff68f49d95c2d186576362cd1d392ae474269b\`:
 - No missing/duplicate components, stale bindings, digest mismatches, unauthenticated receipts, or verified component failures.
 
 This is an ACCEPTED evidence bundle, not an ACCEPTED mathematical result. The report keeps \`paper_a_claims_verified=false\`, \`overall_paper_status=NOT_VERIFIED\`, external trust root NOT ACTIVE, and independent external review NOT COMPLETED. The generated 14-layer assessment is L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+
+
+### 10.4 TFIM encoding increment — 2026-11-18
+
+At exact source revision \`4f6efbe9a1140007d73250940ed7c0ee97411842\`, Lean run 44326403470 succeeded with 18,266 build jobs and axiom audit of 103 declarations (all within the configured allowlist). Producer run 44326401521 and separate provenance verifier 44327033995 succeeded; final component status \`PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED\`.
+
+The new \`HamiltonianEncoding.lean\` formalizes the computational-basis Hamiltonian, Hermitian property, explicit \(K=cI-H\) shift, entrywise nonnegativity, and exact single-spin-flip positive support for \(h>0\). It does not yet prove support-graph connectivity, Hermitian/spectral transfer for \(K\), or existence of a positive top eigenvector. The mathematical result remains NOT_VERIFIED.

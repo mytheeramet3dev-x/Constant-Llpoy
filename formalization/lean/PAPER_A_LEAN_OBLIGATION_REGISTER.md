@@ -120,4 +120,4 @@ The matrix does not discharge PA-LEAN-014. An independent reviewer must check th
 | PA-LEAN-026 | Derive nonnegative irreducible shifted matrix \(K=cI-H\) from the encoded Hamiltonian | OPEN | Prove \(c-H_{ss}>0\), off-diagonal entries are nonnegative, positive support is exactly single-spin-flip adjacency, and the hypercube support graph is connected for \(h>0\). |
 | PA-LEAN-027 | Produce a strictly positive eigenvector at the top eigenvalue and transfer algebraic simplicity to the ground eigenvalue of \(H\) | OPEN | Current Perron core assumes a supplied strictly positive eigenvector; a model-level existence argument and spectral shift correspondence remain to be formalized. |
 
-The Paper A producer run 44323177446 and verifier run 44323720798 authenticated the current build evidence. This does not discharge PA-LEAN-025 through PA-LEAN-027 or upgrade THM-0002.
+The Paper A producer run 44326401521 and verifier run 44327033995 authenticated the current build evidence. PA-LEAN-025 and PA-LEAN-026 are now build-verified; PA-LEAN-027 through PA-LEAN-029 remain open. THM-0002 is not yet fully verified.

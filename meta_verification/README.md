@@ -241,3 +241,8 @@ The overall Paper A status remains NOT_VERIFIED. The Lean failure is in Constant
 ### Latest Paper A run (2026-11-18)
 
 Current exact source revision \`1aff68f49d95c2d186576362cd1d392ae474269b\`: 275 harness tests passed; Lean 4.36.0 build and axiom audit passed (79 declarations, configured allowlist only); the Paper A producer and separate provenance verifier succeeded, authenticating all seven required component subjects. The component bundle was ACCEPTED for artifact completeness/provenance only. The 14-layer plan remains partial/blocked/not-run as recorded in \`PAPER_A_FIRST_14_LAYER_TRIAL.md\`; Paper A itself remains \`NOT_VERIFIED\`.
+
+
+### TFIM formalization increment
+
+The Paper A Lean source now includes a kernel-checked computational-basis TFIM matrix and an explicit nonnegative shift \(K=cI-H\), with exact single-spin-flip positive support. At commit \`4f6efbe9a1140007d73250940ed7c0ee97411842\), Lean built 18,266 jobs and axiom-audit checked 103 declarations against the configured allowlist. The producer and separate provenance verifier succeeded. Hypercube connectivity, positive top-eigenvector existence, and spectral transfer remain open; Paper A remains NOT_VERIFIED.

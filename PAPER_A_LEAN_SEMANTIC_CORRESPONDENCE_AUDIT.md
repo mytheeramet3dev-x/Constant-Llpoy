@@ -2,7 +2,7 @@
 
 **Audit ID:** `PAPER_A_LEAN_SEMANTIC_CORRESPONDENCE_AUDIT`  
 **Frozen source:** `mytheeramet3dev-x/Absolute_Sym`, branch `paper-a-interval-audit-2026-11-14`, commit `8deb7de4a49cb2060720246b7101820ee7e08c91`  
-**Audited Constant Llapoy revision:** `611511db910fb9b7212922b38f67fc5d47cf0a86`  
+**Audited Constant Llapoy revision:** `4f6efbe9a1140007d73250940ed7c0ee97411842`  
 **Lean:** `leanprover/lean4:v4.36.0`; **Mathlib:** `96f6b8b8e029545577421f198a89fb174a4d62e6`
 
 ## Purpose and standard
@@ -33,7 +33,7 @@ Classifications:
 | PROP-0011 — Scale covariance of edge-response eigenvalues | NO_DIRECT_FORMALIZATION | No scale-covariance theorem. |
 | PROP-0012 — Weak-coupling opposite-sign response | SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY | `weakCouplingCoefficient_pos` and `weakCoupling_response_positive_of_remainder` prove a positive coefficient and a conditional final sign step only. They do not prove the model-specific differentiated remainder; this is not verification of the frozen opposite-sign assertion. |
 | THM-0001 — Conditional local saddle-node normal form | NO_DIRECT_FORMALIZATION | No formal Taylor/branch theorem or corresponding regularity bridge. |
-| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | ABSTRACT_MATRIX_CORE_ONLY | The Lean core assumes a supplied real symmetric matrix, nonnegative entries, a positive eigenvector/eigenvalue, and connected positive-transition reachability. It does not construct (K=cI-H), prove the encoded Hamiltonian's entries and hypercube connectivity, or establish the Hamiltonian-spectrum bridge. |
+| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, Hermitian property, explicit scalar shift, entrywise nonnegativity, and single-spin-flip positive support now compile. Hypercube connectivity, K-Hermitian/spectral transfer, and positive top-eigenvector existence remain open. |
 
 ## Audited Lean modules
 
@@ -42,18 +42,19 @@ Classifications:
 | `PerronFrobeniusCore.lean` | Positive-eigenvector ratio/harmonic arguments; one-dimensional Perron eigenspace; unique real-symmetric spectral index; characteristic-root multiplicity one | Abstract matrix theorem only; physical Hamiltonian encoding remains open. |
 | `StrongCoupling.lean` | Positive leading coefficient; conditional sign under explicit remainder bound | Does not prove the asymptotic expansion or its remainder. |
 | `WeakCoupling.lean` | Positive logarithmic coefficient; conditional sign; positive-branch entropy derivative | Does not derive the model-specific differentiated remainder or verify the source's opposite-sign statement. |
+| `HamiltonianEncoding.lean` | Computational-basis TFIM matrix, Hermitian proof, explicit `cI-H` shift, entrywise nonnegativity, and characterization of positive off-diagonal support | Does not prove hypercube connectivity, positive eigenvector existence, or the spectral transfer to the ground state. |
 | `ZeroEigenvalueEntropy.lean` | Parity/Schur algebra, scalar analytic factorization and bounds, generic entropy derivative estimates, leading one-site edge derivative | Generic and leading-order tools; their hypotheses are not yet derived from the complete TFIM reduced-state model. |
 
 ## Result
 
 - Registered claims reviewed: **15/15**.
 - Fully corresponding Lean claim statements: **0/15**.
-- Partial support / abstract matrix core: **3 claims** (DEF-0001, PROP-0005, THM-0002), plus conditional but non-corresponding endpoint lemmas for PROP-0009 and PROP-0012.
+- Partial support / abstract or model-specific core: **4 claims** (DEF-0001, PROP-0005, PROP-0009, THM-0002). For THM-0002, the model matrix and shifted nonnegative support are now formalized, but the full Perron application remains open.
 - No direct formalization: **10 claims**.
 - Source conflict retained: **PROP-0012**.
 - No claim status is upgraded by this audit.
 
-**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. In particular, the THM-0002 bridge should be formalized from the actual computational-basis Hamiltonian before any Paper A theorem is labelled formally verified.
+**L-02 remains BLOCKED.** This matrix improves traceability and makes the gaps explicit; it does not discharge the semantic-correspondence layer. It requires independent mathematical review and subsequent model-specific Lean formalization. For THM-0002, the remaining formal obligations are hypercube connectivity, Hermitian/spectral transfer for the shifted matrix, and construction of a strictly positive top eigenvector before any Paper A theorem is labelled formally verified.
 
 ## Reproducibility
 

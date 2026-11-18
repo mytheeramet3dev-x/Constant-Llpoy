@@ -133,3 +133,23 @@ The producer's 14-layer plan remains:
 | L-14 | NOT_ASSESSED |
 
 **Overall Paper A remains NOT_VERIFIED.** The bundle acceptance is limited to execution-artifact completeness and GitHub/Sigstore provenance. The report explicitly records \`paper_a_claims_verified=false\`, \`external_trust_root=NOT_ACTIVE\`, and \`independent_external_review=NOT_COMPLETED\`. The Lean build passing does not close the 10 absent direct claim formalizations, the four partial/abstract correspondences, or the model-specific Hamiltonian bridge.
+
+
+## TFIM encoding and shifted-matrix formalization — 2026-11-18
+
+Exact source revision: \`4f6efbe9a1140007d73250940ed7c0ee97411842\`.
+
+- Lean workflow run 44326403470: SUCCESS; \`lake build\` completed 18,266 jobs.
+- Configured axiom audit: 103 declarations; all within \`[propext, Classical.choice, Quot.sound]\`.
+- Paper A producer run 44326401521: SUCCESS; exact build transcript and four diagnostic outputs plus traceability and 14-layer plan were emitted and attested.
+- Separate component provenance verifier run 44327033995: SUCCESS; final status \`PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED\`.
+
+New formalized results in \`HamiltonianEncoding.lean\`:
+1. Boolean computational-basis spin configurations and unordered interaction edges.
+2. Exact diagonal ZZ interaction and off-diagonal \(-h\) single-spin-flip matrix entries.
+3. Hermitian/symmetric property of the encoded Hamiltonian.
+4. Explicit finite shift \(c=1+\sum_s |H_{ss}|\), with \(c>H_{ss}\) for every configuration.
+5. Shifted matrix \(K=cI-H\) is entrywise nonnegative for \(h\ge0\).
+6. For \(h>0\), a distinct off-diagonal entry of \(K\) is positive exactly when the configurations differ at one spin.
+
+This advances THM-0002's model-to-matrix bridge, but it does **not** yet prove hypercube connectivity in \`PFReachable\`, Hermitian/spectral transfer for the shifted matrix, or existence of a strictly positive eigenvector for its top eigenvalue. Thus L-04 remains PARTIAL and THM-0002 remains not formally verified. L-02 remains BLOCKED.

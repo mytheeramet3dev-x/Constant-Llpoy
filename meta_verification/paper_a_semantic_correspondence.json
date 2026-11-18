@@ -7,7 +7,7 @@
     "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
   },
   "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
-  "audited_commit": "611511db910fb9b7212922b38f67fc5d47cf0a86",
+  "audited_commit": "4f6efbe9a1140007d73250940ed7c0ee97411842",
   "lean_toolchain": "leanprover/lean4:v4.36.0",
   "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
   "lean_modules": [
@@ -26,6 +26,10 @@
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean",
       "blob_sha": "4088d32b90369da91f6703d0146ff3c0359767b7"
+    },
+    {
+      "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
+      "blob_sha": "b58fbe7f76679403f3960f44a6662edf076d3cde"
     }
   ],
   "claims": [
@@ -159,12 +163,17 @@
       "claim_id": "AS-ALPHA-A-THM-0002",
       "source": "Section 2, lines 3–17",
       "claim_blob": "3900c93b6927bd2dec10385544b29d531ffa0829",
-      "lean_status": "ABSTRACT_MATRIX_CORE_ONLY",
+      "lean_status": "PARTIAL_SUPPORT_ONLY",
       "lean_declarations": [
+        "transverseIsingHamiltonian",
+        "transverseIsingHamiltonian_isHermitian",
+        "shiftedTFIMHamiltonian",
+        "shiftedTFIMHamiltonian_entrywise_nonneg",
+        "shiftedTFIMHamiltonian_positive_iff_single_flip",
         "perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum",
         "perron_eigenvalue_has_characteristic_root_multiplicity_one"
       ],
-      "gap": "The Lean theorem assumes a supplied real symmetric matrix, nonnegative entries, a strictly positive eigenvector/eigenvalue, and connected positive-transition reachability. It does not construct K=cI-H from the TFIM Hamiltonian, prove entrywise nonnegativity for that encoding, prove hypercube connectivity, or connect the encoded matrix spectrum back to the manuscript Hamiltonian."
+      "gap": "The computational-basis Hamiltonian matrix, Hermitian property, explicit scalar shift, entrywise nonnegativity, and exact single-spin-flip positive support are now formalized. Still open: prove hypercube connectivity in PFReachable, prove the shifted matrix is Hermitian and establish the spectral shift/eigenvalue transfer in Lean, and construct a strictly positive eigenvector at the top eigenvalue rather than assume one."
     }
   ],
   "summary": {
