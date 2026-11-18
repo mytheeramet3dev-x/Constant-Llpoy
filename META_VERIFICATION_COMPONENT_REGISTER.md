@@ -225,3 +225,13 @@ This is a bounded observation about the inspected tracked tree only. It does not
 ## 10. Governing rule
 
 > Inventory only what is evidenced. A pinned component is not thereby trusted; an absent entry is not proof of nonexistence; a successful historical job is not evidence for a different commit; and a diagnostic is not a theorem.
+
+
+## 11. Trusted-builder local reference inventory
+
+- `meta_verification/trusted_builder_reference.py`: implemented non-signing reference validator; status is local/untrusted only.
+- `meta_verification/test_trusted_builder_reference.py`: adversarial tests for valid local evidence, subject digest mismatch, caller identity/ref mismatch, failed/cancelled/skipped/incomplete upstream runs, replayed run IDs, source commit mismatch, absolute/traversal/dot/backslash paths, symlink and directory rejection, oversized/empty subjects, invalid UTF-8, duplicate JSON keys, malformed JSON, unknown fields, stale record digest, rejected evidence, and upstream repository ID mismatch.
+- `meta_verification/TRUSTED_BUILDER_REFERENCE_IMPLEMENTATION.md`: explicit assurance boundary and non-implementation list.
+- Commit `614fa5ea361bd57914121ae8f484a961c752db7b` passed 111 tests in harness run [44216666496](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44216666496). Commit `134b01f46af6467b94ae6712f4295d688ac8158f` adds further identity/path/JSON checks; do not claim its tests passed until its exact-head run completes.
+
+This local implementation is not an external builder and does not satisfy independent trust-root, signer, or builder governance. The normative activation gate remains NOT ACTIVE.

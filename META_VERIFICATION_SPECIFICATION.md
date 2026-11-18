@@ -371,3 +371,12 @@ Design completion is not operational completion. No checker, workflow, paper, th
 ## Trusted-builder contract regression evidence
 
 The trusted-builder contract and report schema are covered by 10 structural regression tests. The combined meta-verification harness run `44212792319` passed all 89 tests on commit `ea217ddce37f76f02a29e96eb34839ddf06d1164`. Collector run `44212816996` accepted that exact run and produced signed subject artifact `14386168406`; separate verifier run `44212845744` reported `VERIFIED` for one attestation and uploaded report artifact `14387166418`. This confirms the contract artifacts' structural invariants and required policy statements only; it does not validate an external builder implementation, establish independent governance, or activate external signing.
+
+
+## 16. Local trusted-builder reference implementation (non-trusted)
+
+A contract-validation reference has been implemented in `meta_verification/trusted_builder_reference.py`, with adversarial tests in `meta_verification/test_trusted_builder_reference.py`. It checks subject path confinement and symlink rejection, regular-file and size constraints, strict UTF-8 JSON and duplicate-key rejection, exact subject SHA-256, normalized collector evidence schema and canonical digest, caller repository/workflow/ref fields, and upstream run identity/completion/success/source binding.
+
+**Assurance boundary:** caller and upstream metadata are supplied to the local function by its harness and are not independently authenticated. The implementation does not invoke OIDC, construct a provenance predicate, sign, attest, verify a signature, or establish an independent trust domain. It emits only `VALIDATED_LOCAL_UNTRUSTED` and explicit false values for signing, attestation, and trust. It is not the external trusted builder specified by the contract and cannot satisfy L-11 independent-governance obligations.
+
+The full harness passed 111 tests on commit `614fa5ea361bd57914121ae8f484a961c752db7b` (run [44216666496](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44216666496)). A subsequent commit `134b01f46af6467b94ae6712f4295d688ac8158f` adds backslash-path, malformed-JSON, upstream-repository-ID, and expected-identity validation checks; its exact-head CI result remains pending at the time this note is written.

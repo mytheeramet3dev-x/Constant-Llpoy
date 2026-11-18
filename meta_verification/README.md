@@ -60,3 +60,10 @@ GitHub CLI's `gh attestation verify` in the separate verification workflow. The 
 The normative external builder interface and activation requirements are in [`TRUSTED_BUILDER_CONTRACT.md`](TRUSTED_BUILDER_CONTRACT.md), with the strict output structure in [`trusted_builder_report.schema.json`](trusted_builder_report.schema.json). Structural regression tests are in [`test_trusted_builder_contract.py`](test_trusted_builder_contract.py).
 
 These files specify a contract only. No independent builder repository, repository ID, immutable workflow commit, or external trust-root authorization has been provisioned. The current in-repository signer remains the bounded implementation and must not be represented as an independent trusted builder.
+
+
+## Local builder reference (non-trusted)
+
+A local contract-validation reference is now implemented in `trusted_builder_reference.py`, with adversarial tests in `test_trusted_builder_reference.py` and its limitations documented in `TRUSTED_BUILDER_REFERENCE_IMPLEMENTATION.md`. It validates the exact normalized collector evidence shape, canonical record digest, subject byte digest, strict UTF-8/duplicate-key behavior, path confinement, caller identity fields, upstream run metadata, and success state. It does **not** sign, request OIDC, create an attestation, independently authenticate the supplied metadata, or establish trust. Its only positive status is `VALIDATED_LOCAL_UNTRUSTED`.
+
+The harness run for source commit `614fa5ea361bd57914121ae8f484a961c752db7b` passed all 111 tests. A follow-up commit adds four additional negative checks; its CI result must be read from the exact new-head run before claiming those additional tests passed. This local reference does not satisfy the external builder activation gate.

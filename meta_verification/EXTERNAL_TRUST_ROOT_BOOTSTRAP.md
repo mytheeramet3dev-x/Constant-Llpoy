@@ -134,3 +134,10 @@ No independent trust root or trusted builder is considered active before these g
 The builder interface, mandatory validation behavior, separate-verifier requirements, conformance tests, and activation gates are defined in [`TRUSTED_BUILDER_CONTRACT.md`](TRUSTED_BUILDER_CONTRACT.md). The machine-readable report shape is [`trusted_builder_report.schema.json`](trusted_builder_report.schema.json).
 
 The contract is intentionally not implemented as a local reusable workflow: a workflow in this relying-party repository would remain under the same repository administration boundary and would not establish an independent builder. GitHub reusable workflow references must be committed with the real external repository and full immutable workflow commit after that identity is provisioned and authorized by the signed trust-root manifest.
+
+
+## Local reference implementation status
+
+A non-signing reference validator is implemented at `meta_verification/trusted_builder_reference.py`. It is deliberately confined to the relying-party repository and therefore provides no administrative or cryptographic independence. It checks safe subject path resolution, no symlink components, regular-file and size requirements, strict UTF-8 JSON with duplicate-key rejection, subject SHA-256, collector-record schema/digest, caller identity fields, and completed successful upstream run metadata. The local test harness supplies caller/upstream metadata, so these checks validate logic but do not authenticate the metadata source.
+
+The only success state is `VALIDATED_LOCAL_UNTRUSTED`; signing, attestation, and trust flags remain false. See [the implementation note](TRUSTED_BUILDER_REFERENCE_IMPLEMENTATION.md). External trust-root and trusted-builder activation gates remain unchanged and unsatisfied.
