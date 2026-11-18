@@ -70,6 +70,10 @@ def aggregate(policy: Any, bundle: Any, expected_commit: str, authenticated_rece
     """
     p = validate_policy(policy)
     _sha(expected_commit, SHA40_OR_64, "expected_commit")
+    auth_map = {} if authenticated_receipts is None else authenticated_receipts
+    _require(isinstance(auth_map, dict), "authenticated_receipts must be an object")
+    _require(set(auth_map).issubset(set(p["required_components"])),
+             "authenticated_receipts contains unknown component IDs")
     b = _exact_object(bundle, BUNDLE_KEYS, "bundle")
     _require(b["schema_version"] == SCHEMA_VERSION, "unsupported bundle schema_version")
     _nonempty(b["claim_id"], "bundle.claim_id")
@@ -98,7 +102,7 @@ def aggregate(policy: Any, bundle: Any, expected_commit: str, authenticated_rece
     missing = required - seen.keys()
 
     component_results = []
-    verified_failures, pending = [], []
+    verified_failures, pending, unauthenticated = [], [], []
     digest_errors = []
     for cid in p["required_components"]:
         if cid not in seen:
