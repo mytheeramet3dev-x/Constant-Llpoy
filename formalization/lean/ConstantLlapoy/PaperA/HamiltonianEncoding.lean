@@ -86,4 +86,86 @@ theorem transverseIsingHamiltonian_other_off_diagonal {N : ℕ}
     transverseIsingHamiltonian J h s t = 0 := by
   simp [transverseIsingHamiltonian, hst, hflip]
 
+e
+
+/-- A finite scalar shift strictly above every diagonal entry of the
+computational-basis Hamiltonian. The sum of absolute diagonal entries gives
+an explicit bound without choosing an opaque maximum. -/
+def isingShiftConstant {N : ℕ} (J : IsingEdge N → ℝ) : ℝ :=
+  1 + ∑ s : SpinConfig N, |isingDiagonalEnergy J s|
+
+theorem isingDiagonalEnergy_lt_shiftConstant {N : ℕ}
+    (J : IsingEdge N → ℝ) (s : SpinConfig N) :
+    isingDiagonalEnergy J s < isingShiftConstant J := by
+  unfold isingShiftConstant
+  have hsum :
+      |isingDiagonalEnergy J s| ≤
+        ∑ t : SpinConfig N, |isingDiagonalEnergy J t| := by
+    exact Finset.single_le_sum
+      (fun t ht => abs_nonneg (isingDiagonalEnergy J t))
+      (Finset.mem_univ s)
+  linarith [le_abs_self (isingDiagonalEnergy J s)]
+
+/-- The shifted matrix K = cI - H, with c chosen strictly above all
+diagonal entries. For h>0 its positive off-diagonal support is the
+single-spin-flip graph. -/
+noncomputable def shiftedTFIMHamiltonian {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) :
+    Matrix (SpinConfig N) (SpinConfig N) ℝ := by
+  classical
+  exact fun s t =>
+    (if s = t then isingShiftConstant J else 0) -
+      transverseIsingHamiltonian J h s t
+
+@[simp] theorem shiftedTFIMHamiltonian_diag {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (s : SpinConfig N) :
+    shiftedTFIMHamiltonian J h s s =
+      isingShiftConstant J - isingDiagonalEnergy J s := by
+  simp [shiftedTFIMHamiltonian]
+
+theorem shiftedTFIMHamiltonian_single_flip {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ)
+    {s t : SpinConfig N} (hst : s ≠ t)
+    (hflip : SingleSpinFlip s t) :
+    shiftedTFIMHamiltonian J h s t = h := by
+  simp [shiftedTFIMHamiltonian, transverseIsingHamiltonian, hst, hflip]
+
+theorem shiftedTFIMHamiltonian_other_off_diagonal {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ)
+    {s t : SpinConfig N} (hst : s ≠ t)
+    (hflip : ¬ SingleSpinFlip s t) :
+    shiftedTFIMHamiltonian J h s t = 0 := by
+  simp [shiftedTFIMHamiltonian, transverseIsingHamiltonian, hst, hflip]
+
+theorem shiftedTFIMHamiltonian_entrywise_nonneg {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 ≤ h) :
+    ∀ s t, 0 ≤ shiftedTFIMHamiltonian J h s t := by
+  classical
+  intro s t
+  by_cases hst : s = t
+  · subst t
+    rw [shiftedTFIMHamiltonian_diag]
+    have hdiag := isingDiagonalEnergy_lt_shiftConstant J s
+    linarith
+  · by_cases hflip : SingleSpinFlip s t
+    · rw [shiftedTFIMHamiltonian_single_flip J h hst hflip]
+      exact hh
+    · rw [shiftedTFIMHamiltonian_other_off_diagonal J h hst hflip]
+      exact le_rfl
+
+theorem shiftedTFIMHamiltonian_positive_iff_single_flip {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h)
+    {s t : SpinConfig N} (hst : s ≠ t) :
+    0 < shiftedTFIMHamiltonian J h s t ↔ SingleSpinFlip s t := by
+  constructor
+  · intro hpos
+    by_contra hflip
+    have hzero :=
+      shiftedTFIMHamiltonian_other_off_diagonal J h hst hflip
+    rw [hzero] at hpos
+    exact (lt_irrefl 0) hpos
+  · intro hflip
+    rw [shiftedTFIMHamiltonian_single_flip J h hst hflip]
+    exact hh
+
 end ConstantLlapoy.PaperA
