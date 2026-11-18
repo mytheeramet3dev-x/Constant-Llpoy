@@ -29,6 +29,10 @@ def _require(condition: bool, message: str) -> None:
         raise BuilderValidationError(message)
 
 
+def _require_exact_keys(value: dict[str, Any], expected: set[str], label: str) -> None:
+    _require(set(value) == expected, f"{label} has missing or unknown fields")
+
+
 def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     result: dict[str, Any] = {}
     for key, value in pairs:
@@ -157,6 +161,7 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
              "expected ref must be a branch ref")
 
     _require(isinstance(caller, dict), "caller identity is missing")
+    _require_exact_keys(caller, {"repository", "repository_id", "workflow", "ref"}, "caller identity")
     _require(caller.get("repository") == expected_repository, "caller repository mismatch")
     _require(type(caller.get("repository_id")) is int and
              caller.get("repository_id") == expected_repository_id, "caller repository ID mismatch")
@@ -164,6 +169,8 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
     _require(caller.get("ref") == expected_ref, "caller ref mismatch")
 
     _require(isinstance(upstream, dict), "upstream run metadata is missing")
+    _require_exact_keys(upstream, {"run_id", "status", "conclusion", "head_sha", "repository_id", "workflow", "ref"},
+                        "upstream run metadata")
     _require(type(upstream.get("run_id")) is int and upstream["run_id"] == expected_run_id,
              "upstream run ID mismatch")
     _require(upstream.get("status") == "completed", "upstream run is not completed")
@@ -208,6 +215,48 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
     }
 
 
+
+def _write_report_safely(output_path: str | Path, report: dict[str, Any]) -> None:
+    """Create a new report without following symlinks in any path component."""
+    _require(hasattr(os, "O_NOFOLLOW") and hasattr(os, "O_DIRECTORY"),
+             "platform lacks required no-follow output-open flags")
+    target = Path(output_path)
+    if not target.is_absolute():
+        target = Path.cwd() / target
+    _require(bool(target.name) and target.name not in {".", ".."},
+             "report output must name a file")
+    directory_fd = None
+    file_fd = None
+    created = False
+    try:
+        directory_fd = os.open("/", os.O_RDONLY | os.O_DIRECTORY)
+        for part in target.parts[1:-1]:
+            next_fd = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW,
+                              dir_fd=directory_fd)
+            os.close(directory_fd)
+            directory_fd = next_fd
+        file_fd = os.open(target.name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                          0o600, dir_fd=directory_fd)
+        created = True
+        payload = (json.dumps(report, indent=2, sort_keys=True) + "\n").encode("utf-8")
+        offset = 0
+        while offset < len(payload):
+            offset += os.write(file_fd, payload[offset:])
+        os.fsync(file_fd)
+    except (OSError, ValueError) as exc:
+        if created and directory_fd is not None:
+            try:
+                os.unlink(target.name, dir_fd=directory_fd)
+            except OSError:
+                pass
+        raise BuilderValidationError(f"report output could not be safely created: {exc}") from None
+    finally:
+        if file_fd is not None:
+            os.close(file_fd)
+        if directory_fd is not None:
+            os.close(directory_fd)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True, help="JSON file containing validation arguments")
@@ -215,10 +264,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         payload = json.loads(Path(args.input).read_text(encoding="utf-8"),
-                             object_pairs_hook=_unique_object)
+                             object_pairs_hook=_unique_object, parse_constant=_reject_constant)
         report = validate_subject(**payload)
-        Path(args.output).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n",
-                                     encoding="utf-8")
+        _write_report_safely(args.output, report)
         print(json.dumps({"status": report["status"], "signing_performed": False,
                           "subject_sha256": report["subject_sha256"]}, sort_keys=True))
         return 0

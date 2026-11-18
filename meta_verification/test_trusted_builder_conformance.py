@@ -88,10 +88,14 @@ class TrustedBuilderBlackBoxConformance(unittest.TestCase):
     def subject_digest(self):
         return hashlib.sha256(self.subject.read_bytes()).hexdigest()
 
-    def invoke(self, request=None):
-        self.input.write_text(json.dumps(request or self.request), encoding="utf-8")
+    def invoke(self, request=None, output_path=None, raw_input=None):
+        if raw_input is None:
+            self.input.write_text(json.dumps(self.request if request is None else request), encoding="utf-8")
+        else:
+            self.input.write_bytes(raw_input)
         result = subprocess.run(
-            [sys.executable, str(CLI), "--input", str(self.input), "--output", str(self.output)],
+            [sys.executable, str(CLI), "--input", str(self.input), "--output",
+             str(self.output if output_path is None else output_path)],
             cwd=ROOT, text=True, capture_output=True, timeout=10, check=False,
         )
         try:
@@ -214,6 +218,70 @@ class TrustedBuilderBlackBoxConformance(unittest.TestCase):
         result, stdout = self.invoke(request)
         self.assertEqual(result.returncode, 2)
         self.assertEqual(stdout.get("status"), "REJECTED")
+
+    def test_boolean_caller_repository_id_rejected(self):
+        self.reject(lambda request: request["caller"].update(repository_id=True))
+
+    def test_boolean_upstream_run_id_rejected(self):
+        self.reject(lambda request: request["upstream"].update(run_id=True))
+
+    def test_extra_caller_metadata_rejected(self):
+        self.reject(lambda request: request["caller"].update(repository_owner="attacker"))
+
+    def test_extra_upstream_metadata_rejected(self):
+        self.reject(lambda request: request["upstream"].update(original_run_id=RUN_ID))
+
+    def test_missing_caller_field_rejected(self):
+        self.reject(lambda request: request["caller"].pop("workflow"))
+
+    def test_missing_upstream_field_rejected(self):
+        self.reject(lambda request: request["upstream"].pop("workflow"))
+
+    def test_duplicate_top_level_request_key_rejected(self):
+        raw = json.dumps(self.request, separators=(",", ":")).encode()
+        raw = raw[:-1] + b',"expected_run_id":73142}'
+        result, stdout = self.invoke(raw_input=raw)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(stdout.get("status"), "REJECTED")
+
+    def test_nonstandard_constant_in_request_rejected(self):
+        raw = json.dumps(self.request, separators=(",", ":")).encode()
+        raw = raw[:-1] + b',"ignored_extension":NaN}'
+        result, stdout = self.invoke(raw_input=raw)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(stdout.get("status"), "REJECTED")
+
+    def test_output_symlink_is_not_followed(self):
+        target = self.root / "target-report.json"
+        target.write_text("do-not-overwrite", encoding="utf-8")
+        link = self.root / "report-link.json"
+        link.symlink_to(target)
+        result, stdout = self.invoke(output_path=link)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(stdout.get("status"), "REJECTED")
+        self.assertEqual(target.read_text(encoding="utf-8"), "do-not-overwrite")
+
+    def test_output_parent_symlink_is_not_followed(self):
+        outside = self.root.parent / (self.root.name + "-output-outside")
+        outside.mkdir()
+        try:
+            link = self.root / "linked-output-dir"
+            link.symlink_to(outside, target_is_directory=True)
+            result, stdout = self.invoke(output_path=link / "report.json")
+            self.assertEqual(result.returncode, 2)
+            self.assertEqual(stdout.get("status"), "REJECTED")
+            self.assertFalse((outside / "report.json").exists())
+        finally:
+            for item in outside.iterdir():
+                item.unlink()
+            outside.rmdir()
+
+    def test_existing_output_file_is_not_overwritten(self):
+        self.output.write_text("preserve-existing", encoding="utf-8")
+        result, stdout = self.invoke()
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(stdout.get("status"), "REJECTED")
+        self.assertEqual(self.output.read_text(encoding="utf-8"), "preserve-existing")
 
 
 if __name__ == "__main__":

@@ -31,7 +31,7 @@ def validate_policy(policy: Any) -> dict:
     require(isinstance(policy["repository"], str) and
             re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", policy["repository"]) is not None,
             "invalid repository")
-    require(isinstance(policy["repository_id"], int) and policy["repository_id"] > 0,
+    require(type(policy["repository_id"]) is int and policy["repository_id"] > 0,
             "invalid repository_id")
     require(isinstance(policy["signer_workflow"], str) and
             policy["signer_workflow"].startswith(policy["repository"] + "/.github/workflows/"),
