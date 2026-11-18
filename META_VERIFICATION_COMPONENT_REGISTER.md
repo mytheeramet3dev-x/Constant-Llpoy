@@ -26,7 +26,7 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 
 | Component ID | Component | Current classification | Assurance role | Initial status |
 |---|---|---|---|---|
-| MVC-001 | GitHub Actions workflow | Repository-owned orchestration | Runs Lean build and configured axiom audit | Observed; challenge tests absent from workflow |
+| MVC-001 | GitHub Actions workflow | Repository-owned orchestration | Runs Lean build and configured axiom audit | Observed; Lean workflow remains separate from meta-verification challenge workflow |
 | MVC-002 | `actions/checkout` action | External action dependency | Retrieves source at workflow revision | Pinned by commit SHA; behavior not independently audited here |
 | MVC-003 | `leanprover/lean-action` | External action / build orchestration | Invokes Lean/Lake build and axiom audit | Pinned by commit SHA; contract not independently audited here |
 | MVC-004 | Lean toolchain | Compiler, elaborator, kernel runtime | Type-checks Lean declarations | Version pinned in repository; runtime not executed in this assessment |
@@ -37,7 +37,7 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-009 | Python/SymPy/MPmath diagnostic scripts | Exploratory computational tools | Numerical/exact finite diagnostics; not decisive proof checkers | Observed; explicitly documented as diagnostic evidence |
 | MVC-010 | GitHub-hosted runner (`ubuntu-latest`) | External execution environment | Hosts workflow steps | Observed as moving runner label; exact image/build not pinned in workflow |
 | MVC-011 | GitHub artifact/log storage and status API | External evidence infrastructure | Retains/exposes run evidence | Service dependency inferred from workflow/status use; exact retention/attestation policy not inventoried |
-| MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Exercises evidence-policy logic and selected adversarial cases | Initial policy evaluator and 21 adversarial unit tests implemented; no mutation runner against the Lean checker |
+| MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Exercises evidence-policy logic and selected adversarial cases | Policy evaluator plus 21 policy tests and 13 GitHub-run collector tests implemented; no mutation runner against the Lean checker |
 | MVC-013 | Dedicated certificate parser/checker | Certificate validation | Would validate certificate evidence independently | Not observed in tracked tree snapshot |
 | MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | A limited fail-closed evidence-policy evaluator exists; no GitHub job-status ingestion or release/report aggregator |\n| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs the evaluator's adversarial unit tests | Implemented; runs 44207325850 and 44207354710 completed successfully |
 
@@ -159,15 +159,15 @@ These scripts are not wired into the inspected GitHub Actions workflow. Their pr
 
 ## 6. Not observed in the inspected tracked-tree snapshot
 
-The recursive tree contained 151 entries. The following dedicated repository-owned components were not observed in that snapshot:
+The recursive tree contained 151 entries. The following components were not observed in the initial 151-entry snapshot; subsequent implementation status is recorded below:
 
 - a standalone certificate parser or certificate checker;
-- a meta-verification challenge-test harness;
+- a meta-verification challenge-test harness (subsequently added);
 - mutation operators or a mutation runner;
 - fault-injection tests for CI/workflow status;
 - a repository-owned status aggregator or report generator;
 - a second independent formal prover workflow;
-- a workflow job that independently ingests and verifies GitHub's actual job-status/evidence records.
+- a post-run GitHub API evidence collector (subsequently added; it is not an independent signature/attestation verifier).
 
 This is a bounded observation about the inspected tracked tree only. It does not establish that no such capability exists outside this repository, in a hosted service, or in an untracked local environment.
 
@@ -175,11 +175,11 @@ This is a bounded observation about the inspected tracked tree only. It does not
 
 | Priority | Gap | Why it matters | Required next action |
 |---|---|---|---|
-| P0 | No independent certificate-semantics checker or evidence authenticity verifier | The policy evaluator cannot establish that an accepted artifact is a valid proof or genuine CI output | Design a distinct checker/attestation route and independent review; do not promote policy acceptance to theorem verification |
+| P0 | No cryptographic attestation/signature verifier or independently governed trust root | The collector obtains run metadata from GitHub's authenticated API but its normalized record is not digitally signed or independently anchored | Add signed provenance verification with an independently governed identity/source policy; do not equate API collection with cryptographic attestation |
 | P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |\n| P0 | Evaluator correctness beyond the current test set is not established | Passing tests cover only enumerated cases and may share assumptions with the evaluator | Independent review, additional property-based/mutation tests, and retained external challenge evidence are still required |
 | P1 | Runner image is `ubuntu-latest` | Environment can change without source revision changes | Capture exact runner metadata and bind it to evidence |
-| P1 | No exact current-head status evidence returned | Current snapshot cannot inherit historical run success | Trigger or inspect a run for the exact current commit and bind its SHA |
-| P1 | Evaluator is not connected to actual GitHub job/artifact ingestion | Its current JSON input is supplied externally and is not authenticated | Define a separately reviewed evidence collector/attestation path before operational claim aggregation |
+| P1 | No exact current-head Lean proof-build result is established by the meta-verification run | The successful meta-verification workflow tests its harness, not the Lean proof build | Collect and bind the Lean workflow's own run, jobs, steps, toolchain, and commit evidence |
+| P1 | Collector is not cryptographically attested and has no independent trust root | API transport and repository permissions remain part of the trusted computing base | Verify signed provenance and define trust roots outside the evidence producer's control |
 | P2 | Diagnostic scripts are not wired into a controlled test harness | Outputs may be run ad hoc and are not revision-bound by a standard evidence package | Define reproducible commands, environment pins, and raw-output capture for any diagnostic used as evidence |
 | P2 | External action/toolchain supply chain not independently reviewed | SHA pinning alone does not establish trustworthiness | Perform source/dependency/TCB review and record residual trust |
 
@@ -190,7 +190,7 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - **Lean toolchain and manifest:** Observed and version-pinned in source; independent provenance review pending.
 - **Lean proof inputs:** Observed; mathematical obligations remain claim-specific.
 - **Python diagnostics:** Observed; exploratory only, not proof checkers.
-- **Status and artifact infrastructure:** external dependency; assurance evidence incomplete.
+- **Status and artifact infrastructure:** GitHub API collection and artifact upload are exercised; service trust, retention, and cryptographic provenance remain incomplete.
 - **Meta-verification policy evaluator and adversarial unit tests:** implemented in `meta_verification/`; 21 tests passed in GitHub Actions run `44207325850` on commit `072bd2814cbcb9906e0ed7a7b64ed2e1fb27d169`; subsequent run `44207354710` also passed on commit `f840e5fe5f1270c9a7429669096fae4b18cbd101`.\n- **Dedicated certificate semantics checker, mutation runner against Lean, authenticated evidence collector, and production status aggregator:** not implemented.
 
 **Overall register status: PARTIAL INVENTORY / NOT VALIDATED.**
