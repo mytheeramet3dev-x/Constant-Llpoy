@@ -177,7 +177,7 @@ theorem flipAt_ne_self {N : ℕ} (s : SpinConfig N) (i : Fin N) :
 theorem singleSpinFlip_ne {N : ℕ} {s t : SpinConfig N}
     (h : SingleSpinFlip s t) : s ≠ t := by
   rcases h with ⟨i, rfl⟩
-  exact flipAt_ne_self s i
+  exact Ne.symm (flipAt_ne_self s i)
 
 /-- The Boolean hypercube is connected under single-coordinate flips.
 The proof constructs a path by successively correcting every coordinate
@@ -191,7 +191,7 @@ theorem singleSpinFlip_pf_connected {N : ℕ} :
           PFReachable SingleSpinFlip s t := by
     intro n
     induction n using Nat.strong_induction_on with
-    | h n ih =>
+    | ind n ih =>
       intro s t hcard
       let D : Finset (Fin N) :=
         Finset.univ.filter (fun i : Fin N => s i ≠ t i)
@@ -245,7 +245,7 @@ theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
       exact PFReachable.refl a
   | @step a b c hab hbc ih =>
       rcases hab with ⟨i, rfl⟩
-      have hne : a ≠ flipAt a i := flipAt_ne_self a i
+      have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
       have hpos :
           0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
         (shiftedTFIMHamiltonian_positive_iff_single_flip J h hh hne).2
