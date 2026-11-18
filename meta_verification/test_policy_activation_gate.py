@@ -79,7 +79,7 @@ class GateTests(unittest.TestCase):
  def test_policy_bytes_tamper_rejected(self):
     activation=self.make_record()
     with self.assertRaisesRegex(ActivationError,"policy digest"):
-      verify_activation(self.policy+b"x",self.policy_obj,self.authorities,activation,**self.args(activation))
+      verify_activation(self.policy+b" ",self.policy_obj,self.authorities,activation,**self.args(activation))
  def test_separately_supplied_policy_object_cannot_diverge_from_pinned_bytes(self):
     activation=self.make_record()
     altered=copy.deepcopy(self.policy_obj); altered["claim_id"]="ATTACKER-CLAIM"
