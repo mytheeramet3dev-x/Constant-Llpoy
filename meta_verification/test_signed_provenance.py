@@ -19,6 +19,7 @@ def policy():
         "predicate_type":"https://slsa.dev/provenance/v1",
         "require_verified_timestamps":True,
         "deny_self_hosted_runners":True,
+        "gh_cli_version":"2.103.3",
     }
 
 def result():
@@ -94,5 +95,9 @@ class SignedProvenanceTests(unittest.TestCase):
 
     def test_malformed_source_sha_rejected(self):
         with self.assertRaises(ProvenanceError): validate_cli_output(result(),BYTES,policy(),"not-a-sha")
+
+    def test_cli_version_policy_is_exact(self):
+        p=policy(); p["gh_cli_version"]="latest"
+        with self.assertRaises(ProvenanceError): validate_cli_output(result(),BYTES,p,SOURCE)
 
 if __name__=="__main__": unittest.main(verbosity=2)
