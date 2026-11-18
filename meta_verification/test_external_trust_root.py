@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from external_trust_root import (TrustRootError, fetch_github_repository_id, validate_manifest, verify_package)
+from external_trust_root import (TrustRootError, _require_ed25519_public_key, _safe_package_file, fetch_github_repository_id, validate_manifest, verify_package)
 
 RELYING = "mytheeramet3dev-x/Constant-Llpoy"
 RELYING_ID = 1460417275
@@ -140,6 +140,23 @@ class ExternalTrustRootTests(unittest.TestCase):
         from external_trust_root import _unique_object
         with self.assertRaises(TrustRootError):
             json.loads('{"sequence":1,"sequence":2}', object_pairs_hook=_unique_object)
+
+    def test_package_path_traversal_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            with self.assertRaisesRegex(TrustRootError, "parent traversal"):
+                _safe_package_file(Path(td), "../outside")
+
+    def test_non_ed25519_public_key_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            private = Path(td) / "rsa-private.pem"
+            public = Path(td) / "rsa-public.pem"
+            subprocess.run(["openssl", "genpkey", "-algorithm", "RSA",
+                            "-pkeyopt", "rsa_keygen_bits:2048", "-out", str(private)],
+                           check=True, capture_output=True)
+            subprocess.run(["openssl", "pkey", "-in", str(private), "-pubout", "-out", str(public)],
+                           check=True, capture_output=True)
+            with self.assertRaisesRegex(TrustRootError, "Ed25519"):
+                _require_ed25519_public_key(public)
 
     def test_github_repository_id_is_read_from_api(self):
         response = BytesIO(b'{"id": 2880000001}')
