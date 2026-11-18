@@ -16,7 +16,6 @@ POLICY_KEYS = {
     "deny_self_hosted_runners",
 }
 SHA1 = re.compile(r"^[0-9a-f]{40}$")
-SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 class ProvenanceError(ValueError):
     pass
@@ -49,18 +48,18 @@ def validate_policy(policy: Any) -> dict:
             "self-hosted runners must be denied")
     return policy
 
-def _one_verified_subject(result: Any, expected_digest: str, policy: dict,
-                          source_sha: str) -> dict:
-    require(isinstance(result, dict), "verification result entry is not an object")
-    vr = result.get("verificationResult")
+def _validate_entry(entry: Any, expected_digest: str, policy: dict,
+                    source_sha: str) -> dict:
+    require(isinstance(entry, dict), "verification result entry is not an object")
+    vr = entry.get("verificationResult")
     require(isinstance(vr, dict), "missing verificationResult")
     signature = vr.get("signature")
     require(isinstance(signature, dict), "missing signature result")
     certificate = signature.get("certificate")
     require(isinstance(certificate, dict), "missing verified signing certificate")
 
-    # These values are extracted from the verified certificate, not from the
-    # producer-controlled SLSA predicate.
+    # These fields are extracted from the verified signing certificate, not
+    # from the producer-controlled SLSA predicate body.
     require(str(certificate.get("sourceRepositoryIdentifier")) == str(policy["repository_id"]),
             "signing certificate repository ID mismatch")
     require(certificate.get("sourceRepositoryRef") == policy["source_ref"],
@@ -102,10 +101,11 @@ def validate_cli_output(output: Any, subject_bytes: bytes, policy: Any, source_s
     p = validate_policy(policy)
     require(isinstance(source_sha, str) and SHA1.fullmatch(source_sha) is not None,
             "source_sha must be a lowercase 40-character Git commit SHA")
-    require(isinstance(subject_bytes, bytes) and bool(subject_bytes), "subject artifact is empty or not bytes")
+    require(isinstance(subject_bytes, bytes) and bool(subject_bytes),
+            "subject artifact is empty or not bytes")
     digest = hashlib.sha256(subject_bytes).hexdigest()
     require(isinstance(output, list) and bool(output), "gh returned no verified attestations")
-    checks = [_one_verified_subject(entry, digest, p, source_sha) for entry in output]
+    checks = [_validate_entry(entry, digest, p, source_sha) for entry in output]
     return {
         "schema_version": "1.0",
         "status": "VERIFIED",
