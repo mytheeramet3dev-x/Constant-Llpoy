@@ -40,11 +40,11 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Exercises evidence-policy logic and selected adversarial cases | Policy evaluator plus 21 policy tests and 13 GitHub-run collector tests implemented; no mutation runner against the Lean checker |
 | MVC-013 | Dedicated certificate parser/checker | Certificate validation | Would validate certificate evidence independently | Not observed in tracked tree snapshot |
 | MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | A limited fail-closed evidence-policy evaluator and API run collector exist; no production theorem-status aggregator |
-| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs evaluator and collector unit tests | 34 tests passed in run 44208176534 on commit 4d1c97e6c4c25ec6569ecbae33062bcc4b9bdb17 |
-| MVC-016 | Post-run evidence collection workflow | External evidence acquisition | Queries GitHub API and emits normalized run evidence | API stage validated in run 44208206996; signed-provenance extension awaits end-to-end run |
-| MVC-017 | GitHub/Sigstore attestation producer | Provenance signing | Signs exact evidence JSON subject with SLSA provenance via OIDC | Implemented with actions/attest pinned to 1e69f48acb82d1966a394da916b4c1698aa569d6; end-to-end run pending |
-| MVC-018 | Separate signed-provenance verifier workflow | Independent evidence verification | Downloads producer artifact and verifies signature, certificate identity, source commit, timestamp, and subject digest | Implemented; end-to-end run pending |
-| MVC-019 | Provenance policy verifier and adversarial tests | Evidence-policy checker | Applies repo ID, source ref/commit, signer commit, predicate, timestamp, and digest policy after gh verification | 14 unit tests implemented; CI validation pending |
+| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs evaluator, collector, and provenance-policy tests | 52 tests passed in run 44209706874 on commit 3458ca00bc2a46059044869ac187ec7999d807a1 |
+| MVC-016 | Post-run evidence collection workflow | External evidence acquisition | Queries GitHub API and emits normalized run evidence | Run 44209734212 reported ACCEPTED for harness run 44209706874; subject artifact 14384927888 uploaded |
+| MVC-017 | GitHub/Sigstore attestation producer | Provenance signing | Signs exact evidence JSON subject with SLSA provenance via OIDC | Validated in producer run 44209734212 using actions/attest pinned to 1e69f48acb82d1966a394da916b4c1698aa569d6 |
+| MVC-018 | Separate signed-provenance verifier workflow | Independent evidence verification | Downloads producer artifact and verifies signature, certificate identity, source commit, timestamp, and subject digest | Run 44209776450 completed successfully; report artifact 14385835647 uploaded |
+| MVC-019 | Provenance policy verifier and adversarial tests | Evidence-policy checker | Applies repo ID, source ref/commit, signer commit, predicate, timestamp, and digest policy after gh verification | 18 adversarial tests included in 52-test suite; run 44209706874 passed |\n| MVC-020 | GitHub CLI provenance verifier | Cryptographic verification dependency | Verifies Sigstore signature, certificate chain, transparency evidence, and signer policy | Runner-provided `gh` version 2.103.3 is pinned in policy and checked fail-closed; exact binary provenance remains external |
 
 ## 3. Observed repository-owned components
 
@@ -180,12 +180,12 @@ This is a bounded observation about the inspected tracked tree only. It does not
 
 | Priority | Gap | Why it matters | Required next action |
 |---|---|---|---|
-| P0 | No end-to-end signed-provenance run has passed yet | Implementation exists, but the signature, certificate, artifact transfer, and separate verifier have not yet been exercised together on a successful run | Obtain a successful producer run and a successful separate verifier run bound to the same source revision |
+| P0 | Signed provenance still depends on repository-governed policy and GitHub-hosted public Sigstore | A repository administrator able to change both workflows/policy remains inside the trust boundary; hosted trust infrastructure is not an independently governed root | Add a trusted reusable builder or external policy authority with independently governed identity and change control |
 | P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |
 | P0 | Evaluator correctness beyond the current test set is not established | Passing tests cover only enumerated cases and may share assumptions with the evaluator | Independent review, additional property-based/mutation tests, and retained external challenge evidence are still required |
 | P1 | Runner image is `ubuntu-latest` | Environment can change without source revision changes | Capture exact runner metadata and bind it to evidence |
 | P1 | No exact current-head Lean proof-build result is established by the meta-verification run | The successful meta-verification workflow tests its harness, not the Lean proof build | Collect and bind the Lean workflow's own run, jobs, steps, toolchain, and commit evidence |
-| P0 | Signed provenance currently uses GitHub-hosted public Sigstore and repository-governed producer/verifier policy | A repository administrator able to change both workflows/policy remains inside the trust boundary; hosted trust infrastructure is not an independently governed root | Add a trusted reusable builder or external policy authority with independently governed identity and change control |
+
 | P2 | Diagnostic scripts are not wired into a controlled test harness | Outputs may be run ad hoc and are not revision-bound by a standard evidence package | Define reproducible commands, environment pins, and raw-output capture for any diagnostic used as evidence |
 | P2 | External action/toolchain supply chain not independently reviewed | SHA pinning alone does not establish trustworthiness | Perform source/dependency/TCB review and record residual trust |
 
@@ -196,22 +196,22 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - **Lean toolchain and manifest:** Observed and version-pinned in source; independent provenance review pending.
 - **Lean proof inputs:** Observed; mathematical obligations remain claim-specific.
 - **Python diagnostics:** Observed; exploratory only, not proof checkers.
-- **Status and artifact infrastructure:** GitHub API collection and artifact upload are exercised; service trust, retention, and cryptographic provenance remain incomplete.
+- **Status and artifact infrastructure:** GitHub API collection, artifact upload, Sigstore signing, and separate provenance verification are exercised; service trust and external trust-root governance remain incomplete.
 - **Policy evaluator and adversarial tests:** implemented; original 21-test suite passed in run `44207325850`.
 - **GitHub run collector and adversarial tests:** implemented; combined 34-test suite passed in run `44208176534` on commit `4d1c97e6c4c25ec6569ecbae33062bcc4b9bdb17`.
 - **Post-run API collection:** run `44208206996` completed successfully; collector reported `ACCEPTED` for run `44208176534`; artifact `14385166179` was uploaded. A cancelled upstream run (`44208158463`) was recorded as `REJECTED`, not accepted.
-- **Signed provenance:** producer workflow and separate verifier workflow implemented; end-to-end run not yet validated at this snapshot. Attest action pinned to `1e69f48acb82d1966a394da916b4c1698aa569d6`; download-artifact action pinned to `d3f86a106a0bac45b974a628896c90dbdf5c8093`.
-- **Provenance verifier tests:** 14 adversarial tests implemented; pending CI result.
+- **Signed provenance:** bounded end-to-end validation passed. Harness run `44209706874` passed 52 tests; producer run `44209734212` accepted that run and signed its evidence; separate verifier run `44209776450` reported `VERIFIED` for one attestation. Producer artifact `14384927888`; verifier report artifact `14385835647`.
+- **Pinned provenance tooling:** `actions/attest` commit `1e69f48acb82d1966a394da916b4c1698aa569d6`; `actions/download-artifact` commit `d3f86a106a0bac45b974a628896c90dbdf5c8093`; GitHub CLI version `2.103.3` enforced by policy.
 - **Not implemented:** independently governed external trust root, reusable trusted builder outside repository maintainer control, mutation runner against Lean, independent certificate-semantics checker beyond GitHub CLI, and theorem-status aggregation.
 
-**Overall register status: PARTIAL INVENTORY / SIGNED-PROVENANCE IMPLEMENTED, END-TO-END VALIDATION PENDING.**
+**Overall register status: PARTIAL INVENTORY / SIGNED-PROVENANCE END-TO-END VALIDATED (BOUNDED).**
 
 ## 9. Required follow-up sequence
 
 1. **Done (initial):** repository-owned policy evaluator and adversarial unit tests.
 2. **Done (bounded):** GitHub REST API run collector, revision pins, required-job/step validation, and post-run evidence artifact workflow.
-3. **Implemented; validation pending:** Sigstore-signed evidence production and a separate workflow that verifies signer identity, repository ID, source revision, timestamps, and exact subject digest.
-4. Complete end-to-end validation, including negative tests for missing, wrong-signer, wrong-repository, stale-source, and modified-subject attestations.
+3. **Done (bounded):** Sigstore-signed evidence production and a separate verifier validated in runs `44209734212` and `44209776450`; the verifier checked exact repository ID, source commit, signer workflow, predicate, timestamp evidence, and subject digest.
+4. Extend negative end-to-end tests for wrong signer, wrong repository, stale source, missing attestation, and modified subject.
 5. Add a trusted reusable builder or external policy authority outside repository maintainer control; independently review policy and workflow change control.
 6. Add mutation/property-based tests and collect/verify Lean proof-build evidence separately from harness-test evidence.
 
