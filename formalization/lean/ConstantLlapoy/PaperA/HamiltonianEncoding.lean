@@ -224,8 +224,11 @@ theorem singleSpinFlip_pf_connected {N : ℕ} :
         have hDpos : 0 < D.card := Finset.card_pos.mpr ⟨i, hiD⟩
         have hcard' :
             (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card < n := by
-          rw [hD', Finset.card_erase_of_mem hiD, ← hcard]
-          omega
+          calc
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card
+                = D.card - 1 := by rw [hD', Finset.card_erase_of_mem hiD]
+            _ < D.card := Nat.sub_lt hDpos (by decide)
+            _ = n := hcard
         exact PFReachable.step hsu (ih _ hcard' u t rfl)
   intro s t
   exact hmain _ s t rfl
