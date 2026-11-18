@@ -1,0 +1,56 @@
+name: External trust-root bootstrap verification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-external-trust-root:
+    name: Verify independently governed trust-root package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: meta-trust-root
+    steps:
+      - name: Checkout relying repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Checkout external trust-root repository at immutable commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: ${{ vars.TRUST_ROOT_REPOSITORY }}
+          ref: ${{ vars.TRUST_ROOT_COMMIT }}
+          token: ${{ secrets.TRUST_ROOT_READ_TOKEN || secrets.GITHUB_TOKEN }}
+          path: trust-root
+          persist-credentials: false
+
+      - name: Verify external trust-root identity, pinned digests, Ed25519 signature, and policy
+        env:
+          TRUST_ROOT_REPOSITORY: ${{ vars.TRUST_ROOT_REPOSITORY }}
+          TRUST_ROOT_REPOSITORY_ID: ${{ vars.TRUST_ROOT_REPOSITORY_ID }}
+          TRUST_ROOT_COMMIT: ${{ vars.TRUST_ROOT_COMMIT }}
+          TRUST_ROOT_MANIFEST_PATH: ${{ vars.TRUST_ROOT_MANIFEST_PATH }}
+          TRUST_ROOT_SIGNATURE_PATH: ${{ vars.TRUST_ROOT_SIGNATURE_PATH }}
+          TRUST_ROOT_PUBLIC_KEY_PATH: ${{ vars.TRUST_ROOT_PUBLIC_KEY_PATH }}
+          TRUST_ROOT_MANIFEST_SHA256: ${{ vars.TRUST_ROOT_MANIFEST_SHA256 }}
+          TRUST_ROOT_PUBLIC_KEY_SHA256: ${{ vars.TRUST_ROOT_PUBLIC_KEY_SHA256 }}
+          AUTHORIZED_SIGNER_COMMIT: ${{ vars.AUTHORIZED_SIGNER_COMMIT }}
+          TRUSTED_BUILDER_REPOSITORY: ${{ vars.TRUSTED_BUILDER_REPOSITORY }}
+          TRUSTED_BUILDER_REPOSITORY_ID: ${{ vars.TRUSTED_BUILDER_REPOSITORY_ID }}
+          TRUSTED_BUILDER_WORKFLOW: ${{ vars.TRUSTED_BUILDER_WORKFLOW }}
+          TRUSTED_BUILDER_COMMIT: ${{ vars.TRUSTED_BUILDER_COMMIT }}
+        run: |
+          python meta_verification/external_trust_root.py \
+            --root trust-root \
+            --output trust-root-verification.json
+
+      - name: Upload trust-root verification report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: external-trust-root-verification-${{ github.run_id }}
+          path: trust-root-verification.json
+          if-no-files-found: error
+          retention-days: 90
