@@ -204,3 +204,53 @@ The new shifted-matrix Hermitian and conditional Perron multiplicity declaration
 - External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
 
 The new Mathlib irreducibility theorem closes the model-specific positive-support connectivity obligation. The strictly positive top-eigenvector existence theorem and spectral-shift transfer to the ground eigenvalue remain open.
+
+
+## First full executable 14-layer Paper A trial — 2026-11-19
+
+Exact mathematical/source revision under test: \`d58bcc55f156418959df11b6e36ccf2f9d3f988e\`.
+
+### Execution and provenance evidence
+
+- Lean workflow run \`44385358280\`: SUCCESS; \`lake build\` completed 18,266 jobs. The configured axiom audit covered 156 declarations and found only \`propext\`, \`Classical.choice\`, and \`Quot.sound\` within the configured allowlist.
+- Paper A component producer run \`44385358261\`: SUCCESS. All seven required evidence components were generated and signed: Lean build, exact Dicke diagnostic, exact strong-coupling diagnostic, finite-difference diagnostic, weak-coupling numerical diagnostic, claim traceability, and the 14-layer trial plan.
+- Separate Paper A component verifier run \`44385979037\`, final retried job \`135092142327\`: SUCCESS; final status \`PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED\` for the exact source revision. The first verifier attempt hit a transient GitHub API DNS timeout; the retry completed successfully.
+- Meta-verification harness run \`44386128336\`: SUCCESS; 289 tests passed. The Paper A semantic-audit validator returned \`STRUCTURALLY_VALID_NOT_SEMANTICALLY_VERIFIED\`, with 15 claim records checked, 28 declaration references checked, and all five Lean module source bindings checked.
+- Claim traceability: 15/15 registry records located and hashed. This does not establish semantic equivalence between manuscript claims and Lean declarations.
+
+### Exact and numerical diagnostic observations
+
+- Dicke-basis and independent finite-\(N\) strong-coupling diagnostics agree on the fourth-order coefficients for \(N=4,5,6\): \(1/648\), \(1/6144\), and \(1/20000\), respectively.
+- The strong-coupling diagnostic's comparison rule was corrected to use the separate \(N=4\) endpoint coefficient rather than incorrectly applying the \(N\ge5\) expression at \(N=4\). A regression test now checks all three exact values and fails on mismatch.
+- Finite-difference checks for \(N=4,5\) approach the displayed leading coefficients as \(h\) decreases over the tested values.
+- Weak-coupling numerical checks for \(N=4,5\) approach the displayed leading coefficients as \(J/h\) decreases over the tested values.
+- These are finite-\(N\), finite-sample execution results. They do not prove uniform-in-\(N\) asymptotics, global error bounds, or the full manuscript claims.
+
+### Actual 14-layer assessment
+
+| Layer | Result | Trial finding |
+|---|---|---|
+| L-01 | PARTIAL | Source records and preliminary prior-art screening exist; no exhaustive claim-specific novelty review. |
+| L-02 | BLOCKED | No full direct manuscript-to-Lean semantic correspondence; 0/15 claims fully verified. |
+| L-03 | PARTIAL | Claim obligations and known domain/scope issues are catalogued, but the complete claim-by-claim quantifier and boundary audit is not closed. |
+| L-04 | PARTIAL | The selected Lean development builds and passes the configured axiom audit; 10 claims still lack direct formalization and THM-0002 still has open proof obligations. |
+| L-05 | NOT_RUN | No independent second-prover proof route for Paper A. |
+| L-06 | PARTIAL | Exact symbolic checks cover selected finite \(N\), not the general or asymptotic statements. |
+| L-07 | PARTIAL | Two separately structured finite-\(N\) calculations agree on the tested coefficients; shared specification/runtime risks remain. |
+| L-08 | PARTIAL | Signed attestations authenticate evidence bytes and origin, not theorem proof certificates or their mathematical meaning. |
+| L-09 | PARTIAL | High-precision checks cover a small set of parameter values; no complete conditioning, error, or adversarial parameter analysis. |
+| L-10 | PARTIAL | 15/15 source-linked claim records and exact artifact hashes are present; line-level semantic correspondence is unresolved. |
+| L-11 | PARTIAL | Axiom and GitHub/Sigstore provenance checks pass; external trust-root activation and independent administration are absent. |
+| L-12 | PARTIAL | Exact CI artifacts are reproducible for this run; independent external review is not completed. |
+| L-13 | NOT_RUN | No claim-wide executable satisfiability/non-vacuity audit. A simple non-vacuity example for THM-0002 alone is not sufficient to pass this layer. |
+| L-14 | NOT_ASSESSED | No concrete target system, measurement map, or empirical adequacy analysis has been established for the TFIM model. |
+
+### Mathematical boundary and overall result
+
+The new Hamiltonian encoding, shifted-matrix positivity, Boolean-hypercube connectivity, Mathlib irreducibility bridge, exact matrix-action identity, and eigenvector correspondence strengthen the formal model bridge for THM-0002. The following remain open:
+
+1. Construct a strictly positive eigenvector at the top eigenvalue of the shifted matrix without assuming that eigenvector exists.
+2. Complete the spectral/algebraic-multiplicity transfer from \(K=cI-H\) to the ground eigenvalue of \(H\).
+3. Complete direct formalization and semantic correspondence for the other manuscript claims.
+
+**Overall Paper A status: \`NOT_VERIFIED\`.** All seven evidence components are authenticated, but that is an evidence-integrity result, not a mathematical-proof verdict. External trust root remains \`NOT_ACTIVE\`; independent external review remains \`NOT_COMPLETED\`.
