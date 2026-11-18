@@ -301,23 +301,86 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
 
 
 
-/-- Convert the custom finite positive-support reachability witness into a
-Mathlib quiver path. The constructor order mirrors path composition: first
-a path to an intermediate vertex, then one final edge. -/
-theorem pfReachable_to_quiverPath
+/-- A data-carrying finite path in a relation. Unlike PFReachable,
+this lives in Type, so it can be converted into Mathlib's path data. -/
+inductive PFPath {ι : Type*} (R : ι → ι → Prop) : ι → ι → Type*
+  | refl (i : ι) : PFPath R i i
+  | step {i j k : ι} : R i j → PFPath R j k → PFPath R i k
+
+/-- Forget the explicit path data when only a reachability proposition is needed. -/
+theorem PFPath.toReachable {ι : Type*} {R : ι → ι → Prop} {i j : ι}
+    (p : PFPath R i j) : PFReachable R i j := by
+  induction p with
+  | refl a => exact PFReachable.refl a
+  | @step a b c hab hbc ih => exact PFReachable.step hab ih
+
+/-- Turn a data-carrying relation path into a quiver path. -/
+theorem PFPath.toQuiverPath
     {ι : Type*} [Quiver ι] {R : ι → ι → Prop} {s t : ι}
     (edge : ∀ a b, R a b → a ⟶ b)
-    (hreach : PFReachable R s t) :
+    (p : PFPath R s t) :
     Quiver.Path s t := by
-  induction hreach with
+  induction p with
   | refl a => exact Quiver.Path.nil
   | @step a b c hab hbc ih =>
       exact (Quiver.Path.nil.cons (edge a b hab)).comp ih
 
+/-- The Boolean hypercube is connected under single-coordinate flips, with
+an explicit path object that can be consumed by independent graph APIs. -/
+theorem singleSpinFlip_pf_path {N : ℕ} :
+    ∀ s t : SpinConfig N, PFPath SingleSpinFlip s t := by
+  classical
+  have hmain :
+      ∀ n, ∀ s t : SpinConfig N,
+        (Finset.univ.filter (fun i : Fin N => s i ≠ t i)).card = n →
+          PFPath SingleSpinFlip s t := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | ind n ih =>
+      intro s t hcard
+      let D : Finset (Fin N) :=
+        Finset.univ.filter (fun i : Fin N => s i ≠ t i)
+      by_cases hD : D = ∅
+      · have hst : s = t := by
+          funext i
+          by_contra hne
+          have hi : i ∈ D := by simp [D, hne]
+          simpa [hD] using hi
+        subst t
+        exact PFPath.refl s
+      · have hDnonempty : D.Nonempty :=
+          Finset.nonempty_iff_ne_empty.mpr hD
+        obtain ⟨i, hiD⟩ := hDnonempty
+        have hdiff : s i ≠ t i := by
+          simpa [D] using hiD
+        let u : SpinConfig N := flipAt s i
+        have hsu : SingleSpinFlip s u := ⟨i, rfl⟩
+        have hui : u i = t i := by
+          dsimp [u, flipAt]
+          cases hs : s i <;> cases ht : t i <;> simp_all
+        have hD' :
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)) =
+              D.erase i := by
+          ext j
+          by_cases hji : j = i
+          · subst j
+            simp [D, hui, hiD]
+          · simp [D, u, flipAt, hji]
+        have hDpos : 0 < D.card := Finset.card_pos.mpr ⟨i, hiD⟩
+        have hcard' :
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card < n := by
+          calc
+            (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card
+                = D.card - 1 := by rw [hD', Finset.card_erase_of_mem hiD]
+            _ < D.card := Nat.sub_lt hDpos (by decide)
+            _ = n := hcard
+        exact PFPath.step hsu (ih _ hcard' u t rfl)
+  intro s t
+  exact hmain _ s t rfl
+
 /-- The shifted TFIM matrix is irreducible in Mathlib's matrix/quiver sense.
-The custom Boolean-hypercube connectivity theorem supplies paths between
-all configurations; the strictly positive diagonal shift supplies a
-positive-length loop even when the two endpoints coincide. -/
+The Boolean-hypercube path supplies connectivity, while the strictly
+positive diagonal shift supplies a positive-length loop at every vertex. -/
 theorem shiftedTFIMHamiltonian_isIrreducible {N : ℕ}
     (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h) :
     Matrix.IsIrreducible (shiftedTFIMHamiltonian J h) := by
@@ -325,15 +388,11 @@ theorem shiftedTFIMHamiltonian_isIrreducible {N : ℕ}
   letI : Quiver (SpinConfig N) :=
     Matrix.toQuiver (shiftedTFIMHamiltonian J h)
   intro s t
-  have hreach :
-      PFReachable
-        (fun a b => 0 < shiftedTFIMHamiltonian J h a b) s t :=
-    shiftedTFIMHamiltonian_pf_connected J h hh s t
+  have hreach := shiftedTFIMHamiltonian_pf_path J h hh s t
   have hedge : ∀ a b,
       (0 < shiftedTFIMHamiltonian J h a b) → a ⟶ b :=
     fun a b hp => ⟨hp⟩
-  have p : Quiver.Path s t :=
-    pfReachable_to_quiverPath hedge hreach
+  have p : Quiver.Path s t := PFPath.toQuiverPath hedge hreach
   have hdiag : 0 < shiftedTFIMHamiltonian J h s s := by
     rw [shiftedTFIMHamiltonian_diag]
     have hs := isingDiagonalEnergy_lt_shiftConstant J s
