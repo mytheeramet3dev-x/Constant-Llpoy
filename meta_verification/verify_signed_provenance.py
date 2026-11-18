@@ -60,7 +60,7 @@ def validate_cli_version(version_output: str, policy: Any) -> str:
     return match.group(1)
 
 def _validate_entry(entry: Any, expected_digest: str, policy: dict,
-                    source_sha: str) -> dict:
+                    source_sha: str, expected_invocation_id: str | None = None) -> dict:
     require(isinstance(entry, dict), "verification result entry is not an object")
     vr = entry.get("verificationResult")
     require(isinstance(vr, dict), "missing verificationResult")
