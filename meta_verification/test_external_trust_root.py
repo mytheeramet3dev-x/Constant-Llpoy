@@ -163,6 +163,12 @@ class ExternalTrustRootTests(unittest.TestCase):
         with patch("external_trust_root.urlopen", return_value=response):
             self.assertEqual(fetch_github_repository_id(ROOT, "token"), ROOT_ID)
 
+    def test_malformed_repository_name_rejected_before_api_call(self):
+        with patch("external_trust_root.urlopen") as mocked:
+            with self.assertRaises(TrustRootError):
+                fetch_github_repository_id("https://attacker.invalid/repo")
+            mocked.assert_not_called()
+
     def test_github_repository_api_error_fails_closed(self):
         with patch("external_trust_root.urlopen", side_effect=OSError("unavailable")):
             with self.assertRaisesRegex(TrustRootError, "cannot retrieve GitHub repository identity"):
