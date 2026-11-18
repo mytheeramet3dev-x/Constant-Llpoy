@@ -693,7 +693,7 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
         Finset.univ.filter
           (fun i : κ =>
             RCLike.ofReal lambdaVal =
-              ((RCLike.ofReal : ℝ → RCLike ℝ) ∘ hA.eigenvalues) i) =
+              ((RCLike.ofReal : ℝ → ℝ) ∘ hA.eigenvalues) i) =
         Finset.univ.filter
           (fun i : κ => hA.eigenvalues i = lambdaVal) := by
       ext i
