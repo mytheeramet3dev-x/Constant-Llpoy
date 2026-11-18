@@ -467,3 +467,15 @@ The collector-policy correction was validated end-to-end:
 - Live component provenance smoke test run \`44333317613\`: SUCCESS.
 
 The preceding failure on commit \`ff7d26af27949186d99d8d1addc1dbb2a0a82e1a\` was a fail-closed rejection because the policy pin had not actually changed with the workflow. The policy was then corrected in \`dafd29a65237f442495bd162fb17dc36f0c0e745\`; the subsequent collector run accepted the exact observed harness evidence. The failure was not counted as a successful validation.
+
+
+## Paper A component evidence integration (2026-11-19)
+
+The Paper A first-trial pipeline now includes an eighth independently attested evidence subject, `PAPER_A_SEMANTIC_AUDIT_INTEGRITY`. It executes the structural claim-to-Lean validator against all 15 claim records and five Lean modules, then includes its output in the separate component provenance verifier and the 14-row trial plan. Its successful status is deliberately non-semantic: L-02 remains BLOCKED.
+
+Observed Paper A producer/verifier pair:
+- Producer run `44401847581`, commit `5d0d11f5685f96c673991e8f0b681dd8234eed6b`, success.
+- Separate verifier run `44402341599`, success; eight of eight component attestations authenticated; aggregator `ACCEPTED`.
+- Overall Paper A status remains `NOT_VERIFIED`; external trust root and external independent review remain inactive.
+
+The meta-verification collector policy now pins workflow blob `557c2aa8d1a52335a2c07fbcb398e820620dc7bd` for `.github/workflows/meta-verification.yml`. The refresh was followed by harness success, signed evidence collection success, Sigstore provenance verification success, and live component provenance smoke-test success on commit `a3f1c7b4ac7f9e7059824270fec7f2d0a3707a59`. The policy pin remains repository-controlled, not an independent external trust root.

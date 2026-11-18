@@ -259,3 +259,27 @@ The new Hamiltonian encoding, shifted-matrix positivity, Boolean-hypercube conne
 ## Structural semantic-audit integrity is now part of the evidence bundle
 
 The producer now executes `paper_a_semantic_audit_validator.py` against the 15 frozen claim records and five pinned Lean modules, records the command result and input hashes, attests the resulting evidence subject, and includes it in the separate verifier's eight-component authenticated bundle. The 14-layer plan records this structural result explicitly. A structural PASS does not change L-02: semantic equivalence, exact hypothesis correspondence, and claim-level mathematical proof remain BLOCKED / unverified.
+
+
+## Follow-up execution: structural claim-to-Lean audit included in authenticated bundle
+
+- Producer workflow run: `44401847581`, source commit `5d0d11f5685f96c673991e8f0b681dd8234eed6b` — SUCCESS.
+- Separate component verifier run: `44402341599` — SUCCESS; final report `PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED`.
+- Eight component subjects were produced, each separately attested and cryptographically authenticated by the verifier:
+  1. `PAPER_A_LEAN_BUILD`
+  2. `PAPER_A_DICKE_EXACT_DIAGNOSTIC`
+  3. `PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC`
+  4. `PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC`
+  5. `PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC`
+  6. `PAPER_A_CLAIM_TRACEABILITY`
+  7. `PAPER_A_SEMANTIC_AUDIT_INTEGRITY`
+  8. `PAPER_A_14_LAYER_TRIAL_PLAN`
+- The component aggregator returned `ACCEPTED`: no missing or duplicate components, digest mismatches, stale fields, pending/unverified evidence, unauthenticated provenance, or verified execution failures.
+- The Lean project build returned exit code 0; the log records 18,266 build jobs and an axiom audit of 156 declarations, all within `[propext, Classical.choice, Quot.sound]`. This establishes the selected project build and configured axiom-audit result, not whole-paper formalization.
+- All four configured finite-N / high-precision diagnostic commands returned exit code 0. They remain diagnostics, not proofs of asymptotic or uniform-in-`N` claims.
+- Structural semantic-audit check: `STRUCTURALLY_VALID_NOT_SEMANTICALLY_VERIFIED`; 15 claim records and five Lean module blob bindings checked; 28 declaration references found; classifications recomputed as 10 `NO_DIRECT_FORMALIZATION`, 4 `PARTIAL_SUPPORT_ONLY`, and 1 `SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY`.
+- **L-02 remains BLOCKED.** The structural checker confirms source hashes, claim registry completeness, declaration-name presence and classification counts only. It does not prove mathematical equivalence or exact hypothesis correspondence.
+- The observed 14-layer statuses remain: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+- Overall Paper A status remains `NOT_VERIFIED`. External trust root is `NOT_ACTIVE`; independent external review is `NOT_COMPLETED`. The current provenance-policy pin is checked out from the same repository and is not an independent trust anchor.
+
+The separate meta-verification workflow policy's pinned workflow blob was also refreshed after a workflow-file revision mismatch. On commit `a3f1c7b4ac7f9e7059824270fec7f2d0a3707a59`, the harness and evidence-collection runs succeeded, the signed evidence verifier reported `VERIFIED`, and the live component-provenance smoke test reported `ACCEPTED`. This verifies that bounded meta-verification pipeline path on that commit; it does not activate external trust or prove Paper A.
