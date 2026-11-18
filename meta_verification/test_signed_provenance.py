@@ -55,7 +55,9 @@ class SignedProvenanceTests(unittest.TestCase):
 
     def test_boolean_repository_id_policy_rejected(self):
         p=policy(); p["repository_id"]=True
-        with self.assertRaises(ProvenanceError): validate_cli_output(result(),BYTES,p,SOURCE)
+        x=result()
+        x[0]["verificationResult"]["signature"]["certificate"]["sourceRepositoryIdentifier"]="True"
+        with self.assertRaises(ProvenanceError): validate_cli_output(x,BYTES,p,SOURCE)
 
     def test_wrong_source_ref_rejected(self):
         x=result(); x[0]["verificationResult"]["signature"]["certificate"]["sourceRepositoryRef"]="refs/heads/attacker"
