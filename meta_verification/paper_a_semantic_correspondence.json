@@ -7,7 +7,7 @@
     "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
   },
   "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
-  "audited_commit": "232686de6761b63ebcce6073d5de0867ef320405",
+  "audited_commit": "d772706992a2e5e86d3205dbcae0fd8428e91923",
   "lean_toolchain": "leanprover/lean4:v4.36.0",
   "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
   "lean_modules": [
@@ -29,7 +29,7 @@
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
-      "blob_sha": "1e298c950afaef0fca4ae8d63a3df8fd560bc173"
+      "blob_sha": "26b6065557b05bd9ead779ba03672965134c7816"
     }
   ],
   "claims": [
@@ -173,9 +173,11 @@
         "singleSpinFlip_pf_connected",
         "shiftedTFIMHamiltonian_pf_connected",
         "perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum",
-        "perron_eigenvalue_has_characteristic_root_multiplicity_one"
+        "perron_eigenvalue_has_characteristic_root_multiplicity_one",
+        "shiftedTFIMHamiltonian_isHermitian",
+        "shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one"
       ],
-      "gap": "The computational-basis Hamiltonian, Hermitian property, explicit scalar shift, entrywise nonnegativity, exact single-spin-flip support, and Boolean-hypercube reachability in PFReachable are now formalized. Still open: prove the shifted matrix is Hermitian, establish the spectral shift/eigenvalue transfer in Lean, and construct a strictly positive eigenvector at the top eigenvalue rather than assume one."
+      "gap": "The computational-basis Hamiltonian, its Hermitian property, scalar shift, entrywise nonnegativity, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and a conditional characteristic-root multiplicity-one theorem for the actual shifted TFIM matrix are now formalized. Still open: construct a strictly positive eigenvector at the top eigenvalue without assuming one, and transfer algebraic multiplicity through K=cI-H to the ground eigenvalue of H."
     }
   ],
   "summary": {

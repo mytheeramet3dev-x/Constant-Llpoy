@@ -456,3 +456,14 @@ The new \`HamiltonianEncoding.lean\` formalizes the computational-basis Hamilton
 For source commit \`5eed2081099023631f41e31da9533a3741670b16\`, Paper A producer run \`44331504302\` succeeded and emitted seven attested evidence subjects. Its Lean build input list explicitly includes all five Paper A modules, including \`HamiltonianEncoding.lean\`, and the root \`ConstantLlapoy.lean\`. The separate Paper A provenance verifier run \`44332051326\` succeeded for the exact producer artifact.
 
 The observed 14-layer assessment remains L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED. The overall Paper A status remains NOT_VERIFIED.
+
+
+### Latest meta-verification evidence — 2026-11-18
+
+The collector-policy correction was validated end-to-end:
+- Harness run \`44333082714\`: SUCCESS.
+- Evidence collector run \`44333235608\`: SUCCESS, upstream record status \`ACCEPTED\`, no failure reasons.
+- Signed provenance verifier run \`44333317614\`: SUCCESS; exact source commit \`496ea528089955a23ba300a05f4c24369f70f3e3\`, subject SHA-256 \`222f9f99a854c25f75581f49cab6802f38b39de413755100738e50c7bc87e072\`, one verified attestation.
+- Live component provenance smoke test run \`44333317613\`: SUCCESS.
+
+The preceding failure on commit \`ff7d26af27949186d99d8d1addc1dbb2a0a82e1a\` was a fail-closed rejection because the policy pin had not actually changed with the workflow. The policy was then corrected in \`dafd29a65237f442495bd162fb17dc36f0c0e745\`; the subsequent collector run accepted the exact observed harness evidence. The failure was not counted as a successful validation.

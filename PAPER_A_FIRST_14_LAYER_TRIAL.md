@@ -178,3 +178,16 @@ The successful Lean build verifies compilation of the current formalized declara
 - Separate component provenance verifier \`44332051326\`: SUCCESS for the exact producer artifact.
 - 14-layer assessment unchanged: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
 - External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
+
+
+## Updated Paper A trial — commit d772706992a2e5e86d3205dbcae0fd8428e91923
+
+- Lean workflow run \`44334091727\`: SUCCESS; 18,266 build jobs; axiom audit covered 109 declarations, all within \`propext\`, \`Classical.choice\`, and \`Quot.sound\`.
+- Paper A evidence producer run \`44334091894\`: SUCCESS; Lean build and all four finite-N / high-precision diagnostic commands returned PASS.
+- The evidence manifest includes all five Paper A Lean modules, the root \`ConstantLlapoy.lean\`, and the exact source hashes.
+- Claim traceability: 15/15 records located and hashed. Semantic correspondence remains NOT_ESTABLISHED.
+- Separate Paper A provenance verifier run \`44334708201\`: SUCCESS; the exact producer evidence bundle was authenticated.
+- The 14-layer assessment remains: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+- External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
+
+The new shifted-matrix Hermitian and conditional Perron multiplicity declarations compile, but the positive top-eigenvector existence theorem and the spectral-shift transfer to the ground eigenvalue remain open.

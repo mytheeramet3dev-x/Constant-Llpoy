@@ -33,7 +33,7 @@ Classifications:
 | PROP-0011 — Scale covariance of edge-response eigenvalues | NO_DIRECT_FORMALIZATION | No scale-covariance theorem. |
 | PROP-0012 — Weak-coupling opposite-sign response | SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY | `weakCouplingCoefficient_pos` and `weakCoupling_response_positive_of_remainder` prove a positive coefficient and a conditional final sign step only. They do not prove the model-specific differentiated remainder; this is not verification of the frozen opposite-sign assertion. |
 | THM-0001 — Conditional local saddle-node normal form | NO_DIRECT_FORMALIZATION | No formal Taylor/branch theorem or corresponding regularity bridge. |
-| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, Hermitian property, scalar shift, nonnegative entries, exact single-spin-flip support, and Boolean-hypercube connectivity are formalized. Still missing: shifted-matrix Hermiticity, spectral-shift transfer, and existence of a strictly positive top eigenvector. |
+| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, scalar shift, nonnegative entries, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and a conditional model-level characteristic-root multiplicity theorem are formalized. Still missing: positive top-eigenvector existence and the spectral-shift transfer to the ground eigenvalue of H. |
 
 ## Audited Lean modules
 
@@ -42,7 +42,7 @@ Classifications:
 | `PerronFrobeniusCore.lean` | Positive-eigenvector ratio/harmonic arguments; one-dimensional Perron eigenspace; unique real-symmetric spectral index; characteristic-root multiplicity one | Abstract matrix theorem only; physical Hamiltonian encoding remains open. |
 | `StrongCoupling.lean` | Positive leading coefficient; conditional sign under explicit remainder bound | Does not prove the asymptotic expansion or its remainder. |
 | `WeakCoupling.lean` | Positive logarithmic coefficient; conditional sign; positive-branch entropy derivative | Does not derive the model-specific differentiated remainder or verify the source's opposite-sign statement. |
-| `HamiltonianEncoding.lean` | Computational-basis TFIM matrix, Hermitian proof, explicit `cI-H` shift, entrywise nonnegativity, single-spin-flip support, and Boolean-hypercube connectivity | Does not prove shifted-matrix Hermiticity, positive eigenvector existence, or spectral transfer to the ground state. |
+| `HamiltonianEncoding.lean` | Computational-basis TFIM matrix, Hermitian proof, explicit `cI-H` shift, entrywise nonnegativity, single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and conditional model-level Perron multiplicity bridge | Does not prove positive top-eigenvector existence or transfer multiplicity to the ground state of H. |
 | `ZeroEigenvalueEntropy.lean` | Parity/Schur algebra, scalar analytic factorization and bounds, generic entropy derivative estimates, leading one-site edge derivative | Generic and leading-order tools; their hypotheses are not yet derived from the complete TFIM reduced-state model. |
 
 ## Result
@@ -68,3 +68,8 @@ The audit is intentionally conservative. It does not infer equivalence from name
 The audit now binds five Lean modules, including \`HamiltonianEncoding.lean\`, at the exact module blob SHA. THM-0002 remains **PARTIAL_SUPPORT_ONLY**. The formalization now includes the Boolean-hypercube path theorem \`singleSpinFlip_pf_connected\` and its transfer to positive support of the shifted TFIM matrix, \`shiftedTFIMHamiltonian_pf_connected\`.
 
 Still not established: Hermiticity of the shifted matrix as a separate Lean theorem, the algebraic transfer from \(K=cI-H\) to the ground eigenvalue of \(H\), and existence of a strictly positive eigenvector at the top eigenvalue. This update does not promote THM-0002 to verified.
+
+
+## 2026-11-18 shifted-matrix Hermiticity update
+
+The model-level file now proves \`shiftedTFIMHamiltonian_isHermitian\` and the conditional theorem \`shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one\`. The latter discharges the abstract Perron core's nonnegativity, Hermitian, and connected-support inputs from the actual TFIM encoding, but it still assumes a strictly positive eigenvector and a positive eigenvalue. THM-0002 remains **PARTIAL_SUPPORT_ONLY**. The positive top-eigenvector existence theorem and the algebraic spectral-shift transfer \(K=cI-H\) remain open.
