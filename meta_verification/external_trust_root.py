@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 SHA1 = re.compile(r"^[0-9a-f]{40}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
@@ -159,6 +160,23 @@ def _normalise_remote(remote: str) -> str:
     return value
 
 
+def fetch_github_repository_id(repository: str, token: str = "") -> int:
+    request = Request(
+        "https://api.github.com/repos/" + repository,
+        headers={
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            **({"Authorization": "Bearer " + token} if token else {}),
+        },
+    )
+    try:
+        with urlopen(request, timeout=20) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        raise TrustRootError(f"cannot retrieve GitHub repository identity for {repository}: {exc}") from None
+    require(isinstance(payload, dict), "GitHub repository metadata is malformed")
+    return _positive_int(payload.get("id"), f"GitHub repository ID for {repository}")
+
 def verify_package(root: Path, *, trust_root_repository: str, trust_root_repository_id: int,
                    trust_root_commit: str, manifest_path: str, signature_path: str,
                    public_key_path: str, expected_manifest_sha256: str,
@@ -242,10 +260,19 @@ def main(argv=None) -> int:
             value = __import__("os").environ.get(name, "")
             require(bool(value), f"required protected environment variable is missing: {name}")
             return value
+        token = __import__("os").environ.get("GITHUB_TOKEN", "")
+        root_repository = env("TRUST_ROOT_REPOSITORY")
+        builder_repository = env("TRUSTED_BUILDER_REPOSITORY")
+        actual_root_id = fetch_github_repository_id(root_repository, token)
+        actual_builder_id = fetch_github_repository_id(builder_repository, token)
+        require(actual_root_id == int(env("TRUST_ROOT_REPOSITORY_ID")),
+                "external trust-root GitHub repository ID mismatch")
+        require(actual_builder_id == int(env("TRUSTED_BUILDER_REPOSITORY_ID")),
+                "trusted-builder GitHub repository ID mismatch")
         report = verify_package(
             Path(args.root),
-            trust_root_repository=env("TRUST_ROOT_REPOSITORY"),
-            trust_root_repository_id=int(env("TRUST_ROOT_REPOSITORY_ID")),
+            trust_root_repository=root_repository,
+            trust_root_repository_id=actual_root_id,
             trust_root_commit=env("TRUST_ROOT_COMMIT"),
             manifest_path=env("TRUST_ROOT_MANIFEST_PATH"),
             signature_path=env("TRUST_ROOT_SIGNATURE_PATH"),
@@ -257,8 +284,8 @@ def main(argv=None) -> int:
             expected_signer_workflow="mytheeramet3dev-x/Constant-Llpoy/.github/workflows/meta-verification-evidence.yml",
             expected_signer_ref="refs/heads/main",
             expected_signer_commit=env("AUTHORIZED_SIGNER_COMMIT"),
-            expected_builder_repository=env("TRUSTED_BUILDER_REPOSITORY"),
-            expected_builder_repository_id=int(env("TRUSTED_BUILDER_REPOSITORY_ID")),
+            expected_builder_repository=builder_repository,
+            expected_builder_repository_id=actual_builder_id,
             expected_builder_workflow=env("TRUSTED_BUILDER_WORKFLOW"),
             expected_builder_commit=env("TRUSTED_BUILDER_COMMIT"),
         )
