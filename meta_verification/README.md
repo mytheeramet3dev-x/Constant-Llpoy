@@ -53,3 +53,10 @@ python -m unittest discover -s meta_verification -p 'test_*.py' -v
 Tests use fixed certificate/statement fixtures to test policy enforcement.
 The actual evidence signature and certificate-chain verification is delegated to
 GitHub CLI's `gh attestation verify` in the separate verification workflow. The external trust-root package uses OpenSSL Ed25519 verification and pinned SHA-256 values. Neither route is a mathematical proof checker.
+
+
+## Independent trusted-builder contract
+
+The normative external builder interface and activation requirements are in [`TRUSTED_BUILDER_CONTRACT.md`](TRUSTED_BUILDER_CONTRACT.md), with the strict output structure in [`trusted_builder_report.schema.json`](trusted_builder_report.schema.json). Structural regression tests are in [`test_trusted_builder_contract.py`](test_trusted_builder_contract.py).
+
+These files specify a contract only. No independent builder repository, repository ID, immutable workflow commit, or external trust-root authorization has been provisioned. The current in-repository signer remains the bounded implementation and must not be represented as an independent trusted builder.
