@@ -205,7 +205,8 @@ theorem singleSpinFlip_pf_connected {N : ℕ} :
         exact PFReachable.refl s
       · have hDnonempty : D.Nonempty :=
           Finset.nonempty_iff_ne_empty.mpr hD
-        obtain ⟨i, hiD⟩ := hDnonempty
+        let i : Fin N := Classical.choose hDnonempty
+        have hiD : i ∈ D := Classical.choose_spec hDnonempty
         have hdiff : s i ≠ t i := by
           simpa [D] using hiD
         let u : SpinConfig N := flipAt s i
@@ -247,7 +248,9 @@ theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
   | refl a =>
       exact PFReachable.refl a
   | @step a b c hab hbc ih =>
-      rcases hab with ⟨i, rfl⟩
+      let i : Fin N := Classical.choose hab
+      have hflip : b = flipAt a i := Classical.choose_spec hab
+      subst b
       have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
       have hpos :
           0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
