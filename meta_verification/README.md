@@ -134,3 +134,8 @@ This remains bounded testing against GitHub API responses; it is not an independ
 Tests are in `test_status_aggregator.py`; selected mutation checks are in `test_status_aggregator_mutations.py`. The corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests and killed all 12 selected aggregator mutants. The initial run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) exposed a duplicate-record escalation bug and a mutation-fixture anchor problem; both were corrected before the passing run.
 
 Production use still requires authenticated receipt acquisition, independently governed policy authority, exact verifier identity binding, and an end-to-end workflow integration audit.
+
+
+## Policy authority and change control
+
+See [POLICY_AUTHORITY_AND_CHANGE_CONTROL.md](POLICY_AUTHORITY_AND_CHANGE_CONTROL.md). The verifier and adversarial tests are in policy_change_control.py and test_policy_change_control.py; selected mutation checks are in test_policy_change_mutations.py. The verifier requires a separately supplied authority-set SHA-256 pin, a threshold of distinct Ed25519 reviewers, exact policy digest, parent digest, next sequence and validity interval. A valid proposal remains NOT_ACTIVATED until the external authority updates protected pins. This is a prototype; no independent authority or reviewer keys are provisioned, and no production workflow consumes it.

@@ -348,3 +348,15 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Test correction record:** initial harness run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) failed. It exposed an incorrect escalation from duplicate conflicting component records to REJECTED; duplicate IDs are now excluded from state authority and force INCONCLUSIVE. A stale mutation anchor was also corrected.
 - **Status:** Implemented and validated as a structural prototype only. It is not yet an independently authenticated or production-integrated status authority.
 
+
+
+## 19. Policy authority and change control prototype
+
+- **Implementation:** meta_verification/policy_change_control.py.
+- **Adversarial tests:** meta_verification/test_policy_change_control.py.
+- **Mutation suite:** meta_verification/test_policy_change_mutations.py.
+- **Contract:** meta_verification/POLICY_AUTHORITY_AND_CHANGE_CONTROL.md.
+- **Controls:** externally supplied authority-set SHA-256 pin; distinct Ed25519 reviewers; threshold signatures; exact policy content digest; parent digest; monotonic next sequence; validity window; duplicate/unknown reviewer rejection.
+- **Activation boundary:** POLICY_CHANGE_AUTHORIZED is not activation. External policy-pin update and protected reviewer controls remain mandatory.
+- **Limitations:** authority-set digest is supplied by caller; OpenSSL runtime is not independently pinned; no external authority/reviewer identities/protected Environment are provisioned; verifier is not in production status workflow.
+- **Status:** prototype implementation; do not claim independent policy governance or mathematical theorem acceptance.

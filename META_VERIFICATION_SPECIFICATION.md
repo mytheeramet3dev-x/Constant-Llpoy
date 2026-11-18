@@ -565,3 +565,12 @@ Before this prototype can act as a production status authority:
 4. Define whether and how a trusted external builder/root participates; the existing external trust-root bootstrap remains inactive.
 5. Integrate the aggregator only after end-to-end tests prove the producer cannot inject, omit, replay, or relabel component records.
 6. Keep mathematical theorem acceptance separate from infrastructure evidence acceptance.
+
+
+## 24. Policy authority and change control
+
+Normative contract: [POLICY_AUTHORITY_AND_CHANGE_CONTROL.md](meta_verification/POLICY_AUTHORITY_AND_CHANGE_CONTROL.md).
+
+Implementation: meta_verification/policy_change_control.py. Tests: test_policy_change_control.py. Mutation suite: test_policy_change_mutations.py.
+
+The verifier checks a supplied external authority-set digest, 2-of-3 (default authority policy) distinct Ed25519 signatures, exact policy bytes digest, parent policy digest, next sequence, and validity interval. It emits POLICY_CHANGE_AUTHORIZED only; activation requires external pin publication and protected controls. The authority-set digest remains an externally supplied trust input, and OpenSSL is part of the runtime trust boundary. No external authority, reviewer identity, protected Environment, or production workflow integration is established. The prototype is not a theorem acceptance authority.
