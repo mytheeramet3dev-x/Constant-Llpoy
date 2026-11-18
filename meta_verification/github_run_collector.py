@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 API = "https://api.github.com"
+MAX_API_RESPONSE_BYTES = 10 * 1024 * 1024
 POLICY_KEYS = {"schema_version","workflow_id","workflow_path","workflow_blob_sha","evaluator_path","evaluator_blob_sha","required_jobs","required_steps","allowed_events","required_branch"}
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
 
@@ -112,12 +113,31 @@ def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: 
     record["record_sha256"]=hashlib.sha256(canonical).hexdigest()
     return record
 
+def _unique_object(pairs):
+    result={}
+    for key,value in pairs:
+        require(key not in result,f"duplicate JSON object key: {key}")
+        result[key]=value
+    return result
+
+def _reject_json_constant(value: str):
+    raise CollectionError(f"non-standard JSON constant: {value}")
+
+def decode_api_response(raw: bytes) -> dict:
+    require(isinstance(raw,bytes) and len(raw)<=MAX_API_RESPONSE_BYTES,"GitHub API response exceeds size limit")
+    try:
+        value=json.loads(raw.decode("utf-8"),object_pairs_hook=_unique_object,parse_constant=_reject_json_constant)
+    except (UnicodeError,json.JSONDecodeError) as exc:
+        raise CollectionError(f"malformed GitHub API JSON: {exc}") from None
+    require(isinstance(value,dict),"GitHub API response must be a JSON object")
+    return value
+
 def api_get(url: str, token: str) -> Any:
     req=urllib.request.Request(url,headers={"Accept":"application/vnd.github+json","Authorization":f"Bearer {token}","X-GitHub-Api-Version":"2022-11-28","User-Agent":"constant-llpoy-meta-verification"})
     try:
         with urllib.request.urlopen(req,timeout=20) as response:
             require(response.status==200,f"GitHub API HTTP {response.status}")
-            return json.loads(response.read().decode("utf-8"))
+            return decode_api_response(response.read(MAX_API_RESPONSE_BYTES+1))
     except (urllib.error.URLError,TimeoutError,UnicodeError,json.JSONDecodeError) as exc:
         raise CollectionError(f"GitHub API request failed: {exc}") from None
 

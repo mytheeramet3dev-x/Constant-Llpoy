@@ -38,6 +38,22 @@ MUTANTS = {
         'require(type(attempt) is int and attempt>0,"invalid or missing workflow run attempt")',
         'require(True,"invalid or missing workflow run attempt")',
     ),
+    "job_run_id_binding_bypass": (
+        'require(type(job.get("run_id")) is int and job.get("run_id")==expected_run_id,"job belongs to a different workflow run")',
+        'require(True,"job belongs to a different workflow run")',
+    ),
+    "job_run_attempt_binding_bypass": (
+        'require(type(job.get("run_attempt")) is int and job.get("run_attempt")==expected_run_attempt,"job belongs to a different workflow run attempt")',
+        'require(True,"job belongs to a different workflow run attempt")',
+    ),
+    "run_attempt_expected_binding_bypass": (
+        'require(type(attempt) is int and attempt==expected_run_attempt,"workflow run attempt mismatch (stale or replayed attempt)")',
+        'require(type(attempt) is int and attempt>0,"workflow run attempt mismatch (stale or replayed attempt)")',
+    ),
+    "api_response_duplicate_key_rejection_bypass": (
+        'require(key not in result,f"duplicate JSON object key: {key}")',
+        'require(True,f"duplicate JSON object key: {key}")',
+    ),
     "repository_numeric_identity_bypass": (
         'require(type(repo_id) is int and repo_id>0 and type(head_repo_id) is int and head_repo_id==repo_id,"repository numeric identity mismatch")',
         'require(True,"repository numeric identity mismatch")',

@@ -1,7 +1,10 @@
 """Adversarial tests for GitHub Actions run snapshot validation."""
 import copy
 import unittest
-from github_run_collector import CollectionError, validate_snapshot
+from unittest import mock
+import io
+import urllib.error
+from github_run_collector import CollectionError, validate_snapshot, decode_api_response, api_get, MAX_API_RESPONSE_BYTES
 
 REPO="owner/repository"; HEAD="a"*40; WF="b"*40; EV="c"*40
 JOB="Fail-closed policy evaluator unit tests"
@@ -136,6 +139,27 @@ class CollectorTests(unittest.TestCase):
         duplicate=copy.deepcopy(x[2]["jobs"][0]); duplicate["name"]=second
         x[2]["jobs"].append(duplicate); x[2]["total_count"]=2
         with self.assertRaises(CollectionError): check(x)
+    def test_api_json_duplicate_keys_rejected(self):
+        with self.assertRaises(CollectionError): decode_api_response(b'{"id":1,"id":2}')
+    def test_api_json_nonstandard_constants_rejected(self):
+        for raw in (b'{"x":NaN}',b'{"x":Infinity}',b'{"x":-Infinity}'):
+            with self.subTest(raw=raw):
+                with self.assertRaises(CollectionError): decode_api_response(raw)
+    def test_api_json_non_object_rejected(self):
+        for raw in (b'[]',b'null',b'"string"',b'1'):
+            with self.subTest(raw=raw):
+                with self.assertRaises(CollectionError): decode_api_response(raw)
+    def test_api_json_invalid_utf8_rejected(self):
+        with self.assertRaises(CollectionError): decode_api_response(bytes([123,34,120,34,58,34,255,34,125]))
+    def test_api_json_size_limit_enforced(self):
+        with self.assertRaises(CollectionError): decode_api_response(b' '*(MAX_API_RESPONSE_BYTES+1))
+    def test_api_get_http_error_fails_closed(self):
+        error=urllib.error.HTTPError("https://api.github.com/test",503,"unavailable",{},io.BytesIO(b""))
+        with mock.patch("urllib.request.urlopen",side_effect=error):
+            with self.assertRaises(CollectionError): api_get("https://api.github.com/test","token")
+    def test_api_get_timeout_fails_closed(self):
+        with mock.patch("urllib.request.urlopen",side_effect=TimeoutError("timed out")):
+            with self.assertRaises(CollectionError): api_get("https://api.github.com/test","token")
     def test_record_digest_is_deterministic(self):
         self.assertEqual(check(fixture())["record_sha256"],check(fixture())["record_sha256"])
 
