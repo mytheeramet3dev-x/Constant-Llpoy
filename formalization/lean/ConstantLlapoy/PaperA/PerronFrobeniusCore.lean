@@ -748,11 +748,11 @@ theorem nonneg_eigenvector_strictly_positive_of_pf_connected
     (hv_nonneg : ∀ i, 0 ≤ v i)
     (hv_ne_zero : v ≠ 0)
     (hAv : ∀ i, ∑ j, A i j * v j = r * v i)
-    (hconnected : ∀ i j, PFReachable (fun a b => 0 < A a b) i j) :
+    (hconnected : ∀ i j, ConstantLlapoy.PaperA.PFReachable (fun a b => 0 < A a b) i j) :
     ∀ i, 0 < v i := by
   classical
   have hzero_propagates :
-      ∀ {a b}, ConstantLlapoy.PaperA.PFReachable (fun x y => 0 < A x y) a b →
+      ∀ {a b}, ConstantLlapoy.PaperA.ConstantLlapoy.PaperA.PFReachable (fun x y => 0 < A x y) a b →
         v a = 0 → v b = 0 := by
     intro a b hpath
     induction hpath with
