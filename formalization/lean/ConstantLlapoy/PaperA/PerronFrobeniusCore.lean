@@ -148,6 +148,50 @@ theorem harmonic_function_constant_of_pf_connected
   intro i j
   exact (h_constant i).trans (h_constant j).symm
 
+
+/-- If a real symmetric matrix has all eigenvalues bounded above by `lambda`,
+then `lambda I - A` is positive semidefinite. The proof uses the ordered
+Hermitian spectral decomposition and congruence invariance of positivity. -/
+theorem scalar_identity_sub_posSemidef_of_eigenvalue_upper_bound
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (A : Matrix ι ι ℝ) (hA : A.IsHermitian) (lambda : ℝ)
+    (hupper : ∀ i, hA.eigenvalues i ≤ lambda) :
+    Matrix.PosSemidef (lambda • (1 : Matrix ι ι ℝ) - A) := by
+  classical
+  let U := hA.eigenvectorUnitary
+  have hdiag : Matrix.PosSemidef
+      (Matrix.diagonal (fun i => lambda - hA.eigenvalues i)) := by
+    apply Matrix.PosSemidef.diagonal
+    intro i
+    exact sub_nonneg.mpr (hupper i)
+  have hconst :
+      conjStarAlgAut ℝ _ U (Matrix.diagonal (fun _ : ι => lambda)) =
+        lambda • (1 : Matrix ι ι ℝ) := by
+    ext i j
+    simp [conjStarAlgAut_apply, Matrix.diagonal, Matrix.mul_apply,
+      U.coe_mul_star_self]
+  have hspec :
+      A = conjStarAlgAut ℝ _ U (Matrix.diagonal hA.eigenvalues) := by
+    simpa [U] using hA.spectral_theorem
+  have hrewrite :
+      lambda • (1 : Matrix ι ι ℝ) - A =
+        conjStarAlgAut ℝ _ U
+          (Matrix.diagonal (fun i => lambda - hA.eigenvalues i)) := by
+    calc
+      lambda • (1 : Matrix ι ι ℝ) - A =
+          conjStarAlgAut ℝ _ U (Matrix.diagonal (fun _ : ι => lambda)) -
+            conjStarAlgAut ℝ _ U (Matrix.diagonal hA.eigenvalues) := by
+              rw [hspec, hconst]
+      _ = conjStarAlgAut ℝ _ U
+          (Matrix.diagonal (fun i => lambda - hA.eigenvalues i)) := by
+              rw [← map_sub]
+              congr 1
+              ext i j
+              simp [Matrix.diagonal]
+  rw [hrewrite, conjStarAlgAut_apply]
+  exact hdiag.mul_mul_conjTranspose_same (U : Matrix ι ι ℝ)
+
+
 end ConstantLlapoy.PaperA
 
 namespace ConstantLlapoy.PaperA
