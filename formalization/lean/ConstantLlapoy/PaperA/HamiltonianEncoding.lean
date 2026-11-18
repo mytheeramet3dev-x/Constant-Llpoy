@@ -330,7 +330,16 @@ theorem shiftedTFIMHamiltonian_mulVec_identity {N : ℕ}
               ring_nf
     _ = (∑ t, (if s = t then isingShiftConstant J else 0) * v t) -
           ∑ t, transverseIsingHamiltonian J h s t * v t :=
-            by simp only [sub_eq_add_neg, sum_add_distrib, sum_neg]
+            by
+              change
+                Finset.univ.sum (fun t : SpinConfig N =>
+                  (if s = t then isingShiftConstant J else 0) * v t -
+                    transverseIsingHamiltonian J h s t * v t) =
+                Finset.univ.sum (fun t : SpinConfig N =>
+                  (if s = t then isingShiftConstant J else 0) * v t) -
+                Finset.univ.sum (fun t : SpinConfig N =>
+                  transverseIsingHamiltonian J h s t * v t)
+              exact Finset.sum_sub_distrib
     _ = isingShiftConstant J * v s -
           ∑ t, transverseIsingHamiltonian J h s t * v t := by rw [hdiag]
 
