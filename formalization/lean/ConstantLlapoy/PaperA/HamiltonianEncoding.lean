@@ -248,9 +248,7 @@ theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
   | refl a =>
       exact PFReachable.refl a
   | @step a b c hab hbc ih =>
-      let i : Fin N := Classical.choose hab
-      have hflip : b = flipAt a i := Classical.choose_spec hab
-      subst b
+      rcases hab with ⟨i, rfl⟩
       have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
       have hpos :
           0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
@@ -304,24 +302,25 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
 
 
 
-/-- A data-carrying finite path in a relation. Unlike PFReachable,
-this lives in Type, so it can be converted into Mathlib's path data. -/
-universe u
+/-- A data-carrying finite path in a relation on the finite spin configurations.
+Unlike PFReachable, this lives in Type, so it can be converted into Mathlib's path data. -/
+inductive PFPath {N : ℕ} (R : SpinConfig N → SpinConfig N → Prop) :
+    SpinConfig N → SpinConfig N → Type
+  | refl (i : SpinConfig N) : PFPath R i i
+  | step {i j k : SpinConfig N} : R i j → PFPath R j k → PFPath R i k
 
-inductive PFPath {ι : Type u} (R : ι → ι → Prop) : ι → ι → Type u
-  | refl (i : ι) : PFPath R i i
-  | step {i j k : ι} : R i j → PFPath R j k → PFPath R i k
-
-/-- Forget the explicit path data when only a reachability proposition is needed. -/
-theorem PFPath.toReachable {ι : Type*} {R : ι → ι → Prop} {i j : ι}
+/-- Forget explicit path data when only a reachability proposition is needed. -/
+theorem PFPath.toReachable {N : ℕ}
+    {R : SpinConfig N → SpinConfig N → Prop} {i j : SpinConfig N}
     (p : PFPath R i j) : PFReachable R i j := by
   induction p with
   | refl a => exact PFReachable.refl a
   | @step a b c hab hbc ih => exact PFReachable.step hab ih
 
 /-- Turn a data-carrying relation path into a quiver path. -/
-theorem PFPath.toQuiverPath
-    {ι : Type*} [Quiver ι] {R : ι → ι → Prop} {s t : ι}
+def PFPath.toQuiverPath {N : ℕ}
+    {R : SpinConfig N → SpinConfig N → Prop} {s t : SpinConfig N}
+    [Quiver (SpinConfig N)]
     (edge : ∀ a b, R a b → a ⟶ b)
     (p : PFPath R s t) :
     Quiver.Path s t := by
@@ -332,7 +331,7 @@ theorem PFPath.toQuiverPath
 
 /-- The Boolean hypercube is connected under single-coordinate flips, with
 an explicit path object that can be consumed by independent graph APIs. -/
-theorem singleSpinFlip_pf_path {N : ℕ} :
+noncomputable def singleSpinFlip_pf_path {N : ℕ} :
     ∀ s t : SpinConfig N, PFPath SingleSpinFlip s t := by
   classical
   have hmain :
@@ -355,7 +354,8 @@ theorem singleSpinFlip_pf_path {N : ℕ} :
         exact PFPath.refl s
       · have hDnonempty : D.Nonempty :=
           Finset.nonempty_iff_ne_empty.mpr hD
-        obtain ⟨i, hiD⟩ := hDnonempty
+        let i : Fin N := Classical.choose hDnonempty
+        have hiD : i ∈ D := Classical.choose_spec hDnonempty
         have hdiff : s i ≠ t i := by
           simpa [D] using hiD
         let u : SpinConfig N := flipAt s i
@@ -385,17 +385,20 @@ theorem singleSpinFlip_pf_path {N : ℕ} :
 
 /-- Transfer the explicit Boolean-hypercube path to positive support of
 the shifted TFIM matrix when the transverse field is strictly positive. -/
-theorem shiftedTFIMHamiltonian_pf_path {N : ℕ}
+noncomputable def shiftedTFIMHamiltonian_pf_path {N : ℕ}
     (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h) :
     ∀ s t : SpinConfig N,
       PFPath
         (fun a b => 0 < shiftedTFIMHamiltonian J h a b) s t := by
+  classical
   intro s t
   have hpath := singleSpinFlip_pf_path s t
   induction hpath with
   | refl a => exact PFPath.refl a
   | @step a b c hab hbc ih =>
-      rcases hab with ⟨i, rfl⟩
+      let i : Fin N := Classical.choose hab
+      have hflip : b = flipAt a i := Classical.choose_spec hab
+      subst b
       have hne : a ≠ flipAt a i := Ne.symm (flipAt_ne_self a i)
       have hpos :
           0 < shiftedTFIMHamiltonian J h a (flipAt a i) :=
