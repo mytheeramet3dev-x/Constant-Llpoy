@@ -41,7 +41,7 @@ class LiveSmokeAdapterTests(unittest.TestCase):
             smoke.run(str(self.subject),str(self.policy),"bad",self.commit,123,1)
     def test_rejects_symlink_subject(self):
         link=self.root/"link.json"; link.symlink_to(self.subject)
-        with self.assertRaisesRegex(ValueError,"non-symlink"):
+        with self.assertRaisesRegex(ValueError,"without following links"):
             smoke.run(str(link),str(self.policy),self.pin,self.commit,123,1)
 
 if __name__=="__main__": unittest.main(verbosity=2)
