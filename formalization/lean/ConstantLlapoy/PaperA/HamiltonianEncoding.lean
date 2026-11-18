@@ -332,7 +332,6 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one_of_no
     (v : SpinConfig N → ℝ) (lambdaVal : ℝ)
     (hv_nonneg : ∀ s, 0 ≤ v s)
     (hv_ne_zero : v ≠ 0)
-    (hlambdaVal : 0 < lambdaVal)
     (hKv : ∀ s,
       ∑ t, shiftedTFIMHamiltonian J h s t * v t = lambdaVal * v s) :
     Polynomial.rootMultiplicity (RCLike.ofReal lambdaVal)
@@ -340,6 +339,31 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one_of_no
   have hv : ∀ s, 0 < v s :=
     shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive
       J h hh v lambdaVal hv_nonneg hv_ne_zero hKv
+  let s0 : SpinConfig N := fun _ => false
+  have hdiag_pos : 0 < shiftedTFIMHamiltonian J h s0 s0 := by
+    rw [shiftedTFIMHamiltonian_diag]
+    exact sub_pos.mpr (isingDiagonalEnergy_lt_shiftConstant J s0)
+  have hsum_lower :
+      shiftedTFIMHamiltonian J h s0 s0 * v s0 ≤
+        ∑ t, shiftedTFIMHamiltonian J h s0 t * v t := by
+    exact Finset.single_le_sum
+      (fun t ht =>
+        mul_nonneg
+          (shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le s0 t)
+          (hv_nonneg t))
+      (Finset.mem_univ s0)
+  rw [hKv s0] at hsum_lower
+  have hdiag_product : 0 <
+      shiftedTFIMHamiltonian J h s0 s0 * v s0 :=
+    mul_pos hdiag_pos (hv s0)
+  have hlambda_mul : 0 < lambdaVal * v s0 :=
+    lt_of_lt_of_le hdiag_product hsum_lower
+  have hlambdaVal : 0 < lambdaVal := by
+    by_contra hnot
+    have hle : lambdaVal ≤ 0 := le_of_not_gt hnot
+    have hmul : lambdaVal * v s0 ≤ 0 :=
+      mul_nonpos_of_nonpos_of_nonneg hle (le_of_lt (hv s0))
+    linarith
   exact shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
     J h hh v lambdaVal hv hlambdaVal hKv
 
