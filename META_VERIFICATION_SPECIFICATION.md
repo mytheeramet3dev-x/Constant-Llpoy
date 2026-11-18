@@ -616,3 +616,8 @@ The producer executes the pinned Lean/Mathlib build and configured axiom audit, 
 A component PASS means that its declared execution or manifest-generation operation completed. It is not a theorem status. The conservative layer outcomes are: L-01/L-03/L-04/L-06/L-07/L-08/L-09/L-10/L-11/L-12 PARTIAL; L-02 BLOCKED; L-05 and L-13 NOT_RUN; L-14 NOT_ASSESSED. Overall Paper A remains NOT_VERIFIED.
 
 The provenance-policy digest is computed from the same source checkout. The workflow therefore exercises real GitHub/Sigstore signatures but does not supply an independently administered trust anchor. External trust-root activation, a separately administered trusted builder, independent external review, complete semantic correspondence, and whole-paper mathematical verification remain open.
+
+
+### 13.1 Observed Lean failure handling
+
+The first Paper A producer attempt failed at the pinned Lean build in ConstantLlapoy.PaperA.PerronFrobeniusCore. The observed compiler diagnostics include RCLike (RCLike Real) typeclass synthesis failures and unsolved goals around lines 690–709. The pipeline now retains a FAIL execution record for that command and continues independent diagnostics. The layer planner promotes L-04 to FAILED when the Lean component record is FAIL. The provenance verifier may still authenticate the exact failed log; a cryptographically authenticated failure remains a failure, not a pass.

@@ -98,9 +98,19 @@ def build_layer_plan(root,commit,trace_path,evidence_paths):
  evidence=[]
  for rel in evidence_paths:
   info=file_info(root,rel); obj=json.loads((root/rel).read_text(encoding="utf-8"))
-  if obj.get("source_commit")!=commit or obj.get("status")!="PASS": raise ValueError("evidence did not complete successfully: "+rel)
+  if obj.get("source_commit")!=commit or obj.get("status") not in {"PASS","FAIL","TIMEOUT","INCONCLUSIVE"}: raise ValueError("evidence record is missing, stale or has invalid status: "+rel)
   evidence.append({**info,"component_id":obj.get("component_id"),"execution_status":obj.get("status")})
+ states={x["component_id"]:x["execution_status"] for x in evidence}
  layers=[{"layer_id":i,"name":n,"applicability":a,"assessment_status":s,"rationale":r} for i,n,a,s,r in LAYERS]
+ layer_owner={"L-04":["PAPER_A_LEAN_BUILD"],"L-06":["PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC"],"L-07":["PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC"],"L-09":["PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC"]}
+ for row in layers:
+  observed_states=[states.get(cid) for cid in layer_owner.get(row["layer_id"],[])]
+  if "FAIL" in observed_states:
+   row["assessment_status"]="FAILED"
+   row["rationale"] += " The corresponding executed component returned a nonzero exit code."
+  elif any(x in {"TIMEOUT","INCONCLUSIVE"} for x in observed_states):
+   row["assessment_status"]="INCONCLUSIVE"
+   row["rationale"] += " The corresponding executed component did not reach a conclusive successful result."
  return {"schema_version":"1.0","component_id":"PAPER_A_14_LAYER_TRIAL_PLAN","status":"PASS",
   "status_meaning":"All 14 layer rows were assessed for this trial plan; individual layer assessments are not thereby passed.",
   "source_commit":commit,"claim_count":15,"layer_count":14,"layers":layers,"input_evidence":evidence,
@@ -112,24 +122,25 @@ def verify_bundle(commit,run_id,attempt,policy_path,pin,evidence_paths,output):
  for rel in evidence_paths:
   raw=(root/rel).read_bytes(); rec=json.loads(raw.decode("utf-8")); cid=rec.get("component_id")
   if not isinstance(cid,str) or not cid or cid in ids: raise ValueError("invalid or duplicate component ID")
-  if rec.get("source_commit")!=commit or rec.get("status")!="PASS": raise ValueError("stale or non-PASS evidence: "+rel)
+  if rec.get("source_commit")!=commit or rec.get("status") not in {"PASS","FAIL","TIMEOUT","INCONCLUSIVE"}: raise ValueError("stale or invalid evidence status: "+rel)
   ids.append(cid); sha=digest(raw)
-  components.append({"component_id":cid,"status":"PASS","evidence_base64":base64.b64encode(raw).decode(),"evidence_sha256":sha,
+  components.append({"component_id":cid,"status":rec["status"],"evidence_base64":base64.b64encode(raw).decode(),"evidence_sha256":sha,
    "provenance":{"receipt_schema_version":"2.0","subject_sha256":sha,"source_commit":commit,"attestation_run_id":run_id,"attestation_run_attempt":attempt,"attestation_workflow_revision":commit}})
  required={"PAPER_A_LEAN_BUILD","PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC","PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC","PAPER_A_CLAIM_TRACEABILITY","PAPER_A_14_LAYER_TRIAL_PLAN"}
  if set(ids)!=required: raise ValueError("required component set mismatch")
  policy={"schema_version":"1.0","claim_id":"PAPER-A-FIRST-14-LAYER-TRIAL","policy_revision":commit,"required_components":sorted(required)}
  bundle={"schema_version":"1.0","claim_id":policy["claim_id"],"source_commit":commit,"policy_revision":commit,"components":components}
  auth=authenticate_components(canon(policy),pbytes,pp,bundle,commit,pin); result=aggregate(policy,bundle,commit,auth)
- report={"schema_version":"1.0","status":"PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED" if result["status"]=="ACCEPTED" else result["status"],
+ report={"schema_version":"1.0","status":("PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED" if result["status"]=="ACCEPTED" else
+    ("PAPER_A_EVIDENCE_BUNDLE_AUTHENTICATED_WITH_FAILED_CHECKS" if result["status"]=="REJECTED" else
+     "PAPER_A_EVIDENCE_BUNDLE_AUTHENTICATED_BUT_INCONCLUSIVE")),
   "status_scope":"EXECUTION_ARTIFACT_COMPLETENESS_AND_GITHUB_SIGSTORE_PROVENANCE_ONLY","source_commit":commit,"producer_run_id":run_id,"producer_run_attempt":attempt,
-  "component_aggregation":result,"paper_a_claims_verified":False,"overall_paper_status":"NOT_VERIFIED","external_trust_root":"NOT_ACTIVE",
+  "component_aggregation":result,"execution_outcome":result["status"],"paper_a_claims_verified":False,"overall_paper_status":"NOT_VERIFIED","external_trust_root":"NOT_ACTIVE",
   "provenance_policy_pin_origin":"SAME_REPOSITORY_CHECKOUT_NOT_AN_INDEPENDENT_TRUST_ANCHOR","independent_external_review":"NOT_COMPLETED",
   "residual_limitations":["Attestations authenticate evidence bytes, not mathematical truth.","Claim traceability is source-linked but not semantic or line-level correspondence.",
   "Lean covers selected obligations only; major Paper A obligations remain open.","Numerical diagnostics are not proofs and do not establish uniform asymptotics.",
   "External trust root and separately administered trusted builder are not active."]}
  write_json(output,report)
- if result["status"]!="ACCEPTED": raise AggregationError("component aggregation did not ACCEPT")
  return report
 def main(argv=None):
  p=argparse.ArgumentParser(description=__doc__); s=p.add_subparsers(dest="mode",required=True)

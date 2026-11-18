@@ -199,3 +199,8 @@ This validates one real GitHub/Sigstore subject path only. It does not produce o
 The new Paper A producer workflow runs the pinned Lean build and four bounded diagnostics, generates a source-linked manifest for all 15 Paper A claim records, and emits a 14-row layer assessment plan. Each of the seven evidence JSON subjects is separately attested with GitHub/Sigstore. A distinct verifier workflow downloads the artifact from the exact producer run and authenticates every subject before fail-closed aggregation.
 
 A component PASS means only that the named execution or manifest-generation task completed. It does not mean that the associated mathematical claim passed. The layer report preserves PARTIAL, BLOCKED, NOT_RUN, and NOT_ASSESSED states. Overall Paper A remains NOT_VERIFIED. The provenance-policy digest is currently computed from the same checkout, so this is bounded in-repository provenance verification, not external trust-root activation.
+
+
+### First observed Paper A execution finding
+
+The first producer attempt on source revision dc3273a0a2f75c8e32e47407b1e972edcc882a23 reached the pinned Lean action but failed while building ConstantLlapoy.PaperA.PerronFrobeniusCore. The log reports unsynthesized RCLike (RCLike Real) instances and unresolved goals around source lines 690–709. The action stopped the initial attempt before component evidence could be emitted. This is recorded as a real L-04 blocker, not normalized to PASS. The producer was then changed to preserve failed command transcripts as evidence and continue other independent checks; the final verifier will report authenticated evidence with failed checks rather than hide the failure.

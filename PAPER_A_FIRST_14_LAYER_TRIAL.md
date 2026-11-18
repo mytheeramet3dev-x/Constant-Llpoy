@@ -23,7 +23,7 @@ Connect existing Paper A artifacts to a reproducible execution and evidence path
 | L-01 | PARTIAL | Prior-art coverage is not complete |
 | L-02 | BLOCKED | Exact statement-to-formalization correspondence remains open |
 | L-03 | PARTIAL | Not all claims have completed domain/quantifier audits |
-| L-04 | PARTIAL | Lean covers selected obligations only |
+| L-04 | FAILED | First observed current Lean build fails in PerronFrobeniusCore around lines 690–709; selected formalizations do not currently compile together |
 | L-05 | NOT_RUN | No independent second prover route |
 | L-06 | PARTIAL | Exact computations are finite-N diagnostics |
 | L-07 | PARTIAL | Different formulations exist but common-mode risk remains |
@@ -44,3 +44,8 @@ This gate concerns execution evidence and provenance only. It is not mathematica
 ## Not activated / not claimed
 
 No external trust root, independent trusted builder, or external reviewer is active. Paper A is not fully formalized. Exact line-level manuscript-to-Lean correspondence is open. No theorem is promoted by a green workflow. L-13 does not decide general consistency. L-14 remains open.
+
+
+## First observed execution issue
+
+The first producer run, 44247984360, failed in the Lean action before evidence generation. The compiler reported RCLike (RCLike Real) synthesis errors and unresolved goals in PerronFrobeniusCore around lines 690–709. The producer now captures that failed command output and continues the remaining checks. The 14-layer assessment must show L-04 FAILED until the formalization is repaired and a fresh pinned build passes. This failure is not an issue with the verifier and must not be hidden by CI continuation settings.

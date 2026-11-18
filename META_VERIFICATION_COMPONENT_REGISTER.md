@@ -407,3 +407,8 @@ The final status is now `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. 
 | Component verifier | Component authenticator and separate workflow | Verifies seven exact subjects and binds producer run ID, attempt, and source revision | Policy digest remains same-checkout; external trust is not active |
 
 The pipeline's overall status is scoped to execution evidence and provenance. The report must retain overall_paper_status as NOT_VERIFIED.
+
+
+### 10.1 First observed Paper A Lean execution
+
+The first producer attempt at revision dc3273a0a2f75c8e32e47407b1e972edcc882a23 failed in the pinned Lean build at ConstantLlapoy.PaperA.PerronFrobeniusCore. The log reports RCLike (RCLike Real) typeclass synthesis failures and unsolved goals around lines 690–709. The initial fail-fast run emitted no component artifact. The producer has since been changed to capture the failed Lean transcript, continue other diagnostics, and let the 14-layer assessment mark L-04 FAILED. No Lean proof was edited or weakened to make the pipeline green.

@@ -39,4 +39,15 @@ class Tests(unittest.TestCase):
  def test_candidate_links_do_not_claim_correspondence(self):
   self.assertEqual(p.CLAIM_ARTIFACTS["AS-ALPHA-A-PROP-0009"][0][2],"NOT_ESTABLISHED")
 
+ def test_layer_plan_marks_lean_failure_as_failed_not_pass(self):
+  (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
+  ev=[]
+  ids=["PAPER_A_LEAN_BUILD","PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC","PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC"]
+  for i,cid in enumerate(ids):
+   rel=f"failure{i}.json"; state="FAIL" if i==0 else "PASS"
+   (self.root/rel).write_text(json.dumps({"source_commit":self.commit,"status":state,"component_id":cid})); ev.append(rel)
+  x=p.build_layer_plan(self.root,self.commit,"trace.json",ev)
+  self.assertEqual(x["layers"][3]["assessment_status"],"FAILED")
+  self.assertEqual(x["overall_paper_status"],"NOT_VERIFIED")
+
 if __name__=="__main__": unittest.main(verbosity=2)
