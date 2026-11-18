@@ -35,7 +35,7 @@ MUTANTS = {
         'require(run.get("workflow_id")==p["workflow_id"] and run.get("path")==p["workflow_path"],"workflow identity mismatch")',
     ),
     "run_attempt_validation_bypass": (
-        'require(type(attempt) is int and attempt>0,"invalid or missing workflow run attempt")',
+        'require(type(attempt) is int and attempt==expected_run_attempt,"workflow run attempt mismatch (stale or replayed attempt)")',
         'require(True,"invalid or missing workflow run attempt")',
     ),
     "job_run_id_binding_bypass": (
@@ -67,7 +67,7 @@ MUTANTS = {
         'require(True,"fork-originated run is not accepted")',
     ),
     "job_pagination_completeness_bypass": (
-        'require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs),"jobs response is empty or paginated/incomplete")',
+        'require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs) and len(jobs)<=100,"jobs response is empty, paginated, or incomplete")',
         'require(bool(jobs),"jobs response is empty or paginated/incomplete")',
     ),
     "job_id_type_and_range_bypass": (
