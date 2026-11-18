@@ -64,7 +64,8 @@ theorem transverseIsingHamiltonian_isHermitian {N : ℕ}
       constructor
       · exact singleSpinFlip_symm
       · exact singleSpinFlip_symm
-    simp [transverseIsingHamiltonian, hst, hts, hflip]
+    simp [transverseIsingHamiltonian, hst, hts]
+    rw [hflip]
 
 @[simp] theorem transverseIsingHamiltonian_diag {N : ℕ}
     (J : IsingEdge N → ℝ) (h : ℝ) (s : SpinConfig N) :
