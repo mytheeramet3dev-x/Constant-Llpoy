@@ -1,5 +1,4 @@
 """Adversarial tests for signed-provenance policy enforcement."""
-import copy
 import hashlib
 import unittest
 from verify_signed_provenance import ProvenanceError, validate_cli_output
