@@ -29,6 +29,7 @@ jobs:
 
       - name: Verify external trust-root identity, pinned digests, Ed25519 signature, and policy
         env:
+          GITHUB_TOKEN: ${{ secrets.TRUST_ROOT_READ_TOKEN || secrets.GITHUB_TOKEN }}
           TRUST_ROOT_REPOSITORY: ${{ vars.TRUST_ROOT_REPOSITORY }}
           TRUST_ROOT_REPOSITORY_ID: ${{ vars.TRUST_ROOT_REPOSITORY_ID }}
           TRUST_ROOT_COMMIT: ${{ vars.TRUST_ROOT_COMMIT }}
