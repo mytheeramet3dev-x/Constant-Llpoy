@@ -13,8 +13,8 @@ MUTANTS = {
   '("claim_id", p["claim_id"]), ("source_commit", expected_commit),',
   '("claim_id", p["claim_id"]),'),
  "ignore_policy_revision": (
-  '("policy_revision", p["policy_revision"]):',
-  '("policy_revision", "0" * 40):'),
+  '("policy_revision", p["policy_revision"]))',
+  '("policy_revision", "0" * 40))'),
  "allow_unverified_receipt": (
   'receipt["status"] == "VERIFIED"',
   'receipt["status"] in {"VERIFIED", "UNVERIFIED", "FAILED"}'),

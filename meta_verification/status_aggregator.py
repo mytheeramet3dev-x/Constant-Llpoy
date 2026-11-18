@@ -95,6 +95,8 @@ def aggregate(policy: Any, bundle: Any, expected_commit: str) -> dict:
     for cid in p["required_components"]:
         if cid not in seen:
             continue
+        if cid in duplicates:
+            continue
         c = seen[cid]
         state = c["status"]
         _require(isinstance(state, str) and state in COMPONENT_STATES, f"component {cid}: unsupported status")
