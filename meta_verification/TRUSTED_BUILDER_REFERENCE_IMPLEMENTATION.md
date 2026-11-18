@@ -69,3 +69,14 @@ The external activation gate in `TRUSTED_BUILDER_CONTRACT.md` remains unchanged.
 Subject reads use descriptor-relative traversal from an opened checkout-root directory. Each path component is opened with `O_NOFOLLOW`; intermediate components also require `O_DIRECTORY`. The final descriptor is checked with `fstat` for a regular file and read with a strict byte cap. This avoids the earlier check-then-open symlink race and avoids blocking on FIFOs. Platforms without the required no-follow flags fail closed. JSON parsing also rejects non-standard constants such as `NaN` and `Infinity`.
 
 The adversarial suite covers parent-directory symlinks, FIFOs, and non-standard JSON constants. The full harness passed 117 tests on commit `d8494c4f13aecf133ae156510e72ec689ee16fef` (run [44217266945](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44217266945)).
+
+
+## Black-box conformance suite
+
+`test_trusted_builder_conformance.py` does not import this module. It independently constructs the evidence fixture and invokes the CLI as a subprocess, then checks exit status, machine-readable stdout, report contents, and output-file framing. The negative suite challenges digest substitution, caller and upstream identity mismatches, replay, stale source, path traversal, symlinks, malformed/ambiguous JSON, unknown fields, rejected evidence, and size limits.
+
+The positive control explicitly requires `VALIDATED_LOCAL_UNTRUSTED`, `signing_performed=false`, `attestation_created=false`, and `trust_established=false`. The suite caught and now guards a CLI output-framing defect: the report file must end with an actual newline, not the two literal characters backslash-n.
+
+The full harness passed 137 tests on commit `7eae9f587f8426407b54abc58d9c1e78e374827c` (run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270)). This run has no matching end-to-end provenance verification for its own evidence artifact in the evidence inspected here; the separate verifier run [44220332663](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220332663) verified the previous producer's artifact from commit `d1d7db78e2c3bc32a3fbace9b10f41a5ac860148`. Do not conflate those two source revisions.
+
+**Independence limitation:** this is a separate-process black-box suite, but it is maintained in the same repository and executed by the same CI governance. It is not reviewer-controlled external conformance, does not authenticate metadata, and does not test a real external signer.

@@ -107,3 +107,8 @@ The builder is **NOT ACTIVE** until all are true:
 - [ ] An independent reviewer examines the trust boundary and evidence.
 
 Until then, the existing in-repository producer remains the current bounded implementation. It MUST NOT be described as independently built or independently governed.
+
+
+### Current local conformance implementation (not an activation substitute)
+
+The in-repository black-box suite at `test_trusted_builder_conformance.py` provides known-answer and negative vectors for the local reference CLI. It is a reusable starting point for a future external builder's reviewer-controlled conformance adaptation, but passing it in this repository does not satisfy the independent-review requirement above. The external builder must independently authenticate caller identity and upstream run metadata, bind to the external trust-root manifest, create a real attestation, and pass separate signature verification. The current reference intentionally does none of those things.
