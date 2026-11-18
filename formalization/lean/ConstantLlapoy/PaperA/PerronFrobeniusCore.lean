@@ -165,27 +165,16 @@ theorem scalar_identity_sub_posSemidef_of_eigenvalue_upper_bound
     apply Matrix.PosSemidef.diagonal
     intro i
     exact sub_nonneg.mpr (hupper i)
-  have hU : (U : Matrix ι ι ℝ) * star (U : Matrix ι ι ℝ) = 1 := by
-    simpa only [Unitary.coe_star] using Unitary.coe_mul_star_self U
-  have hUij : ∀ i j, ∑ x, (U : Matrix ι ι ℝ) i x * (U : Matrix ι ι ℝ) j x =
-      (1 : Matrix ι ι ℝ) i j := by
-    intro i j
-    have h := congrArg (fun M : Matrix ι ι ℝ => M i j) hU
-    simpa [Matrix.mul_apply, Matrix.star_apply] using h
+  have hdiag_const :
+      Matrix.diagonal (fun _ : ι => lambda) =
+        lambda • (1 : Matrix ι ι ℝ) := by
+    ext i j
+    simp [Matrix.diagonal]
   have hconst :
       Unitary.conjStarAlgAut ℝ _ U (Matrix.diagonal (fun _ : ι => lambda)) =
         lambda • (1 : Matrix ι ι ℝ) := by
-    ext i j
-    simp only [Unitary.conjStarAlgAut_apply, Matrix.diagonal, Matrix.mul_apply]
-    calc
-      (∑ x, (U : Matrix ι ι ℝ) i x * lambda * (U : Matrix ι ι ℝ) j x)
-          = ∑ x, lambda * ((U : Matrix ι ι ℝ) i x * (U : Matrix ι ι ℝ) j x) := by
-              apply Finset.sum_congr rfl
-              intro x hx
-              ring
-      _ = lambda * ∑ x, (U : Matrix ι ι ℝ) i x * (U : Matrix ι ι ℝ) j x := by
-              rw [Finset.mul_sum]
-      _ = lambda * (1 : Matrix ι ι ℝ) i j := by rw [hUij i j]
+    rw [hdiag_const]
+    simp
   have hspec :
       A = Unitary.conjStarAlgAut ℝ _ U (Matrix.diagonal hA.eigenvalues) := by
     simpa [U] using hA.spectral_theorem
