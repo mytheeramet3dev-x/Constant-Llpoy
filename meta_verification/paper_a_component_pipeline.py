@@ -105,6 +105,12 @@ def build_layer_plan(root,commit,trace_path,evidence_paths):
  layer_owner={"L-04":["PAPER_A_LEAN_BUILD"],"L-06":["PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC"],"L-07":["PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC"],"L-09":["PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC"]}
  for row in layers:
   observed_states=[states.get(cid) for cid in layer_owner.get(row["layer_id"],[])]
+  if row["layer_id"]=="L-02":
+   audit_state=states.get("PAPER_A_SEMANTIC_AUDIT_INTEGRITY")
+   if audit_state=="PASS":
+    row["rationale"] += " Structural source/hash/declaration-reference checks executed successfully; semantic equivalence remains unverified, so L-02 stays BLOCKED."
+   elif audit_state in {"FAIL","TIMEOUT","INCONCLUSIVE"}:
+    row["rationale"] += " The separate structural audit-integrity check did not complete successfully; L-02 remains BLOCKED."
   if "FAIL" in observed_states:
    row["assessment_status"]="FAILED"
    row["rationale"] += " The corresponding executed component returned a nonzero exit code."
@@ -114,6 +120,8 @@ def build_layer_plan(root,commit,trace_path,evidence_paths):
  return {"schema_version":"1.0","component_id":"PAPER_A_14_LAYER_TRIAL_PLAN","status":"PASS",
   "status_meaning":"All 14 layer rows were assessed for this trial plan; individual layer assessments are not thereby passed.",
   "source_commit":commit,"claim_count":15,"layer_count":14,"layers":layers,"input_evidence":evidence,
+  "semantic_audit_integrity":{"execution_status":states.get("PAPER_A_SEMANTIC_AUDIT_INTEGRITY","NOT_RUN"),
+   "semantic_equivalence_established":False,"layer_l02":"BLOCKED"},
   "overall_paper_status":"NOT_VERIFIED","mathematical_correctness":"NOT_ASSESSED","external_trust_root":"NOT_ACTIVE","independent_external_review":"NOT_COMPLETED"}
 def verify_bundle(commit,run_id,attempt,policy_path,pin,evidence_paths,output):
  if not re.fullmatch(r"[0-9a-f]{40}",commit) or type(run_id)!=int or run_id<=0 or type(attempt)!=int or attempt<=0: raise ValueError("invalid source commit, producer run ID or attempt")
@@ -126,7 +134,7 @@ def verify_bundle(commit,run_id,attempt,policy_path,pin,evidence_paths,output):
   ids.append(cid); sha=digest(raw)
   components.append({"component_id":cid,"status":rec["status"],"evidence_base64":base64.b64encode(raw).decode(),"evidence_sha256":sha,
    "provenance":{"receipt_schema_version":"2.0","subject_sha256":sha,"source_commit":commit,"attestation_run_id":run_id,"attestation_run_attempt":attempt,"attestation_workflow_revision":commit}})
- required={"PAPER_A_LEAN_BUILD","PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC","PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC","PAPER_A_CLAIM_TRACEABILITY","PAPER_A_14_LAYER_TRIAL_PLAN"}
+ required={"PAPER_A_LEAN_BUILD","PAPER_A_DICKE_EXACT_DIAGNOSTIC","PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC","PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC","PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC","PAPER_A_CLAIM_TRACEABILITY","PAPER_A_SEMANTIC_AUDIT_INTEGRITY","PAPER_A_14_LAYER_TRIAL_PLAN"}
  if set(ids)!=required: raise ValueError("required component set mismatch")
  policy={"schema_version":"1.0","claim_id":"PAPER-A-FIRST-14-LAYER-TRIAL","policy_revision":commit,"required_components":sorted(required)}
  bundle={"schema_version":"1.0","claim_id":policy["claim_id"],"source_commit":commit,"policy_revision":commit,"components":components}

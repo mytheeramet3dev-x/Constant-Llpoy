@@ -36,6 +36,14 @@ class Tests(unittest.TestCase):
   (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
   (self.root/"e.json").write_text(json.dumps({"source_commit":"b"*40,"status":"PASS","component_id":"C"}))
   with self.assertRaisesRegex(ValueError,"missing, stale or has invalid status"): p.build_layer_plan(self.root,self.commit,"trace.json",["e.json"])
+ def test_l02_structural_audit_pass_never_promotes_semantics(self):
+  (self.root/"trace.json").write_text(json.dumps({"source_commit":self.commit,"claim_count":15}))
+  (self.root/"semantic.json").write_text(json.dumps({"source_commit":self.commit,"status":"PASS","component_id":"PAPER_A_SEMANTIC_AUDIT_INTEGRITY"}))
+  x=p.build_layer_plan(self.root,self.commit,"trace.json",["semantic.json"])
+  self.assertEqual(x["semantic_audit_integrity"]["execution_status"],"PASS")
+  self.assertFalse(x["semantic_audit_integrity"]["semantic_equivalence_established"])
+  self.assertEqual(x["semantic_audit_integrity"]["layer_l02"],"BLOCKED")
+  self.assertEqual(x["layers"][1]["assessment_status"],"BLOCKED")
  def test_candidate_links_do_not_claim_correspondence(self):
   self.assertEqual(p.CLAIM_ARTIFACTS["AS-ALPHA-A-PROP-0009"][0][2],"NOT_ESTABLISHED")
 

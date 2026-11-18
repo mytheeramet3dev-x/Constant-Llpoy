@@ -45,6 +45,7 @@ jobs:
             --evidence evidence/paper-a-lean-build.json --evidence evidence/paper-a-dicke-exact.json \
             --evidence evidence/paper-a-strong-coupling-exact.json --evidence evidence/paper-a-finite-difference.json \
             --evidence evidence/paper-a-weak-coupling-numerical.json --evidence evidence/paper-a-claim-traceability.json \
+            --evidence evidence/paper-a-semantic-audit-integrity.json \
             --evidence evidence/paper-a-14-layer-trial-plan.json --output paper-a-component-verification.json
       - name: Upload component verification report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

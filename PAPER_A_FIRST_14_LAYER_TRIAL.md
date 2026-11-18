@@ -254,3 +254,8 @@ The new Hamiltonian encoding, shifted-matrix positivity, Boolean-hypercube conne
 3. Complete direct formalization and semantic correspondence for the other manuscript claims.
 
 **Overall Paper A status: \`NOT_VERIFIED\`.** All seven evidence components are authenticated, but that is an evidence-integrity result, not a mathematical-proof verdict. External trust root remains \`NOT_ACTIVE\`; independent external review remains \`NOT_COMPLETED\`.
+
+
+## Structural semantic-audit integrity is now part of the evidence bundle
+
+The producer now executes `paper_a_semantic_audit_validator.py` against the 15 frozen claim records and five pinned Lean modules, records the command result and input hashes, attests the resulting evidence subject, and includes it in the separate verifier's eight-component authenticated bundle. The 14-layer plan records this structural result explicitly. A structural PASS does not change L-02: semantic equivalence, exact hypothesis correspondence, and claim-level mathematical proof remain BLOCKED / unverified.

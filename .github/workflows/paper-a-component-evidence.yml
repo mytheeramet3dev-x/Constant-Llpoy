@@ -95,6 +95,35 @@ jobs:
         run: |
           python meta_verification/paper_a_component_pipeline.py traceability --source-commit "$SOURCE_COMMIT" --expected-claims 15 \
             --output evidence/paper-a-claim-traceability.json
+      - name: Validate Paper A claim-to-Lean audit structure (not semantic equivalence)
+        continue-on-error: true
+        env:
+          SOURCE_COMMIT: ${{ github.sha }}
+        run: |
+          python meta_verification/paper_a_component_pipeline.py run --component PAPER_A_SEMANTIC_AUDIT_INTEGRITY --source-commit "$SOURCE_COMMIT" \
+            --input meta_verification/paper_a_semantic_audit_validator.py \
+            --input meta_verification/paper_a_semantic_correspondence.json \
+            --input claims/A/AS-ALPHA-A-DEF-0001.md \
+            --input claims/A/AS-ALPHA-A-PROP-0001.md \
+            --input claims/A/AS-ALPHA-A-PROP-0002.md \
+            --input claims/A/AS-ALPHA-A-PROP-0003.md \
+            --input claims/A/AS-ALPHA-A-PROP-0004.md \
+            --input claims/A/AS-ALPHA-A-PROP-0005.md \
+            --input claims/A/AS-ALPHA-A-PROP-0006.md \
+            --input claims/A/AS-ALPHA-A-PROP-0007.md \
+            --input claims/A/AS-ALPHA-A-PROP-0008.md \
+            --input claims/A/AS-ALPHA-A-PROP-0009.md \
+            --input claims/A/AS-ALPHA-A-PROP-0010.md \
+            --input claims/A/AS-ALPHA-A-PROP-0011.md \
+            --input claims/A/AS-ALPHA-A-PROP-0012.md \
+            --input claims/A/AS-ALPHA-A-THM-0001.md \
+            --input claims/A/AS-ALPHA-A-THM-0002.md \
+            --input formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean \
+            --input formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean \
+            --input formalization/lean/ConstantLlapoy/PaperA/WeakCoupling.lean \
+            --input formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean \
+            --input formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean \
+            --output evidence/paper-a-semantic-audit-integrity.json --timeout 180 -- python meta_verification/paper_a_semantic_audit_validator.py
       - name: Build explicit 14-layer Paper A trial assessment
         env:
           SOURCE_COMMIT: ${{ github.sha }}
@@ -103,7 +132,8 @@ jobs:
             --traceability evidence/paper-a-claim-traceability.json \
             --evidence evidence/paper-a-lean-build.json --evidence evidence/paper-a-dicke-exact.json \
             --evidence evidence/paper-a-strong-coupling-exact.json --evidence evidence/paper-a-finite-difference.json \
-            --evidence evidence/paper-a-weak-coupling-numerical.json --output evidence/paper-a-14-layer-trial-plan.json
+            --evidence evidence/paper-a-weak-coupling-numerical.json \
+            --evidence evidence/paper-a-semantic-audit-integrity.json --output evidence/paper-a-14-layer-trial-plan.json
       - name: Attest Lean build evidence
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6
         with: { subject-path: evidence/paper-a-lean-build.json }
@@ -122,6 +152,9 @@ jobs:
       - name: Attest claim traceability
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6
         with: { subject-path: evidence/paper-a-claim-traceability.json }
+      - name: Attest semantic audit structural-integrity result
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6
+        with: { subject-path: evidence/paper-a-semantic-audit-integrity.json }
       - name: Attest 14-layer trial plan
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6
         with: { subject-path: evidence/paper-a-14-layer-trial-plan.json }
