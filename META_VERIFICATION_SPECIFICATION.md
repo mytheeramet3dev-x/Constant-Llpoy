@@ -366,3 +366,8 @@ Design completion is not operational completion. No checker, workflow, paper, th
 ## 15. Governing principle
 
 > A verification result is only as trustworthy as the exact evidence path that produced and interpreted it. That path must itself be inventoried, challenged, revision-bound, independently reviewed where claimed, and reported within its demonstrated limits.
+
+
+## Trusted-builder contract regression evidence
+
+The trusted-builder contract and report schema are covered by 10 structural regression tests. The combined meta-verification harness run `44212719080` passed all 89 tests on commit `2a8adb2ea185ee4c020630e484f6240a53bd291e`. This confirms the contract artifacts' structural invariants and required policy statements only; it does not validate an external builder implementation, establish independent governance, or activate external signing.
