@@ -51,6 +51,14 @@ def validate_policy(policy: Any) -> dict:
             "gh_cli_version must be an exact semantic version")
     return policy
 
+def validate_cli_version(version_output: str, policy: Any) -> str:
+    p = validate_policy(policy)
+    require(isinstance(version_output, str), "GitHub CLI version output must be text")
+    match = re.search(r"^gh version ([0-9]+\\.[0-9]+\\.[0-9]+)", version_output, re.MULTILINE)
+    require(match is not None and match.group(1) == p["gh_cli_version"],
+            "GitHub CLI version does not match the pinned policy version")
+    return match.group(1)
+
 def _validate_entry(entry: Any, expected_digest: str, policy: dict,
                     source_sha: str) -> dict:
     require(isinstance(entry, dict), "verification result entry is not an object")
