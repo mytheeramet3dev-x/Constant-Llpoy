@@ -65,10 +65,10 @@ class CollectorTests(unittest.TestCase):
         x=fixture(); x[2]["jobs"].append(copy.deepcopy(x[2]["jobs"][0])); x[2]["total_count"]=2
         with self.assertRaises(CollectionError): check(x)
     def test_boolean_policy_workflow_id_rejected(self):
-        x=fixture(); x[0]["workflow_id"]=True
+        x=fixture(); x[0]["workflow_id"]=True; x[1]["workflow_id"]=True
         with self.assertRaises(CollectionError): check(x)
     def test_boolean_expected_run_id_rejected(self):
-        x=fixture()
+        x=fixture(); x[1]["id"]=1
         with self.assertRaises(CollectionError):
             validate_snapshot(*x,expected_run_id=True,expected_head_sha=HEAD,expected_repo=REPO)
     def test_boolean_run_id_and_workflow_id_rejected(self):
@@ -83,6 +83,12 @@ class CollectorTests(unittest.TestCase):
                 with self.assertRaises(CollectionError): check(x)
     def test_numeric_repository_identity_must_match(self):
         x=fixture(); x[1]["head_repository"]["id"]=777
+        with self.assertRaises(CollectionError): check(x)
+    def test_primary_repository_name_must_match(self):
+        x=fixture(); x[1]["repository"]["full_name"]="attacker/repository"
+        with self.assertRaises(CollectionError): check(x)
+    def test_head_repository_name_must_match(self):
+        x=fixture(); x[1]["head_repository"]["full_name"]="attacker/repository"
         with self.assertRaises(CollectionError): check(x)
     def test_job_ids_must_be_positive_exact_integers(self):
         for value in (None,0,True,"900"):
