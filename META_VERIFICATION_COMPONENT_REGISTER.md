@@ -39,7 +39,8 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-011 | GitHub artifact/log storage and status API | External evidence infrastructure | Retains/exposes run evidence | Service dependency inferred from workflow/status use; exact retention/attestation policy not inventoried |
 | MVC-012 | Meta-verification test harness / mutation runner | Checker-challenge infrastructure | Exercises evidence-policy logic and selected adversarial cases | Policy evaluator plus 21 policy tests and 13 GitHub-run collector tests implemented; no mutation runner against the Lean checker |
 | MVC-013 | Dedicated certificate parser/checker | Certificate validation | Would validate certificate evidence independently | Not observed in tracked tree snapshot |
-| MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | A limited fail-closed evidence-policy evaluator exists; no GitHub job-status ingestion or release/report aggregator |\n| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs the evaluator's adversarial unit tests | Implemented; runs 44207325850 and 44207354710 completed successfully |
+| MVC-014 | Repository-owned report generator/status aggregator | Evidence aggregation | Would convert required evidence into claim status | A limited fail-closed evidence-policy evaluator and API run collector exist; no production theorem-status aggregator |
+| MVC-015 | Meta-verification CI workflow | Test orchestration | Runs evaluator and collector unit tests | 34 tests passed in run 44207991899 |\n| MVC-016 | Post-run evidence collection workflow | External evidence acquisition | Queries GitHub API for completed upstream run and stores normalized evidence | Run 44208011244 succeeded; collector reported ACCEPTED for run 44207991899; artifact 14383688864 uploaded |
 
 ## 3. Observed repository-owned components
 
@@ -176,7 +177,8 @@ This is a bounded observation about the inspected tracked tree only. It does not
 | Priority | Gap | Why it matters | Required next action |
 |---|---|---|---|
 | P0 | No cryptographic attestation/signature verifier or independently governed trust root | The collector obtains run metadata from GitHub's authenticated API but its normalized record is not digitally signed or independently anchored | Add signed provenance verification with an independently governed identity/source policy; do not equate API collection with cryptographic attestation |
-| P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |\n| P0 | Evaluator correctness beyond the current test set is not established | Passing tests cover only enumerated cases and may share assumptions with the evaluator | Independent review, additional property-based/mutation tests, and retained external challenge evidence are still required |
+| P0 | Current Lean workflow has only one decisive job and no independent workflow audit | A skipped/misconfigured job or action defect may not be detected by a second route | Add explicit workflow contract checks and an independent review checklist; do not call this a second proof checker |
+| P0 | Evaluator correctness beyond the current test set is not established | Passing tests cover only enumerated cases and may share assumptions with the evaluator | Independent review, additional property-based/mutation tests, and retained external challenge evidence are still required |
 | P1 | Runner image is `ubuntu-latest` | Environment can change without source revision changes | Capture exact runner metadata and bind it to evidence |
 | P1 | No exact current-head Lean proof-build result is established by the meta-verification run | The successful meta-verification workflow tests its harness, not the Lean proof build | Collect and bind the Lean workflow's own run, jobs, steps, toolchain, and commit evidence |
 | P1 | Collector is not cryptographically attested and has no independent trust root | API transport and repository permissions remain part of the trusted computing base | Verify signed provenance and define trust roots outside the evidence producer's control |
@@ -191,18 +193,20 @@ This is a bounded observation about the inspected tracked tree only. It does not
 - **Lean proof inputs:** Observed; mathematical obligations remain claim-specific.
 - **Python diagnostics:** Observed; exploratory only, not proof checkers.
 - **Status and artifact infrastructure:** GitHub API collection and artifact upload are exercised; service trust, retention, and cryptographic provenance remain incomplete.
-- **Meta-verification policy evaluator and adversarial unit tests:** implemented in `meta_verification/`; 21 tests passed in GitHub Actions run `44207325850` on commit `072bd2814cbcb9906e0ed7a7b64ed2e1fb27d169`; subsequent run `44207354710` also passed on commit `f840e5fe5f1270c9a7429669096fae4b18cbd101`.\n- **Dedicated certificate semantics checker, mutation runner against Lean, authenticated evidence collector, and production status aggregator:** not implemented.
+- **Policy evaluator and adversarial tests:** implemented; original 21-test suite passed in run `44207325850`.
+- **GitHub run collector and adversarial tests:** implemented; combined 34-test suite passed in run `44207991899`.
+- **Post-run API collection:** run `44208011244` completed successfully; collector reported `ACCEPTED` for run `44207991899`; artifact `14383688864` was uploaded.\n- **Not implemented:** cryptographic attestation verification, independent trust root, independent certificate-semantics checker, mutation runner against Lean, and theorem-status aggregation.
 
 **Overall register status: PARTIAL INVENTORY / NOT VALIDATED.**
 
 ## 9. Required follow-up sequence
 
-1. Add a repository-owned meta-verification test harness that parses an explicit evidence record schema and evaluates statuses without invoking the checker under test.
-2. Add exhaustive table-driven tests for `ACCEPTED`, `REJECTED`, `ERROR`, `TIMEOUT`, `INCONCLUSIVE`, `NOT_RUN`, missing, stale, skipped, contradictory, and partial evidence.
-3. Add mutation cases for wrong commit, altered checker/workflow revision, omitted required job, missing axiom audit, and forged success metadata.
-4. Run tests in CI and bind their results to the exact workflow and source revisions.
-5. Independently review the harness and its expected outcomes; document shared assumptions and residual risks.
-6. Reassess whether the meta-verification lifecycle is sufficiently distinct to justify a dedicated layer only after this operational evidence exists.
+1. **Done (initial):** repository-owned policy evaluator and adversarial unit tests.
+2. **Done (bounded):** GitHub REST API run collector, revision pins, required-job/step validation, and post-run evidence artifact workflow.
+3. **Next:** add signed-provenance/attestation verification with a trust policy anchored outside the producer workflow.
+4. Add mutation/property-based tests and independent review of expected outcomes and common-mode assumptions.
+5. Add collection and verification for the Lean proof-build workflow, separate from harness-test evidence.
+6. Reassess dedicated-layer status only after these controls and independent review exist.
 
 ## 10. Governing rule
 
