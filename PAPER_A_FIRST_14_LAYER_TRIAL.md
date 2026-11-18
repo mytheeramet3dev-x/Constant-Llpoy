@@ -353,3 +353,21 @@ This is a genuine reduction in assumptions for the model-level conditional theor
 L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
 
 **Overall Paper A remains \`NOT_VERIFIED\`.** The authenticated bundle and green Lean build certify the integrity and execution of selected artifacts, not all mathematical claims. External trust root remains \`NOT_ACTIVE\`; independent external review remains \`NOT_COMPLETED\`.
+
+
+## Perron eigenvalue positivity derived internally — 2026-11-18
+
+- Source commit: \`5cccdea0930408fae5a3626e8acdcfe96095163b\`.
+- Lean workflow run \`44417704788\`: SUCCESS; 18,266 build jobs; axiom audit checked 160 declarations under \`ConstantLlapoy\`, all within \`[propext, Classical.choice, Quot.sound]\`.
+- Paper A component producer run \`44417704938\`: SUCCESS.
+- Separate component verifier run \`44418282878\`: SUCCESS; pinned GitHub CLI \`2.103.3\`; eight component attestations authenticated; aggregation \`ACCEPTED\`; no missing/duplicate subjects, digest mismatches, stale fields, or verified failures.
+- Verifier report artifact: \`paper-a-component-verification-44417704938\`, artifact ID \`14481145960\`.
+
+The model-level theorem \`shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one_of_nonneg_eigenvector\` no longer assumes \`0 < lambdaVal\`. It derives positivity from:
+1. the already-proved strict positivity of every coordinate of the supplied nonzero nonnegative eigenvector;
+2. the strictly positive diagonal of the shifted TFIM matrix; and
+3. the eigenvector equation together with nonnegativity of every matrix entry.
+
+This closes the positive-eigenvalue side condition for the conditional algebraic-simplicity result. It still does **not** construct the required nonzero nonnegative eigenvector at the top eigenvalue. The top-eigenvector existence/Perron variational step, and full transfer to the physical ground-state claim, remain open.
+
+The 14-layer assessment remains: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED. Overall Paper A remains \`NOT_VERIFIED\`; external trust root \`NOT_ACTIVE\`; independent external review \`NOT_COMPLETED\`.
