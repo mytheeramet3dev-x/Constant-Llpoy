@@ -360,3 +360,6 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Activation boundary:** POLICY_CHANGE_AUTHORIZED is not activation. External policy-pin update and protected reviewer controls remain mandatory.
 - **Limitations:** authority-set digest is supplied by caller; OpenSSL runtime is not independently pinned; no external authority/reviewer identities/protected Environment are provisioned; verifier is not in production status workflow.
 - **Status:** prototype implementation; do not claim independent policy governance or mathematical theorem acceptance.
+
+
+**Validation update:** commit 56f4ac5678ab5dc1225075fa242e442f2601da57 passed the full harness (219 tests; run [44233157563](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233157563)) and killed 8/8 selected policy-change mutants. Its evidence producer [44233215756](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233215756) succeeded; separate provenance verifier [44233252327](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233252327) returned VERIFIED. These results are bounded to the tested commit and selected tests, not independent policy governance.

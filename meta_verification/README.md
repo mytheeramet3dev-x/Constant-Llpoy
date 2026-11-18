@@ -139,3 +139,6 @@ Production use still requires authenticated receipt acquisition, independently g
 ## Policy authority and change control
 
 See [POLICY_AUTHORITY_AND_CHANGE_CONTROL.md](POLICY_AUTHORITY_AND_CHANGE_CONTROL.md). The verifier and adversarial tests are in policy_change_control.py and test_policy_change_control.py; selected mutation checks are in test_policy_change_mutations.py. The verifier requires a separately supplied authority-set SHA-256 pin, a threshold of distinct Ed25519 reviewers, exact policy digest, parent digest, next sequence and validity interval. A valid proposal remains NOT_ACTIVATED until the external authority updates protected pins. This is a prototype; no independent authority or reviewer keys are provisioned, and no production workflow consumes it.
+
+
+Policy-change verifier validation: full harness [44233157563](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233157563) passed 219 tests; all 8/8 selected policy-change mutants were killed by assertion-driven tests. Evidence producer [44233215756](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233215756) succeeded; separate provenance verifier [44233252327](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233252327) reported VERIFIED for the exact tested commit. External policy authority remains NOT ACTIVE.
