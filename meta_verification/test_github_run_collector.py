@@ -71,11 +71,11 @@ class CollectorTests(unittest.TestCase):
         x=fixture(); x[0]["workflow_id"]=True; x[1]["workflow_id"]=1
         with self.assertRaises(CollectionError): check(x)
     def test_boolean_expected_run_id_rejected(self):
-        x=fixture(); x[1]["id"]=1
+        x=fixture(); x[1]["id"]=1; x[2]["jobs"][0]["run_id"]=1
         with self.assertRaises(CollectionError):
             validate_snapshot(*x,expected_run_id=True,expected_run_attempt=1,expected_head_sha=HEAD,expected_repo=REPO)
     def test_boolean_run_id_rejected_independently(self):
-        x=fixture(); x[1]["id"]=True
+        x=fixture(); x[1]["id"]=True; x[2]["jobs"][0]["run_id"]=1
         with self.assertRaises(CollectionError):
             validate_snapshot(*x,expected_run_id=1,expected_run_attempt=1,expected_head_sha=HEAD,expected_repo=REPO)
     def test_boolean_workflow_id_binding_rejected_independently(self):
