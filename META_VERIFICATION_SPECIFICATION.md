@@ -303,6 +303,10 @@ Change impact MUST identify affected claims and evidence. Unaffected evidence ma
 
 Every discovered checker or workflow defect MUST become a regression case where feasible. Prior reports affected by the defect MUST be identified and corrected or annotated; silent historical rewriting is prohibited.
 
+## 11A. Independent trusted-builder contract
+
+The external trusted-builder interface and mandatory security properties are specified in `meta_verification/TRUSTED_BUILDER_CONTRACT.md`; the report structure is specified in `meta_verification/trusted_builder_report.schema.json`. These are contracts, not evidence that an external builder exists or is active. A local reusable workflow is deliberately not substituted because it would remain within the relying-party repository's administrative trust boundary. Activation requires a real external repository identity, a trust-root-signed immutable workflow commit, caller delegation pinned to that commit, conformance evidence, and separate attestation verification.
+
 ## 12. Architecture placement: cross-layer obligation or dedicated layer?
 
 **No L-15 decision is made by this document.** The current allocation remains provisional:
