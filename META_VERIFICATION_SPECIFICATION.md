@@ -621,3 +621,12 @@ The provenance-policy digest is computed from the same source checkout. The work
 ### 13.1 Observed Lean failure handling
 
 The first Paper A producer attempt failed at the pinned Lean build in ConstantLlapoy.PaperA.PerronFrobeniusCore. The observed compiler diagnostics include RCLike (RCLike Real) typeclass synthesis failures and unsolved goals around lines 690–709. The pipeline now retains a FAIL execution record for that command and continues independent diagnostics. The layer planner promotes L-04 to FAILED when the Lean component record is FAIL. The provenance verifier may still authenticate the exact failed log; a cryptographically authenticated failure remains a failure, not a pass.
+
+
+## 13.2 Observed first Paper A end-to-end run
+
+On source commit 1173aba070abd89fcb5f62f14e7fd8494bdaa464, producer run 44248949683 succeeded and emitted seven exact component evidence subjects. Separate verifier run 44249207601 succeeded. All seven subjects were authenticated with GitHub/Sigstore; the component report records all seven provenance flags true. The aggregator returned REJECTED because the authenticated PAPER_A_LEAN_BUILD component had status FAIL. There were no missing/duplicate components, stale fields, digest mismatches, or unauthenticated receipts. The status is therefore an authenticated failed-check report, not a theorem PASS.
+
+Traceability resolved all 15 Paper A registry records against their claim records and local frozen source snapshots. The 14-row assessment was: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 FAILED; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED. Overall Paper A remains NOT_VERIFIED.
+
+The failed Lean component reports RCLike (RCLike Real) instance synthesis failures and unresolved goals in PerronFrobeniusCore around lines 690–709. The four computational diagnostics completed successfully but remain finite-N/sampled evidence. External trust-root activation and independent administration remain absent.

@@ -204,3 +204,35 @@ A component PASS means only that the named execution or manifest-generation task
 ### First observed Paper A execution finding
 
 The first producer attempt on source revision dc3273a0a2f75c8e32e47407b1e972edcc882a23 reached the pinned Lean action but failed while building ConstantLlapoy.PaperA.PerronFrobeniusCore. The log reports unsynthesized RCLike (RCLike Real) instances and unresolved goals around source lines 690–709. The action stopped the initial attempt before component evidence could be emitted. This is recorded as a real L-04 blocker, not normalized to PASS. The producer was then changed to preserve failed command transcripts as evidence and continue other independent checks; the final verifier will report authenticated evidence with failed checks rather than hide the failure.
+
+
+## Observed first Paper A evidence run
+
+- Producer workflow run: 44248949683 — SUCCESS, source commit 1173aba070abd89fcb5f62f14e7fd8494bdaa464.
+- Separate component provenance verifier: 44249207601 — SUCCESS.
+- Seven evidence subjects were emitted and each subject's GitHub/Sigstore attestation was cryptographically authenticated. The component report records true for all seven provenance-authentication flags.
+- The aggregator returned REJECTED because PAPER_A_LEAN_BUILD is an authenticated FAIL. There were no missing or duplicate components, no stale fields, no evidence digest mismatches, and no unauthenticated provenance. The verified failure list contains exactly PAPER_A_LEAN_BUILD.
+- The final verifier status is PAPER_A_EVIDENCE_BUNDLE_AUTHENTICATED_WITH_FAILED_CHECKS. This means the evidence bytes and origin were authenticated; it does not mean Paper A passed.
+- Claim traceability completed for all 15 Paper A registry records and resolved frozen upstream source commit 8deb7de4a49cb2060720246b7101820ee7e08c91.
+- Both exact symbolic diagnostics and both high-precision numerical diagnostics exited successfully. They remain finite-N / sampled diagnostics, not proofs.
+
+### Observed 14-layer result
+
+| Layer | Result |
+|---|---|
+| L-01 | PARTIAL |
+| L-02 | BLOCKED |
+| L-03 | PARTIAL |
+| L-04 | FAILED |
+| L-05 | NOT_RUN |
+| L-06 | PARTIAL |
+| L-07 | PARTIAL |
+| L-08 | PARTIAL |
+| L-09 | PARTIAL |
+| L-10 | PARTIAL |
+| L-11 | PARTIAL |
+| L-12 | PARTIAL |
+| L-13 | NOT_RUN |
+| L-14 | NOT_ASSESSED |
+
+The overall Paper A status remains NOT_VERIFIED. The Lean failure is in ConstantLlapoy.PaperA.PerronFrobeniusCore, with RCLike (RCLike Real) synthesis errors and unresolved goals around lines 690–709. No theorem was weakened or promoted to PASS.
