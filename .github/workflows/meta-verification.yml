@@ -19,10 +19,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: meta-verification-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   policy-evaluator-tests:
     name: Fail-closed policy evaluator unit tests
