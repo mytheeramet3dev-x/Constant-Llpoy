@@ -104,6 +104,8 @@ class TrustedBuilderBlackBoxConformance(unittest.TestCase):
         if raw is not None:
             self.write_subject(raw)
         request = dict(self.request)
+        if raw is not None:
+            request["expected_subject_sha256"] = self.subject_digest()
         if mutate_request:
             mutate_request(request)
         if subject_path is not None:
