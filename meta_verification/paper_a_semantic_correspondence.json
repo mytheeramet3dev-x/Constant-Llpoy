@@ -1,0 +1,186 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "PAPER_A_LEAN_SEMANTIC_CORRESPONDENCE_AUDIT",
+  "frozen_source": {
+    "repository": "mytheeramet3dev-x/Absolute_Sym",
+    "branch": "paper-a-interval-audit-2026-11-14",
+    "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
+  },
+  "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
+  "audited_commit": "611511db910fb9b7212922b38f67fc5d47cf0a86",
+  "lean_toolchain": "leanprover/lean4:v4.36.0",
+  "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
+  "lean_modules": [
+    {
+      "path": "formalization/lean/ConstantLlapoy/PaperA/PerronFrobeniusCore.lean",
+      "blob_sha": "05c1b6ed5d351017a7c9163d60201d4f50c4a93e"
+    },
+    {
+      "path": "formalization/lean/ConstantLlapoy/PaperA/StrongCoupling.lean",
+      "blob_sha": "4ffbbc0e39616cfc4e27c00a86e4110331190b27"
+    },
+    {
+      "path": "formalization/lean/ConstantLlapoy/PaperA/WeakCoupling.lean",
+      "blob_sha": "10ae888e5f2c89565621213237c0fa7067a42744"
+    },
+    {
+      "path": "formalization/lean/ConstantLlapoy/PaperA/ZeroEigenvalueEntropy.lean",
+      "blob_sha": "4088d32b90369da91f6703d0146ff3c0359767b7"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "AS-ALPHA-A-DEF-0001",
+      "source": "Section 3, lines 26–44",
+      "claim_blob": "14cdf9627a37a3325cce2017761d79a927b7a973",
+      "lean_status": "PARTIAL_SUPPORT_ONLY",
+      "lean_declarations": [
+        "hasDerivAt_local_min_branch_eq_zero",
+        "hasDerivAt_nonnegative_branch_eq_zero"
+      ],
+      "gap": "These generic Fermat/local-minimum lemmas do not formalize the paper's specific objective, interior domain, or critical-point hypotheses."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0001",
+      "source": "Section 2, lines 159–206",
+      "claim_blob": "4d7df7f150f9bf117201d1488e5c61195fe54351",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the conditional exact threshold scaling statement."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0002",
+      "source": "Section 3, lines 46–66",
+      "claim_blob": "6f5cf4b1b620aa6dbaefc10b56202ff58f3be842",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the manuscript's tangent constraint at an interior critical point."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0003",
+      "source": "Section 3, lines 192–225",
+      "claim_blob": "d00ac0fe03d59cab4559da4aa2ce76615b748ab1",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the Picard map and its local-attractivity criterion."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0004",
+      "source": "Section 4, lines 20–34",
+      "claim_blob": "d662b74b9009750a53e0fea4ddb6d8a4cf0cee4c",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration proves root independence along the dimensionless scaling ray."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0005",
+      "source": "Section 5, lines 42–93",
+      "claim_blob": "101b7c1e0f6549ae9637462163f77d860680ed5d",
+      "lean_status": "PARTIAL_SUPPORT_ONLY",
+      "lean_declarations": [
+        "hasDerivAt_one_site_leading_entropy_incident",
+        "hasDerivAt_one_site_leading_entropy_disjoint",
+        "hasDerivAt_one_site_leading_entropy_edge_contrast"
+      ],
+      "gap": "These declarations differentiate only a leading one-site entropy correction. They do not prove the S_N edge-space decomposition, the three response-sector eigenvalues, or chi_1-chi_2=(N-2)(B-C)."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0006",
+      "source": "Section 2, lines 71–111",
+      "claim_blob": "2ff3e94d0ac84b3e90f7848c32b4f05232bfb684",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration encodes positive scalar energy rescaling, preservation of the ground-state projector, or the dimensionless mutual-information identity."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0007",
+      "source": "Section 2, lines 148–155",
+      "claim_blob": "47ba69867ed0c08eec2f7464da522bc34a048ba4",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the symmetric zero-coupling state as the stated trivial fixed point."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0008",
+      "source": "Section 2, lines 197–206",
+      "claim_blob": "d84dbaa3d76b7a066c8418d6d33d5d6be9664a31",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration proves the claimed subcritical exclusion of nontrivial roots."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0009",
+      "source": "Section 4, lines 103–120",
+      "claim_blob": "64ca12730287c16da6f3bd41f0d3bc267102426d",
+      "lean_status": "PARTIAL_SUPPORT_ONLY",
+      "lean_declarations": [
+        "strongCouplingCoefficient_pos",
+        "strongCoupling_response_positive_of_remainder"
+      ],
+      "gap": "The Lean strong-coupling coefficient and conditional sign lemma concern a B-C endpoint sign step and assume an explicit remainder bound. They do not formalize the manuscript's mutual-information asymptotic expansion or derive its differentiated remainder."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0010",
+      "source": "Section 5, lines 17–24",
+      "claim_blob": "b191ac98469e24cbf3abe017494981d8fb4a149e",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the uniform-response upper bound or its non-implication conclusion."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0011",
+      "source": "Section 5, lines 127–131",
+      "claim_blob": "8c5eb8769c543160ead901039aa410403cf707df",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration proves scale covariance of the edge-response eigenvalues."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-PROP-0012",
+      "source": "Section 4, line 134",
+      "claim_blob": "8a096cdc61e661f4b01599c20e51b1260dfe03c7",
+      "lean_status": "SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY",
+      "lean_declarations": [
+        "weakCouplingCoefficient_pos",
+        "weakCoupling_response_positive_of_remainder",
+        "hasDerivAt_neg_mul_log_comp"
+      ],
+      "gap": "The source claims an opposite-sign weak-coupling response, while the independent local derivation records a positive leading coefficient. Lean proves positivity of the coefficient and a final sign step only under an assumed remainder bound; it does not prove the model-specific differentiated remainder. This is not verification of the source claim."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-THM-0001",
+      "source": "Section 3, lines 96–165",
+      "claim_blob": "ad7873bd31824059c04ef8fa4b45cc8a3bb6bd86",
+      "lean_status": "NO_DIRECT_FORMALIZATION",
+      "lean_declarations": [],
+      "gap": "No Lean declaration formalizes the conditional saddle-node normal form, the regularity assumptions, or the branch expansion."
+    },
+    {
+      "claim_id": "AS-ALPHA-A-THM-0002",
+      "source": "Section 2, lines 3–17",
+      "claim_blob": "3900c93b6927bd2dec10385544b29d531ffa0829",
+      "lean_status": "ABSTRACT_MATRIX_CORE_ONLY",
+      "lean_declarations": [
+        "perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum",
+        "perron_eigenvalue_has_characteristic_root_multiplicity_one"
+      ],
+      "gap": "The Lean theorem assumes a supplied real symmetric matrix, nonnegative entries, a strictly positive eigenvector/eigenvalue, and connected positive-transition reachability. It does not construct K=cI-H from the TFIM Hamiltonian, prove entrywise nonnegativity for that encoding, prove hypercube connectivity, or connect the encoded matrix spectrum back to the manuscript Hamiltonian."
+    }
+  ],
+  "summary": {
+    "total_claims": 15,
+    "directly_fully_corresponding": 0,
+    "partial_support_or_abstract_core": 4,
+    "no_direct_formalization": 10,
+    "source_conflict_with_conditional_lemmas_only": 1,
+    "claim_verification_promoted": false,
+    "layer_l02": "BLOCKED"
+  },
+  "limits": [
+    "This is a declaration-to-claim semantic audit, not a mathematical proof.",
+    "A declaration's presence or successful compilation does not establish equivalence to a manuscript claim.",
+    "The audit does not certify that all Lean hypotheses are discharged by the physical model.",
+    "The source conflict for PROP-0012 is preserved; no upstream source was modified.",
+    "Independent review of this correspondence matrix remains required."
+  ]
+}

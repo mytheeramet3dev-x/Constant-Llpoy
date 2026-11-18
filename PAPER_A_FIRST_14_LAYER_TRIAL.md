@@ -81,3 +81,16 @@ The first producer run, 44247984360, failed in the Lean action before evidence g
 | L-14 | NOT_ASSESSED |
 
 The overall Paper A status remains NOT_VERIFIED. The Lean failure is in ConstantLlapoy.PaperA.PerronFrobeniusCore, with RCLike (RCLike Real) synthesis errors and unresolved goals around lines 690–709. No theorem was weakened or promoted to PASS.
+
+
+## L-02 semantic correspondence audit — 2026-11-18
+
+Added \`PAPER_A_LEAN_SEMANTIC_CORRESPONDENCE_AUDIT.md\` and its machine-readable companion \`meta_verification/paper_a_semantic_correspondence.json\`. All 15 registered Paper A claims are now explicitly classified against the four existing Lean modules, with exact claim-record blob SHAs, source line locators, Lean declaration names, and remaining hypothesis/model bridges.
+
+Observed mapping:
+- 0/15 claims have a complete direct Lean correspondence.
+- 4 claims have only partial supporting declarations or an abstract matrix core (DEF-0001, PROP-0005, PROP-0009, THM-0002).
+- 10 claims have no direct formalization in the four audited modules.
+- PROP-0012 remains a source conflict; its conditional Lean lemmas do not verify the frozen opposite-sign assertion.
+
+This is a traceability improvement, not an L-02 pass. **L-02 remains BLOCKED** pending independent semantic review and model-specific formalization. No Paper A claim status is promoted.

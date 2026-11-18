@@ -102,3 +102,14 @@ matrix-level (Q) and (\partial_u Q) estimates from the actual TFIM
 reduced-state block entries, then prove a valid lower/relative eigenvalue
 bound (or use the zero-branch analytic case split) before applying the
 logarithmic entropy estimate. No upstream Absolute Symmetry files were changed.
+
+
+## PA-LEAN-014 — Semantic correspondence audit update (2026-11-18)
+
+**State: BLOCKED / correspondence matrix created; independent review pending.**
+
+See \`PAPER_A_LEAN_SEMANTIC_CORRESPONDENCE_AUDIT.md\` and \`meta_verification/paper_a_semantic_correspondence.json\`. The audit maps all 15 frozen Paper A claim records to the declarations in the four current Lean modules and records the exact source and module blob identities.
+
+Result: 0/15 full direct correspondences; four partial-support/abstract-core cases; ten with no direct formalization; PROP-0012 remains a source conflict. In particular, the Perron–Frobenius core theorem is conditional on an abstract real symmetric matrix and supplied positivity/connectivity hypotheses; the encoded TFIM Hamiltonian-to-matrix bridge is still open.
+
+The matrix does not discharge PA-LEAN-014. An independent reviewer must check the semantic classifications, and subsequent Lean work must prove the missing model-to-abstract-hypothesis implications. Compilation or provenance authentication does not change this status.
