@@ -1,5 +1,6 @@
 """Adversarial tests for the external, separately governed trust-root package."""
 import hashlib
+from io import BytesIO
 import json
 import os
 import subprocess
@@ -7,8 +8,9 @@ import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
-from external_trust_root import TrustRootError, validate_manifest, verify_package
+from external_trust_root import (TrustRootError, fetch_github_repository_id, validate_manifest, verify_package)
 
 RELYING = "mytheeramet3dev-x/Constant-Llpoy"
 RELYING_ID = 1460417275
@@ -138,6 +140,22 @@ class ExternalTrustRootTests(unittest.TestCase):
         from external_trust_root import _unique_object
         with self.assertRaises(TrustRootError):
             json.loads('{"sequence":1,"sequence":2}', object_pairs_hook=_unique_object)
+
+    def test_github_repository_id_is_read_from_api(self):
+        response = BytesIO(b'{"id": 2880000001}')
+        with patch("external_trust_root.urlopen", return_value=response):
+            self.assertEqual(fetch_github_repository_id(ROOT, "token"), ROOT_ID)
+
+    def test_github_repository_api_error_fails_closed(self):
+        with patch("external_trust_root.urlopen", side_effect=OSError("unavailable")):
+            with self.assertRaisesRegex(TrustRootError, "cannot retrieve GitHub repository identity"):
+                fetch_github_repository_id(ROOT)
+
+    def test_non_integer_github_repository_id_rejected(self):
+        response = BytesIO(b'{"id": "2880000001"}')
+        with patch("external_trust_root.urlopen", return_value=response):
+            with self.assertRaises(TrustRootError):
+                fetch_github_repository_id(ROOT)
 
     def test_full_ed25519_package_verifies(self):
         if not all(subprocess.run(["sh", "-c", f"command -v {x} >/dev/null"], check=False).returncode == 0
