@@ -591,3 +591,6 @@ The activation-gate implementation also has a selected mutation suite (`test_pol
 
 
 Observed bounded validation for the activation-gate revision `b09293fc018144d43829c3a1b6b2dbbed93beef8`: full harness [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests; the nine selected activation-gate mutants were all killed; evidence producer [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded; separate provenance verifier [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported VERIFIED for that exact commit. This is bounded CI evidence and does not activate an external policy authority.
+
+
+The policy activation component includes a CLI contract requiring explicit policy/authority/activation/bundle files, externally sourced authority and active-record digests, expected policy ID and sequence, expected source commit, and trusted epoch time. The CLI rejects symlink/non-regular inputs, oversized inputs, duplicate JSON keys, and missing/malformed pins. It has no repository-local pin defaults. CLI test coverage is included in the meta-verification harness. Production invocation remains NOT ACTIVE because external pin custody, trusted time injection, and protected deployment controls have not been provisioned or verified.

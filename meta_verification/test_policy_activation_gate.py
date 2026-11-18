@@ -1,5 +1,5 @@
 """End-to-end policy-activation gate tests; keys are ephemeral test fixtures."""
-import base64, copy, hashlib, subprocess, tempfile, unittest
+import base64, copy, hashlib, json, subprocess, sys, tempfile, unittest
 from pathlib import Path
 from policy_activation_gate import ActivationError, canonical, digest, evaluate_active_policy, verify_activation
 from status_aggregator import aggregate
@@ -138,5 +138,51 @@ class GateTests(unittest.TestCase):
     activation=self.make_record(); bundle=self.bundle(); bundle["components"].append(copy.deepcopy(bundle["components"][0]))
     r=evaluate_active_policy(self.policy,self.policy_obj,self.authorities,activation,bundle,COMMIT,**self.args(activation))
     self.assertEqual(r["status"],"INCONCLUSIVE")
+
+
+ def _run_cli(self, policy_bytes=None, expected_activation=None):
+    activation=self.make_record()
+    inputs={"policy.json":policy_bytes or self.policy,"authority.json":self.authorities,
+      "activation.json":activation,"bundle.json":canonical(self.bundle())}
+    paths={}
+    for name,raw in inputs.items():
+      path=self.root/name; path.write_bytes(raw); paths[name]=path
+    cmd=[sys.executable,str(Path(__file__).with_name("policy_activation_gate.py")),
+      "--policy",str(paths["policy.json"]),"--authority-set",str(paths["authority.json"]),
+      "--activation-record",str(paths["activation.json"]),"--bundle",str(paths["bundle.json"]),
+      "--expected-commit",COMMIT,"--expected-authority-sha256",digest(self.authorities),
+      "--expected-activation-sha256",expected_activation if expected_activation is not None else digest(activation),
+      "--expected-policy-id","meta-policy-v1","--expected-policy-sequence","4","--now-epoch",str(NOW)]
+    return subprocess.run(cmd,capture_output=True,text=True)
+ def test_cli_executes_pinned_activation_end_to_end(self):
+    result=self._run_cli()
+    self.assertEqual(result.returncode,0,result.stderr+result.stdout)
+    self.assertEqual(json.loads(result.stdout)["status"],"POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED")
+ def test_cli_missing_external_pin_fails_closed(self):
+    result=self._run_cli(expected_activation="")
+    self.assertEqual(result.returncode,2)
+    self.assertEqual(json.loads(result.stdout)["status"],"ERROR")
+ def test_cli_rejects_duplicate_json_keys(self):
+    duplicate=b'{"schema_version":"1.0","schema_version":"1.0","claim_id":"CLAIM-A","policy_revision":"'+POLICY_REV.encode()+b'","required_components":["C1","C2"]}'
+    result=self._run_cli(policy_bytes=duplicate)
+    self.assertEqual(result.returncode,2)
+    self.assertIn("duplicate JSON key",json.loads(result.stdout)["error"])
+ def test_cli_rejects_symlink_inputs(self):
+    activation=self.make_record()
+    target=self.root/"real-policy.json"; target.write_bytes(self.policy)
+    link=self.root/"linked-policy.json"
+    try: link.symlink_to(target)
+    except OSError: self.skipTest("symlink creation unavailable")
+    # Prepare remaining input files through the normal helper.
+    self._run_cli()
+    cmd=[sys.executable,str(Path(__file__).with_name("policy_activation_gate.py")),
+      "--policy",str(link),"--authority-set",str(self.root/"authority.json"),
+      "--activation-record",str(self.root/"activation.json"),"--bundle",str(self.root/"bundle.json"),
+      "--expected-commit",COMMIT,"--expected-authority-sha256",digest(self.authorities),
+      "--expected-activation-sha256",digest(activation),"--expected-policy-id","meta-policy-v1",
+      "--expected-policy-sequence","4","--now-epoch",str(NOW)]
+    denied=subprocess.run(cmd,capture_output=True,text=True)
+    self.assertEqual(denied.returncode,2)
+    self.assertIn("symlinks are not accepted",json.loads(denied.stdout)["error"])
 
 if __name__ == "__main__": unittest.main(verbosity=2)

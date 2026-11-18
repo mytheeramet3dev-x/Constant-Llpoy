@@ -159,3 +159,10 @@ The design, status semantics, trust boundary, and non-activation limitations are
 
 
 Activation-gate validation: full harness [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests; 9/9 selected activation-gate mutants were killed by assertion-driven tests. Producer [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded and separate verifier [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported `VERIFIED` for the exact source commit. External activation remains NOT ACTIVE.
+
+
+### Policy activation CLI
+
+`policy_activation_gate.py` is also directly executable. It requires exact input files and explicit externally sourced authority/activation SHA-256 pins, policy identity/sequence, expected source commit, and trusted epoch time. It rejects symlink/non-regular inputs, oversized files, duplicate JSON keys, missing pins, and failed activation checks. No repository defaults are used. CLI tests cover successful pinned invocation, missing external pin, duplicate JSON keys, and symlink rejection.
+
+The CLI is not activated in production. Pins and time passed by a caller are only as trustworthy as that caller; a production deployment must source them from separately administered protected controls and trusted time. The GitHub workflow runs tests only.

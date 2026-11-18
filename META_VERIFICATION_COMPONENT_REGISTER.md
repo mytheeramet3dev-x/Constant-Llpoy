@@ -370,3 +370,8 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 Added `meta_verification/policy_activation_gate.py` as an activation gate around the existing structural `status_aggregator.py`; no duplicate aggregator was introduced. It requires separately supplied external SHA-256 pins for the authority set and active-policy record, then checks exact policy bytes, policy ID, sequence, authority binding, ACTIVE state, validity interval, and threshold Ed25519 signatures before calling the structural aggregator.
 
 The final status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, never bare `ACCEPTED`. The component receipts remain structural inputs and still require the separate signed-provenance acquisition/verification route. No production workflow consumes this gate, and no external authority or protected pins are active. The design and limitations are documented in `meta_verification/POLICY_ACTIVATION_GATE.md`.
+
+
+### Policy activation CLI
+
+`meta_verification/policy_activation_gate.py` now provides an executable CLI with explicit required inputs and no default trust pins. The caller must provide exact policy, authority-set, activation-record, and bundle files; expected source commit; authority-set and activation-record SHA-256 pins; policy ID and sequence; and trusted epoch time. It rejects symlinks, non-regular files, oversized files, duplicate JSON keys, and missing or malformed pins. The caller's pin/time trust is outside the CLI: production must inject them from separately administered protected controls. No production workflow currently invokes it.

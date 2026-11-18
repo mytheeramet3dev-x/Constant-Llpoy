@@ -53,3 +53,10 @@ Passing these tests demonstrates only the listed local test cases. It does not e
 ## Observed validation record
 
 On commit `b09293fc018144d43829c3a1b6b2dbbed93beef8`, the full harness run [44235070461](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235070461) passed 239 tests in 16.004 seconds. The activation-gate mutation suite killed all 9/9 selected mutants through assertion-driven failures. Evidence producer run [44235147267](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235147267) succeeded; separate provenance verifier run [44235183026](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44235183026) reported `VERIFIED` for that exact source commit and one attestation (subject SHA-256 `1735f3a778ebf7f7fe16ca1980fbcdd01f46d4c028a8c63232d6a7c86ed71902`). These are repository CI observations for the named revision, not independent governance or mathematical proof validation.
+
+
+## Executable CLI contract
+
+The gate now has a fail-closed CLI entry point. It requires explicit paths for the exact policy, authority-set, active-record, and component-bundle bytes, plus explicit expected commit, authority digest, active-record digest, policy ID, sequence, and epoch time. There are no default pins and no fallback to repository-local policy values. Input files must be regular non-symlink files and are size-bounded; policy, authority, activation, and bundle JSON are parsed with duplicate-key rejection. A missing/malformed external pin or invalid activation returns `ERROR` and a nonzero exit. A structurally non-accepted bundle is not upgraded by activation.
+
+The CLI does not itself establish that command-line pins or time are trustworthy. A production caller must inject them from protected, separately administered controls and a trusted time source. Supplying these values from the same mutable checkout or an unprotected workflow input does not satisfy the external trust requirement. The repository workflow runs adversarial tests only; it intentionally does not invoke the gate as a production decision.

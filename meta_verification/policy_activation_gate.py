@@ -153,3 +153,61 @@ def evaluate_active_policy(policy_bytes: bytes, policy: Any, authority_bytes: by
             "assurance_level": "AUTHORITY_AND_ACTIVATION_PINS_REQUIRED_BUT_COMPONENT_RECEIPTS_REMAIN_STRUCTURAL",
             "active_policy": active, "bundle_evaluation": result}
 
+
+
+def _read_cli_input(path_text: str, label: str, maximum: int) -> bytes:
+    path = Path(path_text)
+    require(not path.is_symlink(), f"{label}: symlinks are not accepted")
+    try:
+        if not path.is_file():
+            raise ActivationError(f"{label}: input must be a regular file")
+        raw = path.read_bytes()
+    except OSError as exc:
+        raise ActivationError(f"{label}: cannot read input: {exc}") from None
+    require(0 < len(raw) <= maximum, f"{label}: input is empty or exceeds size limit")
+    return raw
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+    import sys
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--policy", required=True, help="exact policy JSON bytes")
+    parser.add_argument("--authority-set", required=True, help="authority-set JSON bytes")
+    parser.add_argument("--activation-record", required=True, help="threshold-signed ACTIVE record JSON bytes")
+    parser.add_argument("--bundle", required=True, help="component evidence bundle JSON bytes")
+    parser.add_argument("--expected-commit", required=True)
+    parser.add_argument("--expected-authority-sha256", required=True,
+                        help="must be injected from an independently protected external pin source")
+    parser.add_argument("--expected-activation-sha256", required=True,
+                        help="must be injected from an independently protected external pin source")
+    parser.add_argument("--expected-policy-id", required=True)
+    parser.add_argument("--expected-policy-sequence", required=True, type=int)
+    parser.add_argument("--now-epoch", required=True, type=int,
+                        help="must be supplied by a trusted time source; never infer from untrusted evidence")
+    args = parser.parse_args(argv)
+    try:
+        policy_bytes = _read_cli_input(args.policy, "policy", 1024 * 1024)
+        authority_bytes = _read_cli_input(args.authority_set, "authority set", 1024 * 1024)
+        activation_bytes = _read_cli_input(args.activation_record, "activation record", 1024 * 1024)
+        bundle_bytes = _read_cli_input(args.bundle, "bundle", 8 * 1024 * 1024)
+        policy = strict_json(policy_bytes, "policy")
+        bundle = strict_json(bundle_bytes, "bundle")
+        result = evaluate_active_policy(
+            policy_bytes, policy, authority_bytes, activation_bytes, bundle, args.expected_commit,
+            expected_authority_sha256=args.expected_authority_sha256,
+            expected_activation_sha256=args.expected_activation_sha256,
+            expected_policy_id=args.expected_policy_id,
+            expected_policy_sequence=args.expected_policy_sequence,
+            now_epoch=args.now_epoch)
+    except (ActivationError, AggregationError, OSError, subprocess.SubprocessError, ValueError) as exc:
+        result = {"status": "ERROR", "error": str(exc),
+                  "status_scope": "ACTIVE_POLICY_GATED_STRUCTURAL_BUNDLE_EVALUATION_ONLY"}
+        print(json.dumps(result, sort_keys=True))
+        return 2
+    print(json.dumps(result, sort_keys=True))
+    return 0 if result["status"] == "POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
