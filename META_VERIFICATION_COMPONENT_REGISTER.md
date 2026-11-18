@@ -51,6 +51,9 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-023 | Independent trusted-builder authority | Build/signing authority | Supplies a reusable workflow pinned to a separately administered repository and commit | Contract specified; no external builder repository provisioned and current producer does not delegate to it |
 | MVC-024 | Trusted-builder contract and report schema | Normative interface / output contract | Defines immutable builder identity, caller authorization, subject validation, signing constraints, independent verifier requirements, and activation gates | Specified in `meta_verification/TRUSTED_BUILDER_CONTRACT.md`; JSON report schema in `meta_verification/trusted_builder_report.schema.json`; not yet implemented by an external builder |
 | MVC-025 | Trusted-builder contract regression tests | Structural contract checker | Checks strict report schema invariants and required contract/activation statements | 10 tests added; combined harness run `44212792319` passed 89 tests on commit `ea217ddce37f76f02a29e96eb34839ddf06d1164`; collector `44212816996` accepted it (subject artifact `14386168406`) and verifier `44212845744` reported `VERIFIED` (report artifact `14387166418`); tests validate artifact structure, not external builder implementation |
+| MVC-026 | Component provenance authenticator | Direct cryptographic evidence verifier | Verifies every required component's exact evidence bytes against GitHub/Sigstore SLSA provenance, certificate identity, subject digest, source commit, and run invocation ID/attempt | Implemented in `meta_verification/component_provenance_authenticator.py`; tests use controlled fake CLI output; no live component artifact authenticated |
+| MVC-027 | Component receipt schema 2.0 and authentication-gated aggregator | Receipt contract / aggregation control | Removes self-asserted VERIFIED status and requires an in-memory authenticated map before ACCEPTED | Implemented in `status_aggregator.py` and `policy_activation_gate.py`; standalone aggregator CLI cannot accept unauthenticated JSON; external pin and production activation remain NOT ACTIVE |
+| MVC-028 | Component provenance mutation suite | Checker challenge infrastructure | Applies selected bypasses to policy pin, evidence digest, run ID/attempt, workflow revision, CLI failure, invocation ID, subject digest, and aggregation gate | Implemented in `test_component_provenance_mutations.py`; selected mutation results await CI on integration commit |
 
 ## 3. Observed repository-owned components
 
@@ -341,9 +344,9 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Policy inputs:** exact claim ID, immutable policy revision, and unique required component set.
 - **Bundle binding:** expected source commit is supplied independently; claim and policy revision must match; missing, duplicate, unknown, stale, and conflicting records fail closed.
 - **Component state model:** PASS / FAIL / INCONCLUSIVE / ERROR / TIMEOUT / NOT_RUN.
-- **Evidence binding:** non-empty bounded bytes, Base64 validation, SHA-256 digest; provenance receipt structure and source/subject binding; exact positive integer verifier run ID/attempt.
-- **Status semantics:** verified failure or digest mismatch → REJECTED; malformed contract → ERROR; incomplete/stale/duplicate/unverified/non-PASS → INCONCLUSIVE; only complete all-PASS bundle → ACCEPTED.
-- **Output limitation:** every output labels itself `BUNDLE_POLICY_EVALUATION_ONLY` and `STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`. The aggregator does not verify receipt signatures and is not wired into the production theorem-status path.
+- **Evidence binding:** non-empty bounded bytes, Base64 validation, SHA-256 digest; schema 2.0 receipt structure and source/subject binding; exact positive integer attestation run ID/attempt and workflow revision.
+- **Status semantics:** digest mismatch or authenticated FAIL → REJECTED; malformed contract → ERROR; missing authentication, incomplete/stale/duplicate/non-PASS → INCONCLUSIVE; ACCEPTED requires every required component to have a matching in-memory result from the direct attestation authenticator.
+- **Output limitation:** standalone aggregator CLI never receives authenticated records and therefore cannot return ACCEPTED. The internal Python function is not a security sandbox; production must use the activation-gate CLI, which performs direct attestation verification first. Provenance does not prove mathematical correctness.
 - **Selected mutation set:** 12; all 12/12 killed. Corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests on commit `0c1bc5d2e5bd3bb8808222c71868edfa81b83bce`.
 - **Test correction record:** initial harness run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) failed. It exposed an incorrect escalation from duplicate conflicting component records to REJECTED; duplicate IDs are now excluded from state authority and force INCONCLUSIVE. A stale mutation anchor was also corrected.
 - **Status:** Implemented and validated as a structural prototype only. It is not yet an independently authenticated or production-integrated status authority.
@@ -369,9 +372,21 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 
 Added `meta_verification/policy_activation_gate.py` as an activation gate around the existing structural `status_aggregator.py`; no duplicate aggregator was introduced. It requires separately supplied external SHA-256 pins for the authority set and active-policy record, then checks exact policy bytes, policy ID, sequence, authority binding, ACTIVE state, validity interval, and threshold Ed25519 signatures before calling the structural aggregator.
 
-The final status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, never bare `ACCEPTED`. The component receipts remain structural inputs and still require the separate signed-provenance acquisition/verification route. No production workflow consumes this gate, and no external authority or protected pins are active. The design and limitations are documented in `meta_verification/POLICY_ACTIVATION_GATE.md`.
+The final status is now `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. The activation CLI requires a separately supplied provenance-policy digest and directly verifies every required component's exact evidence bytes before invoking the aggregator. No production workflow currently emits attestations for every component, no real component bundle has been authenticated, and no external authority/provenance pin source is active.
 
 
 ### Policy activation CLI
 
 `meta_verification/policy_activation_gate.py` now provides an executable CLI with explicit required inputs and no default trust pins. The caller must provide exact policy, authority-set, activation-record, and bundle files; expected source commit; authority-set and activation-record SHA-256 pins; policy ID and sequence; and trusted epoch time. It rejects symlinks, non-regular files, oversized files, duplicate JSON keys, and missing or malformed pins. The caller's pin/time trust is outside the CLI: production must inject them from separately administered protected controls. No production workflow currently invokes it.
+
+
+## 20. Component provenance receipt authentication
+
+- **Normative contract:** `meta_verification/COMPONENT_PROVENANCE_RECEIPT_AUTHENTICATION.md`.
+- **Authenticator:** `meta_verification/component_provenance_authenticator.py`.
+- **Receipt schema:** exact schema 2.0 fields: subject SHA-256, source commit, attestation run ID, run attempt, and attestation workflow revision. A caller-controlled `status: VERIFIED` field is rejected.
+- **Cryptographic checks:** direct `gh attestation verify` on each exact evidence subject; repository numeric identity, source ref, source commit, signer commit, verified timestamp, SLSA v1 predicate, unique subject digest, and SLSA `invocationId` bound to the receipt's run ID/attempt.
+- **Policy binding:** provenance-policy raw bytes must match an externally supplied SHA-256 pin; parsed policy object must match those exact bytes.
+- **Aggregation:** standalone aggregator CLI has no authenticated-map input and cannot return ACCEPTED for JSON-only receipts. The activation CLI constructs the in-memory map after direct verification and then aggregates.
+- **Tests:** `test_component_provenance_authenticator.py` uses fake GitHub CLI outputs to test the contract; it is not a live signature test. `test_component_provenance_mutations.py` covers a selected set of deliberate bypasses.
+- **Limitations:** existing evidence producer signs only `github-run-evidence.json`, not every component artifact. No per-component attestation producer or real end-to-end component bundle is operational. External provenance-policy pin, authority pins, protected controls, and trusted time are not provisioned. Production activation remains NOT ACTIVE.

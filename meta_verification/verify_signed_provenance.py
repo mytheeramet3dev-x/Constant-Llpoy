@@ -88,6 +88,15 @@ def _validate_entry(entry: Any, expected_digest: str, policy: dict,
     require(isinstance(statement, dict), "missing verified in-toto statement")
     require(statement.get("predicateType") == policy["predicate_type"],
             "predicate type mismatch")
+    if expected_invocation_id is not None:
+        predicate = statement.get("predicate")
+        require(isinstance(predicate, dict), "missing SLSA provenance predicate")
+        run_details = predicate.get("runDetails")
+        require(isinstance(run_details, dict), "missing SLSA runDetails")
+        metadata = run_details.get("metadata")
+        require(isinstance(metadata, dict), "missing SLSA run metadata")
+        require(metadata.get("invocationId") == expected_invocation_id,
+                "SLSA invocationId does not match the receipt run ID and attempt")
     subjects = statement.get("subject")
     require(isinstance(subjects, list) and bool(subjects), "statement has no subjects")
     matching = []
@@ -108,7 +117,8 @@ def _validate_entry(entry: Any, expected_digest: str, policy: dict,
         "subject_sha256": expected_digest,
     }
 
-def validate_cli_output(output: Any, subject_bytes: bytes, policy: Any, source_sha: str) -> dict:
+def validate_cli_output(output: Any, subject_bytes: bytes, policy: Any, source_sha: str,
+                        expected_invocation_id: str | None = None) -> dict:
     p = validate_policy(policy)
     require(isinstance(source_sha, str) and SHA1.fullmatch(source_sha) is not None,
             "source_sha must be a lowercase 40-character Git commit SHA")
@@ -116,7 +126,7 @@ def validate_cli_output(output: Any, subject_bytes: bytes, policy: Any, source_s
             "subject artifact is empty or not bytes")
     digest = hashlib.sha256(subject_bytes).hexdigest()
     require(isinstance(output, list) and bool(output), "gh returned no verified attestations")
-    checks = [_validate_entry(entry, digest, p, source_sha) for entry in output]
+    checks = [_validate_entry(entry, digest, p, source_sha, expected_invocation_id) for entry in output]
     return {
         "schema_version": "1.0",
         "status": "VERIFIED",

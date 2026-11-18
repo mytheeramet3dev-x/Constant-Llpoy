@@ -514,58 +514,59 @@ The collector mutation suite now contains 17 selected mutants, adding run-attemp
 This is bounded API-contract and replay-resistance testing. It does not authenticate GitHub's API independently, prove the API is truthful, or protect against a privileged repository administrator who can change the producer and policy. Pagination is fail-closed at 100 jobs rather than fully traversed; a future policy needing more than 100 jobs requires an explicit cursor/next-page contract and tests before enabling it.
 
 
-## 23. Meta-verification aggregation and status authority (structural prototype)
+## 23. Component provenance authentication and status aggregation
 
-### Purpose and authority boundary
+### 23.1 Authority boundary
 
-`meta_verification/status_aggregator.py` is a deterministic policy evaluator for a supplied component-evidence bundle. It is deliberately not a cryptographic verifier, mathematical proof checker, theorem-status oracle, or independent authority over the truth of component claims.
+`meta_verification/status_aggregator.py` validates component completeness, evidence bytes/digests, policy/source binding, and the shape of provenance receipts. Structural consistency is not cryptographic authentication. A JSON field claiming `VERIFIED` MUST NOT authorize acceptance.
 
-Its `ACCEPTED` result means only: **the supplied bundle structurally satisfies the supplied aggregation policy for the specified claim and source commit**. The output explicitly carries:
-- `status_scope = BUNDLE_POLICY_EVALUATION_ONLY`
-- `assurance_level = STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`
+The standalone `status_aggregator.py` CLI supplies no authenticated-receipt map and therefore MUST return `INCONCLUSIVE` for otherwise complete but unauthenticated bundles. Its internal `aggregate()` API accepts an in-memory authentication map only from the direct component authenticator. Because arbitrary Python code can fabricate Python objects, the function API is not itself a process or security boundary. The supported production path is the `policy_activation_gate.py` CLI, which creates the map internally after direct verification.
 
-The aggregator validates a provenance receipt's shape, source-commit binding, and subject digest binding. It does not itself establish that the receipt was signed by a trusted verifier. Receipt authenticity must be established by a separately trusted acquisition/verification path before the receipt can be treated as authoritative. A caller-controlled JSON field saying `VERIFIED` is not a cryptographic trust root.
+### 23.2 Component receipt schema 2.0
 
-### Policy and bundle contracts
+Each component provenance object MUST have exactly:
+- `receipt_schema_version = "2.0"`;
+- `subject_sha256`, equal to the SHA-256 of the exact decoded evidence bytes;
+- `source_commit`, equal to the expected source commit;
+- positive exact-integer `attestation_run_id`;
+- positive exact-integer `attestation_run_attempt`; and
+- immutable 40-character `attestation_workflow_revision`, equal to the expected source/workflow revision.
 
-- Policy defines an exact claim ID, immutable policy revision, and unique non-empty set of required component IDs.
-- Bundle must match the claim, expected source commit supplied independently to the invocation, and policy revision.
-- Every required component must appear exactly once. Missing, duplicate, unknown, stale, or conflicting component evidence cannot produce acceptance.
-- Each component has a finite state: `PASS`, `FAIL`, `INCONCLUSIVE`, `ERROR`, `TIMEOUT`, or `NOT_RUN`.
-- Component evidence must be non-empty, bounded, Base64-decodable, and match its SHA-256 digest.
-- Provenance receipt has an exact field set, positive exact-integer run ID/attempt, immutable verifier revision, `VERIFIED` status, subject digest matching the evidence bytes, and source commit matching the expected commit.
-- Boolean-as-integer identity confusion is rejected.
-- Empty evidence is rejected. This is stricter than the older policy evaluator's test that allowed an empty byte string with a matching digest; the older evaluator has not been silently redefined by this prototype.
+Legacy self-asserted fields such as `status: VERIFIED`, `verifier_run_id`, and `verifier_revision` are rejected by the exact schema. The run ID and attempt MUST be bound to the signed SLSA v1 `predicate.runDetails.metadata.invocationId`, using the GitHub Actions invocation URI:
 
-### Aggregation semantics
+`https://github.com/OWNER/REPOSITORY/actions/runs/RUN_ID/attempts/RUN_ATTEMPT`.
 
-- Malformed policy/bundle/receipt structure returns CLI `ERROR` and a non-zero exit.
-- A digest mismatch or a component `FAIL` accompanied by a structurally consistent `VERIFIED` receipt yields `REJECTED`.
-- Missing, duplicate, unknown, stale, conflicting, unverified, or non-PASS evidence yields `INCONCLUSIVE`.
-- Only a complete, unique, current bundle with all component states `PASS` and structurally consistent receipts yields `ACCEPTED`.
-- Duplicate component IDs are not resolved by choosing first or last: duplicate records are excluded from authoritative component-state evaluation and force `INCONCLUSIVE`.
-- The output is deterministic and contains component-level summaries and explicit reason fields.
+### 23.3 Direct attestation authentication
 
-This is a prototype status-authority policy, not yet integrated as the final theorem-status gate in the evidence producer/verifier workflows. It does not replace `status_evaluator.py` or the GitHub signed-provenance verifier. No Layer-level mathematical acceptance is inferred from it.
+`component_provenance_authenticator.py` MUST:
+1. validate the exact aggregation policy and complete, unique required component set;
+2. verify the exact provenance-policy bytes against a separately supplied SHA-256 pin and ensure the parsed object equals those bytes;
+3. decode each component's exact evidence bytes and recompute its SHA-256;
+4. require receipt schema, source commit, workflow revision, run ID, and attempt to match;
+5. invoke the pinned-version GitHub CLI `gh attestation verify` on each exact evidence subject with explicit repository, signer-workflow, OIDC issuer, predicate, source-ref, source-digest, signer-digest, and self-hosted-runner denial constraints;
+6. verify repository numeric identity, source ref, source commit, signer commit, verified timestamps, predicate type, unique subject digest, and exact invocation ID; and
+7. return an in-memory authenticated record for each required component.
 
-### Adversarial and mutation evidence
+The verifier MUST NOT accept caller-supplied verification reports or a `VERIFIED` string as a substitute for direct attestation verification. A missing attestation, failed verification, wrong signer, wrong source, wrong subject, wrong invocation ID, stale attempt, or missing/mismatched external provenance-policy pin MUST fail closed.
 
-- Unit tests cover completeness, stale commits/policy, duplicate and conflicting records, unknown components, all non-PASS states, verified versus unverified failures, subject/source binding, digest corruption, empty evidence, exact identity types, and unknown fields.
-- Twelve selected source mutants target completeness, revision binding, receipt status, receipt digest/source binding, Boolean identity confusion, empty evidence, failure handling, duplicate handling, and digest enforcement.
-- Initial run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) failed and exposed two real issues: duplicate conflicting records could incorrectly escalate to `REJECTED`, and one mutation anchor did not match the source. The implementation now excludes duplicated IDs from component-state authority (while preserving the duplicate reason as `INCONCLUSIVE`), and the mutation anchor was corrected.
-- Corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests; all 12/12 selected aggregator mutants were killed, with assertion-driven test failures.
-- This is bounded evidence for the authored tests/mutants, not exhaustive correctness or external independence.
+### 23.4 Aggregation and status
 
-### Remaining integration obligations
+The production activation CLI MUST require all of:
+- external authority-set SHA-256 pin;
+- external active-policy-record SHA-256 pin;
+- external provenance-policy SHA-256 pin;
+- expected source commit, policy ID and sequence; and
+- trusted epoch time.
 
-Before this prototype can act as a production status authority:
-1. Define and pin the authoritative policy revision and who is authorized to change it.
-2. Acquire verifier receipts through an authenticated, independent route; do not trust caller-supplied `VERIFIED` strings.
-3. Bind each receipt to the exact verifier workflow identity, repository ID, signer identity, source commit, run ID, run attempt, and subject digest.
-4. Define whether and how a trusted external builder/root participates; the existing external trust-root bootstrap remains inactive.
-5. Integrate the aggregator only after end-to-end tests prove the producer cannot inject, omit, replay, or relabel component records.
-6. Keep mathematical theorem acceptance separate from infrastructure evidence acceptance.
+It MUST authenticate every required component before calling the existing aggregator. The success status is `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. This means only that the active-policy gate passed and component evidence subjects have authenticated provenance under the supplied signer policy. It does NOT mean the component evidence is mathematically correct, complete, relevant, or a proof of the theorem.
 
+### 23.5 Tests and limitations
+
+The authenticator tests use controlled fake GitHub CLI output. They test policy and receipt binding, not live cryptographic signatures. The mutation suite challenges selected pin, digest, identity, run-attempt, invocation-ID, and aggregation-authentication checks; its score is bounded to the authored mutant set.
+
+No current component-evidence producer workflow emits an attestation for every component artifact, and no real component bundle has been authenticated end to end. The existing evidence producer attests `github-run-evidence.json`; that does not attest arbitrary component subjects. External provenance-policy pins, external authority pins, protected controls, and trusted-time injection remain unprovisioned. GitHub CLI is version-pinned but its binary/runtime remains runner-provided. Repository administrators able to alter workflows and policies remain in the trust boundary.
+
+This subsystem is infrastructure provenance assurance, not a mathematical proof checker or theorem-status authority.
 
 ## 24. Policy authority and change control
 
@@ -582,7 +583,7 @@ The existing `status_aggregator.py` remains the structural component-bundle eval
 
 The new `policy_activation_gate.py` adds a separate activation check before invoking the structural aggregator. It requires (i) an externally supplied SHA-256 pin for the authority set and (ii) a separately externally supplied SHA-256 pin for a threshold-signed active-policy record. The record binds exact policy bytes, policy ID, sequence, authority-set digest, ACTIVE state, validity interval, and distinct Ed25519 signatures. Missing pins, stale sequence, mismatched digests, invalid signatures, or expired records fail closed.
 
-The final integration status is deliberately `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, not bare `ACCEPTED`. It means only that the external activation gate passed and the existing component bundle was structurally accepted. Component provenance receipts remain structurally inspected by the aggregator and must be authenticated through the separate provenance acquisition/verification path. This is not a mathematical proof checker or a theorem acceptance gate.
+The final integration status is `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. The CLI now requires an externally pinned provenance policy and directly verifies each required component's exact evidence bytes with GitHub/Sigstore before invoking the existing aggregator. The standalone aggregator CLI cannot accept unauthenticated JSON receipts. This status still does not prove the component evidence is mathematically correct or constitute theorem acceptance.
 
 The implementation is a prototype only. No external authority repository, independent reviewer key custody, protected Environment/pins, or production workflow invocation has been provisioned or verified. Rollback resistance depends on the external pin source advancing the expected sequence and activation-record digest; if the relying repository can control both expected pins and supplied bytes, the trust boundary collapses. See `meta_verification/POLICY_ACTIVATION_GATE.md` for the contract and limitations.
 

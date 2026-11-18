@@ -5,6 +5,8 @@ import pathlib, shutil, subprocess, sys, tempfile, unittest
 ROOT = pathlib.Path(__file__).resolve().parent
 GATE = ROOT / "policy_activation_gate.py"
 AGGREGATOR = ROOT / "status_aggregator.py"
+AUTHENTICATOR = ROOT / "component_provenance_authenticator.py"
+PROVENANCE_VERIFIER = ROOT / "verify_signed_provenance.py"
 TESTS = ROOT / "test_policy_activation_gate.py"
 MUTANTS = {
     "bypass_external_authority_pin": (
@@ -46,6 +48,8 @@ class PolicyActivationMutationTests(unittest.TestCase):
                 mutated = source.replace(old, new, 1)
                 (root / "policy_activation_gate.py").write_text(mutated, encoding="utf-8")
                 shutil.copy2(AGGREGATOR, root / "status_aggregator.py")
+                shutil.copy2(AUTHENTICATOR, root / "component_provenance_authenticator.py")
+                shutil.copy2(PROVENANCE_VERIFIER, root / "verify_signed_provenance.py")
                 shutil.copy2(TESTS, root / "test_policy_activation_gate.py")
                 syntax = subprocess.run([sys.executable, "-m", "py_compile",
                                          str(root / "policy_activation_gate.py")],

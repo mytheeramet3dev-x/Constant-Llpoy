@@ -15,9 +15,9 @@ MUTANTS = {
  "ignore_policy_revision": (
   '("policy_revision", p["policy_revision"]))',
   '("policy_revision", "0" * 40))'),
- "allow_unverified_receipt": (
-  'receipt["status"] == "VERIFIED"',
-  'receipt["status"] in {"VERIFIED", "UNVERIFIED", "FAILED"}'),
+ "bypass_authenticated_attestation_requirement": (
+  'receipt_valid = (auth_valid and receipt["subject_sha256"] == actual',
+  'receipt_valid = (True and receipt["subject_sha256"] == actual'),
  "skip_subject_digest_binding": (
   'and receipt["subject_sha256"] == actual',
   ''),
@@ -25,11 +25,11 @@ MUTANTS = {
   'and receipt["source_commit"] == expected_commit',
   ''),
  "allow_boolean_run_id": (
-  'type(receipt["verifier_run_id"]) is int',
-  'isinstance(receipt["verifier_run_id"], int)'),
+  'type(receipt["attestation_run_id"]) is int',
+  'isinstance(receipt["attestation_run_id"], int)'),
  "allow_boolean_run_attempt": (
-  'type(receipt["verifier_run_attempt"]) is int',
-  'isinstance(receipt["verifier_run_attempt"], int)'),
+  'type(receipt["attestation_run_attempt"]) is int',
+  'isinstance(receipt["attestation_run_attempt"], int)'),
  "accept_empty_evidence": (
   '0 < len(evidence_bytes) <= MAX_EVIDENCE_BYTES',
   '0 <= len(evidence_bytes) <= MAX_EVIDENCE_BYTES'),

@@ -712,3 +712,14 @@ The threat model exists to challenge the verification system itself with the sam
 **Required controls:** Keep authorization distinct from activation. Require an authority-set digest and active-record digest from a separately governed external source; bind exact policy bytes, policy ID, monotonic sequence, authority digest, ACTIVE state, validity window, and threshold signatures. Fail closed on missing pins, stale sequence, digest mismatch, expiry, invalid/revoked signer, or rollback. The external pin source must itself be protected and independently administered. Tests within the relying repository do not establish this external governance.
 
 **Residual risk:** If the relying repository controls both the active bytes and their expected digests, the trust boundary collapses. External key custody, protected controls, and independent administration remain necessary.
+
+
+## T23 — Forged, replayed, or misbound component provenance receipts
+
+**Threat:** A component bundle is accepted because a caller-controlled receipt says `VERIFIED`, a digest is self-consistent, or a run identifier is plausible, even though no trusted attestation exists for the exact evidence bytes.
+
+**Failure modes:** Receipt status string is forged; artifact bytes are substituted; subject digest is wrong or ambiguous; signer repository/workflow/ref/commit is unauthorized; SLSA predicate or transparency timestamp is absent; a run ID is paired with the wrong attempt; the SLSA invocation ID does not match the receipt; a stale receipt is replayed; provenance policy bytes differ from the externally pinned policy; or an incomplete component set is promoted.
+
+**Required controls:** Remove self-asserted VERIFIED fields from the receipt schema. Verify each required component's exact evidence bytes directly with GitHub/Sigstore. Bind certificate repository identity, source ref and commit, signer workflow identity and commit, verified timestamp, predicate type, unique subject digest, and SLSA invocation ID to the exact run ID/attempt. Require an externally supplied provenance-policy digest. The standalone aggregator CLI must not accept JSON-only receipts; the activation CLI must authenticate every required component before aggregation. Fail closed on missing, stale, duplicate, conflicting, or mismatched evidence.
+
+**Residual risk:** Tests use fake CLI output and do not establish live component attestations. The current evidence producer signs only the collector evidence JSON, not every component artifact. No external provenance-policy pin or production integration is provisioned. GitHub CLI binary provenance and repository-admin trust remain in the trust boundary. Authenticated provenance does not establish mathematical correctness of component evidence.

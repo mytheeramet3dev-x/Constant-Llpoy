@@ -10,6 +10,7 @@ import base64, hashlib, json, re, subprocess, tempfile
 from pathlib import Path
 from typing import Any
 from status_aggregator import aggregate, AggregationError
+from component_provenance_authenticator import authenticate_components, ComponentProvenanceError
 
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 AUTHORITY_KEYS = {"schema_version", "authority_set_id", "threshold", "reviewers"}
@@ -54,7 +55,8 @@ def positive_int(value: Any, label: str) -> int:
 
 def verify_activation(policy_bytes: bytes, policy: Any, authority_bytes: bytes, activation_bytes: bytes,
                       *, expected_authority_sha256: str, expected_activation_sha256: str,
-                      expected_policy_id: str, expected_policy_sequence: int, now_epoch: int) -> dict:
+                      expected_policy_id: str, expected_policy_sequence: int, now_epoch: int,
+                           authenticated_receipts: dict | None = None) -> dict:
     require(isinstance(expected_authority_sha256, str) and SHA256.fullmatch(expected_authority_sha256) is not None,
             "external authority pin is missing or malformed")
     require(isinstance(expected_activation_sha256, str) and SHA256.fullmatch(expected_activation_sha256) is not None,
@@ -140,17 +142,18 @@ def verify_activation(policy_bytes: bytes, policy: Any, authority_bytes: bytes, 
 def evaluate_active_policy(policy_bytes: bytes, policy: Any, authority_bytes: bytes, activation_bytes: bytes,
                            bundle: Any, expected_commit: str, *, expected_authority_sha256: str,
                            expected_activation_sha256: str, expected_policy_id: str,
-                           expected_policy_sequence: int, now_epoch: int) -> dict:
+                           expected_policy_sequence: int, now_epoch: int,
+                           authenticated_receipts: dict | None = None) -> dict:
     active = verify_activation(policy_bytes, policy, authority_bytes, activation_bytes,
         expected_authority_sha256=expected_authority_sha256,
         expected_activation_sha256=expected_activation_sha256,
         expected_policy_id=expected_policy_id, expected_policy_sequence=expected_policy_sequence,
         now_epoch=now_epoch)
-    result = aggregate(policy, bundle, expected_commit)
-    return {"status": ("POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED"
+    result = aggregate(policy, bundle, expected_commit, authenticated_receipts)
+    return {"status": ("POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED"
                        if result["status"] == "ACCEPTED" else result["status"]),
-            "status_scope": "ACTIVE_POLICY_GATED_STRUCTURAL_BUNDLE_EVALUATION_ONLY",
-            "assurance_level": "AUTHORITY_AND_ACTIVATION_PINS_REQUIRED_BUT_COMPONENT_RECEIPTS_REMAIN_STRUCTURAL",
+            "status_scope": "ACTIVE_POLICY_AND_COMPONENT_ATTESTATION_GATED_EVALUATION",
+            "assurance_level": result["assurance_level"],
             "active_policy": active, "bundle_evaluation": result}
 
 
@@ -176,6 +179,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--authority-set", required=True, help="authority-set JSON bytes")
     parser.add_argument("--activation-record", required=True, help="threshold-signed ACTIVE record JSON bytes")
     parser.add_argument("--bundle", required=True, help="component evidence bundle JSON bytes")
+    parser.add_argument("--provenance-policy", required=True,
+                        help="strict signer identity policy for every required component")
+    parser.add_argument("--expected-provenance-policy-sha256", required=True,
+                        help="must be injected from an independently protected external pin source")
     parser.add_argument("--expected-commit", required=True)
     parser.add_argument("--expected-authority-sha256", required=True,
                         help="must be injected from an independently protected external pin source")
@@ -191,22 +198,28 @@ def main(argv: list[str] | None = None) -> int:
         authority_bytes = _read_cli_input(args.authority_set, "authority set", 1024 * 1024)
         activation_bytes = _read_cli_input(args.activation_record, "activation record", 1024 * 1024)
         bundle_bytes = _read_cli_input(args.bundle, "bundle", 8 * 1024 * 1024)
+        provenance_policy_bytes = _read_cli_input(args.provenance_policy, "provenance policy", 1024 * 1024)
         policy = strict_json(policy_bytes, "policy")
         bundle = strict_json(bundle_bytes, "bundle")
+        provenance_policy = strict_json(provenance_policy_bytes, "provenance policy")
+        authenticated_receipts = authenticate_components(
+            policy_bytes, provenance_policy_bytes, provenance_policy, bundle, args.expected_commit,
+            args.expected_provenance_policy_sha256)
         result = evaluate_active_policy(
             policy_bytes, policy, authority_bytes, activation_bytes, bundle, args.expected_commit,
             expected_authority_sha256=args.expected_authority_sha256,
             expected_activation_sha256=args.expected_activation_sha256,
             expected_policy_id=args.expected_policy_id,
             expected_policy_sequence=args.expected_policy_sequence,
-            now_epoch=args.now_epoch)
-    except (ActivationError, AggregationError, OSError, subprocess.SubprocessError, ValueError) as exc:
+            now_epoch=args.now_epoch, authenticated_receipts=authenticated_receipts)
+    except (ActivationError, AggregationError, ComponentProvenanceError, OSError,
+            subprocess.SubprocessError, ValueError) as exc:
         result = {"status": "ERROR", "error": str(exc),
-                  "status_scope": "ACTIVE_POLICY_GATED_STRUCTURAL_BUNDLE_EVALUATION_ONLY"}
+                  "status_scope": "ACTIVE_POLICY_AND_COMPONENT_ATTESTATION_GATED_EVALUATION"}
         print(json.dumps(result, sort_keys=True))
         return 2
     print(json.dumps(result, sort_keys=True))
-    return 0 if result["status"] == "POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED" else 1
+    return 0 if result["status"] == "POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED" else 1
 
 
 if __name__ == "__main__":

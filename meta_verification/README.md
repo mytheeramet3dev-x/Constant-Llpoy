@@ -127,13 +127,13 @@ This remains bounded testing against GitHub API responses; it is not an independ
 
 ## Component status aggregation (structural prototype)
 
-`status_aggregator.py` evaluates a policy-bound bundle of component results. It binds claim ID, expected source commit, policy revision, required component set, per-component evidence bytes/digests, and the structure of provenance receipts. Missing, duplicate, unknown, stale, conflicting, non-PASS, or unverified inputs cannot produce acceptance. A verified component failure or evidence digest mismatch is rejected; malformed contracts return an error.
+`status_aggregator.py` evaluates a policy-bound component bundle and now requires an in-memory authenticated-receipt map before it can return `ACCEPTED`. Its standalone CLI never receives that map and therefore returns `INCONCLUSIVE` for otherwise complete but unauthenticated bundles. The production `policy_activation_gate.py` CLI creates the map internally only after `component_provenance_authenticator.py` verifies every required component's exact evidence bytes with GitHub/Sigstore.
 
-**Important authority boundary:** its `ACCEPTED` means only that the supplied bundle structurally satisfies the supplied policy. Output explicitly says `BUNDLE_POLICY_EVALUATION_ONLY` and `STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`. It does not cryptographically authenticate a receipt merely because a JSON field says `VERIFIED`, does not verify mathematical proofs, and is not integrated as the production theorem-status gate. Do not use it to claim theorem acceptance.
+**Important authority boundary:** a JSON field saying `VERIFIED` is never sufficient. Component provenance schema 2.0 binds exact subject digest, source commit, attestation run ID/attempt, and workflow revision. The direct verifier checks the GitHub certificate identity, source and signer commit, timestamps, SLSA predicate, exact subject digest, and signed `invocationId`. Even authenticated provenance does not verify mathematical proofs or theorem truth. The internal Python API is not a sandbox; production use must go through the CLI path.
 
 Tests are in `test_status_aggregator.py`; selected mutation checks are in `test_status_aggregator_mutations.py`. The corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests and killed all 12 selected aggregator mutants. The initial run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) exposed a duplicate-record escalation bug and a mutation-fixture anchor problem; both were corrected before the passing run.
 
-Production use still requires authenticated receipt acquisition, independently governed policy authority, exact verifier identity binding, and an end-to-end workflow integration audit.
+Tests use synthetic/fake GitHub CLI outputs and do not prove that real component artifacts currently have attestations. The existing producer signs `github-run-evidence.json`, not every component artifact. No component-evidence producer workflow or external policy pin source is active.
 
 
 ## Policy authority and change control
@@ -148,7 +148,7 @@ Policy-change verifier validation: full harness [44233157563](https://github.com
 
 `policy_activation_gate.py` wraps the existing structural `status_aggregator.py`; it does not replace or duplicate it. It requires separate externally supplied SHA-256 pins for the reviewer authority set and active-policy record. The record binds exact policy bytes, policy ID, sequence, authority-set digest, ACTIVE state, validity interval, and threshold Ed25519 signatures. Only after verification does the gate invoke the structural aggregator.
 
-The final success status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, not bare `ACCEPTED`. This is still a structural bundle result, not mathematical proof verification. Component provenance receipt fields are not cryptographically authenticated by this gate.
+The final success status is `POLICY_ACTIVE_AND_COMPONENT_PROVENANCE_AUTHENTICATED`. The gate requires an externally pinned provenance-policy digest and verifies every component's exact evidence bytes directly before aggregation. It still does not establish mathematical correctness. The required external pins and per-component signed artifacts are not yet provisioned, so production activation remains NOT ACTIVE.
 
 The design, status semantics, trust boundary, and non-activation limitations are in [POLICY_ACTIVATION_GATE.md](POLICY_ACTIVATION_GATE.md). Tests are in `test_policy_activation_gate.py`. No external authority, independent reviewer key custody, protected pin source, or production workflow invocation has been provisioned; therefore production activation remains NOT ACTIVE.
 
@@ -166,3 +166,12 @@ Activation-gate validation: full harness [44235070461](https://github.com/mythee
 `policy_activation_gate.py` is also directly executable. It requires exact input files and explicit externally sourced authority/activation SHA-256 pins, policy identity/sequence, expected source commit, and trusted epoch time. It rejects symlink/non-regular inputs, oversized files, duplicate JSON keys, missing pins, and failed activation checks. No repository defaults are used. CLI tests cover successful pinned invocation, missing external pin, duplicate JSON keys, and symlink rejection.
 
 The CLI is not activated in production. Pins and time passed by a caller are only as trustworthy as that caller; a production deployment must source them from separately administered protected controls and trusted time. The GitHub workflow runs tests only.
+
+
+## Component provenance receipt authentication
+
+Normative contract: [COMPONENT_PROVENANCE_RECEIPT_AUTHENTICATION.md](COMPONENT_PROVENANCE_RECEIPT_AUTHENTICATION.md).
+
+Implementation: `component_provenance_authenticator.py`; adversarial tests: `test_component_provenance_authenticator.py`; selected mutation tests: `test_component_provenance_mutations.py`. Receipt schema 2.0 removes self-asserted `VERIFIED` status and binds the exact SLSA invocation ID to the receipt's run ID and attempt. The production activation CLI requires a separately supplied provenance-policy SHA-256 pin and authenticates each exact component subject before aggregation.
+
+**Activation limitation:** the current evidence producer signs only `github-run-evidence.json`; it does not issue a distinct attestation for every component artifact. The new tests use fake CLI output and are not evidence of real component attestations. No production workflow invokes the gate, and the external provenance-policy pin is not yet provisioned. Therefore this integration remains a validated prototype, not an active trust authority or theorem-acceptance mechanism.
