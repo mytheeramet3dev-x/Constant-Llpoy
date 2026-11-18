@@ -630,3 +630,8 @@ On source commit 1173aba070abd89fcb5f62f14e7fd8494bdaa464, producer run 44248949
 Traceability resolved all 15 Paper A registry records against their claim records and local frozen source snapshots. The 14-row assessment was: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 FAILED; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED. Overall Paper A remains NOT_VERIFIED.
 
 The failed Lean component reports RCLike (RCLike Real) instance synthesis failures and unresolved goals in PerronFrobeniusCore around lines 690–709. The four computational diagnostics completed successfully but remain finite-N/sampled evidence. External trust-root activation and independent administration remain absent.
+
+
+## Pinned GitHub CLI verification runtime
+
+The provenance verifier must not inherit an unpinned GitHub CLI from \`ubuntu-latest\`. A shared installer fetches the exact \`2.103.3\` Linux amd64 release archive and validates its SHA-256 digest before placing it on \`GITHUB_PATH\`. This preserves the version constraint while making runner preinstallation changes non-authoritative. Residual trust dependencies include \`curl\`, \`tar\`, \`sha256sum\`, the TLS trust store, and the runner image; they remain in the TCB and are not claimed to be independently pinned by this change.

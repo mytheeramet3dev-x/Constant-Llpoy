@@ -479,3 +479,8 @@ Observed Paper A producer/verifier pair:
 - Overall Paper A status remains `NOT_VERIFIED`; external trust root and external independent review remain inactive.
 
 The meta-verification collector policy now pins workflow blob `557c2aa8d1a52335a2c07fbcb398e820620dc7bd` for `.github/workflows/meta-verification.yml`. The refresh was followed by harness success, signed evidence collection success, Sigstore provenance verification success, and live component provenance smoke-test success on commit `a3f1c7b4ac7f9e7059824270fec7f2d0a3707a59`. The policy pin remains repository-controlled, not an independent external trust root.
+
+
+## GitHub CLI verifier runtime hardening
+
+The three workflows that invoke \`gh attestation verify\` now call \`meta_verification/install_pinned_gh_cli.sh\`. The script installs the exact GitHub CLI version declared by provenance policy (\`2.103.3\`) and checks the official release archive digest \`4c806978ffce1cec70853302a56d70ac6da4f19bae7adca4e1a8ab00633dd91d\`. This avoids silently accepting or rejecting based on mutable runner preinstallation. The runner image and the \`curl\`/\`tar\`/\`sha256sum\` utilities remain external runtime dependencies.

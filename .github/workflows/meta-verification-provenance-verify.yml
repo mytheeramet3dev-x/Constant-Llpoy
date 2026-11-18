@@ -43,6 +43,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SIGNER_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
+          bash meta_verification/install_pinned_gh_cli.sh
           gh --version
           gh attestation verify --help >/dev/null
           python meta_verification/verify_signed_provenance.py \

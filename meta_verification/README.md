@@ -271,3 +271,8 @@ The current TFIM model file now constructs data-carrying Boolean-hypercube paths
 
 
 The meta-verification workflow installs the pinned \`sympy==1.14.0\` dependency before running the black-box Paper A strong-coupling coefficient regression test. The diagnostic itself remains an execution check, not an asymptotic theorem proof.
+
+
+## Reproducible GitHub CLI verifier runtime
+
+All attestation-verification workflows install GitHub CLI \`2.103.3\` from its official Linux amd64 release archive before invoking \`gh attestation verify\`. The archive SHA-256 is pinned in \`install_pinned_gh_cli.sh\` and checked with \`sha256sum --check\`; the verifier no longer trusts the runner's preinstalled CLI version. The installer still relies on the runner's \`curl\`, \`tar\`, \`sha256sum\`, TLS trust store, and GitHub-hosted runner image; these remain explicit runtime dependencies, not independently attested components.

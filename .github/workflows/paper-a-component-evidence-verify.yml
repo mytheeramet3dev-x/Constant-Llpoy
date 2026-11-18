@@ -26,6 +26,9 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
           path: evidence
+      - name: Install pinned GitHub CLI
+        run: bash meta_verification/install_pinned_gh_cli.sh
+
       - name: Verify GitHub CLI
         run: |
           gh version
