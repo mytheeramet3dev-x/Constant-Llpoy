@@ -8,6 +8,7 @@ permissions:
 
 jobs:
   verify-external-trust-root:
+    if: ${{ github.ref == 'refs/heads/main' }}
     name: Verify independently governed trust-root package
     runs-on: ubuntu-latest
     timeout-minutes: 10
