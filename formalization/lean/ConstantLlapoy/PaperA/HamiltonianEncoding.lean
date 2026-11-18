@@ -255,4 +255,47 @@ theorem shiftedTFIMHamiltonian_pf_connected {N : ℕ}
           ⟨i, rfl⟩
       exact PFReachable.step hpos ih
 
+
+
+/-- The shifted computational-basis TFIM matrix remains real symmetric:
+the scalar diagonal shift is symmetric and the single-spin-flip adjacency
+relation is symmetric. -/
+theorem shiftedTFIMHamiltonian_isHermitian {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) :
+    (shiftedTFIMHamiltonian J h).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro s t
+  by_cases hst : s = t
+  · subst t
+    simp [shiftedTFIMHamiltonian]
+  · have hts : t ≠ s := Ne.symm hst
+    have hflip : SingleSpinFlip s t ↔ SingleSpinFlip t s := by
+      constructor
+      · exact singleSpinFlip_symm
+      · exact singleSpinFlip_symm
+    simp [shiftedTFIMHamiltonian, transverseIsingHamiltonian, hst, hts, hflip]
+
+/-- Conditional model-level Perron conclusion for the actual shifted TFIM
+matrix. The only analytic Perron input still assumed here is a strictly
+positive eigenvector and its positive eigenvalue; the Hamiltonian encoding,
+nonnegativity, Hermitian property, and connected positive support are
+discharged from the model definitions. -/
+theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
+    {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h)
+    (v : SpinConfig N → ℝ) (lambdaVal : ℝ)
+    (hv : ∀ s, 0 < v s)
+    (hlambdaVal : 0 < lambdaVal)
+    (hKv : ∀ s,
+      ∑ t, shiftedTFIMHamiltonian J h s t * v t = lambdaVal * v s) :
+    Polynomial.rootMultiplicity (RCLike.ofReal lambdaVal)
+      (shiftedTFIMHamiltonian J h).charpoly = 1 := by
+  exact perron_eigenvalue_has_characteristic_root_multiplicity_one
+    (shiftedTFIMHamiltonian J h)
+    (shiftedTFIMHamiltonian_isHermitian J h)
+    v lambdaVal
+    (shiftedTFIMHamiltonian_entrywise_nonneg J h hh.le)
+    hv hlambdaVal hKv
+    (shiftedTFIMHamiltonian_pf_connected J h hh)
+
 end ConstantLlapoy.PaperA
