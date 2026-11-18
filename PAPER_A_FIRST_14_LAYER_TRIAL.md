@@ -283,3 +283,48 @@ The producer now executes `paper_a_semantic_audit_validator.py` against the 15 f
 - Overall Paper A status remains `NOT_VERIFIED`. External trust root is `NOT_ACTIVE`; independent external review is `NOT_COMPLETED`. The current provenance-policy pin is checked out from the same repository and is not an independent trust anchor.
 
 The separate meta-verification workflow policy's pinned workflow blob was also refreshed after a workflow-file revision mismatch. On commit `a3f1c7b4ac7f9e7059824270fec7f2d0a3707a59`, the harness and evidence-collection runs succeeded, the signed evidence verifier reported `VERIFIED`, and the live component-provenance smoke test reported `ACCEPTED`. This verifies that bounded meta-verification pipeline path on that commit; it does not activate external trust or prove Paper A.
+
+
+## Verified eight-component Paper A evidence bundle — 2026-11-18
+
+- Source commit: `1dbb5a282b1d62c2a2928585f6d08af1af42acb9`.
+- Lean workflow run: `44414931670` — SUCCESS.
+- Component evidence producer run: `44414931668` — SUCCESS.
+- Separate component provenance verifier run: `44415434432` — SUCCESS.
+- Verifier report artifact: `paper-a-component-verification-44414931668`, artifact ID `14480105102`.
+- Producer evidence artifact: `paper-a-component-evidence-44414931668`, artifact ID `14478178116`.
+
+The producer executed all eight required components successfully:
+1. `PAPER_A_LEAN_BUILD`
+2. `PAPER_A_DICKE_EXACT_DIAGNOSTIC`
+3. `PAPER_A_STRONG_COUPLING_EXACT_DIAGNOSTIC`
+4. `PAPER_A_FINITE_DIFFERENCE_DIAGNOSTIC`
+5. `PAPER_A_WEAK_COUPLING_NUMERICAL_DIAGNOSTIC`
+6. `PAPER_A_CLAIM_TRACEABILITY`
+7. `PAPER_A_SEMANTIC_AUDIT_INTEGRITY`
+8. `PAPER_A_14_LAYER_TRIAL_PLAN`
+
+The separate verifier returned `PAPER_A_COMPONENT_EVIDENCE_PIPELINE_VERIFIED`; the component aggregation was `ACCEPTED`, with all eight subjects individually provenance-authenticated and no missing/duplicate components, digest mismatches, stale fields, unauthenticated receipts, or verified execution failures.
+
+The Lean build completed 18,266 build jobs. The configured axiom audit checked 158 declarations and reported only the allowlisted axioms `propext`, `Classical.choice`, and `Quot.sound`. The structural semantic-audit integrity checker validated 15 frozen claim records, five Lean module blob bindings, and 28 declaration references; classifications were 10 `NO_DIRECT_FORMALIZATION`, 4 `PARTIAL_SUPPORT_ONLY`, and 1 `SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY`.
+
+### 14-layer result for this exact source commit
+
+| Layer | Result |
+|---|---|
+| L-01 | PARTIAL |
+| L-02 | BLOCKED |
+| L-03 | PARTIAL |
+| L-04 | PARTIAL |
+| L-05 | NOT_RUN |
+| L-06 | PARTIAL |
+| L-07 | PARTIAL |
+| L-08 | PARTIAL |
+| L-09 | PARTIAL |
+| L-10 | PARTIAL |
+| L-11 | PARTIAL |
+| L-12 | PARTIAL |
+| L-13 | NOT_RUN |
+| L-14 | NOT_ASSESSED |
+
+**Overall Paper A status remains `NOT_VERIFIED`.** The `ACCEPTED` result is strictly about bundle policy, byte digests, and GitHub/Sigstore provenance. It does not verify any manuscript claim. L-02 remains blocked because source/hash/declaration-reference integrity is not semantic equivalence; L-04 remains partial because the current Lean development formalizes selected obligations rather than the full paper. External trust root remains `NOT_ACTIVE`, and independent external review remains `NOT_COMPLETED`.
