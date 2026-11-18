@@ -96,11 +96,17 @@ class TrustedBuilderReferenceTests(unittest.TestCase):
     def test_upstream_replay_from_other_run_rejected(self):
         self.reject(upstream={**self.upstream, "run_id": RUN_ID + 1})
 
+    def test_upstream_repository_id_mismatch_rejected(self):
+        self.reject(upstream={**self.upstream, "repository_id": REPO_ID + 1})
+
     def test_upstream_source_commit_mismatch_rejected(self):
         self.reject(upstream={**self.upstream, "head_sha": "d" * 40})
 
     def test_absolute_path_rejected(self):
         self.reject(subject_path=str(self.subject))
+
+    def test_backslash_path_rejected(self):
+        self.reject(subject_path="folder\\\\evidence.json")
 
     def test_parent_traversal_rejected(self):
         self.reject(subject_path="../evidence.json")
@@ -126,6 +132,11 @@ class TrustedBuilderReferenceTests(unittest.TestCase):
 
     def test_invalid_utf8_rejected(self):
         self.subject.write_bytes(bytes([0xff]))
+        self.refresh_digest()
+        self.reject()
+
+    def test_malformed_json_rejected(self):
+        self.subject.write_text("{not-json", encoding="utf-8")
         self.refresh_digest()
         self.reject()
 

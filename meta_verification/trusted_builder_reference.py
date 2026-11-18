@@ -113,6 +113,14 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
              "source_commit must be a full lowercase Git SHA")
     _require(type(max_subject_bytes) is int and max_subject_bytes > 0, "invalid subject size limit")
     _require(type(expected_run_id) is int and expected_run_id > 0, "invalid expected run ID")
+    _require(type(expected_repository_id) is int and expected_repository_id > 0,
+             "invalid expected repository ID")
+    _require(isinstance(expected_repository, str) and "/" in expected_repository,
+             "invalid expected repository name")
+    _require(isinstance(expected_workflow, str) and bool(expected_workflow),
+             "invalid expected workflow identity")
+    _require(isinstance(expected_ref, str) and expected_ref.startswith("refs/heads/"),
+             "expected ref must be a branch ref")
 
     _require(isinstance(caller, dict), "caller identity is missing")
     _require(caller.get("repository") == expected_repository, "caller repository mismatch")
@@ -127,7 +135,8 @@ def validate_subject(*, checkout_root: str | Path, subject_path: str,
     _require(upstream.get("status") == "completed", "upstream run is not completed")
     _require(upstream.get("conclusion") == "success", "upstream run did not succeed")
     _require(upstream.get("head_sha") == source_commit, "upstream source commit mismatch")
-    _require(upstream.get("repository_id") == expected_repository_id,
+    _require(type(upstream.get("repository_id")) is int and
+             upstream.get("repository_id") == expected_repository_id,
              "upstream repository ID mismatch")
     _require(upstream.get("workflow") == expected_workflow, "upstream workflow mismatch")
     _require(upstream.get("ref") == expected_ref, "upstream ref mismatch")
