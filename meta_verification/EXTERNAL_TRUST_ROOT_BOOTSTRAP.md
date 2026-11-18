@@ -127,3 +127,10 @@ The current evidence producer still invokes `actions/attest` in the relying-part
 6. positive, wrong-builder, stale-builder, modified-subject, and replay tests pass end-to-end.
 
 No independent trust root or trusted builder is considered active before these gates pass.
+
+
+## Normative trusted-builder contract
+
+The builder interface, mandatory validation behavior, separate-verifier requirements, conformance tests, and activation gates are defined in [`TRUSTED_BUILDER_CONTRACT.md`](TRUSTED_BUILDER_CONTRACT.md). The machine-readable report shape is [`trusted_builder_report.schema.json`](trusted_builder_report.schema.json).
+
+The contract is intentionally not implemented as a local reusable workflow: a workflow in this relying-party repository would remain under the same repository administration boundary and would not establish an independent builder. GitHub reusable workflow references must be committed with the real external repository and full immutable workflow commit after that identity is provisioned and authorized by the signed trust-root manifest.
