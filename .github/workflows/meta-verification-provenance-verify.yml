@@ -38,12 +38,14 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
           path: evidence
 
+      - name: Install pinned GitHub CLI
+        run: bash meta_verification/install_pinned_gh_cli.sh
+
       - name: Verify Sigstore signature, certificate identity, source, and subject digest
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SIGNER_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          bash meta_verification/install_pinned_gh_cli.sh
           gh --version
           gh attestation verify --help >/dev/null
           python meta_verification/verify_signed_provenance.py \
