@@ -45,9 +45,10 @@ def content_sha(obj: Any, label: str) -> str:
     require(isinstance(obj,dict) and obj.get("type")=="file",f"{label} is not a file")
     return sha(obj.get("sha"),f"{label} blob SHA")
 
-def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: Any, evaluator_file: Any, *, expected_run_id: int, expected_head_sha: str, expected_repo: str) -> dict:
+def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: Any, evaluator_file: Any, *, expected_run_id: int, expected_run_attempt: int, expected_head_sha: str, expected_repo: str) -> dict:
     p=validate_policy(policy); sha(expected_head_sha,"expected_head_sha")
     require(type(expected_run_id) is int and expected_run_id>0,"invalid expected_run_id")
+    require(type(expected_run_attempt) is int and expected_run_attempt>0,"invalid expected_run_attempt")
     require(isinstance(expected_repo,str) and "/" in expected_repo,"expected_repo must be owner/name")
     require(isinstance(run,dict),"run response must be an object")
     require(type(run.get("id")) is int and run.get("id")==expected_run_id,"run ID mismatch")
@@ -62,16 +63,19 @@ def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: 
     repo_id=run["repository"].get("id"); head_repo_id=run["head_repository"].get("id")
     require(type(repo_id) is int and repo_id>0 and type(head_repo_id) is int and head_repo_id==repo_id,"repository numeric identity mismatch")
     attempt=run.get("run_attempt")
-    require(type(attempt) is int and attempt>0,"invalid or missing workflow run attempt")
+    require(type(attempt) is int and attempt==expected_run_attempt,"workflow run attempt mismatch (stale or replayed attempt)")
     wfsha=content_sha(workflow_file,"workflow"); evsha=content_sha(evaluator_file,"evaluator")
     require(wfsha==p["workflow_blob_sha"],"workflow file revision mismatch")
     require(evsha==p["evaluator_blob_sha"],"evaluator file revision mismatch")
     require(isinstance(jobs_response,dict) and isinstance(jobs_response.get("jobs"),list),"malformed jobs response")
     jobs=jobs_response["jobs"]
-    require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs),"jobs response is empty or paginated/incomplete")
+    require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs) and len(jobs)<=100,"jobs response is empty, paginated, or incomplete")
     names=[j.get("name") if isinstance(j,dict) else None for j in jobs]
     job_ids=[j.get("id") if isinstance(j,dict) else None for j in jobs]
     require(all(type(x) is int and x>0 for x in job_ids),"job IDs must be positive integers")
+    for job in jobs:
+        require(type(job.get("run_id")) is int and job.get("run_id")==expected_run_id,"job belongs to a different workflow run")
+        require(type(job.get("run_attempt")) is int and job.get("run_attempt")==expected_run_attempt,"job belongs to a different workflow run attempt")
     require(len(job_ids)==len(set(job_ids)),"duplicate job IDs")
     require(len(names)==len(set(names)),"duplicate job names")
     require(set(names)==set(p["required_jobs"]),"actual job set differs from policy")
@@ -117,7 +121,7 @@ def api_get(url: str, token: str) -> Any:
     except (urllib.error.URLError,TimeoutError,UnicodeError,json.JSONDecodeError) as exc:
         raise CollectionError(f"GitHub API request failed: {exc}") from None
 
-def collect(policy: Any, repo: str, run_id: int, head_sha: str, token: str) -> dict:
+def collect(policy: Any, repo: str, run_id: int, run_attempt: int, head_sha: str, token: str) -> dict:
     p=validate_policy(policy); require(bool(token),"GITHUB_TOKEN is required")
     base=f"{API}/repos/{repo}"; ref=urllib.parse.quote(head_sha,safe="")
     wf=urllib.parse.quote(p["workflow_path"],safe="/"); ev=urllib.parse.quote(p["evaluator_path"],safe="/")
@@ -125,13 +129,13 @@ def collect(policy: Any, repo: str, run_id: int, head_sha: str, token: str) -> d
     jobs=api_get(f"{base}/actions/runs/{run_id}/jobs?per_page=100",token)
     wf_file=api_get(f"{base}/contents/{wf}?ref={ref}",token)
     ev_file=api_get(f"{base}/contents/{ev}?ref={ref}",token)
-    return validate_snapshot(p,run,jobs,wf_file,ev_file,expected_run_id=run_id,expected_head_sha=head_sha,expected_repo=repo)
+    return validate_snapshot(p,run,jobs,wf_file,ev_file,expected_run_id=run_id,expected_run_attempt=run_attempt,expected_head_sha=head_sha,expected_repo=repo)
 
 def main(argv=None) -> int:
     parser=argparse.ArgumentParser(description=__doc__); parser.add_argument("--policy",required=True); parser.add_argument("--output",required=True); args=parser.parse_args(argv)
     try:
         p=json.loads(Path(args.policy).read_text(encoding="utf-8"))
-        record=collect(p,os.environ["GITHUB_REPOSITORY"],int(os.environ["UPSTREAM_RUN_ID"]),os.environ["UPSTREAM_HEAD_SHA"],os.environ["GITHUB_TOKEN"])
+        record=collect(p,os.environ["GITHUB_REPOSITORY"],int(os.environ["UPSTREAM_RUN_ID"]),int(os.environ["UPSTREAM_RUN_ATTEMPT"]),os.environ["UPSTREAM_HEAD_SHA"],os.environ["GITHUB_TOKEN"])
         Path(args.output).write_text(json.dumps(record,indent=2,sort_keys=True)+"\n",encoding="utf-8")
         print(json.dumps({"status":record["status"],"run_id":record["run_id"],"head_sha":record["head_sha"],"record_sha256":record["record_sha256"],"failure_reasons":record["failure_reasons"]},sort_keys=True))
         return 0

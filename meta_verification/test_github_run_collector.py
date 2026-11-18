@@ -14,11 +14,11 @@ def fixture():
     run={"id":123,"head_sha":HEAD,"workflow_id":42,"path":p["workflow_path"],"status":"completed","event":"push",
          "head_branch":"main","conclusion":"success","run_attempt":1,"repository":{"id":555,"full_name":REPO},"head_repository":{"id":555,"full_name":REPO}}
     steps=[{"name":n,"status":"completed","conclusion":"success"} for n in STEP_NAMES]
-    jobs={"total_count":1,"jobs":[{"id":900,"name":JOB,"status":"completed","conclusion":"success","steps":steps}]}
+    jobs={"total_count":1,"jobs":[{"id":900,"run_id":123,"run_attempt":1,"name":JOB,"status":"completed","conclusion":"success","steps":steps}]}
     return p,run,jobs,{"type":"file","sha":WF},{"type":"file","sha":EV}
 
 def check(x):
-    return validate_snapshot(*x,expected_run_id=123,expected_head_sha=HEAD,expected_repo=REPO)
+    return validate_snapshot(*x,expected_run_id=123,expected_run_attempt=1,expected_head_sha=HEAD,expected_repo=REPO)
 
 class CollectorTests(unittest.TestCase):
     def test_valid_run_accepted(self): self.assertEqual(check(fixture())["status"],"ACCEPTED")
@@ -70,7 +70,7 @@ class CollectorTests(unittest.TestCase):
     def test_boolean_expected_run_id_rejected(self):
         x=fixture(); x[1]["id"]=1
         with self.assertRaises(CollectionError):
-            validate_snapshot(*x,expected_run_id=True,expected_head_sha=HEAD,expected_repo=REPO)
+            validate_snapshot(*x,expected_run_id=True,expected_run_attempt=1,expected_head_sha=HEAD,expected_repo=REPO)
     def test_boolean_run_id_rejected_independently(self):
         x=fixture(); x[1]["id"]=True
         with self.assertRaises(CollectionError):
@@ -83,6 +83,30 @@ class CollectorTests(unittest.TestCase):
             x=fixture(); x[1]["run_attempt"]=value
             with self.subTest(value=value):
                 with self.assertRaises(CollectionError): check(x)
+    def test_stale_or_replayed_run_attempt_rejected(self):
+        for value in (2,3):
+            x=fixture(); x[1]["run_attempt"]=value
+            with self.subTest(value=value):
+                with self.assertRaises(CollectionError): check(x)
+    def test_expected_run_attempt_must_be_exact_positive_integer(self):
+        x=fixture()
+        for value in (True,0,-1,"1"):
+            with self.subTest(value=value):
+                with self.assertRaises(CollectionError):
+                    validate_snapshot(*x,expected_run_id=123,expected_run_attempt=value,expected_head_sha=HEAD,expected_repo=REPO)
+    def test_job_run_id_and_attempt_must_match_parent_run(self):
+        for key,value in (("run_id",124),("run_attempt",2)):
+            x=fixture(); x[2]["jobs"][0][key]=value
+            with self.subTest(key=key):
+                with self.assertRaises(CollectionError): check(x)
+    def test_job_run_id_and_attempt_reject_boolean(self):
+        for key in ("run_id","run_attempt"):
+            x=fixture(); x[2]["jobs"][0][key]=True
+            with self.subTest(key=key):
+                with self.assertRaises(CollectionError): check(x)
+    def test_jobs_response_over_single_page_rejected(self):
+        x=fixture(); x[2]["total_count"]=101
+        with self.assertRaises(CollectionError): check(x)
     def test_numeric_repository_identity_must_match(self):
         x=fixture(); x[1]["head_repository"]["id"]=777
         with self.assertRaises(CollectionError): check(x)

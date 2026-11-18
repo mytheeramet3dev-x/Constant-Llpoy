@@ -33,6 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           UPSTREAM_RUN_ID: ${{ github.event.workflow_run.id }}
+          UPSTREAM_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
           UPSTREAM_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           python meta_verification/github_run_collector.py \
