@@ -47,7 +47,7 @@ Configure these Environment **variables** (not values committed to this reposito
 | `TRUSTED_BUILDER_WORKFLOW` | Exact reusable workflow identity/path |
 | `TRUSTED_BUILDER_COMMIT` | Full immutable commit SHA of the builder workflow |
 
-For a private trust-root repository, add an environment secret `TRUST_ROOT_READ_TOKEN` with read-only access to that repository. A public trust-root repository can use the workflow token.
+For a private trust-root repository, add an environment secret `TRUST_ROOT_READ_TOKEN` with read-only access to the trust-root repository and, if private, the trusted-builder repository as well. The same token is used for the checkout and GitHub API repository-ID checks. Public repositories can be read through the workflow token.
 
 The Environment's required reviewers and variable values are part of the trust boundary. A repository administrator who can change the workflow, Environment protection, and pins remains privileged; protect workflow changes with independently administered branch/ruleset controls.
 
