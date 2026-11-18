@@ -1,7 +1,7 @@
 """Adversarial tests for signed-provenance policy enforcement."""
 import hashlib
 import unittest
-from verify_signed_provenance import ProvenanceError, validate_cli_output
+from verify_signed_provenance import ProvenanceError, validate_cli_output, validate_cli_version
 
 REPO_ID=1460417275
 SOURCE="a"*40
@@ -99,5 +99,14 @@ class SignedProvenanceTests(unittest.TestCase):
     def test_cli_version_policy_is_exact(self):
         p=policy(); p["gh_cli_version"]="latest"
         with self.assertRaises(ProvenanceError): validate_cli_output(result(),BYTES,p,SOURCE)
+
+    def test_exact_gh_cli_version_accepted(self):
+        self.assertEqual(validate_cli_version("gh version 2.103.3 (2026-10-26)\\n",policy()),"2.103.3")
+
+    def test_wrong_gh_cli_version_rejected(self):
+        with self.assertRaises(ProvenanceError): validate_cli_version("gh version 2.103.2\\n",policy())
+
+    def test_malformed_gh_cli_version_rejected(self):
+        with self.assertRaises(ProvenanceError): validate_cli_version("GitHub CLI latest",policy())
 
 if __name__=="__main__": unittest.main(verbosity=2)
