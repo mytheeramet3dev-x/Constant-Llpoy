@@ -156,7 +156,12 @@ class TrustedBuilderBlackBoxConformance(unittest.TestCase):
         self.reject(lambda request: request["upstream"].update(head_sha="d" * 40))
 
     def test_path_traversal_rejected(self):
-        self.reject(subject_path="../subject.json")
+        escaped = self.root.parent / (self.root.name + "-escaped.json")
+        escaped.write_bytes(self.subject.read_bytes())
+        try:
+            self.reject(subject_path="../" + escaped.name)
+        finally:
+            escaped.unlink(missing_ok=True)
 
     def test_absolute_path_rejected(self):
         self.reject(subject_path=str(self.subject))
