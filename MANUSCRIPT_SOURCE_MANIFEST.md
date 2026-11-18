@@ -66,7 +66,7 @@ The supporting-source reconciliation is recorded in `PAPER_A_SUPPORTING_SOURCE_R
 
 ### Constant Llapoy snapshot and derivation mapping
 
-The following immutable source snapshots were copied into Constant Llapoy from the frozen Paper A branch. Their destination blob SHAs were checked against the upstream blob SHAs after creation.
+The following immutable source snapshots were copied into Constant Llapoy from the frozen Paper A branch. Their destination blob SHAs were checked against the upstream blob SHAs after creation. Sections 5 and 6 were added as exact byte-for-byte copies after the first traceability run exposed their absence.
 
 | Frozen upstream source | Upstream blob SHA | Constant Llapoy snapshot | Exact blob match |
 |---|---|---|---|
@@ -75,7 +75,7 @@ The following immutable source snapshots were copied into Constant Llapoy from t
 | Section 3 revised | \`9ac164ac67cc121af212c4fb7268b809d9234bd6\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_03_revised.md\` | Recorded in prior snapshot inventory |
 | Section 4 revised | \`a7570431eac62dd4555194df283edb5a9c87a28d\` | \`source_snapshots/paper-a/Arxiv/paper_01_section_04_revised.md\` | YES |
 
-Provenance sidecars for Sections 1 and 2 record the frozen repository, branch, commit, original path, and blob SHA. These snapshots are read-only evidence. Any proposed manuscript correction must be made in a separate Constant Llapoy working copy and must not alter the upstream repository without prior authorization.
+Provenance sidecars for Sections 1, 2, 5, and 6 record the frozen repository, branch, commit, original path, and blob SHA. These snapshots are read-only evidence. Any proposed manuscript correction must be made in a separate Constant Llapoy working copy and must not alter the upstream repository without prior authorization.
 
 New independent Paper A mathematical work added under Constant Llapoy:
 
