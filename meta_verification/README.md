@@ -151,3 +151,8 @@ Policy-change verifier validation: full harness [44233157563](https://github.com
 The final success status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, not bare `ACCEPTED`. This is still a structural bundle result, not mathematical proof verification. Component provenance receipt fields are not cryptographically authenticated by this gate.
 
 The design, status semantics, trust boundary, and non-activation limitations are in [POLICY_ACTIVATION_GATE.md](POLICY_ACTIVATION_GATE.md). Tests are in `test_policy_activation_gate.py`. No external authority, independent reviewer key custody, protected pin source, or production workflow invocation has been provisioned; therefore production activation remains NOT ACTIVE.
+
+
+### Policy activation gate mutation testing
+
+`test_policy_activation_mutations.py` applies nine selected activation-gate weakenings in isolated copies and requires the gate test suite to kill each through assertion failures. The selected cases cover external pins, ACTIVE-state distinction, sequence, policy digest, exact bytes/object binding, expiry, threshold, and signature verification. Results are bounded to this authored mutant set.

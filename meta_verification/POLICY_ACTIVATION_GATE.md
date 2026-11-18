@@ -43,3 +43,8 @@ python -m unittest discover -s meta_verification -p 'test_*.py' -v
 ```
 
 Passing these tests demonstrates only the listed local test cases. It does not establish independent administration, production activation, complete mutation adequacy, or mathematical correctness.
+
+
+## Mutation adequacy (selected set)
+
+`test_policy_activation_mutations.py` applies nine controlled weakenings to the activation gate in isolated temporary copies and requires the adversarial gate suite to fail through assertions. The selected mutants cover authority pin, activation pin, ACTIVE-state distinction, sequence binding, policy digest, exact policy-object/bytes binding, expiry, threshold, and Ed25519 signature verification. The score is bounded to these nine authored mutants and is not complete mutation coverage or evidence of independent external governance.
