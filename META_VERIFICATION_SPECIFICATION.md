@@ -391,3 +391,21 @@ The suite currently covers a positive local-validation case and negative vectors
 **Observed result:** commit `7eae9f587f8426407b54abc58d9c1e78e374827c` passed 137 tests in harness run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270). The separate provenance verifier run [44220332663](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220332663) independently reported `VERIFIED` for the evidence artifact from producer run `44220303616`, whose exact signer source was commit `d1d7db78e2c3bc32a3fbace9b10f41a5ac860148`. This provenance validates the evidence artifact and signer identity for that earlier commit; it must not be misrepresented as signing the later `7eae9f` harness evidence.
 
 The suite is independent of the implementation at the Python import/oracle level, but it remains in the same repository, shares the same CI platform and maintainer trust boundary, and tests only the local non-signing reference CLI. It is **not** independent governance, does not validate an external builder, does not test OIDC/Sigstore signing, and does not satisfy the external builder activation gate. A future external builder must pass a reviewer-controlled adaptation of these vectors and produce a real attestation that a separate verifier validates.
+
+
+## 18. Mutation adequacy testing for trusted-builder conformance
+
+`meta_verification/test_trusted_builder_mutations.py` performs controlled mutation testing against the black-box CLI conformance suite. For each mutant, it creates an isolated temporary copy of the implementation and conformance tests, applies exactly one targeted weakening, syntax-checks the mutated implementation, then executes the black-box suite against that mutant. A mutant counts as killed only when the suite runs and fails through a test failure; syntax/import failures do not count.
+
+The current mutation set contains seven security-relevant mutants:
+1. bypass subject-byte SHA-256 comparison;
+2. bypass canonical evidence-record digest comparison;
+3. accept a non-`ACCEPTED` upstream evidence record;
+4. bypass caller repository-ID matching;
+5. bypass upstream run-ID matching (replay defense);
+6. bypass path-traversal rejection; and
+7. escalate the local report status to `SIGNED`.
+
+**Observed result:** all seven selected mutants were killed (7/7, 100% for this explicit mutation set) by the conformance suite. The full GitHub Actions harness passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901` in run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161). The job log explicitly records all seven mutant names as killed.
+
+This score is limited to the seven authored mutants. It is not a general mutation-adequacy guarantee, does not establish complete security coverage, and does not turn the local reference into an independently trusted builder. Future work should expand the mutant catalogue based on the threat model, including malformed identity types, missing/extra metadata, report-field tampering, filesystem race attempts, and producer/verifier policy mutations where safely testable.

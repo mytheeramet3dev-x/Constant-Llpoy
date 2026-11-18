@@ -76,3 +76,12 @@ The reference was hardened to use descriptor-relative `O_NOFOLLOW` traversal, re
 The suite also asserts the local-only status `VALIDATED_LOCAL_UNTRUSTED` and that signing, attestation, and trust remain false. On commit `7eae9f587f8426407b54abc58d9c1e78e374827c`, the full harness passed 137 tests in run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270).
 
 This is black-box testing relative to the Python implementation, not an independently administered test authority: it remains in the same repository/CI trust boundary and tests a non-signing reference only. It does not activate or validate an external trusted builder.
+
+
+## Mutation adequacy testing
+
+`test_trusted_builder_mutations.py` creates an isolated copy of the local CLI and black-box suite for each controlled mutant. It applies one targeted weakening, syntax-checks the mutated CLI, and requires the black-box suite to fail through a test assertion. Syntax or import failures do not count as mutant kills.
+
+The current seven mutants target: subject-byte digest comparison, canonical evidence-record digest, `ACCEPTED` status, caller repository ID, upstream run ID/replay, path traversal, and escalation to `SIGNED`. The path-traversal vector uses a byte-identical file outside the checkout root so the later digest check cannot mask a traversal bypass.
+
+**Observed result:** 7/7 selected mutants were killed. GitHub Actions run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161) passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901`; logs explicitly report each mutant as killed. The 100% score applies only to this deliberately selected set and is not a claim of complete mutation coverage or external trust.

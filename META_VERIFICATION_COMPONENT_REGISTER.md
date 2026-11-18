@@ -251,3 +251,18 @@ This local implementation is not an external builder and does not satisfy indepe
 - **Status:** Implemented and validated for the local reference CLI's stated input class; external trusted-builder contract remains NOT ACTIVE.
 
 This component is an implementation-level conformance harness, not a trusted-builder deployment. Its positive result must never be interpreted as signed provenance or as evidence of independent administration.
+
+
+## 13. Trusted-builder mutation adequacy harness
+
+### MVC-027 — Controlled mutation testing for black-box conformance
+
+- **Test driver:** `meta_verification/test_trusted_builder_mutations.py`.
+- **Tested suite:** `meta_verification/test_trusted_builder_conformance.py`.
+- **Method:** for each mutation, create an isolated temporary copy of the CLI and conformance test, apply one targeted source mutation, syntax-check the mutant, then run the conformance suite against it as a subprocess.
+- **Mutant-kill criterion:** the suite must execute and fail through an assertion/test failure. Syntax errors, import errors, or harness failures do not count as killed mutants.
+- **Seven mutants:** subject byte digest bypass; canonical evidence digest bypass; acceptance-status bypass; caller repository-ID bypass; upstream run-ID/replay bypass; path traversal guard bypass; and local status escalation to `SIGNED`.
+- **Observed result:** all 7/7 selected mutants killed. Full harness run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161) passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901`; logs explicitly list each mutant as `MUTANT KILLED`.
+- **Status:** Implemented and validated for the enumerated mutant set. This is a bounded adequacy result, not proof of exhaustive test strength or independent builder trust.
+
+The suite's path-traversal test includes a matching byte-identical subject outside the checkout root. This ensures that bypassing the traversal guard cannot be accidentally masked by the later subject-digest check.

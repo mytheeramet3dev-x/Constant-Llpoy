@@ -80,3 +80,12 @@ The positive control explicitly requires `VALIDATED_LOCAL_UNTRUSTED`, `signing_p
 The full harness passed 137 tests on commit `7eae9f587f8426407b54abc58d9c1e78e374827c` (run [44220321270](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220321270)). This run has no matching end-to-end provenance verification for its own evidence artifact in the evidence inspected here; the separate verifier run [44220332663](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44220332663) verified the previous producer's artifact from commit `d1d7db78e2c3bc32a3fbace9b10f41a5ac860148`. Do not conflate those two source revisions.
 
 **Independence limitation:** this is a separate-process black-box suite, but it is maintained in the same repository and executed by the same CI governance. It is not reviewer-controlled external conformance, does not authenticate metadata, and does not test a real external signer.
+
+
+## Mutation adequacy evidence
+
+The black-box suite is also challenged by `test_trusted_builder_mutations.py`. Seven controlled regressions were injected one at a time into isolated temporary copies: subject-byte digest bypass, canonical evidence digest bypass, acceptance-status bypass, caller repository-ID bypass, upstream run-ID/replay bypass, path-traversal guard bypass, and local status escalation to `SIGNED`.
+
+All seven were killed by the black-box suite (7/7 for this selected mutant set). The full harness passed 138 tests on commit `ad73206847bc15ca4d3d0b1db68f74ad1b3d6901` in run [44229439161](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44229439161). The mutation driver rejects syntax/import failures as evidence of a kill; each mutant must cause the conformance suite itself to fail.
+
+This is a bounded mutation-adequacy result, not an exhaustive security proof. The local reference remains non-signing and untrusted.
