@@ -301,6 +301,60 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
     (shiftedTFIMHamiltonian_pf_connected J h hh)
 
 
+/-- The shifted TFIM matrix acts as cI - H on every vector. This is the
+explicit algebraic identity needed to transfer eigenvectors between the
+shifted nonnegative matrix and the physical Hamiltonian. -/
+theorem shiftedTFIMHamiltonian_mulVec_identity {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ) (v : SpinConfig N → ℝ)
+    (s : SpinConfig N) :
+    (∑ t, shiftedTFIMHamiltonian J h s t * v t) =
+      isingShiftConstant J * v s -
+        ∑ t, transverseIsingHamiltonian J h s t * v t := by
+  classical
+  have hdiag :
+      (∑ t : SpinConfig N, (if s = t then isingShiftConstant J else 0) * v t)
+        = isingShiftConstant J * v s := by
+    rw [Finset.sum_eq_single s]
+    · simp
+    · intro t ht hts
+      simp [hts.symm]
+    · intro hs
+      exact (hs (Finset.mem_univ s)).elim
+  calc
+    (∑ t, shiftedTFIMHamiltonian J h s t * v t)
+        = ∑ t, ((if s = t then isingShiftConstant J else 0) * v t -
+            transverseIsingHamiltonian J h s t * v t) := by
+              apply Finset.sum_congr rfl
+              intro t ht
+              simp [shiftedTFIMHamiltonian]
+              ring
+    _ = (∑ t, (if s = t then isingShiftConstant J else 0) * v t) -
+          ∑ t, transverseIsingHamiltonian J h s t * v t :=
+            Finset.sum_sub_distrib
+    _ = isingShiftConstant J * v s -
+          ∑ t, transverseIsingHamiltonian J h s t * v t := by rw [hdiag]
+
+/-- Exact eigenvector correspondence under the scalar spectral shift
+K = cI - H. No positivity or Perron assumption is used in this algebraic
+equivalence. -/
+theorem shiftedTFIMHamiltonian_eigenvector_iff {N : ℕ}
+    (J : IsingEdge N → ℝ) (h : ℝ)
+    (v : SpinConfig N → ℝ) (lambdaVal : ℝ) :
+    (∀ s, ∑ t, shiftedTFIMHamiltonian J h s t * v t =
+        lambdaVal * v s) ↔
+      (∀ s, ∑ t, transverseIsingHamiltonian J h s t * v t =
+        (isingShiftConstant J - lambdaVal) * v s) := by
+  constructor
+  · intro hK s
+    have hid := shiftedTFIMHamiltonian_mulVec_identity J h v s
+    rw [hK s] at hid
+    linarith
+  · intro hH s
+    have hid := shiftedTFIMHamiltonian_mulVec_identity J h v s
+    rw [hH s] at hid
+    linarith
+
+
 
 /-- A data-carrying finite path in a relation on the finite spin configurations.
 Unlike PFReachable, this lives in Type, so it can be converted into Mathlib's path data. -/
