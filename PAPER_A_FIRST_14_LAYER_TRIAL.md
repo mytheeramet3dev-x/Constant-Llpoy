@@ -191,3 +191,16 @@ The successful Lean build verifies compilation of the current formalized declara
 - External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
 
 The new shifted-matrix Hermitian and conditional Perron multiplicity declarations compile, but the positive top-eigenvector existence theorem and the spectral-shift transfer to the ground eigenvalue remain open.
+
+
+## Mathlib irreducibility bridge — commit 5e8475fe7a90bc4e27158ba983c752900bd6e2df
+
+- Lean workflow run \`44338374338\`: SUCCESS; 18,266 build jobs; axiom audit covered 154 declarations, all within \`propext\`, \`Classical.choice\`, and \`Quot.sound\`.
+- Paper A evidence producer run \`44338374152\`: SUCCESS; Lean build and all four exact / high-precision diagnostic commands returned PASS.
+- The Lean evidence manifest includes all five Paper A modules and the root \`ConstantLlapoy.lean\`.
+- Claim traceability: 15/15 registry records located and hashed; semantic correspondence remains NOT_ESTABLISHED.
+- Separate component provenance verifier run \`44339038580\`: SUCCESS for the exact producer artifact.
+- 14-layer assessment: L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.
+- External trust root NOT_ACTIVE; independent external review NOT_COMPLETED; overall Paper A NOT_VERIFIED.
+
+The new Mathlib irreducibility theorem closes the model-specific positive-support connectivity obligation. The strictly positive top-eigenvector existence theorem and spectral-shift transfer to the ground eigenvalue remain open.

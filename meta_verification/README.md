@@ -263,3 +263,8 @@ After adding the L-02 structural validator to the harness, the next evidence-col
 ### Confirmed collector recovery and latest Paper A run
 
 The exact harness workflow pin is now aligned with the current workflow blob. The collector accepted the run evidence in \`44333235608\`; the separate signed-provenance verifier \`44333317614\` and live component smoke test \`44333317613\` both succeeded. The Paper A model-encoding work at \`d772706992a2e5e86d3205dbcae0fd8428e91923\` also built successfully and its component evidence bundle was verified by run \`44334708201\`.
+
+
+### Paper A Mathlib irreducibility update
+
+The current TFIM model file now constructs data-carrying Boolean-hypercube paths, converts them to Mathlib quiver paths, and proves the shifted matrix is \`Matrix.IsIrreducible\`. The pinned Lean build and axiom audit succeeded for 154 declarations. The Paper A producer and separate provenance verifier also succeeded. This does not yet prove existence of a strictly positive top eigenvector or the full Paper A ground-state claim.

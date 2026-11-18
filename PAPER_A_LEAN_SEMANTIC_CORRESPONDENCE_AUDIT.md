@@ -33,7 +33,7 @@ Classifications:
 | PROP-0011 — Scale covariance of edge-response eigenvalues | NO_DIRECT_FORMALIZATION | No scale-covariance theorem. |
 | PROP-0012 — Weak-coupling opposite-sign response | SOURCE_CONFLICT_WITH_CONDITIONAL_LEMMAS_ONLY | `weakCouplingCoefficient_pos` and `weakCoupling_response_positive_of_remainder` prove a positive coefficient and a conditional final sign step only. They do not prove the model-specific differentiated remainder; this is not verification of the frozen opposite-sign assertion. |
 | THM-0001 — Conditional local saddle-node normal form | NO_DIRECT_FORMALIZATION | No formal Taylor/branch theorem or corresponding regularity bridge. |
-| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, scalar shift, nonnegative entries, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and a conditional model-level characteristic-root multiplicity theorem are formalized. Still missing: positive top-eigenvector existence and the spectral-shift transfer to the ground eigenvalue of H. |
+| THM-0002 — Finite-(N) ground-state Perron–Frobenius nondegeneracy | PARTIAL_SUPPORT_ONLY | The TFIM computational-basis matrix, scalar shift, nonnegative entries, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, Mathlib's Matrix.IsIrreducible property, and a conditional model-level characteristic-root multiplicity theorem are formalized. Still missing: positive top-eigenvector existence and the spectral-shift transfer to the ground eigenvalue of H. |
 
 ## Audited Lean modules
 
@@ -73,3 +73,10 @@ Still not established: existence of a strictly positive eigenvector at the top e
 ## 2026-11-18 shifted-matrix Hermiticity update
 
 The model-level file now proves \`shiftedTFIMHamiltonian_isHermitian\` and the conditional theorem \`shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one\`. The latter discharges the abstract Perron core's nonnegativity, Hermitian, and connected-support inputs from the actual TFIM encoding, but it still assumes a strictly positive eigenvector and a positive eigenvalue. THM-0002 remains **PARTIAL_SUPPORT_ONLY**. The positive top-eigenvector existence theorem and the algebraic spectral-shift transfer \(K=cI-H\) remain open.
+
+
+## 2026-11-18 Mathlib irreducibility bridge update
+
+The data-carrying finite path construction is now kernel-checked. It converts the Boolean-hypercube spin-flip path into a Mathlib quiver path, and the strictly positive diagonal shift provides a nonempty loop at each vertex. The theorem \`shiftedTFIMHamiltonian_isIrreducible\` therefore proves the actual shifted TFIM matrix is \`Matrix.IsIrreducible\` in the pinned Mathlib version.
+
+This closes the graph-theoretic irreducibility sub-obligation. It does not construct the Perron eigenvector. THM-0002 remains **PARTIAL_SUPPORT_ONLY**; positive top-eigenvector existence and spectral-shift transfer remain open.

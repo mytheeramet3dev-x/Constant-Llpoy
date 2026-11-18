@@ -7,7 +7,7 @@
     "commit": "8deb7de4a49cb2060720246b7101820ee7e08c91"
   },
   "audit_repository": "mytheeramet3dev-x/Constant-Llpoy",
-  "audited_commit": "d772706992a2e5e86d3205dbcae0fd8428e91923",
+  "audited_commit": "5e8475fe7a90bc4e27158ba983c752900bd6e2df",
   "lean_toolchain": "leanprover/lean4:v4.36.0",
   "mathlib_commit": "96f6b8b8e029545577421f198a89fb174a4d62e6",
   "lean_modules": [
@@ -29,7 +29,7 @@
     },
     {
       "path": "formalization/lean/ConstantLlapoy/PaperA/HamiltonianEncoding.lean",
-      "blob_sha": "26b6065557b05bd9ead779ba03672965134c7816"
+      "blob_sha": "6fcaf490c7f19314172754caf631e065e8854e43"
     }
   ],
   "claims": [
@@ -175,9 +175,14 @@
         "perron_eigenvalue_occurs_exactly_once_in_real_symmetric_spectrum",
         "perron_eigenvalue_has_characteristic_root_multiplicity_one",
         "shiftedTFIMHamiltonian_isHermitian",
-        "shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one"
+        "shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one",
+        "PFPath.toReachable",
+        "PFPath.toQuiverPath",
+        "singleSpinFlip_pf_path",
+        "shiftedTFIMHamiltonian_pf_path",
+        "shiftedTFIMHamiltonian_isIrreducible"
       ],
-      "gap": "The computational-basis Hamiltonian, its Hermitian property, scalar shift, entrywise nonnegativity, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and a conditional characteristic-root multiplicity-one theorem for the actual shifted TFIM matrix are now formalized. Still open: construct a strictly positive eigenvector at the top eigenvalue without assuming one, and transfer algebraic multiplicity through K=cI-H to the ground eigenvalue of H."
+      "gap": "The computational-basis Hamiltonian, its Hermitian property, scalar shift, entrywise nonnegativity, exact single-spin-flip support, Boolean-hypercube connectivity, shifted-matrix Hermiticity, and Mathlib Matrix.IsIrreducible property are now formalized. A conditional model-level characteristic-root multiplicity-one theorem is also available. Still open: construct a strictly positive eigenvector at the top eigenvalue without assuming one, and transfer algebraic multiplicity through K=cI-H to the ground eigenvalue of H."
     }
   ],
   "summary": {

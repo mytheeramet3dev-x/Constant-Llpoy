@@ -133,3 +133,8 @@ The Paper A producer run `44334091894` and Lean build run `44334091727` succeede
 ### Shifted-matrix Hermiticity update
 
 \`shiftedTFIMHamiltonian_isHermitian\` proves the shifted computational-basis matrix is real symmetric. \`shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one\` applies the existing characteristic-root simplicity theorem to the actual model matrix, deriving nonnegativity and connected positive support from the encoding. Its positive-eigenvector and positive-eigenvalue inputs remain explicit assumptions; it is not yet the ground-state theorem.
+
+
+### Positive Perron eigenvector and spectral-shift proof plan
+
+See \`PAPER_A_PF_EXISTENCE_FORMALIZATION_PLAN.md\` for the exact theorem target, finite-simplex / Collatz–Wielandt proof architecture, prior-art compatibility review, spectral-shift obligations, and acceptance gates. The public MCMC formalization is recorded as prior art only; it is not imported or counted as proof evidence in Constant Llpoy.
