@@ -75,7 +75,7 @@ A green CI result, a source file, a catalog entry, or a completed layer design d
 
 ## 6. Meta-verification specification
 
-The cross-layer assurance requirements for checkers, parsers, CI/workflow orchestration, evidence revision binding, mutation testing, independent review, and fail-closed status aggregation are specified in `META_VERIFICATION_SPECIFICATION.md`. The current evidence-based component snapshot is maintained in `META_VERIFICATION_COMPONENT_REGISTER.md`. This is a design requirement, not evidence that those controls have been implemented or validated. Current provisional ownership is L-08, L-10, L-11, and L-12; no dedicated L-15 has been approved.
+The cross-layer assurance requirements for checkers, parsers, CI/workflow orchestration, evidence revision binding, mutation testing, independent review, and fail-closed status aggregation are specified in `META_VERIFICATION_SPECIFICATION.md`. The component snapshot is maintained in `META_VERIFICATION_COMPONENT_REGISTER.md`. A policy evaluator, GitHub API collector, Sigstore-signed evidence producer, and separate provenance verifier are implemented; the bounded 52-test and end-to-end provenance results are recorded in those documents. These results do not establish mathematical proof correctness, a defect-free verification system, or an independently governed external trust root. Current provisional ownership is L-08, L-10, L-11, and L-12; no dedicated L-15 has been approved.
 
 ## 7. Governing statement
 
