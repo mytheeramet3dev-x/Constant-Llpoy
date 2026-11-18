@@ -86,8 +86,6 @@ theorem transverseIsingHamiltonian_other_off_diagonal {N : ℕ}
     transverseIsingHamiltonian J h s t = 0 := by
   simp [transverseIsingHamiltonian, hst, hflip]
 
-e
-
 /-- A finite scalar shift strictly above every diagonal entry of the
 computational-basis Hamiltonian. The sum of absolute diagonal entries gives
 an explicit bound without choosing an opaque maximum. -/
@@ -151,7 +149,6 @@ theorem shiftedTFIMHamiltonian_entrywise_nonneg {N : ℕ}
     · rw [shiftedTFIMHamiltonian_single_flip J h hst hflip]
       exact hh
     · rw [shiftedTFIMHamiltonian_other_off_diagonal J h hst hflip]
-      exact le_rfl
 
 theorem shiftedTFIMHamiltonian_positive_iff_single_flip {N : ℕ}
     (J : IsingEdge N → ℝ) (h : ℝ) (hh : 0 < h)
