@@ -448,3 +448,38 @@ Ten verifier mutants are currently tested:
 An initial run exposed a test-fixture masking issue: the boolean repository-ID mutant was not detected because the fixture's certificate ID did not match the mutated policy value. The fixture was corrected to align those values so the test isolates the exact type guard. The corrected run killed the mutant. This demonstrates why mutation testing is useful for detecting weaknesses in tests as well as in the implementation.
 
 The 10/10 score applies only to these ten authored mutations. It is not an exhaustive proof of verifier correctness, and the unit suite does not replace actual GitHub CLI/Sigstore verification against live attestations.
+
+
+## 21. GitHub Actions run collector mutation adequacy
+
+The collector is tested with isolated, single-change mutants against `test_github_run_collector.py`. A mutant counts as killed only when the suite executes and fails through an assertion; syntax/import failures do not count.
+
+### Collector hardening performed
+
+- Require exact integer types (not Python booleans) for policy workflow ID, expected run ID, API run ID, and API workflow ID.
+- Require a present, positive exact-integer workflow `run_attempt`.
+- Bind the API repository and head-repository numeric IDs to each other, in addition to requiring both repository names to match the expected repository.
+- Require positive exact-integer job IDs and reject duplicate job IDs.
+- Require exact-integer `total_count` and equality with the returned job count; a partial first page is rejected rather than silently accepted.
+- Preserve exact workflow-file and evaluator-file blob SHA pinning.
+
+### Mutation evidence
+
+Thirteen selected mutants were tested:
+1. Boolean workflow ID accepted in policy.
+2. Boolean expected run ID accepted.
+3. Boolean API run ID accepted.
+4. Boolean API workflow ID accepted.
+5. Missing/invalid run-attempt validation bypassed.
+6. Numeric repository identity comparison bypassed.
+7. Primary repository-name binding bypassed.
+8. Head-repository-name binding bypassed.
+9. Job pagination/completeness check bypassed.
+10. Job ID type/range check bypassed.
+11. Duplicate job ID check bypassed.
+12. Workflow file blob pin bypassed.
+13. Evaluator file blob pin bypassed.
+
+**Observed result:** 13/13 selected collector mutants were killed. GitHub Actions run [44230994871](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230994871) passed 164 tests on commit `8d23997fd0d746ba04f2528a5e34721293ae5514`.
+
+The first runs correctly failed: they exposed missing job-ID validation and three mutation fixtures that were masked by adjacent identity checks. The collector guard and fixtures were corrected; the successful run confirms each mutant was independently detected. The mutation score is limited to these thirteen authored changes. It is not exhaustive assurance, and the collector still relies on the GitHub API response and the repository's configured policy/trust boundary.

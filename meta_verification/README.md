@@ -103,3 +103,12 @@ Coverage is explicit and bounded. The local reference still does not authenticat
 All 10/10 selected mutants were killed. GitHub Actions run [44230310401](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230310401) passed 151 tests on commit `8740ee0c024d4c30105d766d54679f563ee211cc`. The first attempt revealed a fixture-masking issue for the boolean-ID mutant; the fixture was corrected to isolate that check, and the corrected run killed it.
 
 The score is bounded to the ten authored mutants and does not replace real attestation verification or external review.
+
+
+## GitHub Actions run collector mutation testing
+
+The collector now validates exact integer identity fields, requires a positive run attempt, checks repository/head-repository numeric identity, validates positive unique job IDs, and rejects incomplete/paginated job responses. Existing workflow and evaluator blob pins remain enforced.
+
+The mutation harness applies 13 selected weakenings to the collector and requires the adversarial test suite to detect each through assertion failures. All 13/13 were killed. GitHub Actions run [44230994871](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230994871) passed 164 tests on commit `8d23997fd0d746ba04f2528a5e34721293ae5514`.
+
+Initial runs exposed missing job-ID validation and three test fixtures that were masked by adjacent checks; both implementation and fixtures were corrected before the passing run. Coverage remains bounded to the 13 authored mutants. The collector is still an API evidence collector, not a cryptographic attestation verifier or an independent trust root.

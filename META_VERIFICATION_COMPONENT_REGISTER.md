@@ -296,3 +296,18 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Observed result:** 10/10 selected mutants killed. Harness run [44230310401](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230310401) passed 151 tests on commit `8740ee0c024d4c30105d766d54679f563ee211cc`; log explicitly records all ten kills.
 - **Test-quality correction:** the first run showed the boolean-ID mutant survived because another certificate-ID mismatch independently rejected the fixture. The fixture was corrected to align the certificate field with the boolean policy so the type-validation control is isolated; the rerun killed the mutant.
 - **Status:** Implemented and validated for this selected set. No claim of exhaustive coverage or independent external assurance.
+
+
+## 16. GitHub Actions run collector hardening and mutation tests
+
+### MVC-030 — Collector identity and completeness controls
+
+- **Implementation:** `meta_verification/github_run_collector.py`.
+- **Unit/adversarial tests:** `meta_verification/test_github_run_collector.py`.
+- **Mutation driver:** `meta_verification/test_collector_mutations.py`.
+- **New controls:** exact integer type checks for workflow/run IDs and job count; positive run-attempt validation; equality of repository and head-repository numeric IDs; positive and unique job IDs; exact job-page count; existing workflow/evaluator blob SHA pins retained.
+- **Selected mutants:** 13, covering policy/API boolean-ID confusion, run attempt, repository identity/name bindings, job pagination and IDs, workflow revision pin, and evaluator revision pin.
+- **Observed result:** 13/13 selected mutants killed; full harness [44230994871](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44230994871) passed 164 tests on commit `8d23997fd0d746ba04f2528a5e34721293ae5514`.
+- **Test development record:** initial executions failed on missing job-ID validation and three test-fixture masking conditions. The implementation and fixtures were corrected before the successful run.
+- **Status:** Implemented and validated for the named test and mutant set. This is not exhaustive testing, a formal proof of collector correctness, or an independent audit of GitHub's API.
+
