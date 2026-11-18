@@ -711,3 +711,83 @@ theorem perron_eigenvalue_has_characteristic_root_multiplicity_one
   simpa using hfiltered_card
 
 end ConstantLlapoy.PaperA
+
+
+/-- For a nonnegative matrix, replacing every coordinate of a real vector by
+its absolute value cannot decrease the associated quadratic form. This is
+the order-theoretic core of the symmetric Perron existence route. -/
+theorem quadratic_form_le_abs_quadratic_form
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (A : ι → ι → ℝ) (x : ι → ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j) :
+    (∑ i, ∑ j, A i j * x i * x j) ≤
+      ∑ i, ∑ j, A i j * |x i| * |x j| := by
+  classical
+  apply Finset.sum_le_sum
+  intro i hi
+  apply Finset.sum_le_sum
+  intro j hj
+  have hprod : x i * x j ≤ |x i| * |x j| := by
+    calc
+      x i * x j ≤ |x i * x j| := le_abs_self _
+      _ = |x i| * |x j| := abs_mul _ _
+  calc
+    A i j * x i * x j = A i j * (x i * x j) := by ring
+    _ ≤ A i j * (|x i| * |x j|) :=
+      mul_le_mul_of_nonneg_left hprod (hA_nonneg i j)
+    _ = A i j * |x i| * |x j| := by ring
+
+/-- A nonzero nonnegative eigenvector of a nonnegative matrix is strictly
+positive when the positive-entry support relation is connected. The proof
+propagates a zero coordinate along every positive edge using the eigenvector
+equation and the nonnegativity of every summand. -/
+theorem nonneg_eigenvector_strictly_positive_of_pf_connected
+    {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (A : ι → ι → ℝ) (v : ι → ℝ) (r : ℝ)
+    (hA_nonneg : ∀ i j, 0 ≤ A i j)
+    (hv_nonneg : ∀ i, 0 ≤ v i)
+    (hv_ne_zero : v ≠ 0)
+    (hAv : ∀ i, ∑ j, A i j * v j = r * v i)
+    (hconnected : ∀ i j, PFReachable (fun a b => 0 < A a b) i j) :
+    ∀ i, 0 < v i := by
+  classical
+  have hzero_propagates :
+      ∀ {a b}, PFReachable (fun x y => 0 < A x y) a b →
+        v a = 0 → v b = 0 := by
+    intro a b hpath
+    induction hpath with
+    | refl a =>
+        intro ha
+        exact ha
+    | @step a b c hab htail ih =>
+        intro ha
+        have hsum : ∑ j, A a j * v j = 0 := by
+          rw [hAv a, ha]
+          ring
+        have hterms_nonneg : ∀ j ∈ (Finset.univ : Finset ι),
+            0 ≤ A a j * v j := by
+          intro j hj
+          exact mul_nonneg (hA_nonneg a j) (hv_nonneg j)
+        have hterms_zero :=
+          (Finset.sum_eq_zero_iff_of_nonneg hterms_nonneg).mp hsum
+        have hterm : A a b * v b = 0 :=
+          hterms_zero b (Finset.mem_univ b)
+        have hvb : v b = 0 := by
+          rcases mul_eq_zero.mp hterm with hAb_zero | hvb_zero
+          · exact False.elim ((ne_of_gt hab) hAb_zero)
+          · exact hvb_zero
+        exact ih hvb
+  have hpositive_exists : ∃ j, 0 < v j := by
+    by_contra h
+    push_neg at h
+    have hv_all_zero : ∀ j, v j = 0 := by
+      intro j
+      exact le_antisymm (h j) (hv_nonneg j)
+    exact hv_ne_zero (funext hv_all_zero)
+  intro i
+  by_contra hi
+  have hi_zero : v i = 0 := by
+    exact le_antisymm (le_of_not_gt hi) (hv_nonneg i)
+  obtain ⟨j, hj⟩ := hpositive_exists
+  have hj_zero : v j = 0 := hzero_propagates (hconnected i j) hi_zero
+  linarith
