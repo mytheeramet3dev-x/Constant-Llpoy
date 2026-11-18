@@ -14,6 +14,9 @@ on:
       - "meta_verification/paper_a_semantic_correspondence.json"
       - "meta_verification/paper_a_semantic_audit_validator.py"
       - "meta_verification/test_paper_a_semantic_audit_validator.py"
+      - "meta_verification/install_pinned_gh_cli.sh"
+      - "meta_verification/test_pinned_gh_cli_installer.py"
+      - ".github/workflows/paper-a-component-evidence-verify.yml"
       - "meta_verification/paper_a_component_provenance_policy.json"
       - ".github/workflows/paper-a-component-evidence.yml"
   workflow_dispatch:
