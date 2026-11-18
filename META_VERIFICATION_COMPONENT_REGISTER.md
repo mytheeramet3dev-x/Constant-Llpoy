@@ -43,7 +43,8 @@ Blob SHAs identify the inspected file contents. The tree SHA identifies the repo
 | MVC-015 | Meta-verification CI workflow | Test orchestration | Runs evaluator and collector unit tests | 34 tests passed in run 44208176534 on commit 4d1c97e6c4c25ec6569ecbae33062bcc4b9bdb17 |
 | MVC-016 | Post-run evidence collection workflow | External evidence acquisition | Queries GitHub API and emits normalized run evidence | API stage validated in run 44208206996; signed-provenance extension awaits end-to-end run |
 | MVC-017 | GitHub/Sigstore attestation producer | Provenance signing | Signs exact evidence JSON subject with SLSA provenance via OIDC | Implemented with actions/attest pinned to 1e69f48acb82d1966a394da916b4c1698aa569d6; end-to-end run pending |
-| MVC-018 | Separate signed-provenance verifier workflow | Independent evidence verification | Downloads producer artifact and verifies signature, certificate identity, source commit, timestamp, and subject digest | Implemented; end-to-end run pending |\n| MVC-019 | Provenance policy verifier and adversarial tests | Evidence-policy checker | Applies repo ID, source ref/commit, signer commit, predicate, timestamp, and digest policy after gh verification | 14 unit tests implemented; CI validation pending |
+| MVC-018 | Separate signed-provenance verifier workflow | Independent evidence verification | Downloads producer artifact and verifies signature, certificate identity, source commit, timestamp, and subject digest | Implemented; end-to-end run pending |
+| MVC-019 | Provenance policy verifier and adversarial tests | Evidence-policy checker | Applies repo ID, source ref/commit, signer commit, predicate, timestamp, and digest policy after gh verification | 14 unit tests implemented; CI validation pending |
 
 ## 3. Observed repository-owned components
 
