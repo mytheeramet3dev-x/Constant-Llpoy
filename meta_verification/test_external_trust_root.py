@@ -152,7 +152,7 @@ class ExternalTrustRootTests(unittest.TestCase):
                             "https://github.com/" + ROOT + ".git"], check=True)
             mbytes = json.dumps(manifest(), sort_keys=True, separators=(",", ":")).encode()
             (root / "trust-root.json").write_bytes(mbytes)
-            subprocess.run(["openssl", "genpkey", "-algorithm", "ED25519", "-out", str(root / "private.pem")],
+            subprocess.run(["openssl", "genpkey", "-algorithm", "ED25519", "-out", str(Path(td) / "private.pem")],
                            check=True, capture_output=True)
             subprocess.run(["openssl", "pkey", "-in", str(root / "private.pem"), "-pubout",
                             "-out", str(root / "trust-root.pub")], check=True, capture_output=True)
