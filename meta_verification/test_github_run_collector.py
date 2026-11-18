@@ -12,7 +12,7 @@ def fixture():
        "workflow_blob_sha":WF,"evaluator_path":"meta_verification/status_evaluator.py","evaluator_blob_sha":EV,
        "required_jobs":[JOB],"required_steps":{JOB:STEP_NAMES},"allowed_events":["push","workflow_dispatch"],"required_branch":"main"}
     run={"id":123,"head_sha":HEAD,"workflow_id":42,"path":p["workflow_path"],"status":"completed","event":"push",
-         "head_branch":"main","conclusion":"success","run_attempt":1,"repository":{"full_name":REPO},"head_repository":{"full_name":REPO}}
+         "head_branch":"main","conclusion":"success","run_attempt":1,"repository":{"id":555,"full_name":REPO},"head_repository":{"id":555,"full_name":REPO}}
     steps=[{"name":n,"status":"completed","conclusion":"success"} for n in STEP_NAMES]
     jobs={"total_count":1,"jobs":[{"id":900,"name":JOB,"status":"completed","conclusion":"success","steps":steps}]}
     return p,run,jobs,{"type":"file","sha":WF},{"type":"file","sha":EV}
@@ -63,6 +63,38 @@ class CollectorTests(unittest.TestCase):
         with self.assertRaises(CollectionError): check(x)
     def test_unexpected_and_duplicate_jobs_rejected(self):
         x=fixture(); x[2]["jobs"].append(copy.deepcopy(x[2]["jobs"][0])); x[2]["total_count"]=2
+        with self.assertRaises(CollectionError): check(x)
+    def test_boolean_policy_workflow_id_rejected(self):
+        x=fixture(); x[0]["workflow_id"]=True
+        with self.assertRaises(CollectionError): check(x)
+    def test_boolean_expected_run_id_rejected(self):
+        x=fixture()
+        with self.assertRaises(CollectionError):
+            validate_snapshot(*x,expected_run_id=True,expected_head_sha=HEAD,expected_repo=REPO)
+    def test_boolean_run_id_and_workflow_id_rejected(self):
+        for key in ("id","workflow_id"):
+            x=fixture(); x[1][key]=True
+            with self.subTest(key=key):
+                with self.assertRaises(CollectionError): check(x)
+    def test_missing_or_invalid_run_attempt_rejected(self):
+        for value in (None,0,True,"1"):
+            x=fixture(); x[1]["run_attempt"]=value
+            with self.subTest(value=value):
+                with self.assertRaises(CollectionError): check(x)
+    def test_numeric_repository_identity_must_match(self):
+        x=fixture(); x[1]["head_repository"]["id"]=777
+        with self.assertRaises(CollectionError): check(x)
+    def test_job_ids_must_be_positive_exact_integers(self):
+        for value in (None,0,True,"900"):
+            x=fixture(); x[2]["jobs"][0]["id"]=value
+            with self.subTest(value=value):
+                with self.assertRaises(CollectionError): check(x)
+    def test_duplicate_job_ids_rejected(self):
+        x=fixture(); other=copy.deepcopy(x[2]["jobs"][0]); other["name"]="unexpected second job"
+        x[2]["jobs"].append(other); x[2]["total_count"]=2
+        with self.assertRaises(CollectionError): check(x)
+    def test_boolean_jobs_total_count_rejected(self):
+        x=fixture(); x[2]["total_count"]=True
         with self.assertRaises(CollectionError): check(x)
     def test_record_digest_is_deterministic(self):
         self.assertEqual(check(fixture())["record_sha256"],check(fixture())["record_sha256"])

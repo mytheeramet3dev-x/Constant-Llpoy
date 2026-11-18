@@ -25,7 +25,7 @@ def sha(value: Any, label: str) -> str:
 def validate_policy(p: Any) -> dict:
     require(isinstance(p,dict) and set(p)==POLICY_KEYS,"policy has missing or unknown fields")
     require(p["schema_version"]=="1.0","unsupported policy schema")
-    require(isinstance(p["workflow_id"],int) and p["workflow_id"]>0,"invalid workflow_id")
+    require(type(p["workflow_id"]) is int and p["workflow_id"]>0,"invalid workflow_id")
     for k in ("workflow_path","evaluator_path","required_branch"):
         require(isinstance(p[k],str) and bool(p[k]),f"{k} must be non-empty")
     sha(p["workflow_blob_sha"],"workflow_blob_sha"); sha(p["evaluator_blob_sha"],"evaluator_blob_sha")
@@ -47,24 +47,28 @@ def content_sha(obj: Any, label: str) -> str:
 
 def validate_snapshot(policy: Any, run: Any, jobs_response: Any, workflow_file: Any, evaluator_file: Any, *, expected_run_id: int, expected_head_sha: str, expected_repo: str) -> dict:
     p=validate_policy(policy); sha(expected_head_sha,"expected_head_sha")
-    require(isinstance(expected_run_id,int) and expected_run_id>0,"invalid expected_run_id")
+    require(type(expected_run_id) is int and expected_run_id>0,"invalid expected_run_id")
     require(isinstance(expected_repo,str) and "/" in expected_repo,"expected_repo must be owner/name")
     require(isinstance(run,dict),"run response must be an object")
-    require(run.get("id")==expected_run_id,"run ID mismatch")
+    require(type(run.get("id")) is int and run.get("id")==expected_run_id,"run ID mismatch")
     require(run.get("head_sha")==expected_head_sha,"run head SHA mismatch")
-    require(run.get("workflow_id")==p["workflow_id"] and run.get("path")==p["workflow_path"],"workflow identity mismatch")
+    require(type(run.get("workflow_id")) is int and run.get("workflow_id")==p["workflow_id"] and run.get("path")==p["workflow_path"],"workflow identity mismatch")
     require(run.get("status")=="completed","workflow run is not completed")
     require(run.get("event") in p["allowed_events"],"workflow event is not permitted")
     require(run.get("head_branch")==p["required_branch"],"workflow branch is not permitted")
     require(run.get("conclusion") in {"success","failure","cancelled","timed_out","action_required"},"unsupported workflow conclusion")
     require(isinstance(run.get("repository"),dict) and run["repository"].get("full_name")==expected_repo,"repository mismatch")
     require(isinstance(run.get("head_repository"),dict) and run["head_repository"].get("full_name")==expected_repo,"fork-originated run is not accepted")
+    repo_id=run["repository"].get("id"); head_repo_id=run["head_repository"].get("id")
+    require(type(repo_id) is int and repo_id>0 and type(head_repo_id) is int and head_repo_id==repo_id,"repository numeric identity mismatch")
+    attempt=run.get("run_attempt")
+    require(type(attempt) is int and attempt>0,"invalid or missing workflow run attempt")
     wfsha=content_sha(workflow_file,"workflow"); evsha=content_sha(evaluator_file,"evaluator")
     require(wfsha==p["workflow_blob_sha"],"workflow file revision mismatch")
     require(evsha==p["evaluator_blob_sha"],"evaluator file revision mismatch")
     require(isinstance(jobs_response,dict) and isinstance(jobs_response.get("jobs"),list),"malformed jobs response")
     jobs=jobs_response["jobs"]
-    require(bool(jobs) and jobs_response.get("total_count")==len(jobs),"jobs response is empty or paginated/incomplete")
+    require(bool(jobs) and type(jobs_response.get("total_count")) is int and jobs_response.get("total_count")==len(jobs),"jobs response is empty or paginated/incomplete")
     names=[j.get("name") if isinstance(j,dict) else None for j in jobs]
     require(len(names)==len(set(names)),"duplicate job names")
     require(set(names)==set(p["required_jobs"]),"actual job set differs from policy")
