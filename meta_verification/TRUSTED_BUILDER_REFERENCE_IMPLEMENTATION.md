@@ -62,3 +62,10 @@ success claim. It must never be translated into `SIGNED` or used as an attestati
 - independently governed conformance execution.
 
 The external activation gate in `TRUSTED_BUILDER_CONTRACT.md` remains unchanged.
+
+
+## File-descriptor hardening
+
+Subject reads use descriptor-relative traversal from an opened checkout-root directory. Each path component is opened with `O_NOFOLLOW`; intermediate components also require `O_DIRECTORY`. The final descriptor is checked with `fstat` for a regular file and read with a strict byte cap. This avoids the earlier check-then-open symlink race and avoids blocking on FIFOs. Platforms without the required no-follow flags fail closed. JSON parsing also rejects non-standard constants such as `NaN` and `Infinity`.
+
+The adversarial suite covers parent-directory symlinks, FIFOs, and non-standard JSON constants. The full harness passed 117 tests on commit `d8494c4f13aecf133ae156510e72ec689ee16fef` (run [44217266945](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44217266945)).
