@@ -83,3 +83,12 @@ A green test suite proves only that the declared tests ran and passed on the nam
 ## 7. Observed CI validation
 
 On commit `e8da7e8923440716a1b1dbf85c6f2c7b0408c9dc`, full harness run [44238894962](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238894962) passed 263 tests in 28.235 seconds. Selected mutation results: component provenance 10/10, aggregator 12/12, policy activation 9/9. Producer [44238972702](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238972702) and separate verifier [44239010485](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44239010485) succeeded; the verified attestation is for `github-run-evidence.json`, not for individual component evidence. This is bounded CI evidence, not live per-component attestation validation.
+
+
+## 8. Live GitHub attestation integration smoke test
+
+A separate workflow, `.github/workflows/component-provenance-live-smoke.yml`, exercises the authenticator against a real GitHub/Sigstore attestation rather than a fake CLI fixture. It runs only after the existing evidence-collection producer workflow completes successfully. It downloads the exact evidence artifact from that producer run, checks out the producer's exact source revision, and invokes the direct authenticator through `component_provenance_live_smoke.py`.
+
+The smoke adapter constructs a one-component bundle for the exact downloaded `github-run-evidence.json` bytes. Its receipt binds the producer workflow run ID, run attempt, and source revision. The direct authenticator must verify the actual attestation and its SLSA invocation ID; the normal aggregator must then accept the one-component smoke bundle. The workflow uploads a report only after that sequence succeeds.
+
+**Interpretation boundary:** this demonstrates that the current GitHub CLI / Sigstore integration can authenticate one real subject emitted by the existing producer. It does not create attestations for Paper A, Lean modules, numerical diagnostics, or every future component. It also does not activate the external authority, active-policy, or provenance-policy trust roots. The smoke workflow computes the policy digest from the checked-out policy file; this is deliberately a local integration-test pin, not an independently governed production pin. Its final status is `LIVE_COMPONENT_PROVENANCE_SMOKE_VERIFIED`, never a theorem status.

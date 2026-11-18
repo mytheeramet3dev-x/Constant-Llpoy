@@ -9,12 +9,14 @@ on:
       - ".github/workflows/meta-verification-evidence.yml"
       - ".github/workflows/meta-verification-provenance-verify.yml"
       - ".github/workflows/meta-trust-root-bootstrap.yml"
+      - ".github/workflows/component-provenance-live-smoke.yml"
       - "META_VERIFICATION_SPECIFICATION.md"
       - "META_VERIFICATION_COMPONENT_REGISTER.md"
   pull_request:
     paths:
       - "meta_verification/**"
       - ".github/workflows/meta-verification.yml"
+      - ".github/workflows/component-provenance-live-smoke.yml"
       - "META_VERIFICATION_SPECIFICATION.md"
       - "META_VERIFICATION_COMPONENT_REGISTER.md"
   workflow_dispatch:

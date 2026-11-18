@@ -1,0 +1,63 @@
+name: Live component provenance smoke test
+
+on:
+  workflow_run:
+    workflows: ["Meta-verification evidence collection"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  actions: read
+  attestations: read
+  contents: read
+
+jobs:
+  verify-real-component-subject:
+    name: Verify real GitHub-attested component subject
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact signer source revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Download exact signed evidence artifact from producer run
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: meta-verification-signed-evidence-${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+          path: evidence
+
+      - name: Verify GitHub CLI version
+        run: |
+          gh version
+          gh attestation verify --help >/dev/null
+
+      - name: Authenticate exact subject and run the component aggregator
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SIGNER_SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          SIGNER_RUN_ID: ${{ github.event.workflow_run.id }}
+          SIGNER_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          POLICY_SHA256="$(sha256sum meta_verification/signed_provenance_policy.json | awk '{print $1}')"
+          python meta_verification/component_provenance_live_smoke.py \
+            --subject evidence/github-run-evidence.json \
+            --provenance-policy meta_verification/signed_provenance_policy.json \
+            --expected-provenance-policy-sha256 "$POLICY_SHA256" \
+            --source-commit "$SIGNER_SOURCE_SHA" \
+            --run-id "$SIGNER_RUN_ID" \
+            --run-attempt "$SIGNER_RUN_ATTEMPT" \
+            --output component-provenance-live-smoke.json
+
+      - name: Upload live verification report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: component-provenance-live-smoke-${{ github.event.workflow_run.id }}
+          path: component-provenance-live-smoke.json
+          if-no-files-found: error
+          retention-days: 90

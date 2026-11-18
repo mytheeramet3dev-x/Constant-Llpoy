@@ -723,3 +723,14 @@ The threat model exists to challenge the verification system itself with the sam
 **Required controls:** Remove self-asserted VERIFIED fields from the receipt schema. Verify each required component's exact evidence bytes directly with GitHub/Sigstore. Bind certificate repository identity, source ref and commit, signer workflow identity and commit, verified timestamp, predicate type, unique subject digest, and SLSA invocation ID to the exact run ID/attempt. Require an externally supplied provenance-policy digest. The standalone aggregator CLI must not accept JSON-only receipts; the activation CLI must authenticate every required component before aggregation. Fail closed on missing, stale, duplicate, conflicting, or mismatched evidence.
 
 **Residual risk:** Tests use fake CLI output and do not establish live component attestations. The current evidence producer signs only the collector evidence JSON, not every component artifact. No external provenance-policy pin or production integration is provisioned. GitHub CLI binary provenance and repository-admin trust remain in the trust boundary. Authenticated provenance does not establish mathematical correctness of component evidence.
+
+
+## T24 — Synthetic-only validation of component attestation integration
+
+**Threat:** The component provenance authenticator passes fake-output tests but is incompatible with actual GitHub/Sigstore attestations, invocation metadata, artifact handling, or workflow-run identity in production.
+
+**Failure modes:** A fake CLI fixture omits a real field or uses a different representation; a producer run's attempt is bound incorrectly; the verifier downloads a different run's artifact; the SLSA invocation ID differs from the receipt; or the integration silently falls back to structural-only validation.
+
+**Required controls:** Run a separate post-producer integration workflow that downloads the exact artifact from the exact producer run, checks out the producer source revision, verifies the real attestation with the pinned GitHub CLI policy, binds run ID and attempt to the signed invocation ID, and passes the authenticated result through the actual aggregator. Fail closed on any mismatch. Keep this smoke test distinct from theorem acceptance and from external trust activation.
+
+**Residual risk:** A smoke test over the collector's own evidence JSON validates only one signer/subject path. It does not provide attestations for every mathematical component, independently administer the policy pin, or establish external authority governance. A live smoke success is integration evidence, not proof of authenticator completeness or mathematical correctness.

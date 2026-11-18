@@ -595,3 +595,8 @@ Observed bounded validation for the activation-gate revision `b09293fc018144d438
 
 
 The policy activation component includes a CLI contract requiring explicit policy/authority/activation/bundle files, externally sourced authority and active-record digests, expected policy ID and sequence, expected source commit, and trusted epoch time. The CLI rejects symlink/non-regular inputs, oversized inputs, duplicate JSON keys, and missing/malformed pins. It has no repository-local pin defaults. CLI test coverage is included in the meta-verification harness. Production invocation remains NOT ACTIVE because external pin custody, trusted time injection, and protected deployment controls have not been provisioned or verified.
+
+
+## Component-provenance live integration smoke test
+
+The repository now has a separate post-producer smoke workflow that downloads the exact signed `github-run-evidence.json` artifact from the producer run and verifies that exact subject through the component-provenance authenticator. The workflow binds the producer run ID/attempt and source revision, then requires the component aggregator to accept a one-component test bundle. This is evidence that the verifier integration works with one real GitHub/Sigstore attestation once the workflow succeeds. It is not a producer for the mathematical verification components, does not activate external trust pins, and cannot establish theorem correctness. The smoke policy digest is locally computed and must not be represented as an external trust anchor.

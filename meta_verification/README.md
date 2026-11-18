@@ -178,3 +178,10 @@ Implementation: `component_provenance_authenticator.py`; adversarial tests: `tes
 
 
 **Observed validation for commit `e8da7e8923440716a1b1dbf85c6f2c7b0408c9dc`:** full meta-verification harness [44238894962](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238894962) passed 263 tests in 28.235 seconds. The selected mutation suites killed 10/10 component-provenance mutants, 12/12 aggregator mutants, and 9/9 policy-activation mutants. Evidence producer [44238972702](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44238972702) succeeded; separate verifier [44239010485](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44239010485) reported `VERIFIED` for the exact commit and one attestation (subject SHA-256 `bcf1a81a2aa0bf9d708c3fb78d427c1b2fc0b531a465a912933be3ea3309f73a`). This signed subject is the collector's `github-run-evidence.json`, not per-component evidence. The authenticator tests still use fake CLI output; no live component artifact has been authenticated.
+
+
+## Live component-provenance integration smoke test
+
+`.github/workflows/component-provenance-live-smoke.yml` runs after the signed evidence producer and downloads that exact producer run's subject artifact. `component_provenance_live_smoke.py` builds a one-component bundle for the downloaded `github-run-evidence.json`, binds the actual producer run ID/attempt and source revision, calls the direct GitHub/Sigstore authenticator, and requires the existing aggregator to accept the authenticated smoke bundle. The report is uploaded as a workflow artifact.
+
+This is a real-signature integration test for one collector evidence subject, not a per-Paper/per-Lean component producer. The policy digest is computed from the repository checkout solely for this smoke test; it is not an external trust pin. External policy activation remains NOT ACTIVE, and the result is not mathematical verification. Adapter unit tests are in `test_component_provenance_live_smoke.py`.
