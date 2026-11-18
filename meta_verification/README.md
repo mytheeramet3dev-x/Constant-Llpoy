@@ -123,3 +123,14 @@ API JSON parsing is bounded and strict: UTF-8 JSON object only, duplicate keys a
 The test suite covers stale attempts, job/run mismatch, malformed/ambiguous JSON, oversized responses, HTTP errors, and timeouts. The mutation suite now tests 17 selected collector regressions; all 17/17 were killed. Full harness [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`.
 
 This remains bounded testing against GitHub API responses; it is not an independent API trust root. Pagination intentionally fails closed above 100 jobs until a separately specified and tested multi-page contract is implemented.
+
+
+## Component status aggregation (structural prototype)
+
+`status_aggregator.py` evaluates a policy-bound bundle of component results. It binds claim ID, expected source commit, policy revision, required component set, per-component evidence bytes/digests, and the structure of provenance receipts. Missing, duplicate, unknown, stale, conflicting, non-PASS, or unverified inputs cannot produce acceptance. A verified component failure or evidence digest mismatch is rejected; malformed contracts return an error.
+
+**Important authority boundary:** its `ACCEPTED` means only that the supplied bundle structurally satisfies the supplied policy. Output explicitly says `BUNDLE_POLICY_EVALUATION_ONLY` and `STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`. It does not cryptographically authenticate a receipt merely because a JSON field says `VERIFIED`, does not verify mathematical proofs, and is not integrated as the production theorem-status gate. Do not use it to claim theorem acceptance.
+
+Tests are in `test_status_aggregator.py`; selected mutation checks are in `test_status_aggregator_mutations.py`. The corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests and killed all 12 selected aggregator mutants. The initial run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) exposed a duplicate-record escalation bug and a mutation-fixture anchor problem; both were corrected before the passing run.
+
+Production use still requires authenticated receipt acquisition, independently governed policy authority, exact verifier identity binding, and an end-to-end workflow integration audit.

@@ -512,3 +512,56 @@ New tests cover stale/replayed run attempts, expected attempt type/range, job-to
 The collector mutation suite now contains 17 selected mutants, adding run-attempt equality, job run ID, job attempt, and duplicate-key rejection bypasses. GitHub Actions run [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`; the log explicitly records all 17 collector mutants killed.
 
 This is bounded API-contract and replay-resistance testing. It does not authenticate GitHub's API independently, prove the API is truthful, or protect against a privileged repository administrator who can change the producer and policy. Pagination is fail-closed at 100 jobs rather than fully traversed; a future policy needing more than 100 jobs requires an explicit cursor/next-page contract and tests before enabling it.
+
+
+## 23. Meta-verification aggregation and status authority (structural prototype)
+
+### Purpose and authority boundary
+
+`meta_verification/status_aggregator.py` is a deterministic policy evaluator for a supplied component-evidence bundle. It is deliberately not a cryptographic verifier, mathematical proof checker, theorem-status oracle, or independent authority over the truth of component claims.
+
+Its `ACCEPTED` result means only: **the supplied bundle structurally satisfies the supplied aggregation policy for the specified claim and source commit**. The output explicitly carries:
+- `status_scope = BUNDLE_POLICY_EVALUATION_ONLY`
+- `assurance_level = STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`
+
+The aggregator validates a provenance receipt's shape, source-commit binding, and subject digest binding. It does not itself establish that the receipt was signed by a trusted verifier. Receipt authenticity must be established by a separately trusted acquisition/verification path before the receipt can be treated as authoritative. A caller-controlled JSON field saying `VERIFIED` is not a cryptographic trust root.
+
+### Policy and bundle contracts
+
+- Policy defines an exact claim ID, immutable policy revision, and unique non-empty set of required component IDs.
+- Bundle must match the claim, expected source commit supplied independently to the invocation, and policy revision.
+- Every required component must appear exactly once. Missing, duplicate, unknown, stale, or conflicting component evidence cannot produce acceptance.
+- Each component has a finite state: `PASS`, `FAIL`, `INCONCLUSIVE`, `ERROR`, `TIMEOUT`, or `NOT_RUN`.
+- Component evidence must be non-empty, bounded, Base64-decodable, and match its SHA-256 digest.
+- Provenance receipt has an exact field set, positive exact-integer run ID/attempt, immutable verifier revision, `VERIFIED` status, subject digest matching the evidence bytes, and source commit matching the expected commit.
+- Boolean-as-integer identity confusion is rejected.
+- Empty evidence is rejected. This is stricter than the older policy evaluator's test that allowed an empty byte string with a matching digest; the older evaluator has not been silently redefined by this prototype.
+
+### Aggregation semantics
+
+- Malformed policy/bundle/receipt structure returns CLI `ERROR` and a non-zero exit.
+- A digest mismatch or a component `FAIL` accompanied by a structurally consistent `VERIFIED` receipt yields `REJECTED`.
+- Missing, duplicate, unknown, stale, conflicting, unverified, or non-PASS evidence yields `INCONCLUSIVE`.
+- Only a complete, unique, current bundle with all component states `PASS` and structurally consistent receipts yields `ACCEPTED`.
+- Duplicate component IDs are not resolved by choosing first or last: duplicate records are excluded from authoritative component-state evaluation and force `INCONCLUSIVE`.
+- The output is deterministic and contains component-level summaries and explicit reason fields.
+
+This is a prototype status-authority policy, not yet integrated as the final theorem-status gate in the evidence producer/verifier workflows. It does not replace `status_evaluator.py` or the GitHub signed-provenance verifier. No Layer-level mathematical acceptance is inferred from it.
+
+### Adversarial and mutation evidence
+
+- Unit tests cover completeness, stale commits/policy, duplicate and conflicting records, unknown components, all non-PASS states, verified versus unverified failures, subject/source binding, digest corruption, empty evidence, exact identity types, and unknown fields.
+- Twelve selected source mutants target completeness, revision binding, receipt status, receipt digest/source binding, Boolean identity confusion, empty evidence, failure handling, duplicate handling, and digest enforcement.
+- Initial run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) failed and exposed two real issues: duplicate conflicting records could incorrectly escalate to `REJECTED`, and one mutation anchor did not match the source. The implementation now excludes duplicated IDs from component-state authority (while preserving the duplicate reason as `INCONCLUSIVE`), and the mutation anchor was corrected.
+- Corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests; all 12/12 selected aggregator mutants were killed, with assertion-driven test failures.
+- This is bounded evidence for the authored tests/mutants, not exhaustive correctness or external independence.
+
+### Remaining integration obligations
+
+Before this prototype can act as a production status authority:
+1. Define and pin the authoritative policy revision and who is authorized to change it.
+2. Acquire verifier receipts through an authenticated, independent route; do not trust caller-supplied `VERIFIED` strings.
+3. Bind each receipt to the exact verifier workflow identity, repository ID, signer identity, source commit, run ID, run attempt, and subject digest.
+4. Define whether and how a trusted external builder/root participates; the existing external trust-root bootstrap remains inactive.
+5. Integrate the aggregator only after end-to-end tests prove the producer cannot inject, omit, replay, or relabel component records.
+6. Keep mathematical theorem acceptance separate from infrastructure evidence acceptance.

@@ -329,3 +329,22 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 - **Observed result:** all 17/17 selected collector mutants killed; full harness run [44231737913](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44231737913) passed 176 tests on commit `295eea3e0e717569c3f981a3e272dc31b4de567d`.
 - **Status:** Implemented and validated for the selected contract and mutation cases. This is not independent validation of GitHub's API or exhaustive replay resistance.
 
+
+
+## 18. Meta-verification aggregation and status authority prototype
+
+### MVC-032 — Deterministic component evidence aggregator
+
+- **Implementation:** `meta_verification/status_aggregator.py`.
+- **Unit/adversarial tests:** `meta_verification/test_status_aggregator.py`.
+- **Mutation driver:** `meta_verification/test_status_aggregator_mutations.py`.
+- **Policy inputs:** exact claim ID, immutable policy revision, and unique required component set.
+- **Bundle binding:** expected source commit is supplied independently; claim and policy revision must match; missing, duplicate, unknown, stale, and conflicting records fail closed.
+- **Component state model:** PASS / FAIL / INCONCLUSIVE / ERROR / TIMEOUT / NOT_RUN.
+- **Evidence binding:** non-empty bounded bytes, Base64 validation, SHA-256 digest; provenance receipt structure and source/subject binding; exact positive integer verifier run ID/attempt.
+- **Status semantics:** verified failure or digest mismatch → REJECTED; malformed contract → ERROR; incomplete/stale/duplicate/unverified/non-PASS → INCONCLUSIVE; only complete all-PASS bundle → ACCEPTED.
+- **Output limitation:** every output labels itself `BUNDLE_POLICY_EVALUATION_ONLY` and `STRUCTURAL_ONLY_UNAUTHENTICATED_INPUTS`. The aggregator does not verify receipt signatures and is not wired into the production theorem-status path.
+- **Selected mutation set:** 12; all 12/12 killed. Corrected full harness [44232385272](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232385272) passed 202 tests on commit `0c1bc5d2e5bd3bb8808222c71868edfa81b83bce`.
+- **Test correction record:** initial harness run [44232264438](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44232264438) failed. It exposed an incorrect escalation from duplicate conflicting component records to REJECTED; duplicate IDs are now excluded from state authority and force INCONCLUSIVE. A stale mutation anchor was also corrected.
+- **Status:** Implemented and validated as a structural prototype only. It is not yet an independently authenticated or production-integrated status authority.
+
