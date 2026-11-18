@@ -91,6 +91,7 @@ class TrustedBuilderMutationAdequacyTests(unittest.TestCase):
                                      f"{name} failed for an import error, not a detected mutation\n{output}")
                     self.assertNotIn("SyntaxError", output,
                                      f"{name} failed for syntax, not a detected mutation\n{output}")
+                    print(f"MUTANT KILLED: {name}")
 
 
 if __name__ == "__main__":
