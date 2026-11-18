@@ -85,3 +85,48 @@ A result may be marked implemented only when:
 - the Paper A evidence producer and separate provenance verifier authenticate the exact source-bound artifact.
 
 A successful build of the conditional theorem is not a pass for the full ground-state claim.
+
+
+## 6. Pinned-toolchain theorem-route audit (2026-11-19)
+
+The exact pinned Mathlib revision `96f6b8b8e029545577421f198a89fb174a4d62e6` was inspected. Relevant source blobs:
+
+- `Mathlib/Analysis/InnerProductSpace/Rayleigh.lean`, blob `78845bef9a7cc7a3712f4cdd83c0d8ecadd639b6`:
+  - `LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional` proves that the supremum of the Rayleigh quotient of a symmetric operator on a nontrivial finite-dimensional space is an eigenvalue.
+  - `IsSelfAdjoint.hasEigenvector_of_isMaxOn` turns a maximizer of the quadratic form on a sphere into an eigenvector.
+  - These results provide a possible finite-dimensional extremal route, but do not themselves construct a nonnegative or strictly positive eigenvector.
+- `Mathlib/Analysis/Matrix/Spectrum.lean`, blob `5af1845164c4a1c7d7a360bf9086191fac1d52f3`:
+  - Hermitian matrices have an orthonormal eigenvector basis; `eigenvalues₀_antitone` orders the real eigenvalues antitonically.
+  - This supports the largest-eigenvalue / Rayleigh bridge.
+- `Mathlib/LinearAlgebra/Matrix/Irreducible/Defs.lean`, blob `cbd71a13fa7931c20abc99ab01e154578029dad9`:
+  - `Matrix.IsIrreducible` packages entrywise nonnegativity and strong connectivity of the positive-entry quiver.
+  - `IsIrreducible.exists_pos` supplies a positive entry in every row for a nontrivial index type.
+
+### Preferred route to prototype
+
+Because the Paper A shifted TFIM matrix is real symmetric, use a symmetry-specific Rayleigh-maximization proof before importing a general nonsymmetric Perron development:
+
+1. Obtain a nonzero maximizing vector for the Rayleigh quotient of the real-symmetric shifted matrix.
+2. Replace its coordinates by absolute values. Prove norm preservation and that the quadratic form does not decrease, term-by-term from entrywise nonnegativity.
+3. Since the original vector already maximizes the Rayleigh quotient, show the absolute-value vector is also a maximizer; invoke the pinned Rayleigh extremum theorem to obtain a nonnegative eigenvector at the largest eigenvalue.
+4. Show the largest eigenvalue is strictly positive using the model's strictly positive diagonal (the existing shift bound gives this).
+5. Use positive-support connectivity to propagate positivity from one nonzero coordinate to every coordinate. This must be proved explicitly; do not assume strict positivity.
+6. Prove the largest real eigenvalue is the spectral radius for this real-symmetric matrix, then feed the resulting positive eigenpair into the existing characteristic-root multiplicity-one theorem.
+
+This route is a **proof strategy only**. The absolute-value quadratic-form inequality, extremizer transfer, strict positivity propagation, and spectral-radius identification have not yet been formalized.
+
+### External formalization prior-art compatibility
+
+The exact source `or4nge19/MCMC` commit `254beeb` was inspected:
+- `MCMC/PF/LinearAlgebra/Matrix/PerronFrobenius/Irreducible.lean`, blob `98da7b1f0e079a97bb8c8c1d11d03d44e03c3382`, contains `Matrix.exists_positive_eigenvector_of_irreducible`.
+- It obtains the irreducible case through `1 + A), primitive-matrix Perron theory, and supporting Collatz–Wielandt modules.
+- Its declared Lean toolchain is `leanprover/lean4:v4.27.0-rc1`, unlike this repository's Lean `v4.36.0`; the inspected code imports a substantial MCMC-specific support tree. The theorem is therefore not a drop-in dependency for the pinned project.
+- The source carries an Apache-2.0 license. No source code has been copied or imported into Constant Llpoy.
+
+**Decision:** prototype the symmetry-specific Rayleigh route first. Reconsider a port of the general irreducible theorem only if the tailored route proves materially harder, and then require a complete dependency, license, theorem-statement, and axiom audit.
+
+## 7. Current status after route audit
+
+- PA-LEAN-027: `NOT_IMPLEMENTED`; existence of a strictly positive top eigenvector remains the principal mathematical gap.
+- PA-LEAN-028: `PARTIAL`; the algebraic eigenvector correspondence for `K = cI - H` is formalized, but the extremal spectral transfer and characteristic-root affine-multiplicity bridge are not complete.
+- PA-LEAN-029: `NOT_IMPLEMENTED`; no final model-level ground-state nondegeneracy theorem is claimed.
