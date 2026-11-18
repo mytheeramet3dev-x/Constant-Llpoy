@@ -303,7 +303,9 @@ theorem shiftedTFIMHamiltonian_perron_characteristic_root_multiplicity_one
 
 /-- A data-carrying finite path in a relation. Unlike PFReachable,
 this lives in Type, so it can be converted into Mathlib's path data. -/
-inductive PFPath {ι : Type*} (R : ι → ι → Prop) : ι → ι → Type*
+universe u
+
+inductive PFPath {ι : Type u} (R : ι → ι → Prop) : ι → ι → Type u
   | refl (i : ι) : PFPath R i i
   | step {i j k : ι} : R i j → PFPath R j k → PFPath R i k
 
