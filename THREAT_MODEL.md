@@ -701,3 +701,14 @@ At the time this document is created:
 > **A threat is not controlled because we have named it. It is controlled only when a concrete control has been implemented, tested or audited, and its residual risk has been made visible.**
 
 The threat model exists to challenge the verification system itself with the same rigor that the system is expected to apply to mathematical claims.
+
+
+## T22 — Policy activation and authority rollback
+
+**Threat:** A validly signed policy proposal is mistaken for an active policy, or an attacker replays, rolls back, forks, or substitutes the authority set or active-policy revision.
+
+**Failure modes:** A threshold-approved proposal is treated as deployed; a caller supplies its own authority bytes and expected digest; an old activation record is replayed; policy bytes differ from the record; a revoked reviewer remains trusted; activation expires; or the policy sequence/parent chain is inconsistent.
+
+**Required controls:** Keep authorization distinct from activation. Require an authority-set digest and active-record digest from a separately governed external source; bind exact policy bytes, policy ID, monotonic sequence, authority digest, ACTIVE state, validity window, and threshold signatures. Fail closed on missing pins, stale sequence, digest mismatch, expiry, invalid/revoked signer, or rollback. The external pin source must itself be protected and independently administered. Tests within the relying repository do not establish this external governance.
+
+**Residual risk:** If the relying repository controls both the active bytes and their expected digests, the trust boundary collapses. External key custody, protected controls, and independent administration remain necessary.

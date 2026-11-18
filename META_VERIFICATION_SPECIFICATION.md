@@ -574,3 +574,14 @@ Normative contract: [POLICY_AUTHORITY_AND_CHANGE_CONTROL.md](meta_verification/P
 Implementation: meta_verification/policy_change_control.py. Tests: test_policy_change_control.py. Mutation suite: test_policy_change_mutations.py.
 
 The verifier checks a supplied external authority-set digest, 2-of-3 (default authority policy) distinct Ed25519 signatures, exact policy bytes digest, parent policy digest, next sequence, and validity interval. It emits POLICY_CHANGE_AUTHORIZED only; activation requires external pin publication and protected controls. The authority-set digest remains an externally supplied trust input, and OpenSSL is part of the runtime trust boundary. No external authority, reviewer identity, protected Environment, or production workflow integration is established. The prototype is not a theorem acceptance authority.
+
+
+## Policy activation gate and end-to-end integration
+
+The existing `status_aggregator.py` remains the structural component-bundle evaluator; it is not duplicated or promoted to an authenticated theorem-status authority. `policy_change_control.py` verifies proposal authorization, but `POLICY_CHANGE_AUTHORIZED` is not activation.
+
+The new `policy_activation_gate.py` adds a separate activation check before invoking the structural aggregator. It requires (i) an externally supplied SHA-256 pin for the authority set and (ii) a separately externally supplied SHA-256 pin for a threshold-signed active-policy record. The record binds exact policy bytes, policy ID, sequence, authority-set digest, ACTIVE state, validity interval, and distinct Ed25519 signatures. Missing pins, stale sequence, mismatched digests, invalid signatures, or expired records fail closed.
+
+The final integration status is deliberately `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, not bare `ACCEPTED`. It means only that the external activation gate passed and the existing component bundle was structurally accepted. Component provenance receipts remain structurally inspected by the aggregator and must be authenticated through the separate provenance acquisition/verification path. This is not a mathematical proof checker or a theorem acceptance gate.
+
+The implementation is a prototype only. No external authority repository, independent reviewer key custody, protected Environment/pins, or production workflow invocation has been provisioned or verified. Rollback resistance depends on the external pin source advancing the expected sequence and activation-record digest; if the relying repository can control both expected pins and supplied bytes, the trust boundary collapses. See `meta_verification/POLICY_ACTIVATION_GATE.md` for the contract and limitations.

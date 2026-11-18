@@ -142,3 +142,12 @@ See [POLICY_AUTHORITY_AND_CHANGE_CONTROL.md](POLICY_AUTHORITY_AND_CHANGE_CONTROL
 
 
 Policy-change verifier validation: full harness [44233157563](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233157563) passed 219 tests; all 8/8 selected policy-change mutants were killed by assertion-driven tests. Evidence producer [44233215756](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233215756) succeeded; separate provenance verifier [44233252327](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233252327) reported VERIFIED for the exact tested commit. External policy authority remains NOT ACTIVE.
+
+
+## Policy activation gate
+
+`policy_activation_gate.py` wraps the existing structural `status_aggregator.py`; it does not replace or duplicate it. It requires separate externally supplied SHA-256 pins for the reviewer authority set and active-policy record. The record binds exact policy bytes, policy ID, sequence, authority-set digest, ACTIVE state, validity interval, and threshold Ed25519 signatures. Only after verification does the gate invoke the structural aggregator.
+
+The final success status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, not bare `ACCEPTED`. This is still a structural bundle result, not mathematical proof verification. Component provenance receipt fields are not cryptographically authenticated by this gate.
+
+The design, status semantics, trust boundary, and non-activation limitations are in [POLICY_ACTIVATION_GATE.md](POLICY_ACTIVATION_GATE.md). Tests are in `test_policy_activation_gate.py`. No external authority, independent reviewer key custody, protected pin source, or production workflow invocation has been provisioned; therefore production activation remains NOT ACTIVE.

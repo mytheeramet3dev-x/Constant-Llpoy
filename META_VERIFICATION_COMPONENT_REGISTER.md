@@ -363,3 +363,10 @@ The safe output writer is deliberately local and fail-closed. It does not make t
 
 
 **Validation update:** commit 56f4ac5678ab5dc1225075fa242e442f2601da57 passed the full harness (219 tests; run [44233157563](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233157563)) and killed 8/8 selected policy-change mutants. Its evidence producer [44233215756](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233215756) succeeded; separate provenance verifier [44233252327](https://github.com/mytheeramet3-dev-x/Constant-Llpoy/actions/runs/44233252327) returned VERIFIED. These results are bounded to the tested commit and selected tests, not independent policy governance.
+
+
+## Policy activation integration component
+
+Added `meta_verification/policy_activation_gate.py` as an activation gate around the existing structural `status_aggregator.py`; no duplicate aggregator was introduced. It requires separately supplied external SHA-256 pins for the authority set and active-policy record, then checks exact policy bytes, policy ID, sequence, authority binding, ACTIVE state, validity interval, and threshold Ed25519 signatures before calling the structural aggregator.
+
+The final status is `POLICY_ACTIVE_AND_BUNDLE_STRUCTURALLY_ACCEPTED`, never bare `ACCEPTED`. The component receipts remain structural inputs and still require the separate signed-provenance acquisition/verification route. No production workflow consumes this gate, and no external authority or protected pins are active. The design and limitations are documented in `meta_verification/POLICY_ACTIVATION_GATE.md`.
