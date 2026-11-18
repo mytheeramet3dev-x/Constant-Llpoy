@@ -43,10 +43,11 @@ def isingDiagonalEnergy {N : ℕ}
 /-- Exact computational-basis matrix of the finite transverse-field Ising
 Hamiltonian. The diagonal contains the pair interactions; an off-diagonal
 entry is negative h exactly for a single-spin flip and zero otherwise. -/
-def transverseIsingHamiltonian {N : ℕ}
+noncomputable def transverseIsingHamiltonian {N : ℕ}
     (J : IsingEdge N → ℝ) (h : ℝ) :
-    Matrix (SpinConfig N) (SpinConfig N) ℝ :=
-  fun s t =>
+    Matrix (SpinConfig N) (SpinConfig N) ℝ := by
+  classical
+  exact fun s t =>
     if s = t then isingDiagonalEnergy J s
     else if SingleSpinFlip s t then -h else 0
 
