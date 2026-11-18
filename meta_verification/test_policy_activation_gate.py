@@ -31,10 +31,10 @@ class GateTests(unittest.TestCase):
     cls.policy_obj=__import__("json").loads(cls.policy)
  @classmethod
  def tearDownClass(cls): cls.tmp.cleanup()
- def make_record(self, status="ACTIVE", sequence=4, policy_bytes=None, authority_bytes=None, expires=NOW+1000):
+ def make_record(self, status="ACTIVE", sequence=4, policy_bytes=None, authority_bytes=None, expires=NOW+1000, authority_digest_override=None):
     pb=policy_bytes or self.policy; ab=authority_bytes or self.authorities
     record={"schema_version":"1.0","policy_id":"meta-policy-v1","policy_sha256":digest(pb),
-      "sequence":sequence,"authority_set_sha256":digest(ab),"status":status,
+      "sequence":sequence,"authority_set_sha256":authority_digest_override or digest(ab),"status":status,
       "issued_at":str(NOW-10),"expires_at":str(expires)}
     msg=canonical(record); msgfile=self.root/"message"; msgfile.write_bytes(msg); signatures=[]
     for rid in ("R1","R2"):
@@ -69,9 +69,10 @@ class GateTests(unittest.TestCase):
     with self.assertRaisesRegex(ActivationError,"active-policy pin"):
       verify_activation(self.policy,self.policy_obj,self.authorities,activation,**self.args(activation,expected_activation_sha256=""))
  def test_authority_pin_mismatch_rejected(self):
-    activation=self.make_record()
-    with self.assertRaisesRegex(ActivationError,"authority-set digest"):
-      verify_activation(self.policy,self.policy_obj,self.authorities,activation,**self.args(activation,expected_authority_sha256="0"*64))
+    wrong_pin="0"*64
+    activation=self.make_record(authority_digest_override=wrong_pin)
+    with self.assertRaisesRegex(ActivationError,"differs from external pin"):
+      verify_activation(self.policy,self.policy_obj,self.authorities,activation,**self.args(activation,expected_authority_sha256=wrong_pin))
  def test_activation_record_pin_mismatch_rejected(self):
     activation=self.make_record()
     with self.assertRaisesRegex(ActivationError,"activation-record digest"):
