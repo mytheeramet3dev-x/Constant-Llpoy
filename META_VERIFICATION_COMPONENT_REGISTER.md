@@ -430,3 +430,15 @@ The first producer attempt at revision dc3273a0a2f75c8e32e47407b1e972edcc882a23 
 | Mathematical result | NOT_VERIFIED |
 
 The four exact/numerical diagnostic commands completed with exit code 0. The Lean build command exited 1 and its exact output was included in the attested evidence. All seven evidence subjects were authenticated, so the failed Lean outcome is not an artifact-integrity failure. It is a genuine formalization/build failure. External trust-root activation remains NOT ACTIVE.
+
+
+### 10.3 Confirmed Paper A evidence pipeline run — 2026-11-18
+
+Exact source revision \`1aff68f49d95c2d186576362cd1d392ae474269b\`:
+- Harness run 44323177645: 275 tests passed (31.865s).
+- Lean run 44323177442: pinned build and axiom audit passed; 79 declarations audited against \`[propext, Classical.choice, Quot.sound]\`.
+- Evidence producer 44323177446: success; seven subjects produced and attested.
+- Separate verifier 44323720798: success; seven of seven component attestations authenticated; aggregation ACCEPTED.
+- No missing/duplicate components, stale bindings, digest mismatches, unauthenticated receipts, or verified component failures.
+
+This is an ACCEPTED evidence bundle, not an ACCEPTED mathematical result. The report keeps \`paper_a_claims_verified=false\`, \`overall_paper_status=NOT_VERIFIED\`, external trust root NOT ACTIVE, and independent external review NOT COMPLETED. The generated 14-layer assessment is L-01 PARTIAL; L-02 BLOCKED; L-03 PARTIAL; L-04 PARTIAL; L-05 NOT_RUN; L-06 PARTIAL; L-07 PARTIAL; L-08 PARTIAL; L-09 PARTIAL; L-10 PARTIAL; L-11 PARTIAL; L-12 PARTIAL; L-13 NOT_RUN; L-14 NOT_ASSESSED.

@@ -94,3 +94,42 @@ Observed mapping:
 - PROP-0012 remains a source conflict; its conditional Lean lemmas do not verify the frozen opposite-sign assertion.
 
 This is a traceability improvement, not an L-02 pass. **L-02 remains BLOCKED** pending independent semantic review and model-specific formalization. No Paper A claim status is promoted.
+
+
+## Confirmed current Paper A run — 2026-11-18
+
+Exact source revision: \`1aff68f49d95c2d186576362cd1d392ae474269b\`.
+
+| Stage | Run | Result |
+|---|---:|---|
+| Meta-verification harness | 44323177645 | SUCCESS — 275 tests passed in 31.865s |
+| Pinned Lean build + axiom audit | 44323177442 | SUCCESS — 79 declarations audited; only \`propext\`, \`Classical.choice\`, \`Quot.sound\` |
+| Paper A evidence producer | 44323177446 | SUCCESS — all 7 evidence subjects produced and individually attested |
+| Separate Paper A provenance verifier | 44323720798 | SUCCESS — all 7 component attestations authenticated; aggregator ACCEPTED |
+
+The authenticated component bundle reports:
+- 7/7 required evidence components present and authenticated;
+- no missing or duplicate components;
+- no stale fields, evidence digest mismatches, pending/unverified components, unauthenticated provenance, or verified failures;
+- producer run ID 44323177446, attempt 1;
+- exact source commit bound to the evidence: \`1aff68f49d95c2d186576362cd1d392ae474269b\`.
+
+The producer's 14-layer plan remains:
+| Layer | Result |
+|---|---|
+| L-01 | PARTIAL |
+| L-02 | BLOCKED |
+| L-03 | PARTIAL |
+| L-04 | PARTIAL |
+| L-05 | NOT_RUN |
+| L-06 | PARTIAL |
+| L-07 | PARTIAL |
+| L-08 | PARTIAL |
+| L-09 | PARTIAL |
+| L-10 | PARTIAL |
+| L-11 | PARTIAL |
+| L-12 | PARTIAL |
+| L-13 | NOT_RUN |
+| L-14 | NOT_ASSESSED |
+
+**Overall Paper A remains NOT_VERIFIED.** The bundle acceptance is limited to execution-artifact completeness and GitHub/Sigstore provenance. The report explicitly records \`paper_a_claims_verified=false\`, \`external_trust_root=NOT_ACTIVE\`, and \`independent_external_review=NOT_COMPLETED\`. The Lean build passing does not close the 10 absent direct claim formalizations, the four partial/abstract correspondences, or the model-specific Hamiltonian bridge.

@@ -236,3 +236,8 @@ The first producer attempt on source revision dc3273a0a2f75c8e32e47407b1e972edcc
 | L-14 | NOT_ASSESSED |
 
 The overall Paper A status remains NOT_VERIFIED. The Lean failure is in ConstantLlapoy.PaperA.PerronFrobeniusCore, with RCLike (RCLike Real) synthesis errors and unresolved goals around lines 690–709. No theorem was weakened or promoted to PASS.
+
+
+### Latest Paper A run (2026-11-18)
+
+Current exact source revision \`1aff68f49d95c2d186576362cd1d392ae474269b\`: 275 harness tests passed; Lean 4.36.0 build and axiom audit passed (79 declarations, configured allowlist only); the Paper A producer and separate provenance verifier succeeded, authenticating all seven required component subjects. The component bundle was ACCEPTED for artifact completeness/provenance only. The 14-layer plan remains partial/blocked/not-run as recorded in \`PAPER_A_FIRST_14_LAYER_TRIAL.md\`; Paper A itself remains \`NOT_VERIFIED\`.

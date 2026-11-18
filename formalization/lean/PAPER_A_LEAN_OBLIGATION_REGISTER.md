@@ -113,3 +113,11 @@ See \`PAPER_A_LEAN_SEMANTIC_CORRESPONDENCE_AUDIT.md\` and \`meta_verification/pa
 Result: 0/15 full direct correspondences; four partial-support/abstract-core cases; ten with no direct formalization; PROP-0012 remains a source conflict. In particular, the Perron–Frobenius core theorem is conditional on an abstract real symmetric matrix and supplied positivity/connectivity hypotheses; the encoded TFIM Hamiltonian-to-matrix bridge is still open.
 
 The matrix does not discharge PA-LEAN-014. An independent reviewer must check the semantic classifications, and subsequent Lean work must prove the missing model-to-abstract-hypothesis implications. Compilation or provenance authentication does not change this status.
+
+
+| PA-LEAN-024 | Abstract real-symmetric Perron core: uniqueness of supplied positive eigenvalue and characteristic-root multiplicity one | BUILD_VERIFIED; AXIOM_AUDITED | \`PerronFrobeniusCore.lean\`; exact current-source build run 44323177442 at commit \`1aff68f49d95c2d186576362cd1d392ae474269b\`. The audit covered 79 declarations, all within the configured allowlist. The theorem assumes a supplied matrix, nonnegative entries, positive eigenvector/eigenvalue, and connected positive support. |
+| PA-LEAN-025 | Encode the finite-N TFIM computational-basis Hamiltonian and prove exact matrix entries / real symmetry | OPEN | Define the computational-basis configuration space, diagonal ZZ energy and single-spin-flip transverse-field entries; prove equality with the source Hamiltonian and matrix symmetry. |
+| PA-LEAN-026 | Derive nonnegative irreducible shifted matrix \(K=cI-H\) from the encoded Hamiltonian | OPEN | Prove \(c-H_{ss}>0\), off-diagonal entries are nonnegative, positive support is exactly single-spin-flip adjacency, and the hypercube support graph is connected for \(h>0\). |
+| PA-LEAN-027 | Produce a strictly positive eigenvector at the top eigenvalue and transfer algebraic simplicity to the ground eigenvalue of \(H\) | OPEN | Current Perron core assumes a supplied strictly positive eigenvector; a model-level existence argument and spectral shift correspondence remain to be formalized. |
+
+The Paper A producer run 44323177446 and verifier run 44323720798 authenticated the current build evidence. This does not discharge PA-LEAN-025 through PA-LEAN-027 or upgrade THM-0002.
