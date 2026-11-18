@@ -1,4 +1,5 @@
 import Mathlib
+import ConstantLlapoy.PaperA.PerronFrobeniusCore
 
 namespace ConstantLlapoy.PaperA
 
@@ -220,6 +221,7 @@ theorem singleSpinFlip_pf_connected {N : ℕ} :
           · subst j
             simp [D, hui, hiD]
           · simp [D, u, flipAt, hji]
+        have hDpos : 0 < D.card := Finset.card_pos.mpr hDnonempty
         have hcard' :
             (Finset.univ.filter (fun j : Fin N => u j ≠ t j)).card < n := by
           rw [hD', Finset.card_erase_of_mem hiD, ← hcard]
