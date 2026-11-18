@@ -273,7 +273,8 @@ theorem shiftedTFIMHamiltonian_isHermitian {N : ℕ}
       constructor
       · exact singleSpinFlip_symm
       · exact singleSpinFlip_symm
-    simp [shiftedTFIMHamiltonian, transverseIsingHamiltonian, hst, hts, hflip]
+    simp [shiftedTFIMHamiltonian, transverseIsingHamiltonian, hst, hts]
+    rw [hflip]
 
 /-- Conditional model-level Perron conclusion for the actual shifted TFIM
 matrix. The only analytic Perron input still assumed here is a strictly
