@@ -89,12 +89,21 @@ def main():
         if n < 4:
             raise SystemExit("This diagnostic is configured for N >= 4.")
         coefficient, expansion = small_eigenvalue_coefficient(n, args.order)
-        proposed = sp.Rational(1, 8 * (n - 2) * (n - 1) ** 4)
+        # The N=4 endpoint has its own corrected coefficient. The generic
+        # expression applies only for N >= 5; applying it at N=4 halves
+        # the exact coefficient and used to produce a silent false mismatch.
+        proposed = (
+            sp.Rational(1, 648) if n == 4
+            else sp.Rational(1, 8 * (n - 2) * (n - 1) ** 4)
+        )
+        exact_match = coefficient == proposed
         print(f"N={n}")
         print(f"  lambda_small = {expansion}")
         print(f"  [epsilon^4]  = {coefficient}")
         print(f"  proposed     = {proposed}")
-        print(f"  exact_match  = {coefficient == proposed}")
+        print(f"  exact_match  = {exact_match}")
+        if not exact_match:
+            raise SystemExit(f"exact coefficient mismatch at N={n}")
 
 if __name__ == "__main__":
     main()
