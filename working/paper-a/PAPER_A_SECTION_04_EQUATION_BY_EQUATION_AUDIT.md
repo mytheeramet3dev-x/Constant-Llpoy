@@ -105,7 +105,7 @@ The exceptional `N=4` coefficient was corrected and checked against exact-ration
 
 The frozen supporting file `docs/lemma_5_1_proof.md` is titled “Asymptotic Positivity of B-C”; it is not the proof of the uniform `G_N(x)` expansion. The Section 4 citation therefore does not identify the derivation that now exists in Constant Llpoy.
 
-**Required action:** Replace the citation with a correctly numbered lemma/supplementary derivation that actually proves the `G_N) expansion, or cite the correct source after the manuscript's source-authority policy is reconciled. Do not relabel the unrelated `B-C` lemma.
+**Required action:** Replace the citation with a correctly numbered lemma/supplementary derivation that actually proves the `G_N` expansion, or cite the correct source after the manuscript's source-authority policy is reconciled. Do not relabel the unrelated `B-C` lemma.
 
 **Disposition:** CHANGE REQUIRED; SOURCE-CITATION DEFECT CONFIRMED.
 
@@ -177,7 +177,7 @@ The following is a proposed replacement for the affected passages only. It is no
 
 ### Proposed replacement for the first paragraph of §4.4.2
 
-“Assume that the selected upper branch has a global continuation to arbitrarily large `gamma`, with no turning points or branch exchanges, and that `G_N) remains positive on that branch. Since `G_N(x)` has the fixed-`N) positive limit `ln 2` as `x->infinity`, the root equation `x=gamma alpha_N G_N(x)` then gives `x_*(gamma)->infinity`. For fixed finite `N>=4`, the limiting Ising Hamiltonian at `h/J=0` has a two-dimensional ferromagnetic ground space. For positive transverse field the finite-system ground state is unique and parity-even; in the limit `h/J->0+` it approaches the even cat combination.”
+“Assume that the selected upper branch has a global continuation to arbitrarily large `gamma`, with no turning points or branch exchanges, and that `G_N` remains positive on that branch. Since `G_N(x)` has the fixed-`N) positive limit `ln 2` as `x->infinity`, the root equation `x=gamma alpha_N G_N(x)` then gives `x_*(gamma)->infinity`. For fixed finite `N>=4`, the limiting Ising Hamiltonian at `h/J=0` has a two-dimensional ferromagnetic ground space. For positive transverse field the finite-system ground state is unique and parity-even; in the limit `h/J->0+` it approaches the even cat combination.”
 
 ### Proposed replacement for the Lemma 5.1 citation and asymptotic paragraph
 
@@ -193,7 +193,7 @@ These estimates are not asserted uniformly in `N`. Consequently `G_N(x)->ln 2` a
 ## 4. Required action list
 
 1. Reconcile the manuscript source-authority/build-input conflict before deciding where the replacement lemma belongs.
-2. Add a correctly numbered proof/reference for the uniform `G_N) expansion; do not cite Lemma 5.1.
+2. Add a correctly numbered proof/reference for the uniform `G_N` expansion; do not cite Lemma 5.1.
 3. Correct the §4.4.3 “opposite-sign” claim and branch terminology.
 4. Align §4.4.1's branch remainder with the corrected Section 3 regularity theorem.
 5. State fixed finite `N>=4` explicitly for both function and derivative asymptotics, and retain the `O_N` dependence.
@@ -205,8 +205,8 @@ These estimates are not asserted uniformly in `N`. Consequently `G_N(x)->ln 2` a
 
 - Exact algebra in §§4.1–4.3: **SUPPORTED**, subject to stated definitions and scalar scope.
 - Near-critical limits: **CONDITIONAL**, with Section 3 regularity correction required.
-- Fixed-`N) strong-coupling `G_N) expansion: **ANALYTICALLY DERIVED** in Constant Llapoy.
-- Fixed-`N) uniform-path derivative expansion: **ANALYTICALLY DERIVED** separately.
+- Fixed-`N` strong-coupling `G_N` expansion: **ANALYTICALLY DERIVED** in Constant Llapoy.
+- Fixed-`N` uniform-path derivative expansion: **ANALYTICALLY DERIVED** separately.
 - Lemma 5.1 citation: **INCORRECT / CHANGE REQUIRED**.
 - Weak-coupling “opposite-sign” assertion: **UNSUPPORTED / CHANGE REQUIRED**.
 - Global branch continuation: **OPEN**.
