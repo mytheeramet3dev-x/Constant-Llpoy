@@ -62,8 +62,8 @@ theorem absoluteCoordinateVector_ne_zero_iff {ι : Type*} (x : ι → ℝ) :
       simpa [absoluteCoordinateVector] using hi
     exact abs_eq_zero.mp h_coord
 
-/-- ECB-02 bridge: Euclidean norm defined from the finite sum of coordinate squares.This is intentionally distinct from the default norm on function spaces. -/
-def absoluteCoordinateEuclideanNorm {ι : Type*} [Fintype ι] (x : ι → ℝ) : ℝ :=
+/-- ECB-02 bridge: Euclidean norm defined from the finite sum of coordinate squares. This is intentionally distinct from the default norm on function spaces. -/
+noncomputable def absoluteCoordinateEuclideanNorm {ι : Type*} [Fintype ι] (x : ι → ℝ) : ℝ :=
   Real.sqrt (∑ i, (x i) ^ 2)
 /-- ECB-02: the coordinatewise absolute-value transform preserves this Euclidean norm. -/
 theorem absoluteCoordinateVector_euclideanNorm {ι : Type*} [Fintype ι]
