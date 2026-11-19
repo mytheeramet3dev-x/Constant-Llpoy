@@ -38,4 +38,28 @@ theorem absoluteCoordinateVector_sum_sq {ι : Type*} [Fintype ι] (x : ι → �
   intro i hi
   exact absoluteCoordinateVector_square x i
 
+/-- ECB-03 scalar core: absolute value preserves nonzeroness. -/
+theorem absoluteValue_ne_zero_iff (r : ℝ) : |r| ≠ 0 ↔ r ≠ 0 := by
+  simp
+/-- ECB-03 coordinate core: taking absolute value preserves coordinate nonzeroness. -/
+theorem absoluteCoordinate_ne_zero_iff {ι : Type*} (x : ι → ℝ) (i : ι) :
+    absoluteCoordinateVector x i ≠ 0 ↔ x i ≠ 0 := by
+  simp [absoluteCoordinateVector]
+/-- ECB-03: the absolute-coordinate transformation preserves vector nonzeroness.
+This statement also handles the empty index type, where the unique vector is zero. -/
+theorem absoluteCoordinateVector_ne_zero_iff {ι : Type*} (x : ι → ℝ) :
+    absoluteCoordinateVector x ≠ 0 ↔ x ≠ 0 := by
+  constructor
+  · intro h_abs h_x
+    apply h_abs
+    subst x
+    rfl
+  · intro h_x h_abs
+    apply h_x
+    funext i
+    have hi := congrFun h_abs i
+    have h_coord : |x i| = 0 := by
+      simpa [absoluteCoordinateVector] using hi
+    exact abs_eq_zero.mp h_coord
+
 end ConstantLlapoy.PaperA
