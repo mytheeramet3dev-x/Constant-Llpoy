@@ -35,3 +35,7 @@ jobs:
           use-mathlib-cache: true
           build: true
           axiom-audit: true
+
+      - name: Explicitly build package root and standalone absolute-coordinate module
+        working-directory: formalization/lean
+        run: lake build ConstantLlapoy ConstantLlapoy.PaperA.AbsoluteCoordinates
