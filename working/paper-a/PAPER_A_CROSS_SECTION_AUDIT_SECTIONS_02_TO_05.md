@@ -285,7 +285,7 @@ is exact algebraically once the response Jacobian and sector conventions are est
 
 ### 5.3 Domain and representation hypotheses
 
-The three-sector decomposition is stated for the edge permutation representation. For \(N\ge4\), all three listed sectors have the stated nonzero dimensions; at \(N=3\), \(\dim V_2=0\). The manuscript's response-sector claims should state the intended range \(N\ge4\).
+The edge permutation representation admits the stated three-sector decomposition for N≥3, with dim V₂=0 at N=3. If the manuscript intends all three sectors to be nonzero, it must state N≥4. This distinction reconciles the present audit with MCR-04 in the existing Manuscript Correction Register.
 
 Schur's lemma gives scalar action on the irreducible sectors only after the response Jacobian is shown to exist and to commute with the permutation action. Symmetry of the Hamiltonian alone is not a substitute for differentiability of the response map at the point in question.
 
