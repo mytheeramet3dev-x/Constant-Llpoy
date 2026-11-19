@@ -289,7 +289,7 @@ The three-sector decomposition is stated for the edge permutation representation
 
 Schur's lemma gives scalar action on the irreducible sectors only after the response Jacobian is shown to exist and to commute with the permutation action. Symmetry of the Hamiltonian alone is not a substitute for differentiability of the response map at the point in question.
 
-**Finding XSEC-10 — P1:** State \(N\ge4\), differentiability, and equivariance as hypotheses for the sector-eigenvalue theorem.
+**Finding XSEC-10 — P1:** State \(N\ge3\) for the decomposition formulas and explicitly note the zero-dimensional \(V_2\) sector at \(N=3\); use \(N\ge4\) if all three sectors are intended to be nonzero. Also state differentiability and equivariance as hypotheses for the sector-eigenvalue theorem.
 
 ### 5.4 Scale covariance consistency
 
