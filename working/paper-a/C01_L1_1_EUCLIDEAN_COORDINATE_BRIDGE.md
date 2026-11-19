@@ -169,3 +169,59 @@ matrix coordinate equation are separate Lean proof obligations.
 This route constructs a nonnegative eigenvector at the largest Rayleigh
 eigenvalue. It still does not, by itself, prove algebraic simplicity or
 ground-state transfer.
+
+
+## 8. C01-L1.2 source-level implementation refinement
+
+The following additional pinned source files were inspected directly (not via the default-branch code-search index):
+
+| Mathlib file | Blob SHA | Relevant source |
+|---|---|---|
+| `Mathlib/Analysis/Normed/Lp/Matrix.lean` | `bbe4769e298c51c4f3c7047c0ab97dcebe78c435` | `Matrix.toLpLin_apply`: `toLpLin p q M v = toLp _ (M *ᵥ ofLp v)` |
+| `Mathlib/Analysis/Matrix/Hermitian.lean` | `5b2cfb936a1abf866172d167127361f83d957d41` | `Matrix.isSymmetric_toEuclideanLin_iff`: `A.toEuclideanLin.IsSymmetric ↔ A.IsHermitian` |
+| `Mathlib/Analysis/InnerProductSpace/LinearMap.lean` | `597c0a46783b4caec8c356bbfdb9448bbc717b0d` | `ContinuousLinearMap.reApplyInnerSelf_apply`: `T.reApplyInnerSelf x = re ⟪T x,x⟫` |
+
+### Correct representation choice
+
+For the production proof, prefer the named matrix operator `A.toEuclideanLin` and its exact symmetry theorem, rather than manually constructing a continuous linear map. The `toLpLin_apply` theorem supplies the action on coordinates:
+[
+A.toEuclideanLin(x) = \operatorname{toLp}(A *ᵥ \operatorname{ofLp}(x)).
+]
+This is the bridge to the model's existing function-valued matrix eigenvector equations.
+
+The inner-product orientation must be respected. Mathlib gives
+`EuclideanSpace.inner_eq_star_dotProduct`:
+[
+\langle u,v\rangle = \operatorname{ofLp}(v) \mathbin{\cdotᵥ}
+  \operatorname{star}(\operatorname{ofLp}(u)).
+]
+For real coordinates, taking (u=A x) and (v=x) yields
+[
+\langle A x,x\rangle
+= x \mathbin{\cdotᵥ}(A *ᵥ x)
+= \sum_i\sum_j x_i A_{ij}x_j
+= \sum_i\sum_j A_{ij}x_i x_j.
+]
+The final equality is a commutative-ring rearrangement, not a symmetry assumption on the entries. Symmetry is required separately for the Rayleigh spectral theorem.
+
+### Suggested scratch theorem decomposition
+
+Do not initially prove one monolithic theorem. In a scratch module importing
+`ConstantLlapoy.PaperA.HamiltonianEncoding`, split the bridge into these declarations:
+
+- `absCoord (x : EuclideanSpace ℝ (SpinConfig N)) : EuclideanSpace ℝ (SpinConfig N)`
+  defined as the (L^2) lift of the coordinate function `fun s => |x s|).
+- `absCoord_nonneg`: coordinatewise nonnegativity.
+- `absCoord_norm`: `‖absCoord x‖ = ‖x‖`, via squared norms and `sq_abs`.
+- `toEuclideanLin_inner_eq_quadratic`: expand
+  `(A.toEuclideanLin).reApplyInnerSelf x` into the model's double sum, under the real scalar specialization.
+- `quadratic_le_absCoord_quadratic`: rewrite both sides using the preceding expansion and invoke the already-existing
+  `quadratic_form_le_abs_quadratic_form`.
+
+The source-level formula for the quadratic expression is now fixed, including the order of the inner product arguments. The exact Lean coercion syntax and simplifier proof remain untested.
+
+### Environment and verification boundary
+
+No Lean or Lake executable is available in the current execution environment (`which lean` and `which lake` return no executable). Therefore it is not possible in this turn to run the pinned Lean v4.36.0 build. No scratch Lean file is represented as compiled, and no production Lean source was changed.
+
+The next valid execution step requires an environment that actually provisions the pinned toolchain and Mathlib cache. Until then, writing guessed proof scripts and labelling them implementation would be misleading. The work can continue through source inspection and proof-obligation refinement, but compilation status must remain **NOT RUN**.
