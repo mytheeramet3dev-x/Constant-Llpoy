@@ -2,7 +2,7 @@
 **Project:** Constant Llapoy  
 **Repository:** `mytheeramet3dev-x/Constant-Llpoy`  
 **Document ID:** CL-CR-001  
-**Version:** 0.4.5  
+**Version:** 0.4.6  
 **Status:** 46 source-linked records indexed; Paper A independent extraction review completed with issues; one Paper A claim partially verified; formal verification remains open  
 **Normative language:** MUST, MUST NOT, SHOULD, and MAY are requirements.
 
@@ -247,7 +247,7 @@ Completeness status may be marked COMPLETE only after the protocol's reconciliat
 
 ## 11. Current truth statement
 
-At version 0.4.5:
+At version 0.4.6:
 
 - Source-linked claim records: **46** (29 formal/proposition/definition records and 17 A1 ledger records).
 - Paper A: **15** records (14 initial candidates and one SOURCE_CONFLICT record); all extraction-reviewed; PROP-0009 is **PARTIALLY VERIFIED**; PROP-0012 is contradicted in the weak-coupling endpoint by an internal analytic derivation but remains SOURCE_CONFLICT pending formalization; no Paper A claim is fully verified.
@@ -256,7 +256,7 @@ At version 0.4.5:
 - Paper D manuscript-level extraction: **BLOCKED** pending an integrated manuscript.
 - Paper A1 extraction: **PARTIAL**, limited to Stage A1-1.
 - Constant Llapoy fully VERIFIED claims: **0**; PARTIALLY VERIFIED claims: **1** (AS-ALPHA-A-PROP-0009).
-- Preliminary Paper A dependency/obligation map: **CREATED; EDGES PROVISIONAL**. The new claim-by-claim matrix is **POPULATED FOR ALL 15 RECORDS; INITIAL REVIEW ONLY**. Proof re-derivation, full Lean correspondence, axiom/TCB audit, dependency closure, and circularity analysis remain **OPEN / NOT_ESTABLISHED**.
+- Preliminary Paper A dependency/obligation map: **CREATED; EDGES PROVISIONAL**. The claim-by-claim matrix is **POPULATED FOR ALL 15 RECORDS; INITIAL REVIEW ONLY**. The separate manuscript correction register is **CREATED; NO UPSTREAM MANUSCRIPT FILES MODIFIED**. Proof re-derivation, full Lean correspondence, axiom/TCB audit, dependency closure, and circularity analysis remain **OPEN / NOT_ESTABLISHED**.
 
 A record's presence is not evidence of correctness. Do not promote a claim to REGISTERED or VERIFIED solely because it has been transcribed.
 
@@ -264,6 +264,7 @@ A record's presence is not evidence of correctness. Do not promote a claim to RE
 
 - `MANUSCRIPT_EXTRACTION_PROTOCOL.md`\n- `MANUSCRIPT_SOURCE_MANIFEST.md`\n- `EXTRACTION_LEDGER.md`\n- `PAPER_A_FULL_EXTRACTION_AUDIT.md`\n- `PAPER_A_INDEPENDENT_EXTRACTION_REVIEW.md`\n- `PAPER_A_DEPENDENCY_OBLIGATION_MAP.md`\n- `PAPER_A_SUPPORTING_SOURCE_RECONCILIATION.md`
 - `PAPER_A_CLAIM_BY_CLAIM_PROOF_OBLIGATION_MATRIX.md` — 15-record claim-by-claim proof obligations, existing evidence, gaps, dependencies, and priority order
+- `PAPER_A_MANUSCRIPT_CORRECTION_REGISTER.md` — separate manuscript-facing correction register, severity, rationale, and change-control protocol
 - `VERIFICATION_OBLIGATION_MATRIX.md`
 - `ARCHITECTURE_CHARTER.md`
 - `THREAT_MODEL.md`
