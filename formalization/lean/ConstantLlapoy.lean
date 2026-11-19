@@ -3,3 +3,4 @@ import ConstantLlapoy.PaperA.StrongCoupling
 import ConstantLlapoy.PaperA.ZeroEigenvalueEntropy
 import ConstantLlapoy.PaperA.PerronFrobeniusCore
 import ConstantLlapoy.PaperA.HamiltonianEncoding
+import ConstantLlapoy.PaperA.AbsoluteCoordinates
