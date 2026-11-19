@@ -74,3 +74,27 @@ This is a custom Euclidean norm definition on finite function vectors, not Lean'
 
 ### Updated status
 ECB-01–03 and the norm bridge have source-level declarations. **None are compiler-confirmed or kernel-verified yet.** The next priority remains compiler-backed validation, not proceeding to ECB-04.
+
+
+## Follow-up: Source review of ECB-02 norm bridge (2026-11-19)
+
+Reviewed the current source including:
+- `absoluteCoordinateEuclideanNorm`, defined as `Real.sqrt (∑ i, (x i)^2)
+- `absoluteCoordinateVector_euclideanNorm`, rewriting the transformed sum of squares using ECB-02.
+
+### Mathematical/source findings
+- The definition is a finite-coordinate Euclidean norm formula, not a claim about the default norm on the function type `ι → ℝ`.
+- The equality follows from equality of the sums under the same square-root operation; no extra positivity argument is needed for equality itself.
+- The source is explicit and does not introduce an axiom or weaken the theorem statement.
+- The proof's exact Lean elaboration and rewrite matching remain uncertain until compiled with the pinned toolchain.
+
+### ECB-03 source review
+- Scalar and coordinate nonzero equivalences are plausible simplification results for absolute value.
+- Vector-level proof uses function extensionality and coordinatewise absolute-value-zero implications. The empty-index case is not excluded and is logically consistent.
+- Exact tactic elaboration remains compiler-pending.
+
+### CI check
+A query for workflow runs associated with source commit `ba82030364434bd13c866625af4f97c7773cfde8` returned no workflow runs. This is **not** evidence of a successful build. No Lean compilation, kernel verification, or axiom audit was executed during this review.
+
+### Current gate
+**ECB-01–03 and the norm bridge: SOURCE REVIEW ONLY. Compiler evidence is absent.** Do not advance ECB-04 as formally verified until a pinned-toolchain build is obtained and any failures are repaired.
