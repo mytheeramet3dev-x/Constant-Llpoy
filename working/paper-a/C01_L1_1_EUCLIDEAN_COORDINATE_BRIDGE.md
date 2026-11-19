@@ -108,3 +108,64 @@ This note resolves the source-level coordinate identities and narrows the implem
 - the C01-L1 or THM-0002 obligation has passed.
 
 No upstream `Absolute_Sym` file was modified. Paper A remains **NOT VERIFIED**.
+
+
+## 7. Refined existence route: use Mathlib's finite-dimensional Rayleigh theorem
+
+A further exact source inspection of lines 320–344 of the pinned
+`Mathlib/Analysis/InnerProductSpace/Rayleigh.lean` resolves an important
+architectural question. The declaration
+
+`LinearMap.IsSymmetric.hasEigenvalue_iSup_of_finiteDimensional`
+
+already proves that the supremum of the Rayleigh quotient is an eigenvalue
+for a symmetric operator on a nontrivial finite-dimensional inner-product
+space. Its implementation explicitly constructs a compact sphere, obtains
+a maximum of `reApplyInnerSelf`, and invokes
+`IsSelfAdjoint.hasEigenvector_of_isMaxOn`.
+
+This suggests the following tighter route and avoids independently
+reimplementing compactness:
+
+1. Set `T := A.toEuclideanLin` (equivalently the pinned `toLpLin 2 2`
+   representation) on `EuclideanSpace ℝ κ`.
+2. Obtain symmetry from the pinned bridge
+   `Matrix.isSymmetric_toEuclideanLin_iff.mpr hA`, where `hA` is the
+   model's real-Hermitian proof.
+3. Apply `hasEigenvalue_iSup_of_finiteDimensional` to obtain an eigenpair
+   `(lambda, x)` with `x ≠ 0` and `T x = lambda • x`.
+4. Prove that the Rayleigh quotient at this eigenvector is exactly the
+   supremum `lambda`. This follows by unfolding the eigenvector equation
+   in the inner product and using `x ≠ 0`; the scalar identity must be
+   written explicitly in Lean.
+5. Let `y` be the coordinatewise absolute-value vector. ECB-03 gives
+   `‖y‖ = ‖x‖ > 0`; ECB-04/05 gives
+   `⟪T x,x⟫ ≤ ⟪T y,y⟫`. Since the Rayleigh quotient of every nonzero
+   vector is bounded above by the same supremum, and `x` attains it,
+   the two quadratic forms on this common-radius sphere must be equal.
+6. Thus `y` is also a maximizer of `reApplyInnerSelf` on
+   `sphere 0 ‖y‖`. Apply
+   `IsSelfAdjoint.hasEigenvector_of_isMaxOn` to the self-adjoint
+   continuous operator corresponding to `T`, with `y ≠ 0`.
+   This yields an eigenvector at the global Rayleigh supremum.
+7. Translate the resulting continuous-linear-map eigenvector equation
+   through `Matrix.toLpLin_apply` / `Matrix.toEuclideanLin` to the
+   coordinate equation
+   `∀ s, ∑ t, A s t * y t = lambda * y s`.
+   Then invoke the already-existing
+   `shiftedTFIMHamiltonian_nonneg_eigenvector_strictly_positive`.
+
+### Important qualification
+
+The above is a source-grounded proof architecture, not verified Lean code.
+The exact coercions between the linear map, its continuous-linear-map
+self-adjoint wrapper, the Euclidean vector, and the coordinate function
+still need scratch-module compilation. In addition, the finite-dimensional
+instance `Nontrivial (EuclideanSpace ℝ (SpinConfig N))` must be discharged
+explicitly for the full stated range of `N`; it must not be silently
+assumed. The supremum/eigenpair equality and the translation back to the
+matrix coordinate equation are separate Lean proof obligations.
+
+This route constructs a nonnegative eigenvector at the largest Rayleigh
+eigenvalue. It still does not, by itself, prove algebraic simplicity or
+ground-state transfer.
