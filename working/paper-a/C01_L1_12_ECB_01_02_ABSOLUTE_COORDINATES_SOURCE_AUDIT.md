@@ -59,3 +59,18 @@ Added declarations:
 
 ### Status after ECB-03
 **ECB-01–03 source-level proof candidates are present; compilation and formal verification remain pending.** Next: obtain compiler-backed evidence, then add a norm-preservation bridge before moving on.
+
+
+## Follow-up: Euclidean norm bridge added (2026-11-19)
+
+**Source blob:** `9ced8d9b44f04c79dd4a31c675a335f65a50a054`
+
+Added:
+- `absoluteCoordinateEuclideanNorm`: a finite-index Euclidean norm defined as the square root of the sum of coordinate squares.
+- `absoluteCoordinateVector_euclideanNorm`: invariance under the absolute-coordinate transform, rewritten using ECB-02's sum-of-squares theorem.
+
+### Scope warning
+This is a custom Euclidean norm definition on finite function vectors, not Lean's default norm on `ι → ℝ` (which is not automatically the Euclidean norm). The theorem is mathematically immediate from the sum-of-squares equality and the square-root definition. Compilation is still pending; verify the exact finite-sum rewriting behavior with the pinned toolchain.
+
+### Updated status
+ECB-01–03 and the norm bridge have source-level declarations. **None are compiler-confirmed or kernel-verified yet.** The next priority remains compiler-backed validation, not proceeding to ECB-04.
