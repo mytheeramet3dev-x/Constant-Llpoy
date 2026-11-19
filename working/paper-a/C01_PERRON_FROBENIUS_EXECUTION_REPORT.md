@@ -204,3 +204,8 @@ Do not attempt to mark THM-0002 complete in the same change. Keep C01-L2 through
 - The mathematical review PASS is inherited from the separately recorded review artifact, not newly claimed as an independent review by this report.
 - The frozen upstream `Absolute_Sym` source was not modified.
 - Overall Paper A remains **NOT VERIFIED**.
+
+
+## 10. Clarification added after the C01-L1 API inspection (2026-11-19)
+
+The statement in §5 that the absolute-value inequality was not yet formalized is superseded by the more precise finding in `C01_L1_RAYLEIGH_CONSTRUCTION_DESIGN.md`: the scalar inequality `quadratic_form_le_abs_quadratic_form` is already source-present in `PerronFrobeniusCore.lean`. What remains open is the Euclidean-space coordinate bridge, norm preservation of the coordinatewise absolute-value vector, transfer of the Rayleigh maximizer property, and translation of the resulting eigenvector equation back to the matrix form. No new Lean build is claimed. The detailed pinned Mathlib APIs and the refined C01-L1 proof architecture are recorded in that design report.
