@@ -40,3 +40,22 @@ Reviewed `formalization/lean/ConstantLlapoy/PaperA/AbsoluteCoordinates.lean` for
 ## Honest status
 
 **ECB-01/02: SOURCE REVIEWED — mathematical arguments appear sound — compilation pending.**
+
+
+## Follow-up: ECB-03 source review (2026-11-19)
+
+**Updated source blob:** `4fd25fc15bad5441cf80d54797374b215cd343c3`
+
+Added declarations:
+- `absoluteValue_ne_zero_iff`: scalar absolute-value nonzero equivalence.
+- `absoluteCoordinate_ne_zero_iff`: pointwise coordinate equivalence.
+- `absoluteCoordinateVector_ne_zero_iff`: vector-level nonzero preservation.
+
+### Review notes
+- Scalar and coordinate lemmas use simplification of absolute-value zero/nonzero; mathematically standard.
+- Vector-level proof uses function extensionality and the scalar fact. Both directions are logically consistent by source inspection.
+- The vector equivalence is stated without a nonempty-index assumption; for an empty index type, both sides are false because the unique function is the zero vector, so the equivalence remains valid.
+- **Not compiled:** tactic/API elaboration remains unverified. No kernel verification or axiom audit has occurred.
+
+### Status after ECB-03
+**ECB-01–03 source-level proof candidates are present; compilation and formal verification remain pending.** Next: obtain compiler-backed evidence, then add a norm-preservation bridge before moving on.
