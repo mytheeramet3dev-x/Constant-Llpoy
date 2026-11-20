@@ -178,3 +178,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `NOT_COMMITTED` is only a retry candidate when previous sequence/digest match, registry verification passes, and no stage files exist; caller revalidation is required. Missing/unexpected state or stage files block retry.
 - The classifier is read-only; no automatic retry, repair, or stage promotion. It does not prove post-power-loss durability or certification.
 - Tests: `test_paper_a_ambiguous_anchor_commit_recovery.py`; report `PHASE_5_3I_8_24_AMBIGUOUS_COMMIT_RECOVERY_2026-11-21.md`.
+
+
+## Phase 5.3I-8.25 — retry safety, idempotency, duplicate commit prevention
+- `paper_a_ambiguous_anchor_retry_gate.py` is a read-only policy gate: it denies retries for COMMITTED, INDETERMINATE, FAIL_CLOSED, sequence jumps, rollback-floor conflicts, mismatched recovery sequence/digest, or absent caller revalidation.
+- A permitted result is only `RETRY_CANDIDATE`; `retry` remains false and `execution_performed` remains false. The actual writer must revalidate state and enforce CAS; this gate does not make retries atomic or idempotent itself.
+- `test_paper_a_ambiguous_anchor_retry_gate.py` covers duplicate-commit denial, fresh-revalidation gate, exact next-sequence restriction, floor, observed sequence/digest mismatch, bool sequence rejection, and non-mapping input.
+- This does not provide a retry executor, distributed idempotency key, or mathematical certification.
+- Report: `PHASE_5_3I_8_25_RETRY_SAFETY_2026-11-21.md`.
