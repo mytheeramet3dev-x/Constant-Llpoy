@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mytheeramet3dev-x/Absolute_Sym/blob/paper-a-numerical-evidence-framework-2026-11-20/Alphabet/paper_a/verification/paper_a_replay_manifest.schema.json",
+  "title": "Paper A Numerical Replay Manifest",
+  "description": "Schema for recording reproducible execution provenance; a manifest does not certify mathematical claims by itself.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "git_commit",
+    "run_timestamp_utc",
+    "environment",
+    "command",
+    "inputs",
+    "artifacts",
+    "checks",
+    "scope",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "project": {
+      "const": "Paper A"
+    },
+    "git_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "run_timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00))$"
+    },
+    "environment": {
+      "type": "object",
+      "required": [
+        "python_version",
+        "platform",
+        "dependencies"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "python_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          },
+          "propertyNames": {
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "exact_values": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "check_id",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "check_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "INCONCLUSIVE",
+              "NOT_RUN"
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reviewer_notes": {
+      "type": "string"
+    }
+  }
+}
