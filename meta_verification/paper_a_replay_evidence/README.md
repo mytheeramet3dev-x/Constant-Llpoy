@@ -194,3 +194,10 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_retry_intent_ticket.py` covers valid one-time redemption, replay, MAC tampering, expectation mismatch, untrusted key, sequence jumps, bool sequence, and key-scoped nonce behavior.
 - This does not eliminate races after redemption, guarantee distributed coordination beyond the replay DB's deployment scope, or certify mathematics.
 - Report: `PHASE_5_3I_8_26_RETRY_INTENT_TICKET_2026-11-21.md`.
+
+
+## Phase 5.3I-8.27 — concurrent retry-ticket redemption
+- Ticket redemption concurrency is stress-tested with eight threads, each opening its own replay-guard instance against the same SQLite database and racing to redeem the same signed ticket.
+- The test requires exactly one `REDEEMED` result and seven `DENY` results, with bounded worker joins to detect hangs.
+- This validates local SQLite single-use redemption behavior under this test scenario only. It does not establish distributed coordination, post-redemption writer atomicity, or certification.
+- See `PHASE_5_3I_8_27_CONCURRENT_REDEMPTION_2026-11-21.md`.
