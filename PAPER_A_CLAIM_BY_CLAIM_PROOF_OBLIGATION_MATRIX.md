@@ -140,7 +140,7 @@ These are proof-planning dependencies, not yet a verified dependency graph.
 ## 8. Current overall assessment
 
 - Paper A source-linked records: **15**.
-- Latest claim-level audit update (2026-11-21): **PROP-0002 direct algebra PASS under its stated critical-point, positivity, and differentiability hypotheses; Lean formalization remains open.**
+- Latest claim-level audit updates (2026-11-21): **PROP-0002 tangent identities and PROP-0003 Picard multiplier/strict-inequality equivalence PASS by direct algebra under stated assumptions; Lean formalization remains open for both.**
 - Distinct theorem/proposition candidates after excluding one definition and one duplicate: **13 records**, with PROP-0012 retained as a source-conflict candidate.
 - Claims with direct full manuscript-to-Lean correspondence established: **0**.
 - Formalized partial support: **THM-0002 and limited auxiliary lemmas for PROP-0005/0009/0012; none yet establishes the full associated manuscript claim**.
