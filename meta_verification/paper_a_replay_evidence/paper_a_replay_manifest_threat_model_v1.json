@@ -1,0 +1,127 @@
+{
+  "model_id": "PAPER-A-REPLAY-EVIDENCE-THREAT-MODEL-1",
+  "version": "1.0",
+  "date": "2026-11-21",
+  "scope": "Replay-manifest provenance and integrity controls; excludes correctness of the underlying mathematical theorem except where evidence provenance is misrepresented.",
+  "assets": [
+    "Replay inputs and their exact content",
+    "Generated numerical artifacts",
+    "Manifest metadata and check statuses",
+    "Repository revision identifier",
+    Replay environment and command record"
+  ],
+  "trust_boundaries": [
+    {
+      "boundary": "Execution workspace to manifest writer",
+      "trust_assumption": "The writer is not assumed to be a trusted execution attestation; it can only record observed paths and hashes."
+    },
+    {
+      "boundary": "Workspace to repository history",
+      "trust_assumption": "Commit SHA identifies a repository object, but does not prove that the stated command ran against that commit."
+    },
+    {
+      "boundary": "Manifest to independent reviewer",
+      "trust_assumption": "A reviewer can independently recompute hashes if referenced files are available, but a self-contained manifest is not self-authenticating."
+    },
+    {
+      "boundary": "Local files to external storage",
+      "trust_assumption": "No immutability or retention guarantee exists unless separately implemented and audited."
+    }
+  ],
+  "adversary_capabilities": [
+    "Modify an input or output file after manifest creation",
+    "Edit manifest fields and recompute its ordinary digest",
+    "Provide a syntactically valid but semantically misleading status or scope",
+    "Replace both file and manifest when the same storage/control boundary is compromised",
+    "Supply an arbitrary commit identifier without proving the replay used it",
+    "Omit files, checks, limitations, or dependencies if generation is not independently constrained"
+  ],
+  "out_of_scope_capabilities": [
+    "Compromise of cryptographic primitives such as SHA-256",
+    "Compromise of a separately controlled signing key (no signing key is currently defined)",
+    "Proof of maliciousness or correctness of the mathematical model itself"
+  ],
+  "controls_currently_present": [
+    "SHA-256 recorded for listed inputs and artifacts",
+    "Manifest generator rejects missing files and malformed commit/status/dependency entries",
+    "Separate validator checks schema-like structure and semantic consistency",
+    "Optional file hash recomputation detects changed referenced files",
+    "Explicit scope and limitations fields"
+  ],
+  "known_gaps": [
+    "Manifest is unsigned and can be replaced",
+    "Timestamp is generated locally and is not externally trusted",
+    "Git commit field is caller-supplied, not tied to runtime checkout",
+    "Input/artifact lists are manually supplied and not proven complete",
+    "No CI execution attestation or environment lockfile digest is required",
+    "Paths are not canonicalized to protect against aliases or symlink ambiguity",
+    "Hash checks do not establish numerical correctness",
+    "No immutable storage or chain-of-custody procedure"
+  ],
+  "threats": [
+    {
+      "id": "TM-01",
+      "name": "Post-recording input mutation",
+      "impact": "Replay may be represented as using input content that has since changed.",
+      "current_detection": "Optional --verify-files hash recomputation.",
+      "residual": "Detection depends on retaining accessible original files and trusted expected hashes."
+    },
+    {
+      "id": "TM-02",
+      "name": "Artifact mutation or substitution",
+      "impact": "Reported output may not match the originally recorded artifact.",
+      "current_detection": "Optional hash recomputation against artifact paths.",
+      "residual": "Manifest and artifact can be jointly replaced."
+    },
+    {
+      "id": "TM-03",
+      "name": "Manifest tampering",
+      "impact": "Scope, checks, commit, or limitations may be falsified.",
+      "current_detection": "Structural validation; digest changes only if a separately retained digest is compared.",
+      "residual": "No signature or external anchoring."
+    },
+    {
+      "id": "TM-04",
+      "name": "False execution provenance",
+      "impact": "A commit or command may be claimed without the replay actually executing under it.",
+      "current_detection": "None beyond review of records.",
+      "residual": "Manifest is not an execution attestation."
+    },
+    {
+      "id": "TM-05",
+      "name": "Evidence omission",
+      "impact": "A relevant input, artifact, failed check, or limitation may be excluded.",
+      "current_detection": "Limited to reviewer comparison against protocol.",
+      "residual": "No completeness proof or automatically enumerated run inventory."
+    },
+    {
+      "id": "TM-06",
+      "name": "Environment drift",
+      "impact": "Numerical behavior may differ across machines or dependency versions.",
+      "current_detection": "Basic platform and declared dependency metadata.",
+      "residual": "Not a lockfile or complete environment capture."
+    },
+    {
+      "id": "TM-07",
+      "name": "Path ambiguity and symlink substitution",
+      "impact": "Hashing or review may refer to different files than intended.",
+      "current_detection": "File existence and digest check only.",
+      "residual": "Path canonicalization and symlink policy are not implemented."
+    }
+  ],
+  "security_objectives": [
+    "Detect accidental or post-recording content changes when original files are retained",
+    "Make the manifest's limits explicit and prevent it from being mistaken for proof",
+    "Allow an independent reviewer to recompute content hashes",
+    "Avoid claiming authenticity, trusted time, completeness, or execution attestation without controls"
+  ],
+  "next_controls_to_evaluate": [
+    "Canonical path and symlink policy",
+    "Schema validation using a pinned JSON Schema engine in CI",
+    "Environment lockfile hash and complete dependency capture",
+    "Signed manifest with key ownership and verification procedure",
+    "Trusted timestamp or externally anchored signature",
+    "Immutable artifact retention and independent custody",
+    "CI attestation tying workflow run, source revision, and artifacts"
+  ]
+}
