@@ -101,3 +101,11 @@ was intentionally not copied: it belongs in the producer repository.
 - Tests cover invalid or missing identity/digest and mismatched binding fields.
 - This checks metadata consistency only; no identity authentication, signature verification, immutable custody, or certification is claimed.
 - See `PHASE_5_3I_8_13_PROVENANCE_BINDING_2026-11-21.md`.
+
+
+## Phase 5.3I-8.14 — authenticated provenance record
+
+- `paper_a_provenance_hmac.py` authenticates the entire record using HMAC-SHA256 over deterministic JSON bytes; required identity/digest fields are validated and MAC comparison is constant-time.
+- `test_paper_a_provenance_hmac.py` exercises valid records and tampering (status, bundle digest, certification), wrong key, short key, malformed values and missing fields.
+- HMAC uses a shared secret. No production secret provisioning, custody, rotation, revocation, or trust-root setup exists. CI secrets are test-only. This is integrity/authentication of the record only, not numerical or mathematical certification.
+- See `PHASE_5_3I_8_14_HMAC_AUTHENTICATION_2026-11-21.md`.
