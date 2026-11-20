@@ -96,6 +96,19 @@ class RetryIntentTicketTests(unittest.TestCase):
         self.assertEqual(outcomes.count("REDEEMED"), 1)
         self.assertEqual(outcomes.count("DENY"), workers - 1)
 
+    def test_unexpected_replay_guard_exception_fails_closed(self):
+        class BrokenReplayGuard:
+            def consume(self, *args, **kwargs):
+                raise RuntimeError("simulated unexpected adapter failure")
+
+        result = redeem_retry_intent_ticket(
+            ticket=self.ticket, trusted_keys=self.keys,
+            expected_previous_sequence=self.previous,
+            expected_previous_digest=self.digest, intended_sequence=13,
+            replay_guard=BrokenReplayGuard())
+        self.assertEqual(result["status"], "DENY")
+        self.assertFalse(result.get("execution_performed", False))
+
     def test_nonce_scoped_to_key(self):
         other_keys = {"key-other": self.secret}
         # Key change invalidates MAC; issue correctly under alternate key.
