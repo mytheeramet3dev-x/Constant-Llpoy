@@ -54,6 +54,12 @@ def redeem_retry_intent_ticket(*, ticket, trusted_keys: Mapping[str, bytes],
     if not isinstance(ticket, dict):
         return {"status": "DENY", "reason": "ticket must be a mapping"}
     try:
+        # Validate caller expectations strictly; bool is an int subclass in Python.
+        if (type(expected_previous_sequence) is not int or expected_previous_sequence < 1 or
+            type(intended_sequence) is not int or intended_sequence != expected_previous_sequence + 1 or
+            not isinstance(expected_previous_digest, str) or len(expected_previous_digest) != 64 or
+            any(c not in "0123456789abcdef" for c in expected_previous_digest)):
+            return {"status": "DENY", "reason": "retry expectations malformed"}
         payload = _canonical(ticket)
         key_id = ticket["key_id"]
         secret = trusted_keys.get(key_id) if isinstance(trusted_keys, Mapping) else None
