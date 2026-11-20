@@ -99,14 +99,16 @@ class AnchorFilesystemFaultInjectionTests(unittest.TestCase):
 
     def test_staging_write_failure_keeps_original_anchor(self):
         original = self.read_bytes()
-        real_fdopen = os.fdopen
         class BrokenStream:
+            def __init__(self, fd): self.fd = fd
             def __enter__(self): return self
-            def __exit__(self, *args): return False
+            def __exit__(self, *args):
+                os.close(self.fd)
+                return False
             def write(self, data): raise OSError("injected staging write failure")
             def flush(self): return None
-            def fileno(self): return -1
-        with mock.patch.object(atomic.os, "fdopen", return_value=BrokenStream()):
+            def fileno(self): return self.fd
+        with mock.patch.object(atomic.os, "fdopen", side_effect=lambda fd, **kwargs: BrokenStream(fd)):
             with self.assertRaisesRegex(OSError, "staging write failure"):
                 self.call()
         self.assertEqual(self.read_bytes(), original)
