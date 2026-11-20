@@ -156,3 +156,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_atomic_anchor_advance.py` covers success, stale writers, non-increasing sequence, malformed anchor, untrusted key, simulated replace failure, and registry drift.
 - The minimum sequence floor must remain independently held. This local file protocol cannot resist coordinated rollback of the anchor and external floor, does not provide distributed locking, and is not certification.
 - Report: `PHASE_5_3I_8_20_ATOMIC_ANCHOR_ADVANCEMENT_2026-11-21.md.
+
+
+## Phase 5.3I-8.22 — crash-consistency adversarial state-machine model
+
+- `paper_a_anchor_advance_state_machine.py` models STABLE → STAGING → STAGED_DURABLE → REPLACED → READBACK_VERIFIED, with ABORTED only before replacement.
+- Invalid state transitions are rejected. Interrupted states remain INDETERMINATE; they are never automatically recovered or promoted.
+- `test_paper_a_anchor_advance_state_machine.py` covers valid path, skipped/terminal transitions, interrupted stages, orphan stage contradictions, and trust/integrity failure.
+- This is a protocol model, not exhaustive power-loss simulation, filesystem fault injection, or formal proof.
