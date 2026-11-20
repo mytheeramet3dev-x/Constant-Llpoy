@@ -109,3 +109,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_provenance_hmac.py` exercises valid records and tampering (status, bundle digest, certification), wrong key, short key, malformed values and missing fields.
 - HMAC uses a shared secret. No production secret provisioning, custody, rotation, revocation, or trust-root setup exists. CI secrets are test-only. This is integrity/authentication of the record only, not numerical or mathematical certification.
 - See `PHASE_5_3I_8_14_HMAC_AUTHENTICATION_2026-11-21.md`.
+
+
+## Phase 5.3I-8.15 — independent trust policy and replay guard
+
+- `paper_a_provenance_trust.py` applies verifier-supplied key allowlisting, key revocation, record freshness, nonce validation, HMAC verification, and replay checks.
+- `InMemoryReplayGuard` is process-local and not restart/distributed safe; production requires persistent atomic replay state. Caller-provided trusted key registry is not secure key custody. The result explicitly remains `certification: NOT_PERFORMED`.
+- `test_paper_a_provenance_trust.py` covers valid/unknown/revoked key, tampering, freshness, future timestamp, replay, nonce, missing metadata and bool timestamp.
+- See `PHASE_5_3I_8_15_TRUST_POLICY_REPLAY_GUARD_2026-11-21.md`.
