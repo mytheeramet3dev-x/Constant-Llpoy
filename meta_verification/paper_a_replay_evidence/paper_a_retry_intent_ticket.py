@@ -72,5 +72,6 @@ def redeem_retry_intent_ticket(*, ticket, trusted_keys: Mapping[str, bytes],
         replay_guard.consume(key_id, "anchor-retry-ticket", ticket["nonce"])
         return {"status": "REDEEMED", "single_use": True,
                 "execution_performed": False, "requires_writer_cas": True}
-    except (ValueError, TypeError, PersistentReplayError):
-        return {"status": "DENY", "reason": "ticket invalid, untrusted, or already consumed"}
+    except Exception:
+        # Fail closed even when a replay-guard adapter raises an unexpected error.
+        return {"status": "DENY", "reason": "ticket invalid, untrusted, replay guard unavailable, or already consumed"}
