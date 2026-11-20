@@ -24,7 +24,7 @@ def canonical_payload(record: Mapping[str, Any]) -> bytes:
     missing = REQUIRED - set(record)
     if missing:
         raise ProvenanceAuthError(f"missing fields: {sorted(missing)}")
-    payload = {k: record[k] for k in sorted(REQUIRED)}
+    payload = dict(record)
     for k, v in payload.items():
         if not isinstance(v, str) or not v.strip():
             raise ProvenanceAuthError(f"{k} must be a non-empty string")
