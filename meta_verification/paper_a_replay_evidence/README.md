@@ -148,3 +148,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_authenticated_registry_anchor.py` exercises valid authentication, tampering, unknown key, sequence rollback, live state drift, malformed sequence, and missing DB.
 - The key registry and minimum sequence floor must be retained independently. No secure key custody, key rotation/revocation, hardware monotonic counter, anchor advancement protocol, or certification is provided.
 - Report: `PHASE_5_3I_8_19_AUTHENTICATED_ANCHOR_ANTI_ROLLBACK_2026-11-21.md`.
+
+
+## Phase 5.3I-8.20 — atomic anchor advancement and crash-safe transition
+- `paper_a_atomic_anchor_advance.py` serializes cooperating local writers using an advisory lock, verifies the currently signed anchor and live registry, applies caller-supplied sequence/digest compare-and-swap expectations, and requires a strictly increasing sequence.
+- Writes the next anchor via same-directory staging, file fsync, atomic replacement, and directory fsync; performs read-back equality.
+- `test_paper_a_atomic_anchor_advance.py` covers success, stale writers, non-increasing sequence, malformed anchor, untrusted key, simulated replace failure, and registry drift.
+- The minimum sequence floor must remain independently held. This local file protocol cannot resist coordinated rollback of the anchor and external floor, does not provide distributed locking, and is not certification.
+- Report: `PHASE_5_3I_8_20_ATOMIC_ANCHOR_ADVANCEMENT_2026-11-21.md.
