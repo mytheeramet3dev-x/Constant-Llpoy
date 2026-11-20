@@ -12,7 +12,7 @@ from paper_a_authenticated_registry_anchor import (
 )
 
 
-def classify_ambiguous_anchor_commit(
+def classify_ambiguous_anchor_commit_recovery(
     database_path,
     anchor_path,
     trusted_keys: Mapping[str, bytes],
