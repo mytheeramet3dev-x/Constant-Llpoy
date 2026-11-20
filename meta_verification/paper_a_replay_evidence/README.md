@@ -55,3 +55,12 @@ was intentionally not copied: it belongs in the producer repository.
 - Manifest and evidence are opened via directory descriptors and `O_NOFOLLOW` (when supported), and targets are checked as regular files. Hashing occurs on opened descriptors.
 - Dedicated workflow `.github/workflows/paper-a-replay-evidence-intake-tests.yml` runs this package's tests on changes, PRs, or manual dispatch. The first actual run must still be inspected before reporting tests as passing.
 - Residual risks: platform/filesystem semantics, trusted workspace-root setup, mount/privileged adversaries; not a sandbox or mathematical certification.
+
+
+## Adversarial audit 8.8
+- Empty input or artifact sections fail closed.
+- Duplicate normalized paths across inputs/artifacts are rejected.
+- Paths must be canonical relative POSIX paths (no backslashes, empty/dot/traversal components).
+- Descriptor metadata fingerprints are checked before/after manifest read and evidence hashing (race mitigation, not full snapshot protection).
+- Producer check statuses remain untrusted claims; intake does not certify mathematics.
+- See `PHASE_5_3I_8_8_ADVERSARIAL_AUDIT_2026-11-21.md`.
