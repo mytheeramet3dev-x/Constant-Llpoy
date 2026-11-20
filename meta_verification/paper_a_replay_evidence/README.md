@@ -64,3 +64,11 @@ was intentionally not copied: it belongs in the producer repository.
 - Descriptor metadata fingerprints are checked before/after manifest read and evidence hashing (race mitigation, not full snapshot protection).
 - Producer check statuses remain untrusted claims; intake does not certify mathematics.
 - See `PHASE_5_3I_8_8_ADVERSARIAL_AUDIT_2026-11-21.md`.
+
+
+## Phase 5.3I-8.9 — independent evidence completeness policy
+- `paper_a_evidence_completeness.py` compares manifest inventories against a separately maintained policy.
+- Policy requires non-empty required input and artifact lists, rejects duplicates and noncanonical paths.
+- Completeness status only means names are present; it does not imply checks passed or policy authenticity.
+- No authoritative Paper A inventory is adopted yet; this remains an interface/tooling component pending independent inventory approval.
+- See `PHASE_5_3I_8_9_COMPLETENESS_POLICY_2026-11-21.md`.
