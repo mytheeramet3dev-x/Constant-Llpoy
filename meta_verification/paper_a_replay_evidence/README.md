@@ -171,3 +171,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Pre-replacement failures are tested to preserve the original anchor; failures after replacement explicitly assert that the new anchor may already be visible. Raised exceptions after replace therefore mean commit outcome uncertain, not rollback.
 - This is not power-loss, kernel crash, storage hardware, or reboot durability simulation. No durability guarantees or certification are claimed.
 - Report: `PHASE_5_3I_8_23_FILESYSTEM_FAULT_INJECTION_2026-11-21.md`.
+
+
+## Phase 5.3I-8.24 — recovery semantics after ambiguous commit
+- `paper_a_ambiguous_anchor_commit_recovery.py` classifies an authenticated live anchor after ambiguous write errors as `COMMITTED`, `NOT_COMMITTED`, `INDETERMINATE`, or `FAIL_CLOSED`.
+- `NOT_COMMITTED` is only a retry candidate when previous sequence/digest match, registry verification passes, and no stage files exist; caller revalidation is required. Missing/unexpected state or stage files block retry.
+- The classifier is read-only; no automatic retry, repair, or stage promotion. It does not prove post-power-loss durability or certification.
+- Tests: `test_paper_a_ambiguous_anchor_commit_recovery.py`; report `PHASE_5_3I_8_24_AMBIGUOUS_COMMIT_RECOVERY_2026-11-21.md`.
