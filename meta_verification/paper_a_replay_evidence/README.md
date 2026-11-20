@@ -208,3 +208,10 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_retry_intent_ticket.py` simulates a replay guard adapter raising `RuntimeError` and asserts denial with no execution claim.
 - The broad exception boundary is limited to redemption; it does not suppress exceptions in ticket issuance or the anchor writer.
 - This remains a fail-closed policy test, not proof of writer atomicity or certification. See `PHASE_5_3I_8_28_FAIL_CLOSED_REDEMPTION_2026-11-21.md`.
+
+
+## Phase 5.3I-8.29 — strict redemption expectation validation
+- Redemption now rejects malformed caller expectations before ticket authentication/replay consumption: sequence fields must be exact positive integers (not booleans), the intended sequence must be exactly previous + 1, and the expected digest must be lowercase 64-character hexadecimal.
+- Adversarial tests cover boolean sequence, malformed digest, and sequence-jump expectations.
+- This narrows input ambiguity at the redemption boundary; it does not replace writer-side revalidation/CAS or provide mathematical certification.
+- See `PHASE_5_3I_8_29_EXPECTATION_VALIDATION_2026-11-21.md`.
