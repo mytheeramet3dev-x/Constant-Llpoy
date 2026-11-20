@@ -14,3 +14,7 @@ This test exercises local concurrent nonce consumption through SQLite's transact
 
 ## Verification status
 The test is committed and CI is triggered by repository workflows. CI must be checked against the final commit SHA before this phase is declared closed. No local test execution is claimed.
+
+
+## CI correction record
+The initial test commit introduced an accidental dangling test variable in the key-scoped nonce test. The replay-intake CI run exposed the test failure; the variable was removed in corrective commit `eafed96f013ce456a7ead7054686dfd9eccc6fb6`. The replay-intake workflow on that corrected SHA completed successfully. The meta-verification workflow was still pending at the time this report was updated.
