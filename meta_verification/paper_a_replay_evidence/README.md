@@ -117,3 +117,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `InMemoryReplayGuard` is process-local and not restart/distributed safe; production requires persistent atomic replay state. Caller-provided trusted key registry is not secure key custody. The result explicitly remains `certification: NOT_PERFORMED`.
 - `test_paper_a_provenance_trust.py` covers valid/unknown/revoked key, tampering, freshness, future timestamp, replay, nonce, missing metadata and bool timestamp.
 - See `PHASE_5_3I_8_15_TRUST_POLICY_REPLAY_GUARD_2026-11-21.md`.
+
+
+## Phase 5.3I-8.16 — persistent atomic replay registry
+
+- `paper_a_persistent_replay_guard.py` provides a file-backed SQLite registry with atomic nonce consumption and a unique key on `(key_id, nonce)`, protecting nonce reuse across different evaluation IDs for the same key.
+- The guard uses transactional insertion, survives process restart, and fails closed on storage errors. `test_paper_a_persistent_replay_guard.py` exercises restart persistence, cross-evaluation replay, key scoping, concurrent race, and failure cases.
+- This is local persistent state, not distributed replay coordination. Backup rollback, filesystem durability, deployment permissions and cross-host concurrency remain residual risks; certification is not performed.
+- See `PHASE_5_3I_8_16_PERSISTENT_ATOMIC_REPLAY_REGISTRY_2026-11-21.md`.
