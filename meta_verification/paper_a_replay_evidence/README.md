@@ -87,3 +87,10 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_trust_gated_completeness.py` exercises fail-closed, trusted, missing-evidence, pending-pin and non-certification boundaries.
 - Pipeline status remains evidence-intake/completeness only. No production inventory/pin is approved; no math certification is claimed.
 - See `PHASE_5_3I_8_11_TRUST_GATED_PIPELINE_2026-11-21.md`.
+
+
+## Phase 5.3I-8.12 — independent evidence status semantics
+- `paper_a_evidence_status_semantics.py` validates status-specific obligations, evidence/policy digest format, reasons, and FAIL_CLOSED downstream state.
+- Same evaluation ID cannot mutate status, scope, evidence, or context digests; re-evaluation requires a new ID.
+- PASS is limited to the explicit scope and evidence IDs; it is not certification. This validator does not provide persistent uniqueness or authenticated custody.
+- See `PHASE_5_3I_8_12_STATUS_SEMANTICS_2026-11-21.md`.
