@@ -25,14 +25,14 @@ def canonical_payload(record: Mapping[str, Any]) -> bytes:
     if missing:
         raise ProvenanceAuthError(f"missing fields: {sorted(missing)}")
     payload = dict(record)
-    for k, v in payload.items():
-        if not isinstance(v, str) or not v.strip():
+    for k in REQUIRED - {"evidence_bundle_sha256", "policy_sha256", "result_record_sha256"}:
+        if not isinstance(payload[k], str) or not payload[k].strip():
             raise ProvenanceAuthError(f"{k} must be a non-empty string")
     for k in ("evidence_bundle_sha256", "policy_sha256", "result_record_sha256"):
         v = payload[k]
         if len(v) != 64 or any(c not in HEX64 for c in v):
             raise ProvenanceAuthError(f"{k} must be lowercase SHA-256 hex")
-    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
 
 def authenticate_record(record: Mapping[str, Any], secret: bytes) -> str:
     if not isinstance(secret, bytes) or len(secret) < 32:
