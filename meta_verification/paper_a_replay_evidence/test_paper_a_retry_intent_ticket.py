@@ -96,6 +96,15 @@ class RetryIntentTicketTests(unittest.TestCase):
         self.assertEqual(outcomes.count("REDEEMED"), 1)
         self.assertEqual(outcomes.count("DENY"), workers - 1)
 
+    def test_bool_expected_sequence_is_rejected(self):
+        self.assertEqual(self.redeem(expected_previous_sequence=True)["status"], "DENY")
+
+    def test_malformed_expected_digest_is_rejected(self):
+        self.assertEqual(self.redeem(expected_previous_digest="z" * 64)["status"], "DENY")
+
+    def test_expected_sequence_jump_is_rejected(self):
+        self.assertEqual(self.redeem(expected_previous_sequence=12, intended_sequence=14)["status"], "DENY")
+
     def test_unexpected_replay_guard_exception_fails_closed(self):
         class BrokenReplayGuard:
             def consume(self, *args, **kwargs):
