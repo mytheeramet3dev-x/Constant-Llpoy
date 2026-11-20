@@ -72,3 +72,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Completeness status only means names are present; it does not imply checks passed or policy authenticity.
 - No authoritative Paper A inventory is adopted yet; this remains an interface/tooling component pending independent inventory approval.
 - See `PHASE_5_3I_8_9_COMPLETENESS_POLICY_2026-11-21.md`.
+
+
+## Phase 5.3I-8.10 — verifier-side policy integrity pin gate
+- `paper_a_policy_trust.py` canonicalizes policy JSON and checks its SHA-256 against a verifier-side pin record, including policy identity/version and explicit approved status.
+- `test_paper_a_policy_trust.py` includes tampering, pending approval, malformed pin, identity mismatch and canonicalization cases.
+- Pin PASS means integrity relative to the provided pin only; approval provenance and pin custody are not cryptographically authenticated.
+- **No production policy has been approved or pinned.** The unit tests use test fixtures only. See `PHASE_5_3I_8_10_POLICY_TRUST_PIN_2026-11-21.md`.
