@@ -133,3 +133,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `verify_snapshot` detects changes when compared to an independently retained expected digest. Tests cover clean state, digest drift after insertion, missing DB/table, and malformed anchor.
 - The digest is not a secure anchor by itself: if both database and expected digest can be altered or rolled back, changes/rollback may go undetected. No external transparency log, hardware anchor, or automatic recovery is implemented.
 - See `PHASE_5_3I_8_17_REPLAY_REGISTRY_INTEGRITY_ROLLBACK_AUDIT_2026-11-21.md`.
+
+
+## Phase 5.3I-8.18 — external replay-registry anchor verification
+- `paper_a_external_registry_anchor.py` compares the current logical registry snapshot digest and entry count against an externally supplied anchor record.
+- Missing or malformed anchors are rejected; drift returns `FAIL`; missing/corrupt registry fails closed.
+- Anchor custody is outside this repository/module: it is not authenticated, advanced, stored, or protected here. If both registry and anchor are replaced/rolled back, detection may be defeated.
+- Tests: `test_paper_a_external_registry_anchor.py`; this remains an audit component, not certification.
+- Report: `PHASE_5_3I_8_18_EXTERNAL_REGISTRY_ANCHOR_2026-11-21.md`.
