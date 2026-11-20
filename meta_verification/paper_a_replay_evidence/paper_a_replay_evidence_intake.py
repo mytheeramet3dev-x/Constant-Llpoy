@@ -30,7 +30,7 @@ def _open_relative_file(root_fd: int, raw_path: str) -> int:
     if not isinstance(raw_path, str) or not raw_path.strip():
         raise ValueError("file path must be a non-empty string")
     rel = Path(raw_path)
-    if rel.is_absolute() or any(part in ("", ".", "..") for part in rel.parts):
+    if not rel.parts or rel.is_absolute() or any(part in ("", ".", "..") for part in rel.parts):
         raise ValueError("path must be clean and workspace-relative (no absolute path or traversal)")
     parts = rel.parts
     current_fd = os.dup(root_fd)
