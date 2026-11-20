@@ -186,3 +186,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_ambiguous_anchor_retry_gate.py` covers duplicate-commit denial, fresh-revalidation gate, exact next-sequence restriction, floor, observed sequence/digest mismatch, bool sequence rejection, and non-mapping input.
 - This does not provide a retry executor, distributed idempotency key, or mathematical certification.
 - Report: `PHASE_5_3I_8_25_RETRY_SAFETY_2026-11-21.md`.
+
+
+## Phase 5.3I-8.26 — authenticated single-use retry-intent tickets
+- `paper_a_retry_intent_ticket.py` issues HMAC-bound tickets tied to key ID, nonce, previous sequence/digest, and exact next sequence; redemption verifies trust/MAC and expectation match, then consumes the nonce in the persistent replay guard.
+- Redemption is single-use per key+nonce and returns `execution_performed=false`; it is not an anchor writer. Writer-side authenticated state re-read and CAS remain mandatory.
+- `test_paper_a_retry_intent_ticket.py` covers valid one-time redemption, replay, MAC tampering, expectation mismatch, untrusted key, sequence jumps, bool sequence, and key-scoped nonce behavior.
+- This does not eliminate races after redemption, guarantee distributed coordination beyond the replay DB's deployment scope, or certify mathematics.
+- Report: `PHASE_5_3I_8_26_RETRY_INTENT_TICKET_2026-11-21.md`.
