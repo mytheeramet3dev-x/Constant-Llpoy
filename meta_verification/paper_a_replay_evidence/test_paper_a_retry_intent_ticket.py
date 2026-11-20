@@ -1,4 +1,4 @@
-import os, tempfile, unittest
+import os, tempfile, threading, unittest
 
 from paper_a_retry_intent_ticket import (
     issue_retry_intent_ticket, redeem_retry_intent_ticket,
@@ -68,8 +68,35 @@ class RetryIntentTicketTests(unittest.TestCase):
             self.make_ticket("nonce-bool-001", expected_previous_sequence=True,
                            intended_sequence=2)
 
+    def test_concurrent_redemption_allows_exactly_one_ticket_consumer(self):
+        workers = 8
+        barrier = threading.Barrier(workers)
+        outcomes = []
+        lock = threading.Lock()
+
+        def worker():
+            local_guard = PersistentReplayGuard(self.db)
+            barrier.wait(timeout=10)
+            result = redeem_retry_intent_ticket(
+                ticket=self.ticket, trusted_keys=self.keys,
+                expected_previous_sequence=self.previous,
+                expected_previous_digest=self.digest,
+                intended_sequence=13, replay_guard=local_guard)
+            with lock:
+                outcomes.append(result["status"])
+
+        threads = [threading.Thread(target=worker) for _ in range(workers)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=20)
+
+        self.assertTrue(all(not thread.is_alive() for thread in threads),
+                        "concurrent redemption worker timed out")
+        self.assertEqual(outcomes.count("REDEEMED"), 1)
+        self.assertEqual(outcomes.count("DENY"), workers - 1)
+
     def test_nonce_scoped_to_key(self):
-        other_ticket = self.make_ticket("nonce-scope-001")
         other_keys = {"key-other": self.secret}
         other_ticket = dict(other_ticket, key_id="key-other")
         # Key change invalidates MAC; issue correctly under alternate key.
