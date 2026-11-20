@@ -98,7 +98,6 @@ class RetryIntentTicketTests(unittest.TestCase):
 
     def test_nonce_scoped_to_key(self):
         other_keys = {"key-other": self.secret}
-        other_ticket = dict(other_ticket, key_id="key-other")
         # Key change invalidates MAC; issue correctly under alternate key.
         other_ticket = issue_retry_intent_ticket(
             key_id="key-other", nonce="nonce-scope-001",
