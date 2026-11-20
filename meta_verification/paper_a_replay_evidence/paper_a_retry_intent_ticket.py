@@ -60,6 +60,9 @@ def redeem_retry_intent_ticket(*, ticket, trusted_keys: Mapping[str, bytes],
             not isinstance(expected_previous_digest, str) or len(expected_previous_digest) != 64 or
             any(c not in "0123456789abcdef" for c in expected_previous_digest)):
             return {"status": "DENY", "reason": "retry expectations malformed"}
+        allowed_keys = set(_FIELDS) | {"hmac_sha256"}
+        if set(ticket) != allowed_keys:
+            return {"status": "DENY", "reason": "ticket fields invalid"}
         payload = _canonical(ticket)
         key_id = ticket["key_id"]
         secret = trusted_keys.get(key_id) if isinstance(trusted_keys, Mapping) else None
