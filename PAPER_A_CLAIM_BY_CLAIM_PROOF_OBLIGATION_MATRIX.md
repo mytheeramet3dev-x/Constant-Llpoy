@@ -14,6 +14,7 @@ This matrix expands the 15 Paper A source-linked records into claim-specific pro
 Statuses used here:
 
 - **FORMALIZED-PARTIAL:** Some relevant Lean declarations exist, but the full manuscript claim is not shown equivalent to them or its hypotheses are not discharged.
+- **ANALYTIC-VERIFIED (algebraic scope only):** A direct hand-checkable algebraic derivation passes under explicit hypotheses, but Lean formalization and source correspondence remain open.
 - **ANALYTIC-PARTIAL:** An independent mathematical derivation/review supports a stated restricted result, but formalization, source correspondence, or remaining conditions are open.
 - **SOURCE-CONFLICT:** A manuscript assertion or supporting proof conflicts with a corrected derivation; do not use the disputed assertion as established.
 - **NOT-FORMALIZED:** No direct Lean theorem for the manuscript claim was identified in the current semantic audit.
@@ -139,6 +140,7 @@ These are proof-planning dependencies, not yet a verified dependency graph.
 ## 8. Current overall assessment
 
 - Paper A source-linked records: **15**.
+- Latest claim-level audit update (2026-11-21): **PROP-0002 direct algebra PASS under its stated critical-point, positivity, and differentiability hypotheses; Lean formalization remains open.**
 - Distinct theorem/proposition candidates after excluding one definition and one duplicate: **13 records**, with PROP-0012 retained as a source-conflict candidate.
 - Claims with direct full manuscript-to-Lean correspondence established: **0**.
 - Formalized partial support: **THM-0002 and limited auxiliary lemmas for PROP-0005/0009/0012; none yet establishes the full associated manuscript claim**.
