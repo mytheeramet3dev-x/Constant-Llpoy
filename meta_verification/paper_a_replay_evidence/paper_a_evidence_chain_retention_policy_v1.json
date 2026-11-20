@@ -1,0 +1,63 @@
+{
+  "policy_id": "PAPER-A-EVIDENCE-CUSTODY-RETENTION-1",
+  "version": "1.0",
+  "status": "POLICY_DESIGN_ONLY",
+  "purpose": "Define minimum evidence bundle, custody record, storage controls, and retention decision criteria for numerical replay evidence.",
+  "bundle_minimum": [
+    "finalized replay manifest",
+    "all listed input files or documented access locations",
+    "all listed numerical artifacts",
+    "source revision reference and archive of relevant source state",
+    "execution logs and command transcript when available",
+    "schema and validator versions used",
+    "certificate inputs and outputs for claim-level checks",
+    "detached signature sidecar when signing is implemented",
+    "verification instructions and known limitations"
+  ],
+  "custody_event_fields": [
+    "event_id",
+    "event_timestamp_utc",
+    "actor_or_service_identity",
+    "action",
+    "evidence_bundle_identifier_or_digest",
+    "source_location",
+    "destination_location",
+    "integrity_digest_before_and_after_if_applicable",
+    "verification_result",
+    "notes"
+  ],
+  "storage_recommendations": [
+    "Keep a primary working copy and at least one independently administered backup.",
+    "Prefer versioned or write-once retention for finalized evidence bundles where available.",
+    "Separate signing-key custody from ordinary repository write access.",
+    "Record bundle digests in an independently controlled record if authenticity anchoring is required.",
+    "Preserve public keys, fingerprints, rotation and revocation history for signed bundles.",
+    "Document access permissions and retrieval checks.",
+    "Perform periodic restore-and-verify exercises rather than assuming backup integrity."
+  ],
+  "retention_decision_factors": [
+    "research publication and peer-review lifecycle",
+    "reproducibility needs and anticipated re-analysis",
+    "legal, institutional, funder, and repository requirements if applicable",
+    "data licensing and privacy constraints",
+    "storage costs and artifact size",
+    "availability of source data and external dependencies"
+  ],
+  "retention_rule": "No fixed retention duration is prescribed by this policy. Before a bundle is finalized, the project owner must choose and record a duration and basis for that bundle; if no duration is set, retention status is explicitly UNDECIDED.",
+  "integrity_checks": [
+    "verify manifest signature when a signature is available",
+    "recompute hashes for every retained input and artifact",
+    "validate manifest schema and semantic constraints",
+    "verify source revision/archive digest",
+    "check bundle inventory for completeness against the manifest",
+    "record restore/verification outcomes"
+  ],
+  "prohibited_claims_without_controls": [
+    "immutable storage",
+    trusted timestamp",
+    complete evidence bundle",
+    successful restore",
+    authenticated chain of custody",
+    independent execution attestation"
+  ]
+}
