@@ -48,3 +48,10 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_replay_evidence_intake.py` covers success, hash mismatch, path escape, symlink rejection, and missing artifact.
 - Output distinguishes intake checks from producer checks and always reports `certification: NOT_PERFORMED`.
 - **Not yet workflow-integrated; tests not executed in CI.** TOCTOU limitations remain.
+
+
+## Race-reduced intake hardening (8.7)
+- Intake paths are workspace-relative; absolute paths and `..` traversal are rejected.
+- Manifest and evidence are opened via directory descriptors and `O_NOFOLLOW` (when supported), and targets are checked as regular files. Hashing occurs on opened descriptors.
+- Dedicated workflow `.github/workflows/paper-a-replay-evidence-intake-tests.yml` runs this package's tests on changes, PRs, or manual dispatch. The first actual run must still be inspected before reporting tests as passing.
+- Residual risks: platform/filesystem semantics, trusted workspace-root setup, mount/privileged adversaries; not a sandbox or mathematical certification.
