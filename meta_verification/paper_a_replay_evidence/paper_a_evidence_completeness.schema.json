@@ -1,0 +1,10 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"https://github.com/mytheeramet3dev-x/Constant-Llpoy/blob/main/meta_verification/paper_a_replay_evidence/paper_a_evidence_completeness_policy.schema.json",
+ "title":"Independent Paper A Evidence Completeness Policy","type":"object","additionalProperties":false,
+ "required":["policy_id","version","required_inputs","required_artifacts","required_check_ids"],
+ "properties":{"policy_id":{"type":"string","minLength":1},"version":{"type":"string","minLength":1},
+ "required_inputs":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true,"minItems":1},
+ "required_artifacts":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true,"minItems":1},
+ "required_check_ids":{"type":"array","items":{"type":"string","minLength":1},"uniqueItems":true}}
+}
