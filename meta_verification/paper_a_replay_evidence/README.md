@@ -201,3 +201,10 @@ was intentionally not copied: it belongs in the producer repository.
 - The test requires exactly one `REDEEMED` result and seven `DENY` results, with bounded worker joins to detect hangs.
 - This validates local SQLite single-use redemption behavior under this test scenario only. It does not establish distributed coordination, post-redemption writer atomicity, or certification.
 - See `PHASE_5_3I_8_27_CONCURRENT_REDEMPTION_2026-11-21.md`.
+
+
+## Phase 5.3I-8.28 — unexpected replay-guard errors fail closed
+- Retry-ticket redemption now converts unexpected exceptions raised during verification or replay-guard consumption into a generic `DENY` response instead of propagating the exception.
+- `test_paper_a_retry_intent_ticket.py` simulates a replay guard adapter raising `RuntimeError` and asserts denial with no execution claim.
+- The broad exception boundary is limited to redemption; it does not suppress exceptions in ticket issuance or the anchor writer.
+- This remains a fail-closed policy test, not proof of writer atomicity or certification. See `PHASE_5_3I_8_28_FAIL_CLOSED_REDEMPTION_2026-11-21.md`.
