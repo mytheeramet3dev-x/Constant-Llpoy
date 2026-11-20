@@ -18,3 +18,9 @@
 - Replay guard is in-memory only; restart, concurrent workers, and distributed replay are not covered. Production needs persistent atomic replay storage.
 - Time input is caller-supplied and requires a trusted clock.
 - This phase does not provide key rotation, hardware custody, signature-based non-repudiation, or mathematical certification.
+
+## CI update
+
+- Replay Evidence Intake workflow for the corrected implementation commit `a7fbf4a` completed **success**: [run 44789093806](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44789093806).
+- The first attempt failed because phase 8.14's canonical serializer incorrectly required all metadata to be strings, while 8.15 uses an integer `issued_at`. This was corrected by validating required identity strings and digests separately, allowing JSON-typed fields, and rejecting non-finite JSON numbers. The corrected intake run passed.
+- Meta-verification harness run [44789093747](https://github.com/mytheeramet3dev-x/Constant-Llpoy/actions/runs/44789093747) is still in progress; do not count it as passed yet.
