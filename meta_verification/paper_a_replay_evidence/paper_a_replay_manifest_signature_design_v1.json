@@ -1,0 +1,61 @@
+{
+  "design_id": "PAPER-A-REPLAY-MANIFEST-SIGNATURE-DESIGN-1",
+  "version": "1.0",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "signature_scope": "Exact byte sequence of the finalized manifest JSON file; detached signature sidecar carries algorithm identifier, key identifier, signature encoding, and signature bytes.",
+  "candidate_algorithm": "Ed25519",
+  "serialization_policy": "Sign the exact finalized manifest bytes. Verification must use the byte-for-byte file, not parse and reserialize it. If a canonical JSON format is later adopted, its specification and test vectors must be pinned before switching.",
+  "roles": {
+    "author": "Creates run records and artifacts; does not automatically become trusted signer.",
+    "signer": "Reviews manifest scope, artifacts, and check statuses, then signs a finalized manifest.",
+    "verifier": "Verifies detached signature using an independently trusted public key and performs schema/hash checks.",
+    "key_custodian": "Controls private key generation, storage, backup, rotation, and revocation; should be separate from ordinary run generation where practical."
+  },
+  "sidecar_fields": [
+    "signature_schema_version",
+    "algorithm",
+    "key_id",
+    "manifest_filename",
+    "manifest_sha256",
+    "signature_base64"
+  ],
+  "verification_order": [
+    "Obtain public key and key identity from a trust source independent of the manifest.",
+    "Read manifest as raw bytes and recompute SHA-256.",
+    "Check sidecar manifest filename and digest binding.",
+    "Verify signature over exact raw manifest bytes.",
+    "Parse JSON and validate schema and semantic rules.",
+    "Recompute input/artifact hashes when files are available.",
+    "Evaluate claim-level certificate checks separately; signature is provenance authentication, not mathematical proof."
+  ],
+  "key_lifecycle": [
+    "Generate keys in a controlled environment.",
+    "Publish or distribute public keys through an independent channel and record fingerprints.",
+    "Protect private key with restricted access; evaluate hardware-backed storage if risk warrants.",
+    "Document rotation and emergency revocation.",
+    "Keep historical public keys and validity/revocation records to assess old signatures.",
+    "Do not place private keys or secrets in repository."
+  ],
+  "threats_addressed": [
+    "Undetected manifest replacement by an attacker who lacks signing-key access",
+    "Tampering with recorded run metadata after signature creation",
+    "Binding a detached signature to a specific manifest byte sequence"
+  ],
+  "threats_not_solved": [
+    "Signer intentionally signs false or incomplete evidence",
+    "Private key compromise",
+    "Trusted time or proof of when a run occurred",
+    "Execution attestation or complete input inventory",
+    "Numerical correctness or theorem validity",
+    "Artifact deletion or availability"
+  ],
+  "implementation_gates": [
+    "Choose exact sidecar format and byte encoding",
+    "Pin Ed25519 library/runtime or use a vetted standard tool",
+    "Specify independent public-key trust distribution",
+    "Create positive and negative test vectors",
+    "Test altered manifest, altered signature, wrong key, missing sidecar, unsupported algorithm, revoked key",
+    "Review and document key custody and revocation procedure",
+    "Only then implement signing/verifying CLI and CI"
+  ]
+}
