@@ -164,3 +164,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Invalid state transitions are rejected. Interrupted states remain INDETERMINATE; they are never automatically recovered or promoted.
 - `test_paper_a_anchor_advance_state_machine.py` covers valid path, skipped/terminal transitions, interrupted stages, orphan stage contradictions, and trust/integrity failure.
 - This is a protocol model, not exhaustive power-loss simulation, filesystem fault injection, or formal proof.
+
+
+## Phase 5.3I-8.23 — filesystem fault injection at anchor commit boundaries
+- `test_paper_a_anchor_filesystem_fault_injection.py` injects Python-level exceptions at staging write, staged-file fsync, `os.replace`, parent-directory fsync, and read-back.
+- Pre-replacement failures are tested to preserve the original anchor; failures after replacement explicitly assert that the new anchor may already be visible. Raised exceptions after replace therefore mean commit outcome uncertain, not rollback.
+- This is not power-loss, kernel crash, storage hardware, or reboot durability simulation. No durability guarantees or certification are claimed.
+- Report: `PHASE_5_3I_8_23_FILESYSTEM_FAULT_INJECTION_2026-11-21.md`.
