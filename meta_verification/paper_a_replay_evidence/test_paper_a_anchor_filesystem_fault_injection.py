@@ -108,7 +108,7 @@ class AnchorFilesystemFaultInjectionTests(unittest.TestCase):
             def write(self, data): raise OSError("injected staging write failure")
             def flush(self): return None
             def fileno(self): return self.fd
-        with mock.patch.object(atomic.os, "fdopen", side_effect=lambda fd, **kwargs: BrokenStream(fd)):
+        with mock.patch.object(atomic.os, "fdopen", side_effect=lambda fd, mode="r", **kwargs: BrokenStream(fd)):
             with self.assertRaisesRegex(OSError, "staging write failure"):
                 self.call()
         self.assertEqual(self.read_bytes(), original)
