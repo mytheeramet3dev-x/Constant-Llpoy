@@ -215,3 +215,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Adversarial tests cover boolean sequence, malformed digest, and sequence-jump expectations.
 - This narrows input ambiguity at the redemption boundary; it does not replace writer-side revalidation/CAS or provide mathematical certification.
 - See `PHASE_5_3I_8_29_EXPECTATION_VALIDATION_2026-11-21.md`.
+
+
+## Phase 5.3I-8.30 — strict ticket field allowlist
+- Redemption rejects tickets whose mapping keys do not exactly match the signed schema plus the HMAC field. Unknown fields and missing fields fail closed.
+- Tests cover an injected unknown field and a missing nonce field.
+- This removes ambiguity from ignored extensions at the ticket boundary; future extensions require an explicit schema version/update. No writer execution or certification is provided.
+- See `PHASE_5_3I_8_30_STRICT_TICKET_FIELDS_2026-11-21.md`.
