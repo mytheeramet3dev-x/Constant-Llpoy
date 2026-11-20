@@ -79,3 +79,11 @@ was intentionally not copied: it belongs in the producer repository.
 - `test_paper_a_policy_trust.py` includes tampering, pending approval, malformed pin, identity mismatch and canonicalization cases.
 - Pin PASS means integrity relative to the provided pin only; approval provenance and pin custody are not cryptographically authenticated.
 - **No production policy has been approved or pinned.** The unit tests use test fixtures only. See `PHASE_5_3I_8_10_POLICY_TRUST_PIN_2026-11-21.md`.
+
+
+## Phase 5.3I-8.11 — trust-gated completeness pipeline
+- `paper_a_trust_gated_completeness.py` verifies the policy pin before invoking the completeness evaluator.
+- Untrusted policy returns `FAIL_CLOSED` with completeness `NOT_EVALUATED`; trusted policy proceeds to inventory comparison.
+- `test_paper_a_trust_gated_completeness.py` exercises fail-closed, trusted, missing-evidence, pending-pin and non-certification boundaries.
+- Pipeline status remains evidence-intake/completeness only. No production inventory/pin is approved; no math certification is claimed.
+- See `PHASE_5_3I_8_11_TRUST_GATED_PIPELINE_2026-11-21.md`.
