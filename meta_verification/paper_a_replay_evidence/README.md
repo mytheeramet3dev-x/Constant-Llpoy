@@ -125,3 +125,11 @@ was intentionally not copied: it belongs in the producer repository.
 - The guard uses transactional insertion, survives process restart, and fails closed on storage errors. `test_paper_a_persistent_replay_guard.py` exercises restart persistence, cross-evaluation replay, key scoping, concurrent race, and failure cases.
 - This is local persistent state, not distributed replay coordination. Backup rollback, filesystem durability, deployment permissions and cross-host concurrency remain residual risks; certification is not performed.
 - See `PHASE_5_3I_8_16_PERSISTENT_ATOMIC_REPLAY_REGISTRY_2026-11-21.md`.
+
+
+## Phase 5.3I-8.17 — replay registry integrity and rollback audit
+
+- `paper_a_replay_registry_audit.py` checks SQLite integrity, expected schema presence, and computes a deterministic logical snapshot digest from registry rows.
+- `verify_snapshot` detects changes when compared to an independently retained expected digest. Tests cover clean state, digest drift after insertion, missing DB/table, and malformed anchor.
+- The digest is not a secure anchor by itself: if both database and expected digest can be altered or rolled back, changes/rollback may go undetected. No external transparency log, hardware anchor, or automatic recovery is implemented.
+- See `PHASE_5_3I_8_17_REPLAY_REGISTRY_INTEGRITY_ROLLBACK_AUDIT_2026-11-21.md`.
