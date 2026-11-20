@@ -49,6 +49,15 @@ class RetryIntentTicketTests(unittest.TestCase):
         self.assertEqual(self.redeem()["status"], "REDEEMED")
         self.assertEqual(self.redeem()["status"], "DENY")
 
+    def test_unknown_ticket_field_denied(self):
+        extended = dict(self.ticket, unexpected="ignored-field")
+        self.assertEqual(self.redeem(extended)["status"], "DENY")
+
+    def test_missing_ticket_field_denied(self):
+        incomplete = dict(self.ticket)
+        incomplete.pop("nonce")
+        self.assertEqual(self.redeem(incomplete)["status"], "DENY")
+
     def test_tampered_mac_denied(self):
         tampered = dict(self.ticket, hmac_sha256="0" * 64)
         self.assertEqual(self.redeem(tampered)["status"], "DENY")
