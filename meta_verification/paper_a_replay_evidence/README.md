@@ -40,3 +40,11 @@ Imported from `mytheeramet3dev-x/Absolute_Sym`, branch
 `paper-a-numerical-evidence-framework-2026-11-20`, under
 `Alphabet/paper_a/verification`. Producer generator `paper_a_replay_manifest.py`
 was intentionally not copied: it belongs in the producer repository.
+
+
+## Secure intake adapter (initial implementation)
+
+- `paper_a_replay_evidence_intake.py` validates manifest structure then independently hashes every input/artifact with workspace containment and default symlink rejection.
+- `test_paper_a_replay_evidence_intake.py` covers success, hash mismatch, path escape, symlink rejection, and missing artifact.
+- Output distinguishes intake checks from producer checks and always reports `certification: NOT_PERFORMED`.
+- **Not yet workflow-integrated; tests not executed in CI.** TOCTOU limitations remain.
