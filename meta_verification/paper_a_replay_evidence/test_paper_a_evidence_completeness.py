@@ -24,3 +24,10 @@ class CompletenessTests(unittest.TestCase):
   self.policy["required_inputs"]=["../secret"]
   with self.assertRaisesRegex(ValueError,"canonical"): evaluate_completeness(self.manifest,self.policy)
 if __name__=="__main__": unittest.main()
+
+ def test_backslash_path_rejected(self):
+  self.policy["required_inputs"]=["dir\\\\file"]
+  with self.assertRaisesRegex(ValueError,"canonical"): evaluate_completeness(self.manifest,self.policy)
+ def test_empty_required_input_list_rejected(self):
+  self.policy["required_inputs"]=[]
+  with self.assertRaisesRegex(ValueError,"required_inputs"): evaluate_completeness(self.manifest,self.policy)
