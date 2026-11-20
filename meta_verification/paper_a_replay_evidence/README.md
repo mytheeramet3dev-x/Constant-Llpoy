@@ -94,3 +94,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Same evaluation ID cannot mutate status, scope, evidence, or context digests; re-evaluation requires a new ID.
 - PASS is limited to the explicit scope and evidence IDs; it is not certification. This validator does not provide persistent uniqueness or authenticated custody.
 - See `PHASE_5_3I_8_12_STATUS_SEMANTICS_2026-11-21.md`.
+
+
+## Phase 5.3I-8.13 — provenance identity binding
+- `paper_a_evidence_provenance_binding.py` validates declared evaluation, evidence bundle, policy, verifier/version, environment and result record identifiers and compares them field-wise.
+- Tests cover invalid or missing identity/digest and mismatched binding fields.
+- This checks metadata consistency only; no identity authentication, signature verification, immutable custody, or certification is claimed.
+- See `PHASE_5_3I_8_13_PROVENANCE_BINDING_2026-11-21.md`.
