@@ -141,3 +141,10 @@ was intentionally not copied: it belongs in the producer repository.
 - Anchor custody is outside this repository/module: it is not authenticated, advanced, stored, or protected here. If both registry and anchor are replaced/rolled back, detection may be defeated.
 - Tests: `test_paper_a_external_registry_anchor.py`; this remains an audit component, not certification.
 - Report: `PHASE_5_3I_8_18_EXTERNAL_REGISTRY_ANCHOR_2026-11-21.md`.
+
+
+## Phase 5.3I-8.19 — authenticated anchor and anti-rollback
+- `paper_a_authenticated_registry_anchor.py` authenticates a canonical anchor with HMAC-SHA256, checks a verifier-supplied trusted-key map and explicit minimum sequence floor, then compares live registry digest and count.
+- `test_paper_a_authenticated_registry_anchor.py` exercises valid authentication, tampering, unknown key, sequence rollback, live state drift, malformed sequence, and missing DB.
+- The key registry and minimum sequence floor must be retained independently. No secure key custody, key rotation/revocation, hardware monotonic counter, anchor advancement protocol, or certification is provided.
+- Report: `PHASE_5_3I_8_19_AUTHENTICATED_ANCHOR_ANTI_ROLLBACK_2026-11-21.md`.
