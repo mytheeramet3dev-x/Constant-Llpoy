@@ -1,0 +1,17 @@
+{
+  "audit": "IV-64",
+  "resolventConvention": "R0=Q(E0-H0)^(-1)Q; Q=I-|0><0|",
+  "excitedStateDiagonalFactor": "-1/(2 h |S|) for nonempty flip set S",
+  "vacuumTreatment": "excluded by Q; zero denominators not evaluated",
+  "nonVacuumChainSkeleton": "<v| V R0 V R0 V R0 V |0>",
+  "scopeLimit": "chain skeleton is not asserted to be the complete fourth-order normalized target-state coefficient",
+  "openObligations": [
+    "complete fourth-order target-state coefficient",
+    "reducible/energy correction terms",
+    "normalization",
+    "coupling-weighted aggregation",
+    "reduced density matrix",
+    "mutual information response B-C",
+    "Lean verification"
+  ]
+}
