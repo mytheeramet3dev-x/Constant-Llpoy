@@ -1,0 +1,33 @@
+{
+  "audit": "IV-68",
+  "title": "Exhaustive Fourth-Order Edge-Sequence Enumeration",
+  "status": "ANALYTIC-PARTIAL",
+  "verified": false,
+  "graph_model": "finite simple graph; ordered 4-tuples of edges",
+  "definitions": {
+    "S_k": "symmetric difference of first k edge flip sets",
+    "vacuum_return": "S4 empty",
+    "irreducible_chain": "S1,S2,S3 all nonempty",
+    "gap": "2h*|S|",
+    "resolvent_nonempty_state": "-1/(2h*|S|)"
+  },
+  "fourth_order_formula": "E4=<0|V R0 V R0 V R0 V|0> - E2*<0|V R0^2 V|0>",
+  "sequence_ledger_fields": [
+    "ordered edge tuple",
+    "S1,S2,S3,S4",
+    "intermediate gaps",
+    "vacuum return",
+    "reducible flag",
+    "irreducible flag",
+    "denominator product",
+    "signed coefficient",
+    "coupling monomial"
+  ],
+  "required_validation": [
+    "bitmask enumeration",
+    "independent incidence-parity implementation",
+    "count consistency |E|^4",
+    "small-graph symbolic or exact diagonalization comparisons"
+  ],
+  "status_note": "No computation or Lean verification is claimed by this specification."
+}
