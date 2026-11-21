@@ -1,0 +1,19 @@
+{
+  "audit": "IV-66",
+  "status": "ANALYTIC DERIVATION — NOT LEAN-VERIFIED",
+  "energy_second_order": "E2 = -(1/(4h)) sum_e J_e^2",
+  "energy_third_order": "E3 = -(3/(8h^2)) sum_{triangles (i,j,k)} J_ij J_jk J_ki",
+  "graph_path_classification": {
+    "same_edge": "intermediate vacuum; projected out of reduced resolvent Q",
+    "adjacent_distinct_edges": "symmetric difference is third edge of triangle; two-flip intermediate state",
+    "disjoint_edges": "four-flip intermediate state; cannot return to vacuum with one final pair edge"
+  },
+  "triangle_counting": "Each simple triangle counted once; 6 ordered edge-operation sequences",
+  "derivation_scope": "Perturbative energy coefficients for the stated pairwise transverse-field Ising Hamiltonian",
+  "outstanding": [
+    "independent symbolic/numerical check",
+    "fourth-order target observable expansion",
+    "Lean formalization",
+    "proposition 0012 proof"
+  ]
+}
