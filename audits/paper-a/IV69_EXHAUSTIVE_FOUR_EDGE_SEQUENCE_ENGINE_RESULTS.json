@@ -23,13 +23,13 @@
     ]
   },
   "ordered_tuple_count": 256,
-  "vacuum_return_count": 40,
-  "vacuum_return_reducible_count": 24,
-  "vacuum_return_irreducible_count": 16,
+  "vacuum_return_count": 64,
+  "vacuum_return_reducible_count": 16,
+  "vacuum_return_irreducible_count": 48,
   "endpoint_flip_size_histogram": {
-    "0": 40,
-    "2": 160,
-    "4": 56
+    "0": 64,
+    "2": 128,
+    "4": 64
   },
-  "validation": "Independent incidence parity check reported matching totals; no ED comparison or Lean proof."
+  "validation": "Engine execution and independent incidence-parity enumeration matched; no ED comparison or Lean proof."
 }
