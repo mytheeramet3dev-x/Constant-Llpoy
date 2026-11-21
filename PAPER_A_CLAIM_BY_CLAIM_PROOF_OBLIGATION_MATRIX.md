@@ -341,3 +341,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV21_SPECTRAL_PROJECTOR_GAP_C
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV22_FULL_SPECTRUM_ENTROPY_DERIVATIVE_AUDIT.md`. IV-22 reviews the label-free full-matrix derivative. For positive-definite normalized \(\rho\), the identity \(S_u=-\operatorname{Tr}(\rho_u\ln\rho)\) follows after the normalization trace cancels the additive identity term. This avoids branch labels and cluster projector gaps but does not eliminate logarithmic weights: \(\ln\rho\) is unbounded as eigenvalues approach zero, and \(\|\rho_u\|\) alone does not imply a uniform entropy derivative bound. Boundary/rank-deficient cases require limiting justification and additional low-spectrum matrix-element control or verified cancellation.
 
 **IV-22 disposition:** full-spectrum derivative identity PASS on positive-definite states; gap-free route identity-level PASS; uniform low-spectrum logarithmic estimate OPEN; target remainder not closed; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-23 low-spectrum matrix-element suppression audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV23_LOW_SPECTRUM_MATRIX_ELEMENT_SUPPRESSION_AUDIT.md`. In the instantaneous eigenbasis for positive-definite \(\rho\), the entropy derivative reads \(S_u=-\sum_i(\rho_u)_{ii}\ln\lambda_i\), with the normalization identity \(\sum_i(\rho_u)_{ii}=0\). This reveals that low-spectrum diagonal derivative suppression or a verified weighted cancellation is needed to offset logarithmic weights. The eigenvalue size alone, a generic norm bound on \(\rho_u\), or trace normalization alone does not establish the needed rate. Pair-flip support/order results have not been bridged to the exact low-spectrum diagonal response in this basis; that connection remains OPEN.
+
+**IV-23 disposition:** identity-level PASS; low-spectrum diagonal response suppression and uniform logarithmic remainder OPEN; no counterexample to exact proposition established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
