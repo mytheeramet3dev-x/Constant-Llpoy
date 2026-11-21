@@ -1,0 +1,35 @@
+{
+  "audit": "IV-69",
+  "status": "EXECUTED_SMALL_GRAPH_ONLY",
+  "graph": {
+    "vertices": 4,
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        0
+      ]
+    ]
+  },
+  "ordered_tuple_count": 256,
+  "vacuum_return_count": 40,
+  "vacuum_return_reducible_count": 24,
+  "vacuum_return_irreducible_count": 16,
+  "endpoint_flip_size_histogram": {
+    "0": 40,
+    "2": 160,
+    "4": 56
+  },
+  "validation": "Independent incidence parity check reported matching totals; no ED comparison or Lean proof."
+}
