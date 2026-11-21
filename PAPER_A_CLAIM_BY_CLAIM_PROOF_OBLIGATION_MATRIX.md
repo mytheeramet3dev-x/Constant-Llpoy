@@ -542,3 +542,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV49_ODD_BLOCK_CUBIC_NULL_BRANCH_AU
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV50_CUBIC_ODD_BLOCK_AMPLITUDE_BOOKKEEPING.md`. For odd-block retained states and odd-parity environment configurations, write amplitudes c=r a+r^2 b+... when first-order allowed. The cubic reduced-matrix coefficient is the environment sum of a_alpha b_beta* + b_alpha a_beta* over first-order-support configurations. Environment configurations first appearing at r^2 contribute to the reduced block at r^4 or later; normalization correction to first-order amplitudes is cubic and therefore enters O at fourth order. This is structural bookkeeping only; actual second-order coefficients/denominators and the cubic null sum have not been evaluated. No low-branch, entropy, B-C or Lean result claimed.
 
 **IV-50 disposition:** Cubic coefficient amplitude-sum identity CONDITIONAL PASS; evaluated cubic null coefficient OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-51 — Second-order pair amplitudes and cubic null derivative (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV51_SECOND_ORDER_AMPLITUDES_AND_CUBIC_NULL_DERIVATIVE.md`. Re-derived shared-vertex second-order pair amplitude b_ik = sum_{m not i,k} J_im J_km/(8h^2) using two ordered paths with denominators (4h)(4h). At uniform all-to-all J, the cubic odd block entries are equal (rank-one all-ones), so cubic null coefficient vanishes. Explicit derivatives at uniform point: for B=J13, D_B O11=J^2(2N-5)/(16h^3), D_B O22=J^2/(16h^3), D_B O12=J^2(N-2)/(16h^3), null combination zero; for C=J34, all three cubic entry derivatives equal J^2/(8h^3), also null combination zero. This is only cubic-order cancellation at uniform point; fourth-order low-branch coefficient, entropy derivative, all-coupling behavior and B-C sign remain OPEN. No Lean/numerical verification.
+
+**IV-51 disposition:** shared-vertex second-order amplitude PASS (analytic); cubic null and B/C derivative cancellations PASS (uniform-point cubic algebra); full proposition OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.
