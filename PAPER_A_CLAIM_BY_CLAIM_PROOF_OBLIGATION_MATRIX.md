@@ -682,3 +682,7 @@ A symbolic intermediate-normalized recurrence was independently evaluated for si
 
 ## IV-81 — General-graph fourth-order coefficient framework (2026-11-21)
 IV-81 records the graph-independent intermediate-normalized state recurrence with flip masks, exact gap 2h|S|, and raw fourth-order Q-chain endpoint parity classification. It explicitly separates raw chain weights from complete E4 recurrence/reducible terms. General-graph closed E4 remains unproved; B-C response and Proposition 0012 remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV81_GENERAL_GRAPH_FOURTH_ORDER_COEFFICIENT_FRAMEWORK.md`.
+
+
+## IV-82 — Executable exhaustive raw-chain enumeration on K8 (2026-11-21)
+Committed and executed `tools/paper-a/iv82_exhaustive_raw_fourth_order_k8.py`. Assertions pass for all 31,465 four-edge multisets drawn from 28 edges. Closed multiset counts: e^4=28 (raw invalid), adjacent 2+2=168, disjoint 2+2=210, C4=210. Valid raw non-vacuum ordered sequences: adjacent 2+2=672, disjoint 2+2=840, C4=5,040. Prefix flip-size histogram: adjacent=(2,2,2) 672; disjoint=(2,4,2) 840; C4=(2,2,2) 3,360 and (2,4,2) 1,680. This is combinatorial verification only; energy recurrence, response, proposition and Lean remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV82_EXECUTABLE_RAW_CHAIN_ENUMERATION_K8.md`.
