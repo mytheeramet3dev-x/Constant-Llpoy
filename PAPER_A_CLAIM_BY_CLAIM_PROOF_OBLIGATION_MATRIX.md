@@ -648,3 +648,10 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Specification added: ordered edge tuples, symmetric-difference flip sets, intermediate-state denominators, vacuum/reducible flags, and required independent checks.
 - Status: **SPECIFICATION ONLY / NOT EXECUTED / NOT VERIFIED**. No sequence enumeration or Lean proof is claimed.
 - Correct fourth-order energy subtraction retained: `- E2 * <0|V R0^2 V|0>`; it is not generally `-E2^2`.
+
+
+## IV-69 — Executable enumeration engine (small graph test)
+- Added Python engine and executed the four-vertex square test case (256 ordered edge tuples).
+- Reported counts: 40 vacuum returns, 24 reducible vacuum-return tuples, 16 irreducible vacuum-return tuples; endpoint flip histogram 0:40, 2:160, 4:56.
+- Independent incidence-parity check: matching counts.
+- Status: **SMALL-GRAPH TEST ONLY / NO EXACT-DIAGONALIZATION / NO LEAN VERIFICATION**.
