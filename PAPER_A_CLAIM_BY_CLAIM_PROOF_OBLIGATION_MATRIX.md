@@ -609,3 +609,8 @@ For all 614,656 distinct ordered four-edge sequences on the 8-vertex/28-edge poo
 ### IV-63 — Reducible/vacuum prefix classification (executed)
 
 Exhaustively classified 31,360 sequences with a vacuum intermediate: step-2 vacuum 21,952 (first two edges identical), step-3 vacuum 9,408 (triangle prefix), disjoint categories. Step-2 category by repeated edge occurrences in the full four-edge sequence: repeat count 1:19,656; 2:2,268; 3:28. Step-3: repeat count 0:8,400; 1:1,008. Intermediate flip-state repetition also counted. This is structural classification only; it does not prescribe reducible corrections. See IV-63 report, script, JSON. Full amplitude corrections, normalization, density matrix, entropy, B-C, and Lean remain OPEN.
+
+
+### IV-64 — Reduced resolvent convention and vacuum exclusion
+
+Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip state S has diagonal factor -1/(2h|S|), S nonempty. The vacuum is excluded and zero denominators are never evaluated. The non-vacuum four-operation chain is recorded as a skeleton only, not claimed as the complete normalized fourth-order target-state coefficient. Correct treatment of vacuum-return paths through the complete recurrence/correction terms, normalization, full coefficient, reduced density matrix, B-C, and Lean remain OPEN. See IV-64.
