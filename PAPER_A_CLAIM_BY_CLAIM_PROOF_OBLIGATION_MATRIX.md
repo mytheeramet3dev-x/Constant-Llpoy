@@ -655,3 +655,9 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Corrected after actual local execution and independent check: 64 vacuum returns, 16 reducible vacuum-return tuples, 48 irreducible vacuum-return tuples; endpoint flip histogram 0:64, 2:128, 4:64.
 - Independent incidence-parity check: matching counts.
 - Status: **SMALL-GRAPH TEST ONLY / NO EXACT-DIAGONALIZATION / NO LEAN VERIFICATION**.
+
+
+## IV-70 — Seven-graph parity cross-check
+- Exhaustive four-edge tuple counts computed for single-edge, disjoint-edge pair, P3, triangle, square, star K1,3, and P4.
+- XOR bitmask and vertex-set parity implementations matched across all 7 graph families.
+- Scope: combinatorial classification only. Repository script syntax/runtime not verified; no perturbative or Lean proof is claimed.
