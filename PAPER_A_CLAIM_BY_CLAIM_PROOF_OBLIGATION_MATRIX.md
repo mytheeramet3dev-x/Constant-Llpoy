@@ -661,3 +661,8 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Exhaustive four-edge tuple counts computed for single-edge, disjoint-edge pair, P3, triangle, square, star K1,3, and P4.
 - XOR bitmask and vertex-set parity implementations matched across all 7 graph families.
 - Scope: combinatorial classification only. Repository script syntax/runtime not verified; no perturbative or Lean proof is claimed.
+
+
+## Conversation recovery checkpoint — IV-71 through IV-77 (2026-11-21)
+
+Recovery log: `audits/paper-a/PAPER_A_IV71_IV77_RECOVERY_LOG.md`. Notes IV-71 through IV-77 were recreated from conversation context and fetchback-checked. They are recovered analytic records, not a new verification of Proposition 0012. Numerical diagonalization, runtime execution, and Lean proof are not claimed. IV-73 records an invalid Schur sign derivation; IV-75 records a coefficient error; IV-71's fifth-order amplitude coefficient was corrected during recovery.
