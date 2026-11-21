@@ -195,3 +195,10 @@ The pair-flip amplitude-order argument has now been integrated with the exact en
 The paper-level argument closes the even-block small eigenbranch and first edge derivatives at O_N(r^4). The entropy derivative is O_N(r^4(1+|ln r|)) subject to the explicit positive-branch scale check or zero-branch treatment. This is an analytic integration result, **conditional on exact source/Hamiltonian convention and branch reconciliation**; it is not a source-wide or formal pass.
 
 Full PROP-0012 remains OPEN: source reconciliation, branch-scale verification against the source, all entropy branches/remainder integration, and Lean formalization/build remain outstanding. No global B-C sign theorem is claimed.
+
+
+## Supplemental audit update — PROP-0012 source reconciliation access/definitions (2026-11-21)
+
+A source-access/definition audit was recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_SOURCE_RECONCILIATION_ACCESS_AND_DEFINITION_AUDIT.md`, commit `18e829bd2962c0b5a1af7b9aa10d4ea77c031b66`. The accessible current-main manuscript Section 5.2 confirms the definitions (B=\partial_{J_{13}}I_{12}) (adjacent edge) and (C=\partial_{J_{34}}I_{12}) (disjoint edge), and Section 5.3 labels the sign (B-C>0) a numerically supported conjecture. The current-main Hamiltonian/sign convention is structurally consistent with the working TFIM derivation.
+
+**Frozen-source reconciliation BLOCKED:** fetch attempts for the audit branch and frozen commit returned 404/NOT FOUND; the current-main manuscript is not treated as a substitute for the frozen source. Therefore no source-wide reconciliation or status promotion is claimed. PROP-0012 remains OPEN; no Lean formalization/build or global sign theorem is claimed.
