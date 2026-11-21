@@ -686,3 +686,7 @@ IV-81 records the graph-independent intermediate-normalized state recurrence wit
 
 ## IV-82 — Executable exhaustive raw-chain enumeration on K8 (2026-11-21)
 Committed and executed `tools/paper-a/iv82_exhaustive_raw_fourth_order_k8.py`. Assertions pass for all 31,465 four-edge multisets drawn from 28 edges. Closed multiset counts: e^4=28 (raw invalid), adjacent 2+2=168, disjoint 2+2=210, C4=210. Valid raw non-vacuum ordered sequences: adjacent 2+2=672, disjoint 2+2=840, C4=5,040. Prefix flip-size histogram: adjacent=(2,2,2) 672; disjoint=(2,4,2) 840; C4=(2,2,2) 3,360 and (2,4,2) 1,680. This is combinatorial verification only; energy recurrence, response, proposition and Lean remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV82_EXECUTABLE_RAW_CHAIN_ENUMERATION_K8.md`.
+
+
+## IV-83 — Raw versus complete E4 recurrence cross-check (2026-11-21)
+Executable SymPy cross-check run on six graphs (single edge, triangle, C4, P4, K1,3, two disjoint edges). In all six, asserted identity E4_complete-E4_raw=(sum_e J_e^2)^2/(64h^3) passed. Raw sequence counts: edge 0, triangle 12, C4 48, P4 12, star 12, disjoint pair 4. This is an observed finite-example identity and candidate general theorem, not proven universally. Script: `tools/paper-a/iv83_raw_vs_complete_e4_crosscheck.py`; report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV83_RAW_VS_COMPLETE_E4_CROSSCHECK.md`. Both committed and fetchback verified. Proposition and Lean remain open.
