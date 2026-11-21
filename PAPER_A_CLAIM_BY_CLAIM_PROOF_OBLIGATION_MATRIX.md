@@ -376,3 +376,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV26_REDUCED_DENSITY_PARTIAL_
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV27_NORMALIZATION_TRUNCATION_REMAINDER_AUDIT.md`. Exact normalized amplitudes satisfy the norm identity, but a truncated perturbative vector is not exactly normalized; scalar normalization preserves support while changing amplitude coefficients and potentially differentiated remainders. Joint analyticity permits edge differentiation of controlled Taylor remainders only with uniform neighborhood/differentiability bookkeeping. The current derivation's edge-differentiated amplitude/tail estimates remain conditional and are not mechanized. Low-branch size alone does not close its entropy derivative.
 
 **IV-27 disposition:** normalization identity PASS; support preservation under scalar normalization PASS; differentiated truncation remainders and normalization-to-log-entropy closure OPEN; no target counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-28 edge-derivative remainder uniformity audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV28_EDGE_DERIVATIVE_REMAINDER_UNIFORMITY_AUDIT.md`. Cauchy's estimate confirms that a holomorphic remainder uniformly bounded by \(C_N|r|^k\) on a common complex edge-variable disk yields a first edge derivative of the same \(r\)-order, with constant scaled by disk radius. Pointwise real \(O(r^k)\) alone does not imply same-order derivative. The working derivation states joint finite-N analyticity and differentiated expansions, but the complete quantitative neighborhood, common-radius constants, and every amplitude-recursion remainder were not independently certified in IV-28.
+
+**IV-28 disposition:** Cauchy derivative principle PASS conditionally; pointwise-to-derivative shortcut FAILS; complete uniform remainder ledger OPEN; spectral/logarithmic remainder OPEN; no target counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
