@@ -1,0 +1,185 @@
+{
+  "audit": "IV-70",
+  "status": "COMBINATORIAL_RESULTS_CROSSCHECKED",
+  "graphs": {
+    "single_edge": {
+      "vertices": 2,
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ],
+      "total": 1,
+      "vacuum": 1,
+      "reducible": 1,
+      "irreducible": 0,
+      "endpoint_histogram": {
+        "0": 1
+      }
+    },
+    "two_disjoint_edges": {
+      "vertices": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "total": 16,
+      "vacuum": 8,
+      "reducible": 4,
+      "irreducible": 4,
+      "endpoint_histogram": {
+        "0": 8,
+        "4": 8
+      }
+    },
+    "path3": {
+      "vertices": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "total": 16,
+      "vacuum": 8,
+      "reducible": 4,
+      "irreducible": 4,
+      "endpoint_histogram": {
+        "0": 8,
+        "2": 8
+      }
+    },
+    "triangle": {
+      "vertices": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "total": 81,
+      "vacuum": 21,
+      "reducible": 9,
+      "irreducible": 12,
+      "endpoint_histogram": {
+        "0": 21,
+        "2": 60
+      }
+    },
+    "square": {
+      "vertices": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "total": 256,
+      "vacuum": 64,
+      "reducible": 16,
+      "irreducible": 48,
+      "endpoint_histogram": {
+        "0": 64,
+        "2": 128,
+        "4": 64
+      }
+    },
+    "star3": {
+      "vertices": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "total": 81,
+      "vacuum": 21,
+      "reducible": 9,
+      "irreducible": 12,
+      "endpoint_histogram": {
+        "0": 21,
+        "2": 60
+      }
+    },
+    "path4": {
+      "vertices": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "total": 81,
+      "vacuum": 21,
+      "reducible": 9,
+      "irreducible": 12,
+      "endpoint_histogram": {
+        "0": 21,
+        "2": 40,
+        "4": 20
+      }
+    }
+  },
+  "validation_summary": {
+    "graphs_tested": 7,
+    "all_implementations_match": true,
+    "implementations": [
+      "XOR bitmask",
+      "vertex membership set parity"
+    ],
+    "scope": "ordered four-edge tuples; endpoint and intermediate vacuum parity"
+  },
+  "limitations": [
+    "No perturbative energy calculation",
+    "No exact diagonalization comparison",
+    "No Lean proof",
+    "Repository script runtime validation not claimed"
+  ]
+}
