@@ -230,3 +230,10 @@ A separate leading-order re-derivation is recorded at `audits/paper-a/AS-ALPHA-A
 A consolidated report was added at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV1-IV6_INDEPENDENT_HAMILTONIAN_AND_N4_CHECK.md`, report commit `96b3a02f03b4f4b234132f85e0dfc721b173d8f8`, fetch-back blob SHA `7dd89a90d44331d277989e871e770445d0431e21`. It independently rebuilds the Hamiltonian normalization and pair-flip amplitude, the odd two-site block and positive eigenvalue, adjacent-edge eigenvalue derivative, leading entropy contrast, physical coupling conversion, and the N=4 specialization (ratio q/p=4/3).
 
 **Disposition:** IV-1 through IV-6 PASS for the specified leading-order algebraic reconstruction. The N=4 specialization is not a separate remainder proof. Full higher-order entropy remainder closure, frozen-source reconciliation, Lean formalization/build, and global `B-C>0` remain OPEN. PROP-0012 stays ANALYTIC-PARTIAL / OPEN; no status promotion is made.
+
+
+## Supplemental audit update — PROP-0012 IV-7 working-proof remainder-status reconciliation (2026-11-21)
+
+Audit report `audits/paper-a/AS-ALPHA-A-PROP-0012_IV7_WORKING_PROOF_REMAINDER_STATUS_RECONCILIATION.md`, commit `819b5c116ff4ef55f910c0646b83545d6b286fc5`. This found a documentation/provenance mismatch: the current working derivation states the even-block Schur branch at conservative (O_N(r^3)), while the later environment-resolved integration report claims conditional (O_N(r^4)) closure. These are not contradictory by themselves; the stronger estimate has not yet been integrated into the working proof and is conditional on entry/amplitude-order/derivative checks.
+
+**Disposition:** mismatch FOUND; mathematical contradiction NOT ESTABLISHED. Keep the conservative working-proof order unless the stronger environment-resolved entry derivation is explicitly reconciled and independently checked. PROP-0012 remains OPEN / ANALYTIC-PARTIAL.
