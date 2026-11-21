@@ -642,3 +642,9 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Single-edge exact energy consistency check gives `E4=+J^4/(64h^3)`; hand-derived, not code-verified.
 - Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV67_FOURTH_ORDER_CLOSED_WALKS_AND_SUBTRACTION.md`, `audits/paper-a/IV67_FOURTH_ORDER_CLOSED_WALKS_AND_SUBTRACTION.json`.
 - Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED.
+
+
+## IV-68 — Fourth-order edge-sequence audit specification
+- Specification added: ordered edge tuples, symmetric-difference flip sets, intermediate-state denominators, vacuum/reducible flags, and required independent checks.
+- Status: **SPECIFICATION ONLY / NOT EXECUTED / NOT VERIFIED**. No sequence enumeration or Lean proof is claimed.
+- Correct fourth-order energy subtraction retained: `- E2 * <0|V R0^2 V|0>`; it is not generally `-E2^2`.
