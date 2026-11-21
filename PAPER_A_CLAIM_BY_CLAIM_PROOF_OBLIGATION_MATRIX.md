@@ -170,3 +170,10 @@ B-C=\frac{J}{8h^2}\ln\frac{2(N-2)}{N-1}+O_N\!\left(\frac{J^2}{h^3}(1+|\ln(J/h)|)
 conditional on closure of the even-block small eigenbranch contribution.
 
 **Do not promote full PROP-0012 to PASS.** The even-block small eigenbranch is retained at conservative O_N(r^3) in the checked working proof. A conversational O_N(r^4) claim has not yet been supported by an independently committed derivation and is not accepted in this matrix update. Full entropy remainder/source reconciliation, global sign, and Lean formalization/build remain open.
+
+
+## Supplemental audit update — PROP-0012 even-block shared-amplitude Schur cancellation (2026-11-21)
+
+A new environment-resolved even-block review is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_EVEN_BLOCK_SHARED_AMPLITUDE_SCHUR_CANCELLATION_REVIEW.md`, commit `34c3dfbcddb2f2c199248db4f191da7e47461a4b`. It derives exact reduced-block entry sums and identifies a candidate stronger cancellation: the empty-environment contribution to X and S shares the exact ground-state amplitude c_12, while nonempty environments first contribute at higher perturbation orders. Conditional fixed-N analytic order bounds then suggest Schur remainder and small even eigenbranch O_N(r^4), including first edge derivatives.
+
+This is **ANALYTIC-PARTIAL / candidate stronger bound**, not upgraded to full pass. The pair-flip perturbation-order lemma for all amplitudes and edge derivatives still needs a fully closed proof. No Lean formalization/build, source reconciliation, or global B-C sign theorem is claimed.
