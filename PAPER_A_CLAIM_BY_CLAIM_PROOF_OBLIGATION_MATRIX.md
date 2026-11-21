@@ -177,3 +177,12 @@ conditional on closure of the even-block small eigenbranch contribution.
 A new environment-resolved even-block review is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_EVEN_BLOCK_SHARED_AMPLITUDE_SCHUR_CANCELLATION_REVIEW.md`, commit `34c3dfbcddb2f2c199248db4f191da7e47461a4b`. It derives exact reduced-block entry sums and identifies a candidate stronger cancellation: the empty-environment contribution to X and S shares the exact ground-state amplitude c_12, while nonempty environments first contribute at higher perturbation orders. Conditional fixed-N analytic order bounds then suggest Schur remainder and small even eigenbranch O_N(r^4), including first edge derivatives.
 
 This is **ANALYTIC-PARTIAL / candidate stronger bound**, not upgraded to full pass. The pair-flip perturbation-order lemma for all amplitudes and edge derivatives still needs a fully closed proof. No Lean formalization/build, source reconciliation, or global B-C sign theorem is claimed.
+
+
+## Supplemental audit update — PROP-0012 pair-flip amplitude-order lemma (2026-11-21)
+
+The previously outstanding fixed-N pair-flip amplitude-order argument has now been recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_PAIR-FLIP_AMPLITUDE_ORDER_LEMMA_AUDIT.md`. Report commit: `df748501e02fa1a7d18d88b8a1a8ca082953406d`; fetched report blob SHA: `c288692fd8ea208d7fe6747f70138d031533a3cb`.
+
+The paper-level induction uses the analytic eigenvector Taylor recursion and pair-flip support: order n can reach only sets produced by at most n pair flips, so amplitudes for even flip sets E have no Taylor terms below |E|/2. Differentiating edge variables changes coefficients but does not lower r powers. This closes the specific order-lemma gap at analytic argument level for fixed finite N, with no uniform-in-N constants claimed.
+
+**Status remains ANALYTIC-PARTIAL, NOT FORMALLY VERIFIED.** The recursion/support induction has not been mechanically checked; exact source Hamiltonian/convention reconciliation is still required. No Lean formalization/build, full entropy remainder integration, or global B-C sign theorem is claimed. The new lemma alone does not upgrade PROP-0012 to PASS.
