@@ -500,3 +500,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV43_TWO_SITE_PARITY_BLOCK_RECONSTR
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV44_EXACT_TWO_SITE_MATRIX_ELEMENT_FORMULAS.md`. In x-basis amplitudes c_(a,b,e), exact partial-trace entries are rho_(ab,a'b')=sum_e c_(a,b,e) conjugate(c_(a',b',e)). Even/odd parity blocks are explicit Gram matrices of environment-amplitude vectors; their positivity and trace normalization follow exactly, and cross-sector entries vanish by subsystem parity. These are exact formulas only: perturbative coefficient series, derivatives, low eigenvalue/log expansions, and B-C coefficient remain OPEN. No Lean.
 
 **IV-44 disposition:** Exact partial-trace/Gram formulas PASS; explicit perturbative matrix entries OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-45 — Environment parity and perturbative entry-order audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV45_ENVIRONMENT_PARITY_PERTURBATIVE_ORDER_AUDIT.md`. Each interaction sigma_i^z sigma_j^z flips exactly two x-basis spins. Global parity selects even total flipped configurations; an m-flip configuration (m even) first appears no earlier than order m/2, subject to graph path/cancellation. Environment parity yields generic first-possible order pattern E11=1+O(r^2), E22=O(r^2), E12=O(r), O11=O(r^2), O22=O(r^2), O12=O(r^2), assuming generic allowed paths and analytic small-coupling scaling. This pattern is order counting only; coefficients, cancellations, coupling derivatives/uniform remainder, low-spectrum entropy, and B-C sign remain OPEN. Lean not run.
+
+**IV-45 disposition:** parity selection/minimum flip counting PASS; entry order pattern CONDITIONAL; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
