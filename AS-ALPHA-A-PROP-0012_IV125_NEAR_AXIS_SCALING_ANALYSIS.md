@@ -13,7 +13,7 @@ Symbolic expansion:
 H(r)=1+r(ln r-1)-r^2/2+r^3/6-r^4/12+O(r^5).
 
 If B/A=epsilon^alpha with alpha>0, r=epsilon^(2alpha), so
-C2=1-ln(epsilon^2 A^2)+epsilon^(2alpha)(2alpha ln epsilon-1)-epsilon^(4alpha)/2+O(epsilon^(6alpha)).
+C2=1-ln(epsilon^2 A^2)+epsilon^(2alpha)(2alpha ln epsilon-1)-epsilon^(4alpha)/2+epsilon^(6alpha)/6-epsilon^(8alpha)/12+O(epsilon^(10alpha)).
 For fixed A != 0, the dominant term 1-ln(epsilon^2 A^2) grows as -2 ln epsilon, while the ratio corrections vanish.
 
 ## 2. Ratio r -> infinity (A/B -> 0)
@@ -26,7 +26,7 @@ Symbolic expansion:
 G(s)=-s/2+s^2/6-s^3/12+s^4/20+O(s^5).
 
 If A/B=epsilon^alpha with alpha>0,
-C2=-ln(epsilon^2 B^2)-epsilon^(2alpha)/2+epsilon^(4alpha)/6+O(epsilon^(6alpha)).
+C2=-ln(epsilon^2 B^2)-epsilon^(2alpha)/2+epsilon^(4alpha)/6-epsilon^(6alpha)/12+epsilon^(8alpha)/20+O(epsilon^(10alpha)).
 For fixed B != 0, the leading logarithm again dominates as epsilon -> 0.
 
 ## 3. Positivity implication for C2
