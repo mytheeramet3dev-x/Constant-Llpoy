@@ -281,3 +281,12 @@ A direct reconstruction of the leading one-site and two-site reduced-matrix entr
 **IV-14 disposition:** PASS for leading-order direct reconstruction: one-site small eigenvalue coefficient `(N-1)/16`, odd-block positive eigenvalue `(N-2)/8`, and adjacent-edge derivative coefficient `1/8` are reproduced from direct environmental tracing/Gram matrix entries. The even-block shared-amplitude rank-one empty-environment cancellation is confirmed structurally, but this pass does not independently mechanize the amplitude recursion, prove all higher-order branch remainders, or verify the small branch logarithmic scale.
 
 **Status remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.** Frozen-source reconciliation, full higher-order remainder closure, Lean formalization/build, and global `B-C` sign remain open.
+
+
+## Supplemental audit update — PROP-0012 IV-15 independent higher-order even-block reconstruction (2026-11-21)
+
+The adversarial higher-order environment-tail and shared-amplitude Schur cancellation review is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV15_INDEPENDENT_HIGHER_ORDER_EVEN_BLOCK_RECONSTRUCTION.md`. Report commit: `b3fe6ca71279863e3bf26a0d2eb56a6a82fa39ad`; fetched report blob SHA: `ab41e569e0ec56cbef3c2a7227ad786b859e2db0`.
+
+**IV-15 disposition:** Conditional analytic order-counting PASS. The empty-environment rank-one term uses the exact shared amplitude `c_12), so second-order overlapping paths modifying `c_12=a_12+O_N(r^2)` do not spoil its cancellation. Nonempty environment tails have conditional orders `R_L=O_N(r^2)`, `R_X=O_N(r^3)`, `R_S=O_N(r^4)`; their Schur residual and first edge derivatives are therefore `O_N(r^4)`. No O(r^2) or O(r^3) counterexample was found under the pair-flip Taylor-support/derivative lemma.
+
+This is not mechanized; the amplitude support induction, entropy logarithmic-scale closure, frozen-source reconciliation, Lean formalization/build, and global `B-C` sign remain open. PROP-0012 remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.
