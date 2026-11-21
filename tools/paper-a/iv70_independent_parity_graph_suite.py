@@ -6,7 +6,8 @@ def bitmask(n,edges):
  masks=[(1<<a)|(1<<b) for a,b in edges]; t=v=r=i=0; hist=Counter()
  for seq in itertools.product(range(len(edges)),repeat=4):
   t+=1; states=[]; s=0
-  for x in seq:s^=masks[x];states.append(s)
+  for x in seq:
+   s^=masks[x];states.append(s)
   hist[states[-1].bit_count()]+=1
   if states[-1]==0:
    v+=1
