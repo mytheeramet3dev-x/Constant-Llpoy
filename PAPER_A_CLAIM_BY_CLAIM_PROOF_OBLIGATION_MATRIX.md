@@ -272,3 +272,12 @@ For fixed \(N\ge4\), the bracket is positive. This is only a local weak-coupling
 **IV-13 PASS only as an adversarial consistency check against the current working ledger; no internal counterexample found.** The $1/8$ derivative normalization is consistent with the pair-flip gap $4h$ under the stated Hamiltonian convention; leading $(N-1)$ and $(N-2)$ counts match the current ledger; logarithmic combination is algebraically correct and retains the additive $+1$; dimensional remainder conversion is correct conditional on the joint differentiated expansion; and the candidate bracket is positive for fixed $N\ge4$. This is not an independent full reduced-matrix derivation. Frozen-source convention reconciliation, analytic lemma proof, Lean formalization/build, and global positivity remain open.
 
 - Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV13_ADVERSARIAL_COEFFICIENT_CHECK.md`
+
+
+## Supplemental audit update — PROP-0012 IV-14 direct reduced-matrix reconstruction (2026-11-21)
+
+A direct reconstruction of the leading one-site and two-site reduced-matrix entries from perturbative ground-state amplitudes is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV14_DIRECT_REDUCED_MATRIX_RECONSTRUCTION.md`. Report commit: `6034f734cd02050edf69ac45ea18ec9115f71be9`; fetched report blob SHA: `5c9dd2637a5bc042f400159665dd287df01b563c`.
+
+**IV-14 disposition:** PASS for leading-order direct reconstruction: one-site small eigenvalue coefficient `(N-1)/16`, odd-block positive eigenvalue `(N-2)/8`, and adjacent-edge derivative coefficient `1/8` are reproduced from direct environmental tracing/Gram matrix entries. The even-block shared-amplitude rank-one empty-environment cancellation is confirmed structurally, but this pass does not independently mechanize the amplitude recursion, prove all higher-order branch remainders, or verify the small branch logarithmic scale.
+
+**Status remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.** Frozen-source reconciliation, full higher-order remainder closure, Lean formalization/build, and global `B-C` sign remain open.
