@@ -666,3 +666,7 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 ## Conversation recovery checkpoint — IV-71 through IV-77 (2026-11-21)
 
 Recovery log: `audits/paper-a/PAPER_A_IV71_IV77_RECOVERY_LOG.md`. Notes IV-71 through IV-77 were recreated from conversation context and fetchback-checked. They are recovered analytic records, not a new verification of Proposition 0012. Numerical diagonalization, runtime execution, and Lean proof are not claimed. IV-73 records an invalid Schur sign derivation; IV-75 records a coefficient error; IV-71's fifth-order amplitude coefficient was corrected during recovery.
+
+
+## IV-78 — Denominator-weighted fourth-order vacuum-return classification (2026-11-21)
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV78_FOURTH_ORDER_DENOMINATOR_WEIGHTED_CLASSIFICATION.md`. For the raw non-vacuum resolvent walk, edge repeated four times gives denominator product 64h^3 and coefficient -1/64; two distinct repeated edges give four valid sequences, with adjacent-edge denominator 64h^3 (aggregate -1/16) and disjoint-edge denominator 128h^3 (aggregate -1/32); a distinct-edge C4 has 16 orders with first pair adjacent and 8 with first pair opposite, giving aggregate cycle coefficient -5/16. This is raw-walk weight classification only; full energy correction/normalization, arbitrary graph verification, response, and Lean remain OPEN.
