@@ -5,11 +5,11 @@
 
 ## 1. Hamiltonian and first-order pair amplitude
 
-Take
+Use the transverse-field Ising convention
 \[
-H=-h\sum_i\sigma_i^x-J\sum_{i<j}\sigma_i^z\sigma_j^x? 
+H=-h\sum_i\sigma_i^x-J\sum_{i<j}\sigma_i^z\sigma_j^z.
 \]
-**Convention correction:** the interaction in this audit is the TFIM Ising term \(-J\sum_{i<j}\sigma_i^z\sigma_j^z\), and the transverse field is \(-h\sum_i\sigma_i^x\). The pair-flip matrix element is \(-J\), the excitation energy is \(4h\), and the first-order pair amplitude is
+The pair-flip matrix element is \(-J\), the excitation energy is \(4h\), and the first-order pair amplitude is
 \[
 a_{ij}=\frac{J_{ij}}{4h}=\frac r4
 \]
