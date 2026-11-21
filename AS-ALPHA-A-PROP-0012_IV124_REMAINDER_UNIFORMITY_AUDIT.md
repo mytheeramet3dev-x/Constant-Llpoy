@@ -10,7 +10,7 @@ q=epsilon^2 S+epsilon^4 T+epsilon^6 U(epsilon,A,B),
 q3=epsilon^2 R+epsilon^4 T3+epsilon^6 U3,
 with U,U3 uniformly bounded and with R bounded below if the q3 entropy is expanded in the same logarithmic way.
 
-Taylor expansion of h at q0=epsilon^2 S is legitimate because q0 is bounded away from zero relative to epsilon^2, and h'''(x)=O(x^{-2}) for small positive x. The induced probability perturbation is O(epsilon^4), so the second-order Taylor error is O(epsilon^8 * epsilon^{-4})=O(epsilon^4); more carefully, to extract the epsilon^4 coefficient with remainder O(epsilon^6 |ln epsilon|), one must include the epsilon^6 probability coefficient and corresponding entropy terms. Thus the expansion truncated at epsilon^4 does **not** by itself establish an O(epsilon^6 |ln epsilon|) remainder unless the probability expansion is known through epsilon^6 and the Taylor bookkeeping includes it.
+Taylor expansion at q0=epsilon^2 S is legitimate on this compact set. There h'(q0)=O(|ln epsilon|) and h''(q0)=O(epsilon^{-2}). The probability perturbation beyond q0 is O(epsilon^4), so the quadratic Taylor contribution is O(epsilon^8 epsilon^{-2}=epsilon^6). The O(epsilon^6) probability remainder contributes O(epsilon^6 |ln epsilon|) through h'. Hence, with the probability expansion through epsilon^4 and an O(epsilon^6) remainder, the entropy expansion through epsilon^4 has O(epsilon^6 |ln epsilon|) remainder, subject to uniform coefficient bounds.
 
 For the entropy expansion with probability known through epsilon^4 and an O(epsilon^6) probability error, on such a compact set the remainder after the displayed epsilon^4 terms is O(epsilon^6 |ln epsilon|), under uniform coefficient bounds.
 
