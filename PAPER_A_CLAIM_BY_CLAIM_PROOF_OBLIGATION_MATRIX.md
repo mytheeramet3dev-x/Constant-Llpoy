@@ -690,3 +690,7 @@ Committed and executed `tools/paper-a/iv82_exhaustive_raw_fourth_order_k8.py`. A
 
 ## IV-83 — Raw versus complete E4 recurrence cross-check (2026-11-21)
 Executable SymPy cross-check run on six graphs (single edge, triangle, C4, P4, K1,3, two disjoint edges). In all six, asserted identity E4_complete-E4_raw=(sum_e J_e^2)^2/(64h^3) passed. Raw sequence counts: edge 0, triangle 12, C4 48, P4 12, star 12, disjoint pair 4. This is an observed finite-example identity and candidate general theorem, not proven universally. Script: `tools/paper-a/iv83_raw_vs_complete_e4_crosscheck.py`; report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV83_RAW_VS_COMPLETE_E4_CROSSCHECK.md`. Both committed and fetchback verified. Proposition and Lean remain open.
+
+
+## IV-84 — Analytic proof of raw-to-complete E4 correction (2026-11-21)
+Proved under the finite simple-graph transverse-field Ising and intermediate-normalization conventions: E4_complete=E4_raw+(sum_e J_e^2)^2/(64h^3). From recurrence, c3=R0Q(Vc2-E2c1), so E4 equals raw closed non-vacuum Q-chain minus E2<0|VR0Qc1>. Since E2=-sum J_e^2/(4h) and <0|VR0Qc1>=sum J_e^2/(16h^2), the correction follows. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV84_ANALYTIC_PROOF_RAW_COMPLETE_E4_CORRECTION.md`. This closes the general correction identity (not a closed raw E4 formula, B-C response, proposition, or Lean proof).
