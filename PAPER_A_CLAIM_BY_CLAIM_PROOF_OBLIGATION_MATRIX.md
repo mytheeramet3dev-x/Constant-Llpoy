@@ -418,3 +418,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV32_EXACT_EDGE_DIRECTION_ENT
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV33_PHYSICAL_DERIVATIVE_SCALING_REMAINDER_CONVERSION_AUDIT.md`. The chain rule for \(J_e=J(1+u_e)\) gives \(\partial_{J_e}=J^{-1}\partial_{u_e}\). The leading \(r^2\) dimensionless derivative converts to \(J/h^2\), with units of inverse energy. A conditional dimensionless remainder \(O_N(r^3|\ln r|)\) converts to \(O_N(J^2h^{-3}|\ln(J/h)|)\), dimensionally consistent. The conversion is correct, but the underlying differentiated remainder estimate is still open. For fixed \(N\ge4\), the candidate log \(\ln[2(N-2)/(N-1)]\) is positive.
 
 **IV-33 disposition:** chain rule/dimensions PASS; remainder conversion PASS conditional; actual remainder bound OPEN; no uniform-in-N threshold; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-34 leading positivity/fixed-N dominance (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV34_LEADING_POSITIVITY_FIXED_N_DOMINANCE_AUDIT.md`. The corrected displayed candidate coefficient \(c_N=\ln[2(N-2)/(N-1)]\) is strictly positive for \(N\ge4\), since its argument is at least \(4/3\). If the physical remainder theorem \(|R_N|\le K_N(J^2/h^3)|\ln(J/h)|\) is proven, then fixed-N sign dominance follows from \(r|\ln r|\to0\); a concrete sufficient inequality is \(K_Nr|\ln r|<c_N/16\) for the stated scale. This is conditional logic only: the actual remainder and threshold constants are not established.
+
+**IV-34 disposition:** coefficient positivity PASS; fixed-N asymptotic dominance logic PASS conditional on remainder theorem; actual sign theorem OPEN; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
