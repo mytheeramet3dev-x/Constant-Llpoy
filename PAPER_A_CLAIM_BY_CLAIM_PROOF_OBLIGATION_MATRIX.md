@@ -698,3 +698,7 @@ Proved under the finite simple-graph transverse-field Ising and intermediate-nor
 
 ## IV-85 — General-graph fourth-order energy formula (2026-11-21)
 Derived from IV-79 raw classes plus IV-84 correction: E4=[sum_e J_e^4 -2 sum_{adjacent unordered edge pairs}J_e^2J_f^2 -20 sum_{simple C4} product_{e in C4}J_e]/(64h^3). Adjacent means sharing one vertex; each simple 4-cycle counted once. Verified symbolically by a SymPy recurrence verifier across all simple labeled graphs on n<=4 vertices (75 total) plus six structured n=5 graphs (81 total); local equivalent script assertions passed. Committed verifier at `tools/paper-a/iv85_general_graph_e4_formula_crosscheck.py`, report at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV85_GENERAL_GRAPH_E4_FORMULA.md`. General formula analytic derivation recorded; this remains perturbative-energy work and does not close response B-C or Proposition 0012/Lean.
+
+
+## IV-86 — Exact single-edge mutual information asymptotic (2026-11-21)
+For the two-spin single-edge TFIM, exact ground-state energy is `-sqrt(4h^2+J^2)`; Schmidt probabilities are `(1 ± 2h/sqrt(4h^2+J^2))/2`. Natural-log MI is twice the binary entropy. At weak coupling, `I=J^2/(8h^2)[1-ln(J^2/(16h^2))]+O(J^4/h^4 ln(h/|J|))`, showing J^2 log J nonanalyticity at zero. This exact one-edge observable is a caution for response expansions; does not address general graph B-C or proposition. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV86_SINGLE_EDGE_EXACT_MUTUAL_INFORMATION_WEAK_COUPLING.md`.
