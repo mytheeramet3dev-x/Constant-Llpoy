@@ -186,3 +186,12 @@ The previously outstanding fixed-N pair-flip amplitude-order argument has now be
 The paper-level induction uses the analytic eigenvector Taylor recursion and pair-flip support: order n can reach only sets produced by at most n pair flips, so amplitudes for even flip sets E have no Taylor terms below |E|/2. Differentiating edge variables changes coefficients but does not lower r powers. This closes the specific order-lemma gap at analytic argument level for fixed finite N, with no uniform-in-N constants claimed.
 
 **Status remains ANALYTIC-PARTIAL, NOT FORMALLY VERIFIED.** The recursion/support induction has not been mechanically checked; exact source Hamiltonian/convention reconciliation is still required. No Lean formalization/build, full entropy remainder integration, or global B-C sign theorem is claimed. The new lemma alone does not upgrade PROP-0012 to PASS.
+
+
+## Supplemental audit update — PROP-0012 even-block O(r^4) integration (2026-11-21)
+
+The pair-flip amplitude-order argument has now been integrated with the exact environment-summed even-block entries, Schur cancellation, determinant identity for the small eigenvalue, and first edge derivatives. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_EVEN_BLOCK_R4_INTEGRATION_REVIEW.md`; commit `38d4498ba0aa287ad4f4518d83be7a27e77d169d`; fetched report blob SHA `68f34f61e0c3ad1bff2ba1333868c1aa4db2a50e`.
+
+The paper-level argument closes the even-block small eigenbranch and first edge derivatives at O_N(r^4). The entropy derivative is O_N(r^4(1+|ln r|)) subject to the explicit positive-branch scale check or zero-branch treatment. This is an analytic integration result, **conditional on exact source/Hamiltonian convention and branch reconciliation**; it is not a source-wide or formal pass.
+
+Full PROP-0012 remains OPEN: source reconciliation, branch-scale verification against the source, all entropy branches/remainder integration, and Lean formalization/build remain outstanding. No global B-C sign theorem is claimed.
