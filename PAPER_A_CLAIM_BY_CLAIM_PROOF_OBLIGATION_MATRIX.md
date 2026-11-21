@@ -678,3 +678,7 @@ IV-79 corrects IV-78: the e,e,e,e multiset is not a valid raw Q-resolvent chain 
 
 ## IV-80 — Complete fourth-order recurrence cross-check (2026-11-21)
 A symbolic intermediate-normalized recurrence was independently evaluated for single-edge, triangle, and square C4 examples. Results: single edge E4=+J^4/(64h^3); triangle E4=(sum J_i^4-2 sum_{i<j}J_i^2J_j^2)/(64h^3), agreeing with IV-72; square E4=[sum J_i^4-2(adjacent-edge squared products)-20J0J1J2J3]/(64h^3), agreeing with IV-76 and showing opposite-edge terms cancel. A reproducible SymPy script is committed at tools/paper-a/iv80_complete_fourth_order_recurrence.py; report at audits/paper-a/AS-ALPHA-A-PROP-0012_IV80_COMPLETE_FOURTH_ORDER_RECURRENCE_CROSSCHECK.md. The calculation used an equivalent analysis-session implementation; committed script itself was fetchback-verified but not separately executed in runtime. Finite-graph cross-check only; arbitrary-graph derivation, B-C response, proposition and Lean remain open.
+
+
+## IV-81 — General-graph fourth-order coefficient framework (2026-11-21)
+IV-81 records the graph-independent intermediate-normalized state recurrence with flip masks, exact gap 2h|S|, and raw fourth-order Q-chain endpoint parity classification. It explicitly separates raw chain weights from complete E4 recurrence/reducible terms. General-graph closed E4 remains unproved; B-C response and Proposition 0012 remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV81_GENERAL_GRAPH_FOURTH_ORDER_COEFFICIENT_FRAMEWORK.md`.
