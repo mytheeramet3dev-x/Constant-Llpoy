@@ -41,7 +41,7 @@ def audit(n=8,k=4):
             if not ss[1] or not ss[2]: c[2]+=1
     return classes
 
-if ____=="__main__":
+if __name__=="__main__":
     C=audit()
     print("multisets",sum(v[0] for v in C.values()))
     print("classes",len(C))
