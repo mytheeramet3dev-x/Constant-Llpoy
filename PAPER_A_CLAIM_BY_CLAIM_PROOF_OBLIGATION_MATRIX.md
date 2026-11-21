@@ -479,3 +479,10 @@ The IV-40 report was rewritten in plain-text notation to avoid escape corruption
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV41_ONE_SITE_ENTROPY_DERIVATIVE_LOG_REMAINDER_AUDIT.md`. Exact binary entropy derivative (S_u=p_u\ln((1-p)/p)) PASS. For (p=r^2a(u,r)), positive lower bound on (a), bounded (a,a_u), its scale is (O(r^2(1+|\ln r|))). For (p=r^2a+r^3b+O(r^4)), the formal expansion is (S_u=r^2a_u(-2\ln r-\ln a)+r^3[b_u(-2\ln r-\ln a)-ba_u/a]+O(r^4(1+|\ln r|))), conditional on controlled differentiated remainder. Pointwise (O(r^4)) does not imply derivative (O(r^4)). Zero-leading coefficient and complete (B-C) remain open. Lean not run.
 
 **IV-41 disposition:** algebraic entropy expansion PASS; uniform derivative estimates conditional; zero-leading branch and full proposition OPEN. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-42 two-site entropy/spectral branch audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV42_TWO_SITE_ENTROPY_SPECTRAL_BRANCH_AUDIT.md`. For strictly positive differentiable density matrix rho, exact (S_u=-Tr(rho_u ln rho)) (using (Tr rho_u=0)) PASS; individual eigenvalue formula (S_u=-sum_k lambda_{k,u}ln lambda_k) is safe for positive spectrum and can be handled within degenerate eigenspaces via spectral perturbation. Exact mutual-information response (I_{12,u}=S_{1,u}+S_{2,u}-S_{12,u}) PASS. Full two-site matrix/spectral expansions have not been reconstructed; zero/low-spectrum logarithmic branches and differentiated remainders remain OPEN. No coefficient/sign is certified; Lean not performed.
+
+**IV-42 disposition:** Exact identities PASS; spectral expansion OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
