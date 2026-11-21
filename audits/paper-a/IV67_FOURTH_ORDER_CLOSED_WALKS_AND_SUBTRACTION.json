@@ -1,0 +1,36 @@
+{
+  "audit": "IV-67",
+  "status": "ANALYTIC DERIVATION WITH SINGLE-EDGE CONSISTENCY CHECK; NOT LEAN-VERIFIED",
+  "vacuum_return_condition": "e1 symmetric_difference e2 symmetric difference e3 symmetric difference e4 = empty; equivalently all vertex incidence degrees even",
+  "valid_four_operation_multigraph_types": [
+    "single edge multiplicity 4",
+    "two distinct edges each multiplicity 2",
+    "four distinct edges forming a 4-cycle"
+  ],
+  "rejected_example": {
+    "edges": [
+      "12",
+      "12",
+      "23",
+      "31"
+    ],
+    "reason": "vertices 1 and 2 have odd degree 3; does not return to vacuum"
+  },
+  "corrected_E4": "<0|V R0 V R0 V R0 V|0> - E2 <0|V R0^2 V|0>",
+  "correction_note": "An earlier tentative expression -E2^2 was dimensionally and algebraically wrong; the correct subtraction contains R0^2.",
+  "single_edge_check": {
+    "exact_energy": "-sqrt(4 h^2 + J^2)",
+    "expansion": "-2h - J^2/(4h) + J^4/(64h^3) + O(J^6)",
+    "E2": "-J^2/(4h)",
+    "E4": "J^4/(64h^3)",
+    "chain_term": "zero due to Q projection at intermediate vacuum",
+    "correction_term": "reproduces positive J^4/(64h^3)"
+  },
+  "caveat": "Single-edge consistency is hand-derived only; no independent code execution or Lean proof.",
+  "next": [
+    "enumerate admissible ordered 4-edge sequences and denominators",
+    "small-graph exact diagonalization",
+    "Lean formalization"
+  ],
+  "proposition_0012": "not proven"
+}
