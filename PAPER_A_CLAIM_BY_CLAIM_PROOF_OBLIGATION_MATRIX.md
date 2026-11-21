@@ -528,3 +528,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV47_ODD_BLOCK_RANK_AND_EDGE_DERIVA
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV48_ODD_BLOCK_LOW_EIGENVALUE_RECONSTRUCTION.md`. In the leading rank-one odd block basis (u,v), write O(r)=r^2 A+r^3 B+r^4 C+O(r^5), A=diag(a_+,0), a_+>0. The low branch has r^3 coefficient B_vv; an r^4 start requires B_vv=0, which is not established for the actual Hamiltonian. Conditional on that vanishing, the r^4 coefficient is C_vv-|B_uv|^2/a_+, so the off-diagonal cubic mixing cannot be ignored. The exact determinant/eigenvalue relation does not replace reconstruction of entries to adequate order. Low-branch coupling derivatives, positivity/strict coefficient, entropy logarithmic control, full B-C and Lean remain OPEN.
 
 **IV-48 disposition:** Conditional low-eigenvalue expansion formula PASS; actual branch order/coefficient OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-49 — Odd-block cubic null-branch audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV49_ODD_BLOCK_CUBIC_NULL_BRANCH_AUDIT.md`. In the leading odd-block eigenbasis, the cubic low-branch coefficient is B_vv=(B_11+B_22-B_12-B_21)/2 (for a real symmetric block, (B_11+B_22-2B_12)/2). Global x-parity ensures even/odd subsystem blocks but does not alone force this coefficient to vanish. An additional r-to-minus-r symmetry acting appropriately on the null vector has not been established for the frozen model. Actual cubic entries and cancellation remain OPEN; branch order may be r^3, r^4, or later. No entropy response/B-C coefficient or Lean verification.
+
+**IV-49 disposition:** Algebraic null coefficient expression PASS; symmetry cancellation NOT ESTABLISHED; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
