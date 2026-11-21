@@ -632,3 +632,13 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Edge symmetric-difference classification: same edge → vacuum; adjacent distinct edges → third edge; disjoint edges → four-flip state and no third-order vacuum return.
 - Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV66_E2_E3_EDGE_EXPANSION.md`, `audits/paper-a/IV66_E2_E3_EDGE_EXPANSION.json`.
 - Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED.
+
+
+## IV-67 — Fourth-Order Vacuum Return and Energy Subtraction
+
+- Four-edge vacuum-return criterion: edge symmetric difference is empty / all vertex incidence degrees even.
+- Admissible multigraph support types at four operations: one edge multiplicity four; two distinct edges each twice; four distinct edges as a 4-cycle. Triangle-with-repeated-edge example `12,12,23,31` is rejected by parity.
+- Correct fourth-order energy expression: `E4 = <0|V R0 V R0 V R0 V|0> - E2 <0|V R0^2 V|0>`. The previous tentative `-E2^2` expression is explicitly corrected as erroneous.
+- Single-edge exact energy consistency check gives `E4=+J^4/(64h^3)`; hand-derived, not code-verified.
+- Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV67_FOURTH_ORDER_CLOSED_WALKS_AND_SUBTRACTION.md`, `audits/paper-a/IV67_FOURTH_ORDER_CLOSED_WALKS_AND_SUBTRACTION.json`.
+- Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED.
