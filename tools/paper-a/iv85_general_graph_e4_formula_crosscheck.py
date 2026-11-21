@@ -32,7 +32,7 @@ def proposed_formula(edges):
     J = sp.symbols(f'J0:{len(edges)}')
     adjacent_pairs = [J[i]**2 * J[j]**2
         for i, j in combinations(range(len(edges)), 2)
-        if set(edges[i]) & set(edges[j]]
+        if set(edges[i]) & set(edges[j])
     cycle_products = []
     for ids in combinations(range(len(edges)), 4):
         chosen = [edges[i] for i in ids]
