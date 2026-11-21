@@ -486,3 +486,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV41_ONE_SITE_ENTROPY_DERIVATIVE_LO
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV42_TWO_SITE_ENTROPY_SPECTRAL_BRANCH_AUDIT.md`. For strictly positive differentiable density matrix rho, exact (S_u=-Tr(rho_u ln rho)) (using (Tr rho_u=0)) PASS; individual eigenvalue formula (S_u=-sum_k lambda_{k,u}ln lambda_k) is safe for positive spectrum and can be handled within degenerate eigenspaces via spectral perturbation. Exact mutual-information response (I_{12,u}=S_{1,u}+S_{2,u}-S_{12,u}) PASS. Full two-site matrix/spectral expansions have not been reconstructed; zero/low-spectrum logarithmic branches and differentiated remainders remain OPEN. No coefficient/sign is certified; Lean not performed.
 
 **IV-42 disposition:** Exact identities PASS; spectral expansion OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-43 — Two-site parity-block reconstruction (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV43_TWO_SITE_PARITY_BLOCK_RECONSTRUCTION.md`. Global x-parity P_x=product_i sigma_i^x commutes with the frozen Hamiltonian; in a nondegenerate parity eigenstate, subsystem parity P_ij=sigma_i^x sigma_j^x commutes with rho_ij. In ordered x-basis {|++>,|+->,|-+>,|-->}, rho_ij decomposes into two 2x2 blocks (even {|++>,|-->} and odd {|+->,|-+>}) exactly. The eigenvalues of each block have exact trace/determinant formula. Explicit block entries to entropy-required order, normalization/interference, edge derivatives, low-branch logs remain OPEN. No B-C coefficient certified; Lean not performed.
+
+**IV-43 disposition:** Symmetry/block structure PASS; perturbative block expansion OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
