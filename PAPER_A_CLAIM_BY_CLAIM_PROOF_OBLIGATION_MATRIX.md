@@ -411,3 +411,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV31_LEADING_COEFFICIENT_INDE
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV32_EXACT_EDGE_DIRECTION_ENTROPY_BOOKKEEPING_AUDIT.md`. Using the displayed leading branches, edge 13 contributes \(r^2/8(-\ln p-1)\) from site 1 and subtracts \(r^2/8(-\ln q-1)\) from the positive odd two-site branch; site 2 is higher order at this direction. The regular \(-1\) pieces cancel, giving \(r^2/8\ln(q/p)\), with \(q/p=2(N-2)/(N-1)\). Edge 34 has no displayed order-\(r^2\) contribution (one-site and odd-branch derivatives are stated \(O_N(r^3)\)); other branches remain conditional. After physical derivative conversion, the corrected leading candidate is \(\frac{J}{8h^2}\ln\frac{2(N-2)}{N-1}\), without the prior extra \(+1\).
 
 **IV-32 disposition:** displayed-branch bookkeeping PASS; extra \(+1\) not supported and cancels at this level; full low-spectrum and remainder closure OPEN; no counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-33 physical derivative scaling/remainder conversion (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV33_PHYSICAL_DERIVATIVE_SCALING_REMAINDER_CONVERSION_AUDIT.md`. The chain rule for \(J_e=J(1+u_e)\) gives \(\partial_{J_e}=J^{-1}\partial_{u_e}\). The leading \(r^2\) dimensionless derivative converts to \(J/h^2\), with units of inverse energy. A conditional dimensionless remainder \(O_N(r^3|\ln r|)\) converts to \(O_N(J^2h^{-3}|\ln(J/h)|)\), dimensionally consistent. The conversion is correct, but the underlying differentiated remainder estimate is still open. For fixed \(N\ge4\), the candidate log \(\ln[2(N-2)/(N-1)]\) is positive.
+
+**IV-33 disposition:** chain rule/dimensions PASS; remainder conversion PASS conditional; actual remainder bound OPEN; no uniform-in-N threshold; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
