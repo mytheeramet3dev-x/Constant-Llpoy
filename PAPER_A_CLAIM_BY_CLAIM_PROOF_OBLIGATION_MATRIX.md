@@ -623,3 +623,12 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 - Fourth order includes `-E2 psi2 - E3 psi1`; `E1=0` for ZZ perturbation. The ordinary resolvent chain alone is not complete.
 - Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV65_FOURTH_ORDER_RECURRENCE.md`, `audits/paper-a/IV65_FOURTH_ORDER_RECURRENCE.json`.
 - Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED; proposition not proven.
+
+
+## IV-66 — Explicit E2 and E3 Edge Expansion
+
+- Derived `E2 = -(1/(4h)) sum_e J_e^2`.
+- Derived third-order triangle term `E3 = -(3/(8h^2)) sum_triangles J_ij J_jk J_ki`; simple triangles counted once.
+- Edge symmetric-difference classification: same edge → vacuum; adjacent distinct edges → third edge; disjoint edges → four-flip state and no third-order vacuum return.
+- Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV66_E2_E3_EDGE_EXPANSION.md`, `audits/paper-a/IV66_E2_E3_EDGE_EXPANSION.json`.
+- Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED.
