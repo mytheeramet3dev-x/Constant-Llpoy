@@ -507,3 +507,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV44_EXACT_TWO_SITE_MATRIX_ELEMENT_
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV45_ENVIRONMENT_PARITY_PERTURBATIVE_ORDER_AUDIT.md`. Each interaction sigma_i^z sigma_j^z flips exactly two x-basis spins. Global parity selects even total flipped configurations; an m-flip configuration (m even) first appears no earlier than order m/2, subject to graph path/cancellation. Environment parity yields generic first-possible order pattern E11=1+O(r^2), E22=O(r^2), E12=O(r), O11=O(r^2), O22=O(r^2), O12=O(r^2), assuming generic allowed paths and analytic small-coupling scaling. This pattern is order counting only; coefficients, cancellations, coupling derivatives/uniform remainder, low-spectrum entropy, and B-C sign remain OPEN. Lean not run.
 
 **IV-45 disposition:** parity selection/minimum flip counting PASS; entry order pattern CONDITIONAL; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-46 — Leading two-site parity-block coefficients (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV46_LEADING_TWO_SITE_BLOCK_COEFFICIENTS.md`. First-order pair-flip amplitudes g_ab=J_ab/(4h) PASS. From first-order amplitudes plus quadratic normalization bookkeeping, leading even block: E11=1-A_i-A_j+g_ij^2, E22=g_ij^2, E12=g_ij, with A_i=sum_(k!=i)g_ik^2 and A_j=sum_(k!=j)g_jk^2. Leading odd block: O11=sum_(k not i,j)g_jk^2; O22=sum_(k not i,j)g_ik^2; O12=sum_(k not i,j)g_ik g_jk. Trace consistency through quadratic order and Gram/Cauchy positivity check PASS at this order. This is leading-coefficient bookkeeping only; higher-order matrix entries, low eigenvalue/log entropy derivative, uniform differentiated remainders, B-C remain OPEN. Lean not performed.
+
+**IV-46 disposition:** Leading coefficients conditional pass; entropy-order matrix and response OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
