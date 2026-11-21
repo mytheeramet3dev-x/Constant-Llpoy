@@ -1,0 +1,16 @@
+{
+  "vertex_pool_size": 8,
+  "edge_pool_size": 28,
+  "edge_operations": 4,
+  "labeled_edge_multisets": 31465,
+  "unlabeled_weighted_support_classes": 23,
+  "unique_ordered_sequences": 614656,
+  "ordered_sequences_with_vacuum_intermediate": 31360,
+  "endpoint_flip_count_distribution_over_multisets": {
+    "0": 616,
+    "2": 9464,
+    "4": 17080,
+    "6": 4200,
+    "8": 105
+  }
+}
