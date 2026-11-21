@@ -202,3 +202,10 @@ Full PROP-0012 remains OPEN: source reconciliation, branch-scale verification ag
 A source-access/definition audit was recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_SOURCE_RECONCILIATION_ACCESS_AND_DEFINITION_AUDIT.md`, commit `18e829bd2962c0b5a1af7b9aa10d4ea77c031b66`. The accessible current-main manuscript Section 5.2 confirms the definitions (B=\partial_{J_{13}}I_{12}) (adjacent edge) and (C=\partial_{J_{34}}I_{12}) (disjoint edge), and Section 5.3 labels the sign (B-C>0) a numerically supported conjecture. The current-main Hamiltonian/sign convention is structurally consistent with the working TFIM derivation.
 
 **Frozen-source reconciliation BLOCKED:** fetch attempts for the audit branch and frozen commit returned 404/NOT FOUND; the current-main manuscript is not treated as a substitute for the frozen source. Therefore no source-wide reconciliation or status promotion is claimed. PROP-0012 remains OPEN; no Lean formalization/build or global sign theorem is claimed.
+
+
+## Supplemental audit update — PROP-0012 complete entropy-branch bookkeeping (2026-11-21)
+
+A branch-by-branch entropy derivative audit is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_COMPLETE_ENTROPY_BRANCH_BOOKKEEPING_AUDIT.md`, commit `e3425299d481e291ba4ed653d2246f4f6ad4c9c7`. It explicitly uses trace normalization to cancel the constant `-1` terms in entropy derivatives, then checks the even-block large eigenbranch: `lambda_L=1-O_N(r^2)`, `lambda_L'=O_N(r^2)`, so the trace-cancelled contribution `-(ln lambda_L)lambda_L'` is `O_N(r^4)`. The even small branch remains conditional on the pair-flip/Schur estimates and positive-scale or zero-branch treatment; the odd positive branch, odd zero branch, and one-site branches are accounted for by the existing reports.
+
+**Status:** complete entropy branch bookkeeping at the claimed fixed-N orders, **conditional analytic closure only**. The report does not upgrade PROP-0012 to PASS. Frozen-source access/reconciliation, verifying the branch-scale hypotheses against the frozen source, independent verification of the amplitude recursion, Lean formalization/build, and any global `B-C>0` theorem remain open.
