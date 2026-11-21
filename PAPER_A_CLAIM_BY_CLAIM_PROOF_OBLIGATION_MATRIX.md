@@ -290,3 +290,12 @@ The adversarial higher-order environment-tail and shared-amplitude Schur cancell
 **IV-15 disposition:** Conditional analytic order-counting PASS. The empty-environment rank-one term uses the exact shared amplitude `c_12), so second-order overlapping paths modifying `c_12=a_12+O_N(r^2)` do not spoil its cancellation. Nonempty environment tails have conditional orders `R_L=O_N(r^2)`, `R_X=O_N(r^3)`, `R_S=O_N(r^4)`; their Schur residual and first edge derivatives are therefore `O_N(r^4)`. No O(r^2) or O(r^3) counterexample was found under the pair-flip Taylor-support/derivative lemma.
 
 This is not mechanized; the amplitude support induction, entropy logarithmic-scale closure, frozen-source reconciliation, Lean formalization/build, and global `B-C` sign remain open. PROP-0012 remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.
+
+
+## Supplemental audit update — PROP-0012 IV-16 pair-flip Taylor-support induction (2026-11-21)
+
+The fixed-finite-N pair-flip Taylor-support induction, including first edge derivatives, is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV16_PAIR_FLIP_TAYLOR_SUPPORT_INDUCTION.md`. Report commit: `4f605a3926ede9b89f1176339d63aa0aa28fa087`.
+
+The support argument uses the fact that each interaction insertion flips exactly two sites: after n insertions, the flip set is a symmetric difference of n pairs and therefore contains at most 2n sites. Scalar eigenvalue/normalization recursion terms multiply prior amplitudes and do not introduce new sites. Differentiating edge variables changes path weights but not flip-set transitions or r-order. This supports the conditional orders `c_E=O_N(r^{|E|/2})` and `c_{E∪{1,2}}=O_N(r^{(|E|+2)/2})), and hence IV-15 environment-tail orders.
+
+**IV-16 disposition:** analytic argument-level support/order PASS under the locally analytic eigenvector Taylor setup; not mechanically checked and not Lean-formalized. No uniform-in-N bounds. Frozen-source reconciliation, complete entropy-branch closure, formalization/build, and global `B-C` sign remain open. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
