@@ -12,9 +12,9 @@ Here adjacent edge pairs share one vertex. Each distinct simple four-cycle is co
 
 ## Cross-check
 A committed SymPy script compared complete recurrence E4 against this formula:
-- Exhaustive simple graphs on labeled n=1,2,3,4 vertices: 1+1+2+64=68 graphs.
+- Exhaustive simple graphs on labeled n=1,2,3,4 vertices: 1+2+8+64=75 graphs.
 - Six additional structured graphs on five vertices: P5, C5, K1,4, square-plus-tail, triangle with two leaves, and two disjoint paths.
-- Total 74? Count: 1+1+2+64=68, plus 6 = 74. (Runtime output may be independently rechecked after commit.)
+- Total 81 graph instances (75 exhaustive graphs on n<=4, plus six five-vertex examples).
 The script asserts symbolic equality for each graph.
 
 ## Reproducibility
