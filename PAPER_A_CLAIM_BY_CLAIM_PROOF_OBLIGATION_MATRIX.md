@@ -599,3 +599,8 @@ A pure-Python script enumerates four pair-edge multiset configurations over an 8
 ### IV-61 — Canonical class-by-class path audit (executed)
 
 Re-enumerated all four-edge multisets over an eight-vertex pool and accumulated per canonical class: represented multiset counts, distinct ordered sequence totals, and sequences returning to vacuum at intermediate step 2 or 3. Totals reproduce IV-60: 31,465 multiset configurations, 23 classes, 614,656 ordered sequences, 31,360 vacuum-return orders. The per-class ledger is in `audits/paper-a/AS-ALPHA-A-PROP-0012_IV61_CANONICAL_CLASS_PATH_AUDIT.md`; script in `tools/paper-a/iv61_canonical_class_path_audit.py`. These are combinatorial counts only; denominator-specific path terms, reducible corrections, amplitudes, normalization, density matrix, entropy, B-C, and Lean verification remain OPEN.
+
+
+### IV-62 — Intermediate-state denominator ledger (executed)
+
+For all 614,656 distinct ordered four-edge sequences on the 8-vertex/28-edge pool, the first intermediate gap is always 4h. Step-2 gap histogram (DeltaE/h): 0:21,952; 4:263,424; 8:329,280. Step-3 histogram: 0:9,408; 4:205,408; 8:329,280; 12:70,560. Thus 583,296 sequences have all three intermediate denominators nonzero and 31,360 have at least one vacuum intermediate, matching the prior count. Nonzero gap triples are exhaustively summarized in the IV-62 report and JSON. Zero-gap sequences are flagged, not removed or corrected. This is denominator bookkeeping only; reducible corrections, full fourth-order amplitudes, normalized density matrix, entropy, B-C, and Lean verification remain OPEN.
