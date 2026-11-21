@@ -446,3 +446,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV36_FROZEN_SOURCE_EDGE_DEFIN
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV37_RESPONSE_MATRIX_SYMMETRY_IDENTITY_INDEPENDENT_REDERIVATION.md`. IV-37 independently reconstructs the symmetric edge-response matrix from orbit classes (same edge A, adjacent edge B, disjoint edge C) and the combinatorial counts on (K_N). The constant sector is \\(\\chi_0=A+2(N-2)B+\\frac{(N-2)(N-3)}2C\\); standard vertex sector is \\(\\chi_1=A+(N-4)B-(N-3)C\\); residual degree-preserving sector is \\(\\chi_2=A-2B+C\\). Exact subtraction yields \\(\\chi_1-\\chi_2=(N-2)(B-C)\\). This is algebraic/symmetry exact and source-confirmed, but it does not establish the sign of (B-C).
 
 **IV-37 disposition:** response-matrix orbit counts and sector formulas PASS algebraically; exact identity PASS; Lean not performed; weak-coupling sign remains OPEN. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-38 Hamiltonian/perturbation convention audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV38_HAMILTONIAN_PERTURBATION_CONVENTION_AUDIT.md`. Frozen Section 2.1 confirms (H=-\\sum_{i<j}J_{ij}\\sigma_i^z\\sigma_j^z-h\\sum_i\\sigma_i^x), (h>0). In the (x)-basis, the pair interaction flips two spins; the excitation costs (4h), matrix element is (-J_{ij}), and first-order amplitude is \\(a_{ij}=(-J_{ij})/(-4h)=J_{ij}/(4h)\\). This confirms sign/factor for the first-order pair-flip amplitude and leading probability scale (J^2/(16h^2)). It does not certify higher-order amplitudes or differentiated remainders.
+
+**IV-38 disposition:** Hamiltonian convention SOURCE-CONFIRMED; first-order amplitude DERIVED/PASS; complete entropy derivative and remainder bounds OPEN; Lean not performed. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
