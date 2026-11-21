@@ -362,3 +362,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV24_KERNEL_TANGENT_CONE_RANK
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV25_SELECTION_RULE_BRIDGE_AUDIT.md`. IV-16/17 pair-flip Taylor support/order is a conditional fixed-finite-N analytic result in the computational configuration basis. It does not itself bound the transformation into the instantaneous low-spectrum eigenbasis: eigenvector/projector mixing and near-degeneracy require spectral separation or basis-invariant cluster estimates. The audited records do not derive a bridge from support/order to the low-spectrum diagonal response entering the entropy derivative.
 
 **IV-25 disposition:** prior pair-flip support/order premise PASS within scope; bridge to low-spectrum response NOT ESTABLISHED; eigenbasis mixing and log-weighted remainder OPEN; no proposition counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-26 reduced-density construction/partial-trace audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV26_REDUCED_DENSITY_PARTIAL_TRACE_AUDIT.md`. Rechecked the exact Gram partial-trace identity, one-site leading probability/edge derivative, odd-block environment parity and leading index convention, and even-block shared-amplitude rank-one cancellation. The displayed IV-14 leading formulas are internally consistent under the stated basis convention. The exact even-block residual Schur quantity is nonnegative for \(L>0\); its claimed \(O_N(r^4)\) size and differentiated size still depend on amplitude/tail estimates and were not re-proved here. Normalization corrections and higher-order derivative remainders remain open for independent closure.
+
+**IV-26 disposition:** exact Gram partial trace PASS; leading one-site and odd-block reconstruction PASS within perturbative scope; shared-amplitude cancellation PASS algebraically; higher-order normalization/tail/remainder closure OPEN; no counterexample to exact proposition; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
