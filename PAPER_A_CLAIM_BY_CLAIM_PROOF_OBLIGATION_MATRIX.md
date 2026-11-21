@@ -209,3 +209,10 @@ A source-access/definition audit was recorded at `audits/paper-a/AS-ALPHA-A-PROP
 A branch-by-branch entropy derivative audit is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_COMPLETE_ENTROPY_BRANCH_BOOKKEEPING_AUDIT.md`, commit `e3425299d481e291ba4ed653d2246f4f6ad4c9c7`. It explicitly uses trace normalization to cancel the constant `-1` terms in entropy derivatives, then checks the even-block large eigenbranch: `lambda_L=1-O_N(r^2)`, `lambda_L'=O_N(r^2)`, so the trace-cancelled contribution `-(ln lambda_L)lambda_L'` is `O_N(r^4)`. The even small branch remains conditional on the pair-flip/Schur estimates and positive-scale or zero-branch treatment; the odd positive branch, odd zero branch, and one-site branches are accounted for by the existing reports.
 
 **Status:** complete entropy branch bookkeeping at the claimed fixed-N orders, **conditional analytic closure only**. The report does not upgrade PROP-0012 to PASS. Frozen-source access/reconciliation, verifying the branch-scale hypotheses against the frozen source, independent verification of the amplitude recursion, Lean formalization/build, and any global `B-C>0` theorem remain open.
+
+
+## Supplemental audit update — PROP-0012 leading logarithmic coefficient / constant cancellation (2026-11-21)
+
+A separate algebraic cross-check is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_LEADING_LOG_COEFFICIENT_AND_CONSTANT_CANCELLATION_CHECK.md`, commit `5aa3f21d48e0644315b457114d3865ea52dc6954`. It explicitly verifies that the `+1) constants in derivatives of `-lambda ln lambda` cancel by trace normalization `sum(lambda')=0`; after this cancellation the leading two-site entropy contrast is `-(r^2/8)ln(q)`, not a term retaining an isolated constant. Combining with one-site entropy gives `(r^2/8)ln(q/p)`, where `q/p=2(N-2)/(N-1)>1), and physical-coupling conversion reproduces the corrected leading formula.
+
+**Disposition:** algebraic cross-check PASS conditional on the previously audited branch expansions and derivative estimates. This is not an independent source reconciliation, formal verification, or global sign proof; PROP-0012 remains OPEN.
