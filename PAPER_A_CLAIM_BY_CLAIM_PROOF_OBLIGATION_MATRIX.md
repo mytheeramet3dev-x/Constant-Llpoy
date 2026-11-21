@@ -559,3 +559,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV52_FOURTH_ORDER_LOW_EIGENVALUE_SC
 ## IV-53 — Cubic off-diagonal mixing derivative (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV53_CUBIC_OFF_DIAGONAL_MIXING_DERIVATIVE.md`. At uniform J the cubic odd block has equal entries, so B_uv=B_vv=0. Re-derivation of edge B=J13 gives D_B O11=J^2(2N-5)/(16h^3), D_B O22=J^2/(16h^3), D_B O12=J^2(N-2)/(16h^3). Hence D_B B_vv=0 but D_B B_uv=J^2(N-3)/(16h^3), generally nonzero for N>3. For C=J34, all three entry derivatives equal J^2/(8h^3), so both null and off-diagonal derivative combinations vanish. At uniform point B_uv=0, the derivative of |B_uv|^2 is zero, but local quadratic variation in B direction is possible. Direct fourth-order c_vv, eigenvalue coefficient, entropy derivative, B-C, and Lean remain OPEN.
+
+
+## IV-54 — Local quadratic mixing expansion around uniform coupling (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV54_LOCAL_QUADRATIC_MIXING_EXPANSION.md`. From IV-53, at fixed J,h,N>3, B_uv(delta)=kappa_N delta+O(delta^2), with kappa_N=J^2(N-3)/(16h^3) for physical displacement delta in J13. Using a=(N-2)/8 (r=J/h), the mixing square/a is J^4(N-3)^2 delta^2/[32(N-2)h^6]+O(delta^3). This is only the Schur mixing component; direct c_vv and the full low-branch coefficient remain open. Taylor smoothness is local at fixed N; no uniform estimate or Lean verification.
