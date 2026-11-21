@@ -535,3 +535,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV48_ODD_BLOCK_LOW_EIGENVALUE_RECON
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV49_ODD_BLOCK_CUBIC_NULL_BRANCH_AUDIT.md`. In the leading odd-block eigenbasis, the cubic low-branch coefficient is B_vv=(B_11+B_22-B_12-B_21)/2 (for a real symmetric block, (B_11+B_22-2B_12)/2). Global x-parity ensures even/odd subsystem blocks but does not alone force this coefficient to vanish. An additional r-to-minus-r symmetry acting appropriately on the null vector has not been established for the frozen model. Actual cubic entries and cancellation remain OPEN; branch order may be r^3, r^4, or later. No entropy response/B-C coefficient or Lean verification.
 
 **IV-49 disposition:** Algebraic null coefficient expression PASS; symmetry cancellation NOT ESTABLISHED; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-50 — Cubic odd-block amplitude bookkeeping (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV50_CUBIC_ODD_BLOCK_AMPLITUDE_BOOKKEEPING.md`. For odd-block retained states and odd-parity environment configurations, write amplitudes c=r a+r^2 b+... when first-order allowed. The cubic reduced-matrix coefficient is the environment sum of a_alpha b_beta* + b_alpha a_beta* over first-order-support configurations. Environment configurations first appearing at r^2 contribute to the reduced block at r^4 or later; normalization correction to first-order amplitudes is cubic and therefore enters O at fourth order. This is structural bookkeeping only; actual second-order coefficients/denominators and the cubic null sum have not been evaluated. No low-branch, entropy, B-C or Lean result claimed.
+
+**IV-50 disposition:** Cubic coefficient amplitude-sum identity CONDITIONAL PASS; evaluated cubic null coefficient OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
