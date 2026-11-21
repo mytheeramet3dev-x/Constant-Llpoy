@@ -554,3 +554,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV51_SECOND_ORDER_AMPLITUDES_AND_CU
 ## IV-52 — Fourth-order low eigenvalue Schur reconstruction (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV52_FOURTH_ORDER_LOW_EIGENVALUE_SCHUR_RECONSTRUCTION.md`. In leading eigenbasis, with O_uu=a r^2+O(r^3), O_uv=b_uv r^3+O(r^4), O_vv=c_vv r^4+O(r^5), and cubic null coefficient B_vv=0, the Schur complement yields lambda_low=r^4(c_vv-|b_uv|^2/a)+O(r^5), conditional on analytic expansions and a>0. Formula is algebraically derived; direct c_vv and b_uv are not evaluated. Remainder and edge derivatives are not controlled; no Lean verification. PROP-0012 remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.
+
+
+## IV-53 — Cubic off-diagonal mixing derivative (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV53_CUBIC_OFF_DIAGONAL_MIXING_DERIVATIVE.md`. At uniform J the cubic odd block has equal entries, so B_uv=B_vv=0. Re-derivation of edge B=J13 gives D_B O11=J^2(2N-5)/(16h^3), D_B O22=J^2/(16h^3), D_B O12=J^2(N-2)/(16h^3). Hence D_B B_vv=0 but D_B B_uv=J^2(N-3)/(16h^3), generally nonzero for N>3. For C=J34, all three entry derivatives equal J^2/(8h^3), so both null and off-diagonal derivative combinations vanish. At uniform point B_uv=0, the derivative of |B_uv|^2 is zero, but local quadratic variation in B direction is possible. Direct fourth-order c_vv, eigenvalue coefficient, entropy derivative, B-C, and Lean remain OPEN.
