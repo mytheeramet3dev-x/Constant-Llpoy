@@ -1,0 +1,37 @@
+{
+  "vertex_pool_size": 8,
+  "edge_pool_size": 28,
+  "edge_operations": 4,
+  "ordered_sequences": 614656,
+  "all_intermediate_denominators_nonzero": 583296,
+  "at_least_one_vacuum_intermediate": 31360,
+  "gap_histograms_by_intermediate_step_deltaE_over_h": [
+    {
+      "4": 614656
+    },
+    {
+      "0": 21952,
+      "4": 263424,
+      "8": 329280
+    },
+    {
+      "0": 9408,
+      "4": 205408,
+      "8": 329280,
+      "12": 70560
+    }
+  ],
+  "zero_gap_counts_by_step": [
+    0,
+    21952,
+    9408
+  ],
+  "nonzero_gap_tuple_histogram_deltaE_over_h": {
+    "[4, 4, 4]": 112896,
+    "[4, 4, 8]": 141120,
+    "[4, 8, 4]": 70560,
+    "[4, 8, 8]": 188160,
+    "[4, 8, 12]": 70560
+  },
+  "note": "Gap DeltaE=2h|S|; values in histograms are DeltaE/h. Zero-gap paths flagged only, not corrected/subtracted."
+}
