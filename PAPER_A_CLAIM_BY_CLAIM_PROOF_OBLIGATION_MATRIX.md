@@ -564,3 +564,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV53_CUBIC_OFF_DIAGONAL_MIXING_DERI
 ## IV-54 — Local quadratic mixing expansion around uniform coupling (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV54_LOCAL_QUADRATIC_MIXING_EXPANSION.md`. From IV-53, at fixed J,h,N>3, B_uv(delta)=kappa_N delta+O(delta^2), with kappa_N=J^2(N-3)/(16h^3) for physical displacement delta in J13. Using a=(N-2)/8 (r=J/h), the mixing square/a is J^4(N-3)^2 delta^2/[32(N-2)h^6]+O(delta^3). This is only the Schur mixing component; direct c_vv and the full low-branch coefficient remain open. Taylor smoothness is local at fixed N; no uniform estimate or Lean verification.
+
+
+## IV-55 — Direct fourth-order null-block reconstruction dependency audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV55_DIRECT_FOURTH_ORDER_RECONSTRUCTION_BLOCKER.md`. Direct coefficient c_vv remains BLOCKED: the fetched IV-53/54 artifacts do not provide the complete consistently normalized amplitude expansion needed at O(r^4) (third-order×first-order, second-order products, fourth-order/vacuum terms where relevant, and normalization/orthogonality corrections with environment multiplicities). The general conditional Schur block coefficient c_vv-|b_uv|^2/a is not a derivation of c_vv. No full coefficient, sign, B-C response, entropy derivative, or Lean verification is claimed.
