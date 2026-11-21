@@ -254,3 +254,14 @@ A fresh derivation reconstructs the even-block entries directly from exact envir
 - Frozen manuscript source retrieval/reconciliation remains blocked.
 - Do not cite the IV-10 leading coefficient as confirmed until the complete contrast is recomputed.
 - PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**. No Lean formalization/build was performed.
+
+
+## IV-12 status — site-by-site and branch-by-branch reconstruction
+
+**IV-12 PASS for reconstruction from the current working derivative ledger, conditional on its analytic expansions and source convention.** The one-site binary entropy derivative is \(H'(p)=\ln((1-p)/p)\) (no standalone \(-1\)); the odd positive branch derivative of \(-q\ln q\) contains \(-(1+\ln q)q'\). The combined candidate therefore retains an additive \(+1\) in the leading bracket:
+\[
+B-C=\frac{J}{8h^2}\left[1+\ln\frac{2(N-2)}{N-1}\right]+O_N\left(\frac{J^2}{h^3}|\ln(J/h)|\right).
+\]
+For fixed \(N\ge4\), the bracket is positive. This is only a local weak-coupling candidate under current expansions; frozen-source convention reconciliation, complete proof of analytic remainder lemmas, Lean formalization/build, and global positivity remain open. Do not claim PROP-0012 verified.
+
+- Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV12_SITE_BRANCH_DERIVATIVE_RECONSTRUCTION.md`
