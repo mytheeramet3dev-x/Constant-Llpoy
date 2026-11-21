@@ -355,3 +355,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV23_LOW_SPECTRUM_MATRIX_ELEM
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV24_KERNEL_TANGENT_CONE_RANK_DEFICIENT_AUDIT.md`. IV-24 checks whether PSD tangent constraints alone imply low-spectrum response suppression. For a two-sided differentiable PSD path at a rank-deficient base point, the kernel-to-kernel block of the first derivative must vanish; one-sided tangent paths impose positivity on that block. However cross-block derivatives need not vanish: the PSD rank-one path \(\rho(t)=\begin{pmatrix}1&t\\t&t^2\end{pmatrix}\) has nonzero cross-block derivative at \(t=0\). These local positivity facts do not supply a uniform weak-coupling order for the low-spectrum diagonal response or entropy derivative.
 
 **IV-24 disposition:** tangent-cone facts PASS; shortcut from positivity to quantitative response suppression FAILS (not implied); uniform rank-deficient entropy derivative remains OPEN; no counterexample to exact proposition established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-25 model-specific selection-rule bridge audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV25_SELECTION_RULE_BRIDGE_AUDIT.md`. IV-16/17 pair-flip Taylor support/order is a conditional fixed-finite-N analytic result in the computational configuration basis. It does not itself bound the transformation into the instantaneous low-spectrum eigenbasis: eigenvector/projector mixing and near-degeneracy require spectral separation or basis-invariant cluster estimates. The audited records do not derive a bridge from support/order to the low-spectrum diagonal response entering the entropy derivative.
+
+**IV-25 disposition:** prior pair-flip support/order premise PASS within scope; bridge to low-spectrum response NOT ESTABLISHED; eigenbasis mixing and log-weighted remainder OPEN; no proposition counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
