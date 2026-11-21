@@ -514,3 +514,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV45_ENVIRONMENT_PARITY_PERTURBATIV
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV46_LEADING_TWO_SITE_BLOCK_COEFFICIENTS.md`. First-order pair-flip amplitudes g_ab=J_ab/(4h) PASS. From first-order amplitudes plus quadratic normalization bookkeeping, leading even block: E11=1-A_i-A_j+g_ij^2, E22=g_ij^2, E12=g_ij, with A_i=sum_(k!=i)g_ik^2 and A_j=sum_(k!=j)g_jk^2. Leading odd block: O11=sum_(k not i,j)g_jk^2; O22=sum_(k not i,j)g_ik^2; O12=sum_(k not i,j)g_ik g_jk. Trace consistency through quadratic order and Gram/Cauchy positivity check PASS at this order. This is leading-coefficient bookkeeping only; higher-order matrix entries, low eigenvalue/log entropy derivative, uniform differentiated remainders, B-C remain OPEN. Lean not performed.
 
 **IV-46 disposition:** Leading coefficients conditional pass; entropy-order matrix and response OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-47 — Symmetric odd-block rank and edge derivative audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV47_ODD_BLOCK_RANK_AND_EDGE_DERIVATIVE_AUDIT.md`. At uniform couplings and g=J/(4h), the leading odd block is (N-2)g^2[[1,1],[1,1]], with eigenvalues 2(N-2)g^2=(N-2)r^2/8 and 0. The low branch has no r^2 coefficient; higher order must resolve it. For B=J_13, leading odd-block derivative has entries O11_B=0, O22_B=2g/(4h), O12_B=g/(4h); its expectation in the leading null vector (1,-1)/sqrt(2) vanishes. For C=J_34, derivative of leading odd block is zero by IV-46 formula. These leading algebraic results do not determine higher branch or logarithmic entropy derivative. Lean not performed.
+
+**IV-47 disposition:** Leading odd spectrum and derivative bookkeeping PASS; low-branch expansion OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
