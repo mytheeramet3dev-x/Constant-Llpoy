@@ -594,3 +594,8 @@ Support graph and edge multiplicities must be separated; graph isomorphism ignor
 ### IV-60 — Executed combinatorial graph enumeration
 
 A pure-Python script enumerates four pair-edge multiset configurations over an 8-vertex pool and canonicalizes weighted support components by brute-force permutations. Computed: 28 available edges; 31,465 labeled edge multisets; 614,656 unique ordered sequences; 23 weighted unlabeled support classes; 31,360 sequences with vacuum intermediate at step 2 or 3; endpoint-count histogram 0:616, 2:9464, 4:17080, 6:4200, 8:105. These are combinatorial counts only. Denominator/path corrections, normalized amplitudes, fourth-order density entries, and c_vv remain OPEN. Script and summary JSON are stored under tools/paper-a/ and audits/paper-a/ respectively.
+
+
+### IV-61 — Canonical class-by-class path audit (executed)
+
+Re-enumerated all four-edge multisets over an eight-vertex pool and accumulated per canonical class: represented multiset counts, distinct ordered sequence totals, and sequences returning to vacuum at intermediate step 2 or 3. Totals reproduce IV-60: 31,465 multiset configurations, 23 classes, 614,656 ordered sequences, 31,360 vacuum-return orders. The per-class ledger is in `audits/paper-a/AS-ALPHA-A-PROP-0012_IV61_CANONICAL_CLASS_PATH_AUDIT.md`; script in `tools/paper-a/iv61_canonical_class_path_audit.py`. These are combinatorial counts only; denominator-specific path terms, reducible corrections, amplitudes, normalization, density matrix, entropy, B-C, and Lean verification remain OPEN.
