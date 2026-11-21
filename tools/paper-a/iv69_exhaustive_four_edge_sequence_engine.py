@@ -16,8 +16,8 @@ def run(n_vertices: int, edges: list[tuple[int,int]]):
     for a,b in edges:
         if a==b: raise ValueError("self-loops not supported")
         if not (0 <= a < n_vertices and 0 <= b < n_vertices): raise ValueError("vertex out of range")
-        normalized.append(tuple(sorted((a,b))))
-    if len(set(normalized)) != len(normalized): raise Value ValueError("duplicate edge definitions")
+        normalized.append(tuple(sorted((a,b)))))
+    if len(set(normalized)) != len(normalized): raise ValueError("duplicate edge definitions")
     masks=[(1<<a)|(1<<b) for a,b in normalized]
     total=len(edges)**4
     vacuum_count=0
