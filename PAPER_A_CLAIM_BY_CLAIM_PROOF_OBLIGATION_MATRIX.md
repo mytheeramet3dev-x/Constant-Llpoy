@@ -460,3 +460,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV38_HAMILTONIAN_PERTURBATION
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV39_SECOND_ORDER_MULTIPATH_AMPLITUDE_AUDIT.md`. For distinct four-site final flips, coherent summation of two ordered paths for each of three pairings gives (c_{ijkl}^{(2)}=[J_{ij}J_{kl}+J_{ik}J_{jl}+J_{il}J_{jk}]/(16h^2)). For a two-flip final state, shared-vertex paths give (c_{ij}^{(2)}=\sum_{k\ne i,j}J_{ik}J_{jk}/(8h^2)). The second-order ground-component normalization correction is (-\frac12\sum_{i<j}J_{ij}^2/(16h^2)). Path amplitudes are summed coherently before probability formation.
 
 **IV-39:** Second-order path counting/denominators analytically PASS; reduced-density entropy derivative implications and uniform differentiated remainder OPEN; Lean not run. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-40 second-order reduced-density reconstruction (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV40_SECOND_ORDER_REDUCED_DENSITY_RECONSTRUCTION.md`. Global transverse parity (P_x=\prod_i\sigma_i^x) and nondegenerate ground-state parity imply the one-site reduced state commutes with (sigma_i^x), hence is diagonal in the (x)-basis. Its leading small eigenvalue is (p_i^{(2)}=\sum_{j\ne i}J_{ij}^2/(16h^2)), or ((N-1)r^2/16) at symmetry. Degree-three bookkeeping includes (2\operatorname{Re}\sum_j a_{ij}^{(1)*}a_{ij}^{(2)}); its full coefficient is not yet independently evaluated. The exact two-site partial trace ((\rho_{ij})_{aa'}=\sum_b c_{ab}\overline{c_{a'b}}) is confirmed, but its complete entropy-order matrix expansion remains open.
+
+**IV-40 disposition:** One-site parity/diagonal structure PASS; leading one-site eigenvalue PASS; degree-three interference structure derived; full two-site expansion and entropy derivative OPEN; Lean not performed. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
