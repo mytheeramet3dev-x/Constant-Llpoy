@@ -1,66 +1,54 @@
 # IV-40 — Second-Order Reduced Density Matrix Reconstruction
 
-**Status:** ONE-SITE STRUCTURE PASS / FULL TWO-SITE RECONSTRUCTION OPEN / ENTROPY COEFFICIENT NOT VERIFIED  
-**Scope:** Translate perturbative state amplitudes into reduced density matrices; check which orders can enter one-site eigenvalues and identify the remaining two-site obligations.
+**Status:** ONE-SITE STRUCTURE PASS / FULL TWO-SITE RECONSTRUCTION OPEN / ENTROPY COEFFICIENT NOT VERIFIED
 
 ## 1. Perturbative state bookkeeping
 
-In the transverse-field (x)-basis, interaction flips occur in pairs. Through second order, the normalized state has structure
-[
-|psiangle=(1+c_0^{(2)})|0angle+
-sum_{e} (a_e^{(1)}+a_e^{(2)})|eangle+
-sum_{|F|=4}c_F^{(2)}|Fangle+O(r^3),
-]
-where (a_e^{(1)}=J_e/(4h)), (a_e^{(2)}) receives shared-vertex path contributions, and (c_F^{(2)}) is the coherent three-pairing four-flip coefficient from IV-39. The displayed state is bookkeeping by perturbative degree; omitted higher-order sectors cannot be ignored when seeking fourth-order probabilities or entropy remainders.
+In the transverse-field x-basis, interactions flip spins in pairs. The normalized state is organized by perturbative degree:
+- ground-state component: 1 + c0(2)
+- pair-flip states: a_e(1) + a_e(2)
+- four-flip states: c_F(2)
+- higher-degree terms omitted
 
-## 2. One-site reduced density matrix structure
+Here a_ij(1) = J_ij/(4h); a_ij(2) receives shared-vertex paths; c_F(2) is the coherent four-flip coefficient from IV-39. This bookkeeping is not a complete fourth-order probability or entropy expansion.
 
-The Hamiltonian commutes with global transverse parity (P_x=\prod_i\sigma_i^x). For the unique ground state, the state is a parity eigenstate. Since (P_x) factors into site parity and environment parity, tracing the environment forces the one-site reduced state to commute with (sigma_i^x). Thus in the (x)-basis it is diagonal:
-[
-\rho_i=\begin{pmatrix}1-p_i&0\\0&p_i\end{pmatrix}
-]
-(up to which basis vector is designated the small-eigenvalue sector). This symmetry statement is exact in the nondegenerate ground-state regime, not just perturbative.
+## 2. Exact one-site structure from parity
 
-The leading small eigenvalue comes from first-order pair amplitudes:
-[
-p_i^{(2)}=\sum_{j\ne i}|a_{ij}^{(1)}|^2
-=\sum_{j\ne i}\frac{J_{ij}^2}{16h^2}.
-]
-For the symmetric coupling (J_{ij}=J), this becomes
-[
-p_i^{(2)}=\frac{N-1}{16}r^2,quad r=J/h.
-]
+The Hamiltonian commutes with global transverse parity Px = product_i sigma_i^x. In the nondegenerate ground-state regime, the ground state is a parity eigenstate. Since parity factors into site and environment parity, tracing out the environment implies rho_i commutes with sigma_i^x. Thus rho_i is diagonal in the x-basis:
 
-The next perturbative contribution (degree three in coupling) includes interference between first- and second-order amplitudes:
-[
-p_i^{(3)}=2\operatorname{Re}\sum_{j\ne i}a_{ij}^{(1)*}a_{ij}^{(2)}.
-]
-This formula is an order-bookkeeping identity for the two-flip sector. It is not a full expression for (p_i) through degree four; fourth-order probability terms also receive four-flip amplitudes squared, higher-order two-flip amplitudes, and consistent normalization contributions.
+rho_i = diag(1-p_i, p_i).
 
-## 3. Two-site reduced density matrix: exact construction, unresolved expansion
+The leading small eigenvalue is:
+p_i(2) = sum_(j != i) |a_ij(1)|^2
+        = sum_(j != i) J_ij^2/(16h^2).
 
-For any global state with amplitudes (c_{ab}), where (a) labels the two-site basis and (b) the environment basis, the exact reduced matrix is
-[
-(\rho_{ij})_{aa'}=\sum_b c_{ab}\overline{c_{a'b}}.
-]
-This is exact and is the reconstruction formula to apply to the perturbative state.
+At symmetric coupling J_ij=J and r=J/h:
+p_i(2) = (N-1)r^2/16.
 
-The two-site matrix contains populations and coherences. To obtain its eigenvalues to the order required for entropy derivatives, the expansion must include all amplitudes whose products contribute at that order, including normalization, two-flip corrections, four-flip channels, and relevant off-diagonal blocks. IV-39 path amplitudes alone are not yet a completed second-order reduced-matrix expansion.
+Degree-three bookkeeping includes the interference term:
+p_i(3) = 2 Re sum_(j != i) conjugate(a_ij(1))*a_ij(2).
 
-## 4. Consequence for entropy and edge-response difference
+This is not a complete expansion through degree four. Fourth-order contributions include four-flip amplitudes squared, higher-order pair amplitudes, and normalization terms.
 
-The exact one-site symmetry/diagonal form is established, and the leading (p_i=O(r^2)) term is recovered. But a complete (B-C) coefficient requires the differentiated one-site and two-site entropy contributions with order-consistent eigenvalue/coherence expansions. In particular, the low-eigenvalue entropy derivative involves (p_u\ln p); the coefficient of (p_u) and the differentiated higher-order remainder cannot be inferred from (p=O(r^2)) alone.
+## 3. Two-site reduced matrix
+
+For global amplitudes c_(a,b), with a labeling the two-site basis and b the environment basis, the exact partial trace is:
+(rho_ij)_(a,a') = sum_b c_(a,b) conjugate(c_(a',b)).
+
+A full entropy-order expansion requires consistent inclusion of amplitudes, normalization, two-flip corrections, four-flip channels, and off-diagonal matrix blocks. IV-39 amplitudes alone do not constitute this complete reconstruction.
+
+## 4. Entropy-response implication
+
+The one-site symmetry structure and leading p_i are confirmed. However, the complete B-C coefficient requires differentiated one-site and two-site entropy contributions from an order-consistent matrix expansion. A bound p=O(r^2) alone does not control p_u ln(p) or its differentiated remainder.
 
 ## 5. Findings
 
-- Global parity symmetry implies one-site reduced state diagonal in the (x)-basis: **PASS (exact, nondegenerate ground state)**.
-- Leading one-site eigenvalue (\sum_{j\ne i}J_{ij}^2/(16h^2)): **PASS**.
-- Degree-three interference term (2\mathrm{Re}\sum a^{(1)*}a^{(2)}): **STRUCTURE DERIVED**; its fully evaluated coefficient is not yet independently checked.
-- Exact two-site partial-trace formula: **PASS**.
-- Full two-site matrix expansion to the entropy-required order: **OPEN**.
-- Recomputed entropy derivative and (B-C): **OPEN**.
-- Lean proof/build: **NOT PERFORMED**.
+- One-site parity/diagonal structure: PASS (exact in nondegenerate ground-state regime).
+- Leading one-site small eigenvalue: PASS.
+- Degree-three interference structure: derived; full coefficient not independently evaluated.
+- Exact two-site partial-trace formula: PASS.
+- Complete two-site matrix expansion at entropy-required order: OPEN.
+- Entropy derivative and B-C recomputation: OPEN.
+- Lean verification: NOT PERFORMED.
 
-## 6. Disposition
-
-IV-40 is a partial structural audit only. It does not promote the current candidate coefficient to a theorem. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+IV-40 is partial structural progress only. PROP-0012 remains OPEN / ANALYTIC-PARTIAL / NOT VERIFIED.
