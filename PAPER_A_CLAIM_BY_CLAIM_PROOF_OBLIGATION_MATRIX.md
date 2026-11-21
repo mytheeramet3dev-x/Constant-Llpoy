@@ -579,3 +579,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV56_EXCITATION_SECTOR_DEPENDENCY_M
 ## IV-57 — Explicit ordered pair-edge path samples and denominators (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV57_EXPLICIT_ORDERED_PATH_SAMPLES_AND_DENOMINATORS.md`. Excitation sets update by symmetric difference with each edge. For a 2q-flip intermediate, gap is 4qh. Sample non-vacuum sequence (ab,bc,cd,ab) has S1={a,b}, S2={a,c}, S3={a,d}, target S4={b,d}, all intermediate gaps 4h; its raw sequential resolvent term is -J_ab^2 J_bc J_cd/(64h^3) under the stated denominator convention. This is only a raw path contribution, not normalized full amplitude. A repeated disjoint-edge sample (ab,cd,ab,cd) returns to vacuum at step 2 and exposes reducible/normalization handling. Exhaustive path enumeration, aggregation, normalized amplitudes, c_vv, B-C, entropy and Lean remain OPEN.
+
+
+### IV-58 — Four-edge topology classification framework
+
+The multiplicity partitions of four edge occurrences are exhaustive: 4; 3+1; 2+2; 2+1+1; and 1+1+1+1. The endpoint flipped set is the set of odd-degree vertices in the four-edge multigraph, so its size is even and at most eight. This exhausts multiplicity partitions only; support graph refinement, ordered paths, denominators/reducible-path treatment, normalized amplitudes, and direct fourth-order coefficient remain OPEN. See `audits/paper-a/AS-ALPHA-A-PROP-0012_IV58_FOUR_EDGE_TOPOLOGY_CLASSIFICATION.md`.
