@@ -1,0 +1,46 @@
+{
+  "totalOrderedSequences": 614656,
+  "vacuumPrefixCounts": {
+    "step2": 21952,
+    "step3": 9408,
+    "both": 0,
+    "total": 31360
+  },
+  "edgeRepeatCounts": {
+    "step2": {
+      "repeat1": 19656,
+      "repeat2": 2268,
+      "repeat3": 28
+    },
+    "step3": {
+      "repeat0": 8400,
+      "repeat1": 1008
+    }
+  },
+  "repeatedStateCounts": {
+    "step2": {
+      "0": 20076,
+      "1": 1848,
+      "2": 28
+    },
+    "step3": {
+      "0": 8736,
+      "1": 672
+    }
+  },
+  "details": {
+    "step2": {
+      "distinctEdges3_repeat1_stateRepeat0": 19320,
+      "distinctEdges3_repeat1_stateRepeat1": 336,
+      "distinctEdges2_repeat2_stateRepeat0": 756,
+      "distinctEdges2_repeat2_stateRepeat1": 1512,
+      "distinctEdges2_repeat2_stateRepeat2": 28
+    },
+    "step3": {
+      "distinctEdges4_repeat0_stateRepeat0": 8400,
+      "distinctEdges3_repeat1_stateRepeat0": 336,
+      "distinctEdges3_repeat1_stateRepeat1": 672
+    }
+  },
+  "interpretation": "Step-2 vacuum requires first two edge operations identical; step-3 vacuum is triangle prefix. Bookkeeping flags only, no amplitude corrections."
+}
