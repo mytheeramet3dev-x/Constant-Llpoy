@@ -614,3 +614,12 @@ Exhaustively classified 31,360 sequences with a vacuum intermediate: step-2 vacu
 ### IV-64 — Reduced resolvent convention and vacuum exclusion
 
 Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip state S has diagonal factor -1/(2h|S|), S nonempty. The vacuum is excluded and zero denominators are never evaluated. The non-vacuum four-operation chain is recorded as a skeleton only, not claimed as the complete normalized fourth-order target-state coefficient. Correct treatment of vacuum-return paths through the complete recurrence/correction terms, normalization, full coefficient, reduced density matrix, B-C, and Lean remain OPEN. See IV-64.
+
+
+## IV-65 — Fourth-Order Perturbative Recurrence
+
+- Derived intermediate-normalized energy recurrence: `E_k = <0|V|psi_{k-1}>`.
+- Derived state recurrence: `psi_k = R0 Q [V psi_{k-1} - sum_{j=1}^{k-1} E_j psi_{k-j}]`.
+- Fourth order includes `-E2 psi2 - E3 psi1`; `E1=0` for ZZ perturbation. The ordinary resolvent chain alone is not complete.
+- Artifacts: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV65_FOURTH_ORDER_RECURRENCE.md`, `audits/paper-a/IV65_FOURTH_ORDER_RECURRENCE.json`.
+- Status remains ANALYTIC-PARTIAL / NOT LEAN-VERIFIED; proposition not proven.
