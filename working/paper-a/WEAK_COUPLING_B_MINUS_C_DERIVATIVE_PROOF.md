@@ -134,54 +134,54 @@ For the positive branch, the eigenvector at the uniform point is \((1,1)/\sqrt2\
 
 Indeed, \(J_{13}\) changes \(a_{13}\), while \(J_{34}\) does not enter the leading Gram matrix.
 
-## 4. The `(++ , --)` block: shared-amplitude Schur cancellation
+## 4. The \((++ , --)\) block: shared-amplitude Schur cancellation
 
 Write the even block entries as exact environment sums over even environment
-flip sets (Esubseteq{3,ldots,N}):
-[
-L=sum_E|c_E|^2,quad
-X=sum_Ec_Eoverline{c_{Ecup{1,2}}},quad
-S=sum_E|c_{Ecup{1,2}}|^2.
-]
+flip sets \(E\subseteq\{3,\ldots,N\}\):
+\[
+L=\sum_E|c_E|^2,\quad
+X=\sum_Ec_E\overline{c_{E\cup\{1,2\}}},\quad
+S=\sum_E|c_{E\cup\{1,2\}}|^2.
+\]
 Separate the empty environment without truncating the shared amplitude:
-[
-L=|c_emptyset|^2+R_L,quad
-X=c_emptysetoverline{c_{12}}+R_X,quad
+\[
+L=|c_\emptyset|^2+R_L,\quad
+X=c_\emptyset\overline{c_{12}}+R_X,\quad
 S=|c_{12}|^2+R_S.
-]
-By the pair-flip support lemma, for fixed finite (N), nonempty even (E)
-has (|E|ge2), and the corresponding amplitudes have orders
-(c_E=O_N(r^{|E|/2})), (c_{Ecup{1,2}}=O_N(r^{(|E|+2)/2}));
+\]
+By the pair-flip support lemma, for fixed finite \(N\), nonempty even \(E\)
+has \(|E|\ge2\), and the corresponding amplitudes have orders
+\(c_E=O_N(r^{|E|/2})\), \(c_{E\cup\{1,2\}}=O_N(r^{(|E|+2)/2})\);
 the same orders hold for first edge derivatives. Thus
-[
-R_L=O_N(r^2),quad R_X=O_N(r^3),quad R_S=O_N(r^4),
-]
-including first edge derivatives. Also (c_emptyset=1+O_N(r^2)) and
-(c_{12}=O_N(r)), with first edge derivatives (O_N(r)).
+\[
+R_L=O_N(r^2),\quad R_X=O_N(r^3),\quad R_S=O_N(r^4),
+\]
+including first edge derivatives. Also \(c_\emptyset=1+O_N(r^2)\) and
+\(c_{12}=O_N(r)\), with first edge derivatives \(O_N(r)\).
 
 Consequently,
-[
-rac{|X|^2}{L}=|c_{12}|^2+O_N(r^4),qquad
-D:=S-rac{|X|^2}{L}=O_N(r^4),
-]
-and (partial_{u_e}D=O_N(r^4)) for each first edge direction. The
-cancellation is through the exact common amplitude (c_{12}); it does not
-assume (c_{12}=a_{12}+O(r^3)). In fact, second-order overlapping pair-flip
-paths can give (c_{12}=a_{12}+O_N(r^2)).
+\[
+\frac{|X|^2}{L}=|c_{12}|^2+O_N(r^4),\qquad
+D:=S-\frac{|X|^2}{L}=O_N(r^4),
+\]
+and \(\partial_{u_e}D=O_N(r^4)\) for each first edge direction. The
+cancellation is through the exact common amplitude \(c_{12}\); it does not
+assume \(c_{12}=a_{12}+O(r^3)\). In fact, second-order overlapping pair-flip
+paths can give \(c_{12}=a_{12}+O_N(r^2)\).
 
-If (lambda_L) is the large eigenvalue of this positive block, then it
+If \(\lambda_L\) is the large eigenvalue of this positive block, then it
 stays bounded below near the uncoupled point and
-[
-lambda_s=rac{det M}{lambda_L}
-=rac{L}{lambda_L}D=O_N(r^4),qquad
-partial_{u_e}lambda_s=O_N(r^4).
-]
+\[
+\lambda_s=\frac{\det M}{\lambda_L}
+=\frac{L}{\lambda_L}D=O_N(r^4),\qquad
+\partial_{u_e}\lambda_s=O_N(r^4).
+\]
 For a positive analytic branch with its leading logarithmic scale controlled,
 the small-branch entropy directional derivative is
-(O_N(r^4(1+|ln r|))). An identically-zero/nonnegative branch is handled
-separately by the interior-minimum argument; no (ln 0) is evaluated.
+\(O_N(r^4(1+|\ln r|))\). An identically-zero/nonnegative branch is handled
+separately by the interior-minimum argument; no \(\ln 0\) is evaluated.
 
-This replaces the former conservative (O_N(r^3)) Schur/entropy bound with
-the stronger (O_N(r^4)) result **conditional on the stated amplitude-order
-lemma and environment-sum hypotheses**. This is fixed-(N), local weak-coupling
-analysis; no uniform-in-(N) estimate is claimed.
+This replaces the former conservative \(O_N(r^3)\) Schur/entropy bound with
+the stronger \(O_N(r^4)\) result **conditional on the stated amplitude-order
+lemma and environment-sum hypotheses**. This is fixed-\(N\), local weak-coupling
+analysis; no uniform-in-\(N\) estimate is claimed.
