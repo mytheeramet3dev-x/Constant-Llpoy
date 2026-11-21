@@ -8,8 +8,8 @@
 
 In the leading eigenbasis (u,v), assume the odd block admits an analytic expansion
 O(r)=r^2 A+r^3 B+r^4 C+O(r^5), with A=diag(a,0), a>0. IV-51 reports the cubic null cancellation B_vv=0 at the uniform point. Write entries:
-O_uu=a r^2+b_uu r^3+c_uu r^4+O(r^5,
-O_uv=b_uv r^3+c_uv r^4+O(r^5,
+O_uu=a r^2+b_uu r^3+c_uu r^4+O(r^5),
+O_uv=b_uv r^3+c_uv r^4+O(r^5),
 O_vv=c_vv r^4+O(r^5.
 The cubic null entry is zero by the prior conditional calculation; it is not assumed globally.
 
