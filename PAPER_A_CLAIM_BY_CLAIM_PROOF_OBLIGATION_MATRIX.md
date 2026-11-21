@@ -652,6 +652,6 @@ Defined the formal convention P=|0><0|, Q=I-P, R0=Q(E0-H0)^(-1)Q; excited flip s
 
 ## IV-69 — Executable enumeration engine (small graph test)
 - Added Python engine and executed the four-vertex square test case (256 ordered edge tuples).
-- Reported counts: 40 vacuum returns, 24 reducible vacuum-return tuples, 16 irreducible vacuum-return tuples; endpoint flip histogram 0:40, 2:160, 4:56.
+- Corrected after actual local execution and independent check: 64 vacuum returns, 16 reducible vacuum-return tuples, 48 irreducible vacuum-return tuples; endpoint flip histogram 0:64, 2:128, 4:64.
 - Independent incidence-parity check: matching counts.
 - Status: **SMALL-GRAPH TEST ONLY / NO EXACT-DIAGONALIZATION / NO LEAN VERIFICATION**.
