@@ -467,3 +467,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV39_SECOND_ORDER_MULTIPATH_AMPLITU
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV40_SECOND_ORDER_REDUCED_DENSITY_RECONSTRUCTION.md`. Global transverse parity (P_x=\prod_i\sigma_i^x) and nondegenerate ground-state parity imply the one-site reduced state commutes with (sigma_i^x), hence is diagonal in the (x)-basis. Its leading small eigenvalue is (p_i^{(2)}=\sum_{j\ne i}J_{ij}^2/(16h^2)), or ((N-1)r^2/16) at symmetry. Degree-three bookkeeping includes (2\operatorname{Re}\sum_j a_{ij}^{(1)*}a_{ij}^{(2)}); its full coefficient is not yet independently evaluated. The exact two-site partial trace ((\rho_{ij})_{aa'}=\sum_b c_{ab}\overline{c_{a'b}}) is confirmed, but its complete entropy-order matrix expansion remains open.
 
 **IV-40 disposition:** One-site parity/diagonal structure PASS; leading one-site eigenvalue PASS; degree-three interference structure derived; full two-site expansion and entropy derivative OPEN; Lean not performed. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+### IV-40 notation repair / fetch-back integrity note
+
+The IV-40 report was rewritten in plain-text notation to avoid escape corruption in rendered formulas. Confirmed relationships: p_i leading = sum_(j != i) J_ij^2/(16 h^2); symmetric p_i = (N-1)(J/h)^2/16; degree-three interference = 2 Re sum_j conjugate(a_ij(1))*a_ij(2). The two-site partial trace is (rho_ij)_(a,a') = sum_b c_(a,b) conjugate(c_(a',b)). Audit status unchanged: one-site structure PASS; full two-site expansion and entropy derivative OPEN; proposition not verified.
