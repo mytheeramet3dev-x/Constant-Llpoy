@@ -383,3 +383,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV27_NORMALIZATION_TRUNCATION
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV28_EDGE_DERIVATIVE_REMAINDER_UNIFORMITY_AUDIT.md`. Cauchy's estimate confirms that a holomorphic remainder uniformly bounded by \(C_N|r|^k\) on a common complex edge-variable disk yields a first edge derivative of the same \(r\)-order, with constant scaled by disk radius. Pointwise real \(O(r^k)\) alone does not imply same-order derivative. The working derivation states joint finite-N analyticity and differentiated expansions, but the complete quantitative neighborhood, common-radius constants, and every amplitude-recursion remainder were not independently certified in IV-28.
 
 **IV-28 disposition:** Cauchy derivative principle PASS conditionally; pointwise-to-derivative shortcut FAILS; complete uniform remainder ledger OPEN; spectral/logarithmic remainder OPEN; no target counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-29 ground-state projector/gap-neighborhood audit (2026-11-21)
+
+Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV29_GROUND_STATE_PROJECTOR_GAP_NEIGHBORHOOD_AUDIT.md`. The uncoupled \(H_0=-h\sum_i\sigma_i^x\), \(h>0\), has a unique ground state and gap \(2h\). Standard finite-dimensional perturbation theory gives persistence of an isolated ground eigenvalue and analyticity of its Riesz projector in a sufficiently small parameter neighborhood; the working derivation states this fixed-finite-N analytic setup. Explicit perturbation norm/radius, quantitative gap lower bound across the common remainder neighborhood, and uniform-in-N control are not supplied/independently audited. This validates the projector principle but not every downstream remainder.
+
+**IV-29 disposition:** unperturbed unique ground/gap PASS; analytic projector principle and local gap persistence PASS conditional on small finite-N neighborhood; explicit common neighborhood for all remainders OPEN; no counterexample established; no Lean verification. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
