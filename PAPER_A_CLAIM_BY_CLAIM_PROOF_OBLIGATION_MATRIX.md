@@ -216,3 +216,10 @@ A branch-by-branch entropy derivative audit is recorded at `audits/paper-a/AS-AL
 A separate algebraic cross-check is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_LEADING_LOG_COEFFICIENT_AND_CONSTANT_CANCELLATION_CHECK.md`, commit `5aa3f21d48e0644315b457114d3865ea52dc6954`. It explicitly verifies that the `+1` constants in derivatives of `-lambda ln lambda` cancel by trace normalization `sum(lambda')=0`; after this cancellation the leading two-site entropy contrast is `-(r^2/8)ln(q)`, not a term retaining an isolated constant. Combining with one-site entropy gives `(r^2/8)ln(q/p)`, where `q/p=2(N-2)/(N-1)>1`, and physical-coupling conversion reproduces the corrected leading formula.
 
 **Disposition:** algebraic cross-check PASS conditional on the previously audited branch expansions and derivative estimates. This is not an independent source reconciliation, formal verification, or global sign proof; PROP-0012 remains OPEN.
+
+
+## Supplemental audit update — PROP-0012 independent leading-coefficient re-derivation (2026-11-21)
+
+A separate leading-order re-derivation is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_INDEPENDENT_LEADING_COEFFICIENT_REDERIVATION.md`, commit `023e389a7d0461efed0690e5c8105842e2ec3b80`. It recomputes the pair amplitude from the TFIM matrix element/energy gap, the one-site small eigenvalue, the odd-block positive eigenvalue and its adjacent-edge derivative via the eigenvector formula, the logarithmic ratio, and the physical-coupling conversion. It agrees with the leading coefficient previously obtained.
+
+**Disposition:** independent leading-coefficient algebra PASS. This is not a full independent eigenbranch/remainder/source proof. Even-block and all-branch remainder estimates remain conditional, source reconciliation and Lean formalization/build remain open, and PROP-0012 remains OPEN.
