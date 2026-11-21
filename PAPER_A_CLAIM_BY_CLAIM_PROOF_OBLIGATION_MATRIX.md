@@ -569,3 +569,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV54_LOCAL_QUADRATIC_MIXING_EXPANSI
 ## IV-55 — Direct fourth-order null-block reconstruction dependency audit (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV55_DIRECT_FOURTH_ORDER_RECONSTRUCTION_BLOCKER.md`. Direct coefficient c_vv remains BLOCKED: the fetched IV-53/54 artifacts do not provide the complete consistently normalized amplitude expansion needed at O(r^4) (third-order×first-order, second-order products, fourth-order/vacuum terms where relevant, and normalization/orthogonality corrections with environment multiplicities). The general conditional Schur block coefficient c_vv-|b_uv|^2/a is not a derivation of c_vv. No full coefficient, sign, B-C response, entropy derivative, or Lean verification is claimed.
+
+
+## IV-56 — Fourth-order excitation-sector dependency map (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV56_EXCITATION_SECTOR_DEPENDENCY_MAP.md`. Under H0=-h sum sigma_x and V=-sum J_ij sigma_i^z sigma_j^z, V flips two x-basis spins; an n-th order wavefunction amplitude can reach candidate 2q-flip sectors with q<=n (sector bound only). Fourth-order reduced-state terms can arise from amplitude-order pairings (0,4),(1,3),(2,2),(3,1),(4,0), subject to environment-state matching after partial trace. Complete ordered path sums, intermediate denominators, normalization/reducible-term handling, environment matching, c_vv, B-C, entropy and Lean remain open.
