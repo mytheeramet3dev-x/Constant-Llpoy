@@ -694,3 +694,7 @@ Executable SymPy cross-check run on six graphs (single edge, triangle, C4, P4, K
 
 ## IV-84 — Analytic proof of raw-to-complete E4 correction (2026-11-21)
 Proved under the finite simple-graph transverse-field Ising and intermediate-normalization conventions: E4_complete=E4_raw+(sum_e J_e^2)^2/(64h^3). From recurrence, c3=R0Q(Vc2-E2c1), so E4 equals raw closed non-vacuum Q-chain minus E2<0|VR0Qc1>. Since E2=-sum J_e^2/(4h) and <0|VR0Qc1>=sum J_e^2/(16h^2), the correction follows. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV84_ANALYTIC_PROOF_RAW_COMPLETE_E4_CORRECTION.md`. This closes the general correction identity (not a closed raw E4 formula, B-C response, proposition, or Lean proof).
+
+
+## IV-85 — General-graph fourth-order energy formula (2026-11-21)
+Derived from IV-79 raw classes plus IV-84 correction: E4=[sum_e J_e^4 -2 sum_{adjacent unordered edge pairs}J_e^2J_f^2 -20 sum_{simple C4} product_{e in C4}J_e]/(64h^3). Adjacent means sharing one vertex; each simple 4-cycle counted once. Verified symbolically by a SymPy recurrence verifier across all simple labeled graphs on n<=4 vertices (75 total) plus six structured n=5 graphs (81 total); local equivalent script assertions passed. Committed verifier at `tools/paper-a/iv85_general_graph_e4_formula_crosscheck.py`, report at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV85_GENERAL_GRAPH_E4_FORMULA.md`. General formula analytic derivation recorded; this remains perturbative-energy work and does not close response B-C or Proposition 0012/Lean.
