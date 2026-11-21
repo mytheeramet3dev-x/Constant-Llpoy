@@ -223,3 +223,10 @@ A separate algebraic cross-check is recorded at `audits/paper-a/AS-ALPHA-A-PROP-
 A separate leading-order re-derivation is recorded at `audits/paper-a/AS-ALPHA-A-PROP-0012_INDEPENDENT_LEADING_COEFFICIENT_REDERIVATION.md`, commit `023e389a7d0461efed0690e5c8105842e2ec3b80`. It recomputes the pair amplitude from the TFIM matrix element/energy gap, the one-site small eigenvalue, the odd-block positive eigenvalue and its adjacent-edge derivative via the eigenvector formula, the logarithmic ratio, and the physical-coupling conversion. It agrees with the leading coefficient previously obtained.
 
 **Disposition:** independent leading-coefficient algebra PASS. This is not a full independent eigenbranch/remainder/source proof. Even-block and all-branch remainder estimates remain conditional, source reconciliation and Lean formalization/build remain open, and PROP-0012 remains OPEN.
+
+
+## Supplemental audit update — PROP-0012 independent Hamiltonian/leading-coefficient checks IV-1 to IV-6 (2026-11-21)
+
+A consolidated report was added at `audits/paper-a/AS-ALPHA-A-PROP-0012_IV1-IV6_INDEPENDENT_HAMILTONIAN_AND_N4_CHECK.md`, report commit `96b3a02f03b4f4b234132f85e0dfc721b173d8f8`, fetch-back blob SHA `7dd89a90d44331d277989e871e770445d0431e21`. It independently rebuilds the Hamiltonian normalization and pair-flip amplitude, the odd two-site block and positive eigenvalue, adjacent-edge eigenvalue derivative, leading entropy contrast, physical coupling conversion, and the N=4 specialization (ratio q/p=4/3).
+
+**Disposition:** IV-1 through IV-6 PASS for the specified leading-order algebraic reconstruction. The N=4 specialization is not a separate remainder proof. Full higher-order entropy remainder closure, frozen-source reconciliation, Lean formalization/build, and global `B-C>0` remain OPEN. PROP-0012 stays ANALYTIC-PARTIAL / OPEN; no status promotion is made.
