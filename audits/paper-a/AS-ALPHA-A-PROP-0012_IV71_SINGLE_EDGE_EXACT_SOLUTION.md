@@ -16,7 +16,7 @@ Thus E_2=-J^2/(4h), E_4=+J^4/(64h^3). This verifies the fourth-order coefficient
 ## Intermediate-normalized ground-state amplitude
 With |ψ>=|++>_x+c|-->_x and <++|ψ>=1,
 c=J/(sqrt(4h^2+J^2)+2h)
-=J/(4h)-J^3/(64h^3)+J^5/(1024h^5)+O(J^7).
+=J/(4h)-J^3/(64h^3)+J^5/(512h^5)+O(J^7).
 
 ## Limits
 This is a single-edge exact check only. It does not prove the general graph fourth-order formula, the fourth-order vacuum-return correction, or Proposition 0012. No Lean verification is claimed.
