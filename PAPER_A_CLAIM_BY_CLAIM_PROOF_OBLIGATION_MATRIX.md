@@ -574,3 +574,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV55_DIRECT_FOURTH_ORDER_RECONSTRUC
 ## IV-56 — Fourth-order excitation-sector dependency map (2026-11-21)
 
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV56_EXCITATION_SECTOR_DEPENDENCY_MAP.md`. Under H0=-h sum sigma_x and V=-sum J_ij sigma_i^z sigma_j^z, V flips two x-basis spins; an n-th order wavefunction amplitude can reach candidate 2q-flip sectors with q<=n (sector bound only). Fourth-order reduced-state terms can arise from amplitude-order pairings (0,4),(1,3),(2,2),(3,1),(4,0), subject to environment-state matching after partial trace. Complete ordered path sums, intermediate denominators, normalization/reducible-term handling, environment matching, c_vv, B-C, entropy and Lean remain open.
+
+
+## IV-57 — Explicit ordered pair-edge path samples and denominators (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV57_EXPLICIT_ORDERED_PATH_SAMPLES_AND_DENOMINATORS.md`. Excitation sets update by symmetric difference with each edge. For a 2q-flip intermediate, gap is 4qh. Sample non-vacuum sequence (ab,bc,cd,ab) has S1={a,b}, S2={a,c}, S3={a,d}, target S4={b,d}, all intermediate gaps 4h; its raw sequential resolvent term is -J_ab^2 J_bc J_cd/(64h^3) under the stated denominator convention. This is only a raw path contribution, not normalized full amplitude. A repeated disjoint-edge sample (ab,cd,ab,cd) returns to vacuum at step 2 and exposes reducible/normalization handling. Exhaustive path enumeration, aggregation, normalized amplitudes, c_vv, B-C, entropy and Lean remain OPEN.
