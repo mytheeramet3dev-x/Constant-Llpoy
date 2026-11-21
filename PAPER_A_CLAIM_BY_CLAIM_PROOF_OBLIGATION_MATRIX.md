@@ -244,3 +244,13 @@ Audit report `audits/paper-a/AS-ALPHA-A-PROP-0012_IV7_WORKING_PROOF_REMAINDER_ST
 A fresh derivation reconstructs the even-block entries directly from exact environment sums, isolates the empty-environment shared amplitude, and independently checks the nonempty-environment tail orders and Schur cancellation. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV8_DIRECT_ENVIRONMENT_SUM_RECONSTRUCTION.md`; report commit `87c85cf01f3167575921d53431cf9ef15350bd03`; fetch-back blob SHA `ae65288901ee26fbebb2abd535998f056ae232ba`.
 
 **IV-8 disposition:** PASS for the algebraic reconstruction, conditional on the pair-flip Taylor-support and first-edge-derivative order lemma, fixed finite N, local analyticity, and source/convention agreement. The shared-amplitude argument gives Schur remainder and small eigenbranch O_N(r^4), with entropy derivative O_N(r^4(1+|ln r|)) under the positive-scale check or separate zero-branch treatment. This addresses the earlier derivation-provenance gap, but does not independently mechanize the amplitude recursion or source reconciliation. The working proof's conservative O_N(r^3) even-branch bound is now ready for an explicit provenance/integration update, but has not yet been edited in this IV-8 step. Full PROP-0012 remains OPEN / ANALYTIC-PARTIAL; no Lean formalization/build, source-wide pass, uniform-in-N bound, or global B-C sign theorem is claimed.
+
+
+## IV-11 status correction — Full differentiated entropy contrast
+
+**IV-11: FAIL-TO-CLOSE / REOPENED.** Independent scalar entropy derivative checking identified an additive constant discrepancy in the IV-10 claim that chain-rule constants cancel. The one-site binary entropy derivative is exactly \(H'(p)=\ln((1-p)/p)\), with no standalone \(-1\), while the positive eigenbranch derivative of \(-q\ln q\) is \(-(1+\ln q)q'\), containing an explicit \(+1\). With the currently reported edge-direction coefficients, a candidate combination retains an additive \(+1\) inside the leading bracket; this is not accepted as a corrected theorem because the full source-convention and both-site derivative reconstruction is still incomplete.
+
+- Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV11_FULL_ENTROPY_CONTRAST_CLOSURE_REOPENED.md`
+- Frozen manuscript source retrieval/reconciliation remains blocked.
+- Do not cite the IV-10 leading coefficient as confirmed until the complete contrast is recomputed.
+- PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**. No Lean formalization/build was performed.
