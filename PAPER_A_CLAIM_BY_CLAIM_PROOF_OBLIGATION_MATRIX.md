@@ -472,3 +472,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV40_SECOND_ORDER_REDUCED_DENSITY_R
 ### IV-40 notation repair / fetch-back integrity note
 
 The IV-40 report was rewritten in plain-text notation to avoid escape corruption in rendered formulas. Confirmed relationships: p_i leading = sum_(j != i) J_ij^2/(16 h^2); symmetric p_i = (N-1)(J/h)^2/16; degree-three interference = 2 Re sum_j conjugate(a_ij(1))*a_ij(2). The two-site partial trace is (rho_ij)_(a,a') = sum_b c_(a,b) conjugate(c_(a',b)). Audit status unchanged: one-site structure PASS; full two-site expansion and entropy derivative OPEN; proposition not verified.
+
+
+## Supplemental audit update — PROP-0012 IV-41 one-site entropy derivative/log remainder (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV41_ONE_SITE_ENTROPY_DERIVATIVE_LOG_REMAINDER_AUDIT.md`. Exact binary entropy derivative (S_u=p_u\ln((1-p)/p)) PASS. For (p=r^2a(u,r)), positive lower bound on (a), bounded (a,a_u), its scale is (O(r^2(1+|\ln r|))). For (p=r^2a+r^3b+O(r^4)), the formal expansion is (S_u=r^2a_u(-2\ln r-\ln a)+r^3[b_u(-2\ln r-\ln a)-ba_u/a]+O(r^4(1+|\ln r|))), conditional on controlled differentiated remainder. Pointwise (O(r^4)) does not imply derivative (O(r^4)). Zero-leading coefficient and complete (B-C) remain open. Lean not run.
+
+**IV-41 disposition:** algebraic entropy expansion PASS; uniform derivative estimates conditional; zero-leading branch and full proposition OPEN. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
