@@ -31,7 +31,10 @@ Using (H'(p)=\ln((1-p)/p)) and the entropy derivative (-q'(1+\ln q)), the contra
 \[
 \partial_{u_{13}}I_{12}-\partial_{u_{34}}I_{12}=\frac{r^2}{8}\ln\frac{q}{p}+O_N(r^3(1+|\ln r|)).
 \]
-Because (u_e) perturbs (J_e=J(1+u_e)), physical response derivatives satisfy (B-C=J^{-1}(\partial_{u_{13}}I-\partial_{u_{34}}I)). Hence
+Because (u_e) perturbs (J_e=J(1+u_e)), physical response derivatives satisfy (B-C=J^{-1}(\partial_{u_{13}}I-\partial_{u_{34}}I)). Hence the physical response contrast is
+\[
+B-C=\frac{J}{8h^2}\ln\frac{2(N-2)}{N-1}+O_N\left(\frac{J^2}{h^3}(1+|\ln(J/h)|)\right).
+\]
 
 Since
 [
