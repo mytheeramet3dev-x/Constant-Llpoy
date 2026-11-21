@@ -37,7 +37,7 @@ Step-2 vacuum:
 - 3 distinct edges, 1 edge repeat, 1 repeated state: 336
 - 2 distinct edges, 2 edge repeats, 0 repeated states: 756
 - 2 distinct edges, 2 edge repeats, 1 repeated state: 1,512
-- 2 distinct edges, 2 edge repeats, 2 repeated states: 28
+- 1 distinct edge, 3 edge repeats, 2 repeated states: 28
 
 Step-3 vacuum:
 - 4 distinct edges, no edge repeat, no repeated state: 8,400
