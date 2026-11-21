@@ -453,3 +453,10 @@ Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV37_RESPONSE_MATRIX_SYMMETRY
 Audit report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV38_HAMILTONIAN_PERTURBATION_CONVENTION_AUDIT.md`. Frozen Section 2.1 confirms (H=-\\sum_{i<j}J_{ij}\\sigma_i^z\\sigma_j^z-h\\sum_i\\sigma_i^x), (h>0). In the (x)-basis, the pair interaction flips two spins; the excitation costs (4h), matrix element is (-J_{ij}), and first-order amplitude is \\(a_{ij}=(-J_{ij})/(-4h)=J_{ij}/(4h)\\). This confirms sign/factor for the first-order pair-flip amplitude and leading probability scale (J^2/(16h^2)). It does not certify higher-order amplitudes or differentiated remainders.
 
 **IV-38 disposition:** Hamiltonian convention SOURCE-CONFIRMED; first-order amplitude DERIVED/PASS; complete entropy derivative and remainder bounds OPEN; Lean not performed. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## Supplemental audit update — PROP-0012 IV-39 second-order multipath amplitude audit (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV39_SECOND_ORDER_MULTIPATH_AMPLITUDE_AUDIT.md`. For distinct four-site final flips, coherent summation of two ordered paths for each of three pairings gives (c_{ijkl}^{(2)}=[J_{ij}J_{kl}+J_{ik}J_{jl}+J_{il}J_{jk}]/(16h^2)). For a two-flip final state, shared-vertex paths give (c_{ij}^{(2)}=\sum_{k\ne i,j}J_{ik}J_{jk}/(8h^2)). The second-order ground-component normalization correction is (-\frac12\sum_{i<j}J_{ij}^2/(16h^2)). Path amplitudes are summed coherently before probability formation.
+
+**IV-39:** Second-order path counting/denominators analytically PASS; reduced-density entropy derivative implications and uniform differentiated remainder OPEN; Lean not run. PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
