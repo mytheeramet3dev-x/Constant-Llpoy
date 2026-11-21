@@ -493,3 +493,10 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV42_TWO_SITE_ENTROPY_SPECTRAL_BRAN
 Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV43_TWO_SITE_PARITY_BLOCK_RECONSTRUCTION.md`. Global x-parity P_x=product_i sigma_i^x commutes with the frozen Hamiltonian; in a nondegenerate parity eigenstate, subsystem parity P_ij=sigma_i^x sigma_j^x commutes with rho_ij. In ordered x-basis {|++>,|+->,|-+>,|-->}, rho_ij decomposes into two 2x2 blocks (even {|++>,|-->} and odd {|+->,|-+>}) exactly. The eigenvalues of each block have exact trace/determinant formula. Explicit block entries to entropy-required order, normalization/interference, edge derivatives, low-branch logs remain OPEN. No B-C coefficient certified; Lean not performed.
 
 **IV-43 disposition:** Symmetry/block structure PASS; perturbative block expansion OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
+
+
+## IV-44 — Exact two-site reduced-matrix element formulas (2026-11-21)
+
+Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV44_EXACT_TWO_SITE_MATRIX_ELEMENT_FORMULAS.md`. In x-basis amplitudes c_(a,b,e), exact partial-trace entries are rho_(ab,a'b')=sum_e c_(a,b,e) conjugate(c_(a',b',e)). Even/odd parity blocks are explicit Gram matrices of environment-amplitude vectors; their positivity and trace normalization follow exactly, and cross-sector entries vanish by subsystem parity. These are exact formulas only: perturbative coefficient series, derivatives, low eigenvalue/log expansions, and B-C coefficient remain OPEN. No Lean.
+
+**IV-44 disposition:** Exact partial-trace/Gram formulas PASS; explicit perturbative matrix entries OPEN; PROP-0012 remains **OPEN / ANALYTIC-PARTIAL / NOT VERIFIED**.
