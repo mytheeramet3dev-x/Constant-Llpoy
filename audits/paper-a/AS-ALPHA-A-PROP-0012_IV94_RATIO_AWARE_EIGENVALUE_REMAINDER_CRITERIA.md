@@ -10,7 +10,7 @@ Let t=x+y, and use natural logarithms in this note. Define h(p)=-p ln p-(1-p)ln(
 F_nat(x,y)=t ln t-x ln x-y ln y,
 with 0 ln 0 :=0. Conversion to bits divides by ln 2.
 
-For the endpoint marginals, write their small eigenvalues p_x and p_y; for the joint endpoint state, write its small eigenvalue q. The leading perturbative targets are p_x=x, p_y=y, q=t.
+For the endpoint marginals, write their small eigenvalues p_x and p_y; for the joint endpoint state, write its dominant eigenvalue 1-q and its principal small eigenvalue q. The leading perturbative targets are p_x=x, p_y=y, q=t. This criterion also presumes every additional joint-state eigenvalue contributes entropy at most O(t^2 ln(1/t)) (for example, if each is O(t^2) and there are finitely many).
 
 ## Conditional ratio-aware criterion
 Suppose for sufficiently small t there are constants C,c independent of x/y such that:
