@@ -589,3 +589,8 @@ The multiplicity partitions of four edge occurrences are exhaustive: 4; 3+1; 2+2
 ### IV-59 — Support graph classification framework
 
 Support graph and edge multiplicities must be separated; graph isomorphism ignores operation order, which must be retained in ordered-path enumeration. One- and two-edge support types are classified (single edge; adjacent or disjoint two edges). Three-edge and four-edge support graph lists remain incomplete. Canonicalization is specified conceptually but has not been implemented/run. This is partial classification, not exhaustive enumeration. See `audits/paper-a/AS-ALPHA-A-PROP-0012_IV59_SUPPORT_GRAPH_ISOMORPHISM_FRAMEWORK.md`.
+
+
+### IV-60 — Executed combinatorial graph enumeration
+
+A pure-Python script enumerates four pair-edge multiset configurations over an 8-vertex pool and canonicalizes weighted support components by brute-force permutations. Computed: 28 available edges; 31,465 labeled edge multisets; 614,656 unique ordered sequences; 23 weighted unlabeled support classes; 31,360 sequences with vacuum intermediate at step 2 or 3; endpoint-count histogram 0:616, 2:9464, 4:17080, 6:4200, 8:105. These are combinatorial counts only. Denominator/path corrections, normalized amplitudes, fourth-order density entries, and c_vv remain OPEN. Script and summary JSON are stored under tools/paper-a/ and audits/paper-a/ respectively.
