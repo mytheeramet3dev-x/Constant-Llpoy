@@ -265,3 +265,10 @@ B-C=\frac{J}{8h^2}\left[1+\ln\frac{2(N-2)}{N-1}\right]+O_N\left(\frac{J^2}{h^3}|
 For fixed \(N\ge4\), the bracket is positive. This is only a local weak-coupling candidate under current expansions; frozen-source convention reconciliation, complete proof of analytic remainder lemmas, Lean formalization/build, and global positivity remain open. Do not claim PROP-0012 verified.
 
 - Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV12_SITE_BRANCH_DERIVATIVE_RECONSTRUCTION.md`
+
+
+## IV-13 status — adversarial check of corrected coefficient
+
+**IV-13 PASS only as an adversarial consistency check against the current working ledger; no internal counterexample found.** The $1/8$ derivative normalization is consistent with the pair-flip gap $4h$ under the stated Hamiltonian convention; leading $(N-1)$ and $(N-2)$ counts match the current ledger; logarithmic combination is algebraically correct and retains the additive $+1$; dimensional remainder conversion is correct conditional on the joint differentiated expansion; and the candidate bracket is positive for fixed $N\ge4$. This is not an independent full reduced-matrix derivation. Frozen-source convention reconciliation, analytic lemma proof, Lean formalization/build, and global positivity remain open.
+
+- Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV13_ADVERSARIAL_COEFFICIENT_CHECK.md`
