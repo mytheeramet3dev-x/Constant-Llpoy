@@ -702,3 +702,7 @@ Derived from IV-79 raw classes plus IV-84 correction: E4=[sum_e J_e^4 -2 sum_{ad
 
 ## IV-86 — Exact single-edge mutual information asymptotic (2026-11-21)
 For the two-spin single-edge TFIM, exact ground-state energy is `-sqrt(4h^2+J^2)`; Schmidt probabilities are `(1 ± 2h/sqrt(4h^2+J^2))/2`. Natural-log MI is twice the binary entropy. At weak coupling, `I=J^2/(8h^2)[1-ln(J^2/(16h^2))]+O(J^4/h^4 ln(h/|J|))`, showing J^2 log J nonanalyticity at zero. This exact one-edge observable is a caution for response expansions; does not address general graph B-C or proposition. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV86_SINGLE_EDGE_EXACT_MUTUAL_INFORMATION_WEAK_COUPLING.md`.
+
+
+## IV-87 — Single-edge MI coupling derivative (2026-11-21)
+Derived exact derivative for direct two-spin MI: with q=2h/sqrt(4h^2+J^2), p=(1-q)/2, dI/dJ=2J h/(4h^2+J^2)^(3/2) ln((1+q)/(1-q)). Weak-coupling leading term is -J/(4h^2) ln(J^2/(16h^2)), which tends to zero but is logarithmically nonanalytic. This direct-edge result is only an observable baseline; general-graph B-C and Proposition 0012 remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV87_SINGLE_EDGE_MI_COUPLING_DERIVATIVE.md`.
