@@ -35,4 +35,4 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(); p.add_argument('--vertices',type=int,default=8); p.add_argument('--operations',type=int,default=4); p.add_argument('--output',default='iv62_denominator_ledger.json'); a=p.parse_args()
     result=compute(a.vertices,a.operations)
     with open(a.output,'w',encoding='utf-8') as f: json.dump(result,f,indent=2,ensure_ascii=False)
-    print(json.dumps(result,indent=2,ensure_ascii=False)
+    print(json.dumps(result,indent=2,ensure_ascii=False))
