@@ -584,3 +584,8 @@ Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV57_EXPLICIT_ORDERED_PATH_SAMPLES_
 ### IV-58 — Four-edge topology classification framework
 
 The multiplicity partitions of four edge occurrences are exhaustive: 4; 3+1; 2+2; 2+1+1; and 1+1+1+1. The endpoint flipped set is the set of odd-degree vertices in the four-edge multigraph, so its size is even and at most eight. This exhausts multiplicity partitions only; support graph refinement, ordered paths, denominators/reducible-path treatment, normalized amplitudes, and direct fourth-order coefficient remain OPEN. See `audits/paper-a/AS-ALPHA-A-PROP-0012_IV58_FOUR_EDGE_TOPOLOGY_CLASSIFICATION.md`.
+
+
+### IV-59 — Support graph classification framework
+
+Support graph and edge multiplicities must be separated; graph isomorphism ignores operation order, which must be retained in ordered-path enumeration. One- and two-edge support types are classified (single edge; adjacent or disjoint two edges). Three-edge and four-edge support graph lists remain incomplete. Canonicalization is specified conceptually but has not been implemented/run. This is partial classification, not exhaustive enumeration. See `audits/paper-a/AS-ALPHA-A-PROP-0012_IV59_SUPPORT_GRAPH_ISOMORPHISM_FRAMEWORK.md`.
