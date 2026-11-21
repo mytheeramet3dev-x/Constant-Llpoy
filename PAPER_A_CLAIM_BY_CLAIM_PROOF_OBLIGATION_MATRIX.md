@@ -604,3 +604,8 @@ Re-enumerated all four-edge multisets over an eight-vertex pool and accumulated 
 ### IV-62 — Intermediate-state denominator ledger (executed)
 
 For all 614,656 distinct ordered four-edge sequences on the 8-vertex/28-edge pool, the first intermediate gap is always 4h. Step-2 gap histogram (DeltaE/h): 0:21,952; 4:263,424; 8:329,280. Step-3 histogram: 0:9,408; 4:205,408; 8:329,280; 12:70,560. Thus 583,296 sequences have all three intermediate denominators nonzero and 31,360 have at least one vacuum intermediate, matching the prior count. Nonzero gap triples are exhaustively summarized in the IV-62 report and JSON. Zero-gap sequences are flagged, not removed or corrected. This is denominator bookkeeping only; reducible corrections, full fourth-order amplitudes, normalized density matrix, entropy, B-C, and Lean verification remain OPEN.
+
+
+### IV-63 — Reducible/vacuum prefix classification (executed)
+
+Exhaustively classified 31,360 sequences with a vacuum intermediate: step-2 vacuum 21,952 (first two edges identical), step-3 vacuum 9,408 (triangle prefix), disjoint categories. Step-2 category by repeated edge occurrences in the full four-edge sequence: repeat count 1:19,656; 2:2,268; 3:28. Step-3: repeat count 0:8,400; 1:1,008. Intermediate flip-state repetition also counted. This is structural classification only; it does not prescribe reducible corrections. See IV-63 report, script, JSON. Full amplitude corrections, normalization, density matrix, entropy, B-C, and Lean remain OPEN.
