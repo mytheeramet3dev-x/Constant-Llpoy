@@ -706,3 +706,7 @@ For the two-spin single-edge TFIM, exact ground-state energy is `-sqrt(4h^2+J^2)
 
 ## IV-87 — Single-edge MI coupling derivative (2026-11-21)
 Derived exact derivative for direct two-spin MI: with q=2h/sqrt(4h^2+J^2), p=(1-q)/2, dI/dJ=2J h/(4h^2+J^2)^(3/2) ln((1+q)/(1-q)). Weak-coupling leading term is -J/(4h^2) ln(J^2/(16h^2)), which tends to zero but is logarithmically nonanalytic. This direct-edge result is only an observable baseline; general-graph B-C and Proposition 0012 remain open. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV87_SINGLE_EDGE_MI_COUPLING_DERIVATIVE.md`.
+
+
+## IV-88 — Validated path-3 endpoint MI exploratory numerics (2026-11-21)
+For 3-spin path 1-2-3 with h=1, equal J12=J23=J and no J13, exact 8x8 ground-state diagonalization and corrected partial trace give trace(rho13)=1, Hermiticity, eigenvalue positivity up to roundoff, and MI>=0. MI samples at J=.01,.03,.1,.2: 8.668015035e-6, 7.822106236e-5, 8.887053599e-4, 3.749426606e-3. MI/J^2 roughly .08668,.08690,.08887,.09374; numerically suggests order J^2 but finite samples do not establish asymptotics. No general path theorem or Paper A response result. Report: `audits/paper-a/AS-ALPHA-A-PROP-0012_IV88_VALIDATED_PATH3_ENDPOINT_MI_NUMERICAL.md`.
