@@ -29,9 +29,9 @@ Use \(|d_t|<4.194\), \(|F_t|<50.084572\):
 |H_t|\le\frac1{3969}\left(\frac{2(4.194)}4+
 \frac{2(50.084572)}{63/4}\right).
 \]
-The computed rounded-up enclosure is
+The computed enclosure (rounded upward in this record) is
 \[
-\boxed{|H_t|<0.002743}.
+\boxed{|H_t|<0.002131}.
 \]
 
 ## 3. Angular derivative
