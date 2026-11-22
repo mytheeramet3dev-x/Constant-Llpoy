@@ -55,7 +55,6 @@ These bounds ensure the component formulas' denominators remain safely away from
 
 Recall
 \[
-\[
 q_3=t\varepsilon Q_3,\quad \varepsilon=1-p,
 \]
 and
