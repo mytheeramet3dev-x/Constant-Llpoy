@@ -52,7 +52,7 @@ Thus throughout this disk, the endpoint-normalized \(Q_3\) is bounded away from 
 
 From the implicit spectral equation and previous derivative identities, a conservative bound for \(d_t\) is
 \[
-d_t\le\frac{16d_*^3}{(16-1/4)^2}<4.327700.
+d_t\le\frac{16d_*^3}{(4^2-4)^2}<7.455139.
 \]
 This only bounds the spectral parameter's radial derivative. It does not yet bound the derivatives of normalized probability factors \(Q,Q_3\), which also involve differentiating component rational functions and \(D\).
 
