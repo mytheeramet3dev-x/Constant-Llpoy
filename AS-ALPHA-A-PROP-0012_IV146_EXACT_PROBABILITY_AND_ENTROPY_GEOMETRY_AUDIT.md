@@ -16,7 +16,7 @@ u=\frac{a(d^2-a^2+b^2)}{dF},\quad
 w=\frac{2ab}{F},\quad
 z=\frac{b(d^2+a^2-b^2)}{dF}.
 \]
-These expressions are algebraic solutions of the linear subsystem; they do not independently identify the eigenvalue branch.
+These expressions solve the algebraic linear subsystem; they do not independently identify the eigenvalue branch.
 
 ### 2. Exact probability representation
 
@@ -33,20 +33,21 @@ Then the normalized probabilities are exactly
 q=(U^2+Z^2)/\mathcal N,\qquad
 q_3=(Z^2+W^2)/\mathcal N.
 \]
-Consequently,
+Writing \(D=1+u^2+w^2+z^2=\mathcal N/(d^2F^2)\), we have
 \[
-q-q_3=(U^2-W^2)/\mathcal N
-=\frac{a^2\left[(d^2-a^2+b^2)^2-4b^2d^2\right]}{d^2F^2\mathcal N^{-1}?}
+q-q_3=\frac{u^2-w^2}{D}
+=\frac{a^2\left[(d^2-a^2+b^2)^2-4b^2d^2\right]}{d^2F^2D}.
 \]
-**Correct denominator form:** since \(U^2-W^2=\frac{a^2}{d^2F^2}[(d^2-a^2+b^2)^2-4b^2d^2]\), equivalently
+The numerator factorization is
 \[
-q-q_3=\frac{a^2\left[(d^2-a^2+b^2)^2-4b^2d^2\right]}{d^2F^2\,D},
+\boxed{(d^2-a^2+b^2)^2-4b^2d^2
+=\left((d-b)^2-a^2\right)\left((d+b)^2-a^2\right).}
 \]
-where \(D=1+u^2+w^2+z^2=\mathcal N/(d^2F^2)\). This expression simplifies by factorization to
+Thus
 \[
-\boxed{q-q_3=\frac{a^2\left((d-b)^2-a^2\right)\left((d+b)^2-a^2\right)}{d^2F^2\,D}.}
+\boxed{q-q_3=\frac{a^2\left((d-b)^2-a^2\right)\left((d+b)^2-a^2\right)}{d^2F^2D}.}
 \]
-(Equivalently denominator \(\mathcal N\), with numerator \(a^2[(d^2-a^2+b^2)^2-4b^2d^2]\).)
+Equivalently, use denominator \(\mathcal N\) and numerator \(a^2[(d^2-a^2+b^2)^2-4b^2d^2]\).
 
 ### 3. Ordering on the disk
 
