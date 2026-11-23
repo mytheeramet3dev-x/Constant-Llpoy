@@ -47,13 +47,13 @@ Q_p^*=(2.348672731,2.348672731,0.064617497).
 Euclidean column ceilings:
 \[
 \|Q_t\|_2<\sqrt{2(17.616462585)^2+(1.155173614)^2}
-<24.923? 
+<24.940207179 
 \]
 \[
 \|Q_p\|_2<\sqrt{2(2.348672731)^2+(0.064617497)^2}
-<3.322? 
+<3.322153311 
 \]
-Frobenius ceiling combines both column norms. These are arithmetic ceilings from the generic bounds; report rounded values only after independent numerical recomputation.
+Frobenius ceiling combines both column norms. Independent arithmetic gives <25.160497545, rounded upward to 9 decimals.
 
 ## 4. Recalculation caveat
 IV-204's radial ceilings are generic componentwise bounds based on its recorded inputs. IV-205 audits angular bounds only; radial input bounds have not been independently revisited in this step. Do not mix historical IV-203 tighter quotient ceilings with the generic IV-204 values.
