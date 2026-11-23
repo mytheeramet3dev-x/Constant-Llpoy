@@ -16,7 +16,7 @@ The Gram entries are exactly
 \[
 x=\langle a_1,a_1\rangle=\frac n{16}+\frac u8+\frac{u^2}{16},\quad
 y=\langle a_2,a_2\rangle=\frac n{16},\quad
-z=\langle a_1,a_2\rangle=\frac n{16}+\frac u{16.
+z=\langle a_1,a_2\rangle=\frac n{16}+\frac u{16}.
 \]
 Thus
 \[
