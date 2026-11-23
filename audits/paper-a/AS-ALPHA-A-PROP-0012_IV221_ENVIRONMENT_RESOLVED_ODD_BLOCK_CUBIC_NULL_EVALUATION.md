@@ -43,7 +43,7 @@ O^{(3)}_{ij}=\sum_{k=3}^N(a_{ik}b_{jk}+b_{ik}a_{jk}).
 Consequently, for \(v=(1,-1)/\sqrt2\),
 \[
 B_{vv}=\frac{O^{(3)}_{11}+O^{(3)}_{22}-O^{(3)}_{12}-O^{(3)}_{21}}2
-=\boxed{\frac12\sum_{k=3}^N(a_{1k}-a_{2k})(b_{1k}-b_{2k})}.
+=\boxed{\sum_{k=3}^N(a_{1k}-a_{2k})(b_{1k}-b_{2k})}.
 \]
 This last factorization is an explicit algebraic reduction, not a symmetry assumption.
 
