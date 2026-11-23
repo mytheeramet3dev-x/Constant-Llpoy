@@ -41,15 +41,15 @@ These are conservative, dependency-agnostic bounds; they do not exploit exact co
 
 ### Radial (t) ceilings
 Using the displayed upward-rounded ceilings:
-- For Q_u,Q_z: 16.160182018 + 1.081145×1.346979884017405 < 17.617? (recomputed below in machine arithmetic).
-- For Q_w: 1.133453605 + 0.016124969×1.346979884017405.
-- For Q_3: 16.160182018 + 1.133453605 + (1.081145+0.016124969)×1.346979884017405.
+- For Q_u,Q_z: 16.160182018 + 1.081145×1.346979884017405 < 17.616462585.
+- For Q_w: 1.133453605 + 0.016124969×1.346979884017405 < 1.155173614.
+- For Q_3: 16.160182018 + 1.133453605 + (1.081145+0.016124969)×1.346979884017405 < 18.771636199.
 
 ### Angular (p) ceilings
 Using the displayed ceilings:
-- Q_u,Q_z: 2.345169494 + 1.081145×0.003193586765625.
-- Q_w: 0.064566 + 0.016124969×0.003193586765625.
-- Q_3: 2.345169494 + 0.064566 + (1.081145+0.016124969)×0.003193586765625.
+- Q_u,Q_z: 2.345169494 + 1.081145×0.003193586765625 < 2.348622225.
+- Q_w: 0.064566 + 0.016124969×0.003193586765625 < 0.064617497.
+- Q_3: 2.345169494 + 0.064566 + (1.081145+0.016124969)×0.003193586765625 < 2.413239721.
 
 ## Audit conclusion
 1. Quotient derivative identities: PASS, conditional on component differentiability and D=1+tS.
