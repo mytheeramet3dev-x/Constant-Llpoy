@@ -62,7 +62,7 @@ the recomputed normalized ceilings are:
 - \(|(Q_w)_t|<1.156318825\).
 - \(|(Q_w)_p|<0.064617497\).
 
-For the corrected \(Q_3=(P_z+P_w)/D\), use numerator ceilings \(|(P_z+P_w)_t|<17.482870\), \(|(P_z+P_w)_p|<2.409786\) (componentwise IV-180 sum), and amplitude \(P_z+P_w<1.148758\):
+For the corrected \(Q_3=(P_z+P_w)/D\), use numerator ceilings \(|(P_z+P_w)_t|<17.482870918\), \(|(P_z+P_w)_p|<2.409786\) (componentwise IV-180 sum), and amplitude \(P_z+P_w<1.148758\):
 - \(|(Q_3)_t|<19.033560048\).
 - \(|(Q_3)_p|<2.413454660\).
 
