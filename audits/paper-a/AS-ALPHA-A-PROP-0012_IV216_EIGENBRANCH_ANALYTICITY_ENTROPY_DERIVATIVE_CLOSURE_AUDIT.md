@@ -1,6 +1,6 @@
 # IV-216 — Eigenbranch Analyticity, Entropy Logarithms, and Derivative Closure Audit
 
-**Target:** Weak-coupling fixed-finite-`N` derivation for `B-C) in AS-ALPHA-A-PROP-0012.
+**Target:** Weak-coupling fixed-finite-`N` derivation for `B-C` in AS-ALPHA-A-PROP-0012.
 **Status:** CONDITIONAL PASS for the scalar entropy-derivative mechanism; OPEN for its full model-specific application and the overall sign theorem.
 **Scope:** Audit the current working proof, the reusable nonnegative-eigenvalue entropy lemma, and the Schur-remainder source lemma. This record does not claim live upstream Paper A recovery.
 
@@ -14,9 +14,9 @@ Inspected from Constant-Llpoy main:
 ## 2. Positive isolated branch: closure is valid under explicit hypotheses
 
 For an eigenvalue branch with `lambda(r,0)>0`, the identity
-[
+\n\[
 \partial_u[-\lambda\ln\lambda]=-(1+\ln\lambda)\partial_u\lambda
-]
+\n\]
 is valid. If `lambda(r,0)=c r^k(1+O(r))`, `c>0`, then `|ln lambda|=O(1+|ln r|)`. A derivative bound `partial_u lambda=O(r^m)` therefore yields `O(r^m(1+|ln r|))`.
 
 The joint analytic, uniform-in-u order hypothesis in the scalar lemma is stronger than a pointwise eigenvalue upper bound and is needed to infer the derivative order. The lemma must not be used from `lambda=O(r^m)` alone.
@@ -36,9 +36,9 @@ The small eigenvalue's order and derivative are not established by the source le
 ## 5. Leading term and asymptotic dominance
 
 The leading coefficient previously audited is
-[
-(B-C)_{lead}=\frac{J}{8h^2}\ln\frac{2(N-2)}{N-1}>0,\quad N\ge4.
-]
+\n\[
+(B-C)_{\mathrm{lead}}=\frac{J}{8h^2}\ln\frac{2(N-2)}{N-1}>0,\quad N\ge4.
+\n\]
 If a remainder of `O_N(J^2 h^{-3}|ln(J/h)|)` is rigorously established, then for each fixed finite N it is asymptotically smaller than the positive leading term as `r=J/h\to0^+`. This does **not** provide an explicit threshold, uniform-in-N control, or positivity at finite coupling. The current IV-215 `O_N(r^4|ln r|)` even-block entropy remainder is stronger but remains conditional on its model-specific hypotheses.
 
 ## 6. Verdict
