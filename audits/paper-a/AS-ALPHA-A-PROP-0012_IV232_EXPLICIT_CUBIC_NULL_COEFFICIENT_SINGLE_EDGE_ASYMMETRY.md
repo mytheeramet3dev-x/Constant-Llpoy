@@ -11,7 +11,6 @@ For retained \(i\in\{1,2\}\) and environment \(k\in\{3,\ldots,N\}\),
 \[
 a_{ik}=\frac{g_{ik}}4,\qquad
 b_{ik}=\frac18\sum_{m\ne i,k}g_{im}g_{mk}.
-]
 \]
 Define the cubic null coefficient
 \[
